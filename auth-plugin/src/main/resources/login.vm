@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title>Login</title>
+    </head>
+    <body>
+        <form method="POST">
+            Username <input class="login" type="text" name="os_username" size="25" tabindex="1" accessKey="u" value="" /><br />
+            Password <input class="login" type="password" name="os_password" size="25" tabindex="2" accessKey="p" /><br />
+            <input type="checkbox" name="os_cookie" id="os_cookie_id" value="true" tabindex="4" />
+            <label for="os_cookie_id" accesskey="r">Remember my login on this computer</label><br />
+            <input id="login" type="submit" value="Log In" tabindex="4" />
+        </form>
+    </body>
+</html>
