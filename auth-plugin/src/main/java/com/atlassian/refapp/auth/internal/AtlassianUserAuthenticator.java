@@ -1,4 +1,4 @@
-package com.atlassian.security.auth.plugin.internal;
+package com.atlassian.refapp.auth.internal;
 
 import java.io.IOException;
 import java.security.Principal;

@@ -1,4 +1,4 @@
-package com.atlassian.security.auth.plugin.internal;
+package com.atlassian.refapp.auth.internal;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

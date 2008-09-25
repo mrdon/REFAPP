@@ -1,4 +1,4 @@
-package com.atlassian.security.auth.plugin.internal;
+package com.atlassian.refapp.auth.internal;
 
 import com.atlassian.user.repository.RepositoryIdentifier;
 

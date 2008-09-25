@@ -1,4 +1,4 @@
-package com.atlassian.security.auth.trustedapps.plugin;
+package com.atlassian.refapp.trustedapps.internal;
 
 import java.security.Principal;
 

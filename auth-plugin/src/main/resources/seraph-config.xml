@@ -58,14 +58,14 @@
   </parameters>
 
   <!-- Determines what roles (permissions) a user has. -->
-  <rolemapper class="com.atlassian.security.auth.plugin.internal.GroupRoleMapper"/>
+  <rolemapper class="com.atlassian.refapp.auth.internal.GroupRoleMapper"/>
 
   <!-- A controller is not required. If not specified, security will always be on
   <controller class="com.atlassian.myapp.setup.MyAppSecurityController" />
   -->
 
   <!-- Logs in users. Must be overridden for SSO apps -->
-  <authenticator class="com.atlassian.security.auth.plugin.internal.AtlassianUserAuthenticator"/>
+  <authenticator class="com.atlassian.refapp.auth.internal.AtlassianUserAuthenticator"/>
 
 
   <services>

@@ -8,7 +8,7 @@
         </bundle-instructions>
     </plugin-info>
     
-    <component key="repositoryIdentifier" class="com.atlassian.security.auth.plugin.internal.AuthPluginRepositoryIdentifier">
+    <component key="repositoryIdentifier" class="com.atlassian.refapp.auth.internal.AuthPluginRepositoryIdentifier">
         <interface>com.atlassian.user.repository.RepositoryIdentifier</interface>
     </component>
     <component key="memoryProvider" class="com.atlassian.user.impl.memory.provider.MemoryProvider" />
@@ -21,7 +21,7 @@
     <component key="groupManager" class="com.atlassian.user.impl.memory.MemoryGroupManager" public="true">
         <interface>com.atlassian.user.GroupManager</interface>
     </component>
-    <component key="authenticationInitialization" class="com.atlassian.security.auth.plugin.internal.AuthenticationInitialization" />
+    <component key="authenticationInitialization" class="com.atlassian.refapp.auth.internal.AuthenticationInitialization" />
     
     <servlet-filter key="login-filter" class="com.atlassian.seraph.filter.LoginFilter" location="top" weight="5">
         <url-pattern>/*</url-pattern>
@@ -34,7 +34,7 @@
         </init-param>
     </servlet-filter>
     
-    <servlet key="login-servlet" class="com.atlassian.security.auth.plugin.internal.LoginServlet">
+    <servlet key="login-servlet" class="com.atlassian.refapp.auth.internal.LoginServlet">
         <url-pattern>/login</url-pattern>
     </servlet>
     
