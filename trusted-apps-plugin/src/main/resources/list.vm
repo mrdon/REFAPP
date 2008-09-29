@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <title>Trusted Apps</title>
+  </head>
+  <body>
+    <table>
+      #foreach ($trustedApp in $trustedApplications)
+      <tr>
+        <td>$trustedApp.getID()</td>
+      </tr>
+      #end
+    </table>
+    <a href="$request.contextPath/plugins/servlet/trusted-apps?a=add">Add</a>
+  </body>
+</html>

@@ -10,10 +10,15 @@
     
     <component-import key="userManager" interface="com.atlassian.user.UserManager" />
     
-    <component key="trusted-apps-manager" class="com.atlassian.security.auth.trustedapps.DefaultTrustedApplicationsManager" />
-    <component key="user-resolver" class="com.atlassian.refapp.trustedapps.internal.RefImplUserResolver" />
+    <component key="encryption-provider" class="com.atlassian.security.auth.trustedapps.BouncyCastleEncryptionProvider" />
+    <component key="trusted-apps-manager" class="com.atlassian.refapp.trustedapps.internal.RefAppTrustedApplicationsManagerImpl" />
+    <component key="user-resolver" class="com.atlassian.refapp.trustedapps.internal.RefAppUserResolverImpl" />
     
     <servlet-filter key="seraph-trusted-apps-filter" class="com.atlassian.security.auth.trustedapps.seraph.filter.SeraphTrustedApplicationsFilter" location="top" weight="10">
         <url-pattern>/*</url-pattern>
     </servlet-filter>
+    
+    <servlet key="trusted-apps-management-servlet" class="com.atlassian.refapp.trustedapps.internal.TrustedAppsManagementServlet">
+        <url-pattern>/trusted-apps</url-pattern>
+    </servlet>
 </atlassian-plugin>

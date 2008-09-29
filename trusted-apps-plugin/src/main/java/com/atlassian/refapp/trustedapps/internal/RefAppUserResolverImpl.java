@@ -7,11 +7,11 @@ import com.atlassian.security.auth.trustedapps.UserResolver;
 import com.atlassian.user.EntityException;
 import com.atlassian.user.UserManager;
 
-public class RefImplUserResolver implements UserResolver
+public class RefAppUserResolverImpl implements UserResolver
 {
     private final UserManager userManager;
     
-    public RefImplUserResolver(UserManager userManager)
+    public RefAppUserResolverImpl(UserManager userManager)
     {
         this.userManager = userManager;
     }
