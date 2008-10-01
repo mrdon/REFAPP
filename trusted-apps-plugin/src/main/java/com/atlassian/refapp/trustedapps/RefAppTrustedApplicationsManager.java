@@ -12,5 +12,5 @@ public interface RefAppTrustedApplicationsManager extends TrustedApplicationsMan
 {
     Map<String, TrustedApplication> getTrustedApplications();
     Application getApplicationCertificate(String url) throws RetrievalException;
-    TrustedApplication addTrustedApplication(Application app, String name, long certificateTimeout, Set<String> urlPatterns, Set<String> ipPatterns);
+    TrustedApplication addTrustedApplication(Application app, long certificateTimeout, Set<String> urlPatterns, Set<String> ipPatterns);
 }

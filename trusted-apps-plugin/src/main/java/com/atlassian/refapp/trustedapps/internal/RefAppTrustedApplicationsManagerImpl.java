@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.atlassian.refapp.trustedapps.RefAppTrustedApplicationsManager;
 import com.atlassian.security.auth.trustedapps.Application;
 import com.atlassian.security.auth.trustedapps.CurrentApplication;
 import com.atlassian.security.auth.trustedapps.DefaultCurrentApplication;
@@ -15,10 +16,9 @@ import com.atlassian.security.auth.trustedapps.DefaultTrustedApplication;
 import com.atlassian.security.auth.trustedapps.DefaultURLMatcher;
 import com.atlassian.security.auth.trustedapps.EncryptionProvider;
 import com.atlassian.security.auth.trustedapps.TrustedApplication;
-import com.atlassian.security.auth.trustedapps.TrustedApplicationsManager;
 import com.atlassian.security.auth.trustedapps.ApplicationRetriever.RetrievalException;
 
-public class RefAppTrustedApplicationsManagerImpl implements TrustedApplicationsManager
+public class RefAppTrustedApplicationsManagerImpl implements RefAppTrustedApplicationsManager
 {
     private final EncryptionProvider encryptionProvider;
     private final CurrentApplication currentApplication;
@@ -62,7 +62,7 @@ public class RefAppTrustedApplicationsManagerImpl implements TrustedApplications
         return encryptionProvider.getApplicationCertificate(url);
     }
 
-    public synchronized TrustedApplication addTrustedApplication(Application app, String name, long certificateTimeout, Set<String> urlPatterns, Set<String> ipPatterns)
+    public synchronized TrustedApplication addTrustedApplication(Application app, long certificateTimeout, Set<String> urlPatterns, Set<String> ipPatterns)
     {
         TrustedApplication trustedApp = new DefaultTrustedApplication(
             encryptionProvider, 

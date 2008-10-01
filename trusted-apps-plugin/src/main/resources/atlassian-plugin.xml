@@ -5,16 +5,26 @@
         <vendor name="${pom.organization.name}" url="${pom.organization.url}" />
         <bundle-instructions>
             <Export-Package>com.atlassian.security.auth.trustedapps</Export-Package>
+            <Import-Package>
+                com.atlassian.user,com.atlassian.seraph.auth,com.atlassian.seraph.config,
+                org.bouncycastle.jce.provider,org.bouncycastle.util.encoders,javax.crypto,
+                org.apache.velocity.context,
+                javax.servlet.http,javax.servlet,
+                org.slf4j
+            </Import-Package>
         </bundle-instructions>
     </plugin-info>
     
-    <component-import key="userManager" interface="com.atlassian.user.UserManager" />
+    <component-import key="user-manager" interface="com.atlassian.user.UserManager" />
     
     <component key="encryption-provider" class="com.atlassian.security.auth.trustedapps.BouncyCastleEncryptionProvider" />
-    <component key="trusted-apps-manager" class="com.atlassian.refapp.trustedapps.internal.RefAppTrustedApplicationsManagerImpl" />
+    <component key="trusted-apps-manager" class="com.atlassian.refapp.trustedapps.internal.RefAppTrustedApplicationsManagerImpl" public="true">
+        <interface>com.atlassian.refapp.trustedapps.RefAppTrustedApplicationsManager</interface>
+        <interface>com.atlassian.security.auth.trustedapps.TrustedApplicationsManager</interface>
+    </component>
     <component key="user-resolver" class="com.atlassian.refapp.trustedapps.internal.RefAppUserResolverImpl" />
     
-    <servlet-filter key="seraph-trusted-apps-filter" class="com.atlassian.security.auth.trustedapps.seraph.filter.SeraphTrustedApplicationsFilter" location="top" weight="10">
+    <servlet-filter key="seraph-trusted-apps-filter" class="com.atlassian.security.auth.trustedapps.seraph.filter.SeraphTrustedApplicationsFilter" location="top" weight="5">
         <url-pattern>/*</url-pattern>
     </servlet-filter>
     
