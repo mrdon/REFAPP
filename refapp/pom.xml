@@ -168,12 +168,14 @@
             <version>${pom.version}</version>
             <scope>provided</scope>
         </dependency>
+<!--
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-trusted-apps-client-plugin</artifactId>
             <version>${pom.version}</version>
             <scope>provided</scope>
         </dependency>
+-->
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-ui-toolbox-plugin</artifactId>
@@ -216,10 +218,10 @@
     <properties>
         <baseurl>http://localhost:8080/atlassian-refapp</baseurl>
         <tomcat.installer.url>
-            file:///tmp/apache-tomcat-5.5.25.zip
 <!--
-            https://m2proxy.atlassian.com/repository/public/org/apache/tomcat/apache-tomcat/5.5.25/apache-tomcat-5.5.25.zip
+            file:///tmp/apache-tomcat-5.5.25.zip
 -->
+            https://m2proxy.atlassian.com/repository/public/org/apache/tomcat/apache-tomcat/5.5.25/apache-tomcat-5.5.25.zip
         </tomcat.installer.url>
         <cargo.wait>false</cargo.wait>
         <jvmargs/>
