@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <title>Trusted Apps Client</title>
+  </head>
+  <body>
+    <form>
+      <label for="url">URL</label> <input type="text" id="url" name="url" value="$!url" />
+      <input type="submit" value="Send Request" />
+    </form>
+    Status code: $responseStatusCode<br/>
+    Status text: $responseStatusText<br/>
+    Response body: <pre>$esc.xml($responseBody)</pre>
+  </body>
+</html>
