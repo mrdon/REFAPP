@@ -3,23 +3,23 @@ package com.atlassian.refapp.auth.internal;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.atlassian.seraph.auth.Authenticator;
+import com.atlassian.seraph.auth.RoleMapper;
 import com.atlassian.user.EntityException;
 import com.atlassian.user.Group;
 import com.atlassian.user.GroupManager;
 import com.atlassian.user.User;
 import com.atlassian.user.UserManager;
-import com.atlassian.user.security.password.PasswordEncryptor;
 
 public class AuthenticationInitialization
 {
     private final Log log = LogFactory.getLog(getClass());
     
-    public AuthenticationInitialization(UserManager userManager, GroupManager groupManager, PasswordEncryptor passwordEncryptor)
+    public AuthenticationInitialization(Authenticator authenticator, RoleMapper roleMapper, UserManager userManager, GroupManager groupManager)
     {
-        Services.setUserManager(userManager);
-        Services.setGroupManager(groupManager);
-        Services.setPasswordEncryptor(passwordEncryptor);
-     
+        StaticDelegatingAuthenticator.setAuthenticator(authenticator);
+        StaticDelegatingRoleMapper.setRoleMapper(roleMapper);
+        
         try
         {
             addUser(userManager, groupManager, "admin", "admin", "users", "administrators");

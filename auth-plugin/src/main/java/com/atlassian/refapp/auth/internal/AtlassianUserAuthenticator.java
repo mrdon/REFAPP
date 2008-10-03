@@ -10,7 +10,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.atlassian.seraph.auth.AbstractAuthenticator;
 import com.atlassian.seraph.auth.AuthenticatorException;
@@ -22,7 +23,8 @@ import com.atlassian.seraph.cookie.CookieHandler;
 import com.atlassian.seraph.interceptor.LogoutInterceptor;
 import com.atlassian.seraph.util.RedirectUtils;
 import com.atlassian.user.EntityException;
-import com.atlassian.user.impl.DefaultUser;
+import com.atlassian.user.UserManager;
+import com.atlassian.user.security.authentication.Authenticator;
 import com.atlassian.user.util.Base64Encoder;
 
 public class AtlassianUserAuthenticator extends AbstractAuthenticator
@@ -38,15 +40,24 @@ public class AtlassianUserAuthenticator extends AbstractAuthenticator
      */
     public static final String LOGGED_OUT_KEY = "seraph_defaultauthenticator_logged_out_user";
 
-    private final Logger log = Logger.getLogger(getClass());
+    private final Log log = LogFactory.getLog(getClass());
 
     // --------------------------------------------------------------------------------------------------------- members
+
+    private final UserManager userManager;
+    private final Authenticator authenticator;
 
     private String loginCookieKey;
     private String authType;
     private int autoLoginCookieAge;
     private String loginCookiePath;
 
+    public AtlassianUserAuthenticator(UserManager userManager, Authenticator authenticator)
+    {
+        this.userManager = userManager;
+        this.authenticator = authenticator;
+    }
+    
     public void init(Map params, SecurityConfig config)
     {
         if (log.isDebugEnabled())
@@ -79,47 +90,36 @@ public class AtlassianUserAuthenticator extends AbstractAuthenticator
             throws AuthenticatorException
     {
         final boolean dbg = log.isDebugEnabled();
-        final Principal user = getUser(username);
         CookieHandler cookieHandler = CookieFactory.getCookieHandler();
 
         // check that they can login (they have the USE permission or ADMINISTER permission)
-        if (user == null)
+        boolean authenticated = authenticate(username, password);
+        if (dbg)
         {
-            log.info("Cannot login user '" + username + "' as they do not exist.");
+            log.debug("User : " + username + " has " + (authenticated ? "been" : "no been") + " authenticated");
         }
-        else
+        if (authenticated)
         {
-            boolean authenticated = authenticate(user, password);
+            Principal user = getUser(username);
+            request.getSession().setAttribute(LOGGED_IN_KEY, user);
+            request.getSession().setAttribute(LOGGED_OUT_KEY, null);
+
+            final boolean canLogin = getRoleMapper().canLogin(user, request);
             if (dbg)
             {
-                log.debug("User : " + username + " has " + (authenticated ? "been" : "no been") + " authenticated");
+                log.debug("User : " + username + " " + (canLogin ? "can" : "CANT") + " login according to the RoleMapper");
             }
-            if (authenticated)
+            if (canLogin)
             {
-                request.getSession().setAttribute(LOGGED_IN_KEY, user);
-                request.getSession().setAttribute(LOGGED_OUT_KEY, null);
-
-                final boolean canLogin = getRoleMapper().canLogin(user, request);
-                if (dbg)
+                if (cookie && response != null)
                 {
-                    log.debug("User : " + username + " " + (canLogin ? "can" : "CANT") + " login according to the RoleMapper");
+                    cookieHandler.setCookie(request, response, getLoginCookieKey(), encodeCookie(username, password), autoLoginCookieAge, getCookiePath(request));
                 }
-                if (canLogin)
-                {
-                    if (cookie && response != null)
-                    {
-                        cookieHandler.setCookie(request, response, getLoginCookieKey(), encodeCookie(username, password), autoLoginCookieAge, getCookiePath(request));
-                    }
-                    return true;
-                }
-                else
-                {
-                    request.getSession().removeAttribute(LOGGED_IN_KEY);
-                }
+                return true;
             }
             else
             {
-                log.info("Cannot login user '" + username + "' as they used an incorrect password");
+                request.getSession().removeAttribute(LOGGED_IN_KEY);
             }
         }
 
@@ -469,7 +469,7 @@ public class AtlassianUserAuthenticator extends AbstractAuthenticator
     {
         try
         {
-            return Services.getUserManager().getUser(username);
+            return userManager.getUser(username);
         }
         catch (EntityException e)
         {
@@ -477,8 +477,18 @@ public class AtlassianUserAuthenticator extends AbstractAuthenticator
         }
     }
     
-    protected boolean authenticate(Principal user, String password)
+    protected boolean authenticate(String username, String password)
     {
-        return ((DefaultUser) user).getPassword().equals(Services.getPasswordEncryptor().encrypt(password));
+        try
+        {
+            boolean authenticated = authenticator.authenticate(username, password);
+            if (authenticated)
+                log.info("Cannot login user '" + username + "' as they used an incorrect password");
+            return authenticated;
+        } catch (EntityException e)
+        {
+            log.info("Cannot login user '" + username + "' as they do not exist.");
+            return false;
+        }
     }
 }

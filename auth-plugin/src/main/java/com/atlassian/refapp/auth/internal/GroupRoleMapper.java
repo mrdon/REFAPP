@@ -14,6 +14,7 @@ import com.atlassian.seraph.auth.RoleMapper;
 import com.atlassian.seraph.config.SecurityConfig;
 import com.atlassian.user.EntityException;
 import com.atlassian.user.Group;
+import com.atlassian.user.GroupManager;
 import com.atlassian.user.User;
 import com.atlassian.user.search.page.Pager;
 
@@ -21,11 +22,17 @@ import edu.emory.mathcs.backport.java.util.Collections;
 
 public class GroupRoleMapper implements RoleMapper
 {
-    private Authenticator authenticator;
+    private final Authenticator authenticator;
+    private final GroupManager groupManager;
 
+    public GroupRoleMapper(Authenticator authenticator, GroupManager groupManager)
+    {
+        this.authenticator = authenticator;
+        this.groupManager = groupManager;
+    }
+    
     public void init(Map params, SecurityConfig config)
     {
-        authenticator = config.getAuthenticator();
     }
 
     /**
@@ -63,7 +70,7 @@ public class GroupRoleMapper implements RoleMapper
         }
         try
         {
-            Pager groupPager = Services.getGroupManager().getGroups(user);
+            Pager groupPager = groupManager.getGroups(user);
             List<String> groups = new LinkedList<String>();
             for (Iterator<Group> i = groupPager.iterator(); i.hasNext(); )
             {
