@@ -73,6 +73,10 @@
 	                    <groupId>log4j</groupId>
 	                    <artifactId>log4j</artifactId>
 	                </exclusion>
+                        <exclusion>
+                            <groupId>bouncycastle</groupId>
+                            <artifactId>bcprov-jdk14</artifactId>
+                        </exclusion>
 	            </exclusions>
 	        </dependency>
 	        <dependency>
@@ -124,6 +128,14 @@
 	                    <groupId>xml-apis</groupId>
 	                    <artifactId>xml-apis</artifactId>
 	                </exclusion>
+                        <exclusion>
+                            <groupId>log4j</groupId>
+                            <artifactId>log4j</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>p6spy</groupId>
+                            <artifactId>p6spy</artifactId>
+                        </exclusion>
 	            </exclusions>
 	        </dependency>
 	        <dependency>
