@@ -57,14 +57,6 @@
         </resources>
     </build>
     <dependencies>
-<!--
-        <dependency>
-            <groupId>com.atlassian.security.auth.trustedapps</groupId>
-            <artifactId>atlassian-trusted-apps-core</artifactId>
-            <version>1.0</version>
-            <scope>provided</scope>
-        </dependency>
--->
         <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity</artifactId>

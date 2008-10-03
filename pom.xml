@@ -13,6 +13,7 @@
     <modules>
         <module>auth-plugin</module>
         <module>trusted-apps-plugin</module>
+        <module>trusted-apps-client-plugin</module>
         <module>ui-toolbox-plugin</module>
         <module>refapp</module>
     </modules>
