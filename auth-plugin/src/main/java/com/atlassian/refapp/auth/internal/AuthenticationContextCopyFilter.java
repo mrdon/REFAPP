@@ -37,7 +37,7 @@ public class AuthenticationContextCopyFilter implements Filter
         try
         {
             chain.doFilter(request, response);
-        } catch (Exception e)
+        } finally
         {
             authenticationContext.clearUser();
         }
