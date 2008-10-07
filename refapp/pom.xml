@@ -84,6 +84,7 @@
                             </deployable>
                         </deployables>
                         <properties>
+                            <cargo.servlet.port>${http.port}</cargo.servlet.port>
                             <cargo.jvmargs>${jvmargs}</cargo.jvmargs>
                         </properties>
                     </configuration>
@@ -216,7 +217,8 @@
     </dependencies>
 
     <properties>
-        <baseurl>http://localhost:8080/atlassian-refapp</baseurl>
+        <http.port>8080</http.port>
+        <baseurl>http://localhost:${http.port}/atlassian-refapp</baseurl>
         <tomcat.installer.url>
 <!--
             file:///tmp/apache-tomcat-5.5.25.zip
