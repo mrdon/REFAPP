@@ -200,6 +200,13 @@
             <version>${sal.version}</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.atlassian.upm</groupId>
+            <artifactId>atlassian-universal-plugin-manager</artifactId>
+            <version>1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
 
         <dependency>
             <groupId>net.sourceforge.jwebunit</groupId>
