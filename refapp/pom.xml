@@ -169,14 +169,12 @@
             <version>${pom.version}</version>
             <scope>provided</scope>
         </dependency>
-<!--
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-trusted-apps-client-plugin</artifactId>
             <version>${pom.version}</version>
             <scope>provided</scope>
         </dependency>
--->
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-ui-toolbox-plugin</artifactId>
@@ -206,7 +204,6 @@
             <version>1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-
 
         <dependency>
             <groupId>net.sourceforge.jwebunit</groupId>

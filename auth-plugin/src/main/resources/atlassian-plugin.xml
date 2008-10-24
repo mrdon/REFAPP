@@ -35,17 +35,17 @@
     <component key="roleMapper" class="com.atlassian.refapp.auth.internal.GroupRoleMapper" />
     <component key="authenticationInitialization" class="com.atlassian.refapp.auth.internal.AuthenticationInitialization" />
     
-    <servlet-filter key="login-filter" class="com.atlassian.seraph.filter.LoginFilter" location="before-decoration" weight="5">
+    <servlet-filter key="login-filter" class="com.atlassian.seraph.filter.LoginFilter" location="before-login" weight="1000000">
         <url-pattern>/*</url-pattern>
     </servlet-filter>
-    <servlet-filter key="security" class="com.atlassian.seraph.filter.SecurityFilter" location="before-decoration" weight="10">
+    <servlet-filter key="security" class="com.atlassian.seraph.filter.SecurityFilter" location="before-login" weight="1000001">
         <url-pattern>/*</url-pattern>
         <init-param>
             <param-name>config.file</param-name>
             <param-value>/seraph-config.xml</param-value>
         </init-param>
     </servlet-filter>
-    <servlet-filter key="copy-authentication-context" class="com.atlassian.refapp.auth.internal.AuthenticationContextCopyFilter" location="before-decoration" weight="10">
+    <servlet-filter key="copy-authentication-context" class="com.atlassian.refapp.auth.internal.AuthenticationContextCopyFilter" location="before-login" weight="1000001">
         <url-pattern>/*</url-pattern>
     </servlet-filter>
     

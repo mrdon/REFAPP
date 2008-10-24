@@ -24,7 +24,7 @@
     </component>
     <component key="user-resolver" class="com.atlassian.refapp.trustedapps.internal.RefAppUserResolverImpl" />
     
-    <servlet-filter key="seraph-trusted-apps-filter" class="com.atlassian.security.auth.trustedapps.seraph.filter.SeraphTrustedApplicationsFilter" location="before-decoration" weight="5">
+    <servlet-filter key="seraph-trusted-apps-filter" class="com.atlassian.security.auth.trustedapps.seraph.filter.SeraphTrustedApplicationsFilter" location="before-login" weight="1000000">
         <url-pattern>/*</url-pattern>
     </servlet-filter>
     
