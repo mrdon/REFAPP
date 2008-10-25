@@ -13,6 +13,7 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.log.JdkLogChute;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 public class LoginServlet extends HttpServlet
@@ -22,6 +23,7 @@ public class LoginServlet extends HttpServlet
     public LoginServlet()
     {
         velocity = new VelocityEngine();
+        velocity.addProperty(Velocity.RUNTIME_LOG_LOGSYSTEM_CLASS, JdkLogChute.class.getName());
         velocity.addProperty(Velocity.RESOURCE_LOADER, "classpath");
         velocity.addProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
     }

@@ -16,15 +16,16 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.log.JdkLogChute;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.tools.generic.EscapeTool;
 
 import com.atlassian.sal.api.net.Request;
+import com.atlassian.sal.api.net.Request.MethodType;
 import com.atlassian.sal.api.net.RequestFactory;
 import com.atlassian.sal.api.net.Response;
 import com.atlassian.sal.api.net.ResponseException;
 import com.atlassian.sal.api.net.ResponseHandler;
-import com.atlassian.sal.api.net.Request.MethodType;
 
 public class TrustedAppsClientServlet extends HttpServlet
 {
@@ -36,6 +37,7 @@ public class TrustedAppsClientServlet extends HttpServlet
         this.requestFactory = requestFactory;
         
         velocity = new VelocityEngine();
+        velocity.addProperty(Velocity.RUNTIME_LOG_LOGSYSTEM_CLASS, JdkLogChute.class.getName());
         velocity.addProperty(Velocity.RESOURCE_LOADER, "classpath");
         velocity.addProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
         velocity.init();

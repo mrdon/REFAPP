@@ -1,7 +1,5 @@
 package com.atlassian.refapp.trustedapps.internal;
 
-import static org.apache.commons.lang.StringUtils.isBlank;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,22 +8,23 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static org.apache.commons.lang.StringUtils.isBlank;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.log.JdkLogChute;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import com.atlassian.refapp.trustedapps.RefAppTrustedApplicationsManager;
 import com.atlassian.security.auth.trustedapps.Application;
-import com.atlassian.security.auth.trustedapps.IPAddressFormatException;
 import com.atlassian.security.auth.trustedapps.ApplicationRetriever.RetrievalException;
+import com.atlassian.security.auth.trustedapps.IPAddressFormatException;
 
 
 public class TrustedAppsManagementServlet extends HttpServlet
@@ -38,6 +37,7 @@ public class TrustedAppsManagementServlet extends HttpServlet
         this.trustedAppsManager = trustedAppsManager;
         
         velocity = new VelocityEngine();
+        velocity.addProperty(Velocity.RUNTIME_LOG_LOGSYSTEM_CLASS, JdkLogChute.class.getName());
         velocity.addProperty(Velocity.RESOURCE_LOADER, "classpath");
         velocity.addProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());        
         velocity.init();
