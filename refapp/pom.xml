@@ -153,6 +153,11 @@
             <scope>runtime</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.atlassian.extras</groupId>
+            <artifactId>atlassian-extras</artifactId>
+        </dependency>
+        
         <!--
             These are plugins that we want to install in the refimpl container.  They're maked as scope provided so the
             Maven WAR plugin doesn't try to package them in WEB-INF/lib.

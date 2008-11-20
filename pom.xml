@@ -144,6 +144,11 @@
                         </exclusion>
 	            </exclusions>
 	        </dependency>
+            <dependency>
+                <groupId>com.atlassian.extras</groupId>
+                <artifactId>atlassian-extras</artifactId>
+                <version>1.20.1</version>
+            </dependency>
 	        <dependency>
 	            <groupId>commons-logging</groupId>
 	            <artifactId>commons-logging</artifactId>
