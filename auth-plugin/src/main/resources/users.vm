@@ -1,0 +1,27 @@
+<html>
+<head>
+    <title>Users</title>
+    <meta name="decorator" content="atl.general"/>
+</head>
+<body>
+<table>
+<tr><th>Username</th><th>Full Name</th><th>Email</th><th>View</th></tr>
+#foreach ($user in $users)
+<tr><td>$user.name</td><td>$!user.fullName</td><td>$!user.email</td><td><a href="users/$user.name">View</a></td></tr>
+#end
+</table>
+
+<br/><br/>
+
+
+<form method="POST" action="users">
+<table>
+<tr><th>Username:</th><td><input type="text" name="name"/></td></tr>
+<tr><th>Password:</th><td><input type="password" name="password"/></td></tr>
+<tr><th>Full Name:</th><td><input type="text" name="fullName"/></td></tr>
+<tr><th>Email:</th><td><input type="text" name="email"/></td></tr>
+</table>
+<input type="submit" value="Create User"/>
+</form>
+</body>
+</html>

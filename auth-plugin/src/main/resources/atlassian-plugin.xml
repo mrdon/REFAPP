@@ -56,4 +56,10 @@
     <servlet key="logout" class="com.atlassian.seraph.logout.LogoutServlet">
         <url-pattern>/logout</url-pattern>
     </servlet>
+
+    <servlet key="users-servlet" class="com.atlassian.refapp.auth.internal.UsersServlet">
+        <url-pattern>/users</url-pattern>
+        <url-pattern>/users/*</url-pattern>
+    </servlet>
+
 </atlassian-plugin>

@@ -22,9 +22,9 @@ public class AuthenticationInitialization
         
         try
         {
-            addUser(userManager, groupManager, "admin", "admin", "users", "administrators");
-            addUser(userManager, groupManager, "fred", "fred", "users", "administrators");
-            addUser(userManager, groupManager, "barney", "barney", "users");
+            addUser(userManager, groupManager, "admin", "A. D. Ministrator", "admin@example.com", "admin", "users", "administrators");
+            addUser(userManager, groupManager, "fred", "Fred Admin", "fred@example.org", "fred", "users", "administrators");
+            addUser(userManager, groupManager, "barney", "Barney User", "barney@example.org", "barney", "users");
         }
         catch (EntityException e)
         {
@@ -33,9 +33,12 @@ public class AuthenticationInitialization
     }
 
     private void addUser(UserManager userManager, GroupManager groupManager, 
-        String username, String password, String... groupNames) throws EntityException
+        String username, String fullName, String email, String password, String... groupNames) throws EntityException
     {
         User user = userManager.createUser(username);
+        user.setFullName(fullName);
+        user.setEmail(email);
+        userManager.saveUser(user);
         userManager.alterPassword(user, password);
         for (String groupName : groupNames)
         {
