@@ -214,6 +214,6 @@
     <properties>
         <jdkLevel>1.5</jdkLevel>
         <atlassian.plugins.version>2.2.0-SNAPSHOT</atlassian.plugins.version>
-        <sal.version>1.1.0.beta-02-SNAPSHOT</sal.version>
+        <sal.version>2.0-SNAPSHOT</sal.version>
     </properties>
 </project>
