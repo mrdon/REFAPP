@@ -85,6 +85,7 @@
                         </deployables>
                         <properties>
                             <cargo.servlet.port>${http.port}</cargo.servlet.port>
+                            <cargo.rmi.port>${rmi.port}</cargo.rmi.port>
                             <cargo.jvmargs>${jvmargs}</cargo.jvmargs>
                         </properties>
                     </configuration>
@@ -227,6 +228,7 @@
 
     <properties>
         <http.port>8080</http.port>
+        <rmi.port>8580</rmi.port>
         <baseurl>http://localhost:${http.port}/atlassian-refapp</baseurl>
         <tomcat.installer.url>
 <!--
