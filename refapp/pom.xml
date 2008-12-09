@@ -188,6 +188,13 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.atlassian.pdkinstall</groupId>
+            <artifactId>pdkinstall-plugin</artifactId>
+            <version>0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.atlassian.sal</groupId>
             <artifactId>sal-api</artifactId>
             <scope>provided</scope>
