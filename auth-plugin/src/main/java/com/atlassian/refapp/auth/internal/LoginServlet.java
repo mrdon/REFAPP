@@ -45,6 +45,7 @@ public class LoginServlet extends HttpServlet
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
+        response.setContentType("text/html;charset=UTF-8");
         Template template = getTemplate("/login.vm");
         render(template, response.getWriter());
     }
