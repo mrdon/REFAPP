@@ -483,6 +483,8 @@ public class AtlassianUserAuthenticator extends AbstractAuthenticator
         {
             boolean authenticated = authenticator.authenticate(username, password);
             if (authenticated)
+                log.info("User '" + username + "' successfully logged in");
+            else
                 log.info("Cannot login user '" + username + "' as they used an incorrect password");
             return authenticated;
         } catch (EntityException e)

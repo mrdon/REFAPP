@@ -9,32 +9,29 @@
     <artifactId>atlassian-refapp-trusted-apps-plugin</artifactId>
     <name>Reference App Trusted Apps Plugin</name>
     <description>Plugin which can be used to add Trusted Applications support to the reference app</description>
-    <packaging>jar</packaging>
+    <packaging>bundle</packaging>
     <properties>
         <atlassian.plugin.key>com.atlassian.refapp.trustedapps</atlassian.plugin.key>
     </properties>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.outputDirectory}/META-INF/lib</outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>false</overWriteSnapshots>
-                            <overWriteIfNewer>true</overWriteIfNewer>
-                            <excludeScope>provided</excludeScope>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Import-Package>*</Import-Package>
+            <Private-Package>com.atlassian.refapp.trustedapps.internal</Private-Package>
+            <Export-Package>com.atlassian.refapp.trustedapps,com.atlassian.security.auth.trustedapps</Export-Package>
+            <Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency>
+            <Embed-Transitive>true</Embed-Transitive>
+            <Embed-Directory>META-INF/lib</Embed-Directory>
+            <Bundle-ClassPath>.,{maven-dependencies}</Bundle-ClassPath>
+            <Spring-Context>*;timeout:=60</Spring-Context>
+          </instructions>
+        </configuration>
+      </plugin>
         </plugins>
         <resources>
             <resource>
