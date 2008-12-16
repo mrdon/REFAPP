@@ -213,7 +213,7 @@
 
     <properties>
         <jdkLevel>1.5</jdkLevel>
-        <atlassian.plugins.version>2.2.0.beta1</atlassian.plugins.version>
+        <atlassian.plugins.version>2.2.0-SNAPSHOT</atlassian.plugins.version>
         <sal.version>2.0-SNAPSHOT</sal.version>
     </properties>
 </project>
