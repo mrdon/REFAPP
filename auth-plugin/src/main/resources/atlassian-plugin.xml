@@ -53,7 +53,7 @@
         <url-pattern>/login</url-pattern>
     </servlet>
     
-    <servlet key="logout" class="com.atlassian.seraph.logout.LogoutServlet">
+    <servlet key="logout" class="com.atlassian.refapp.auth.internal.LogoutServlet">
         <url-pattern>/logout</url-pattern>
     </servlet>
 
