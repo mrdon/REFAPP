@@ -160,7 +160,7 @@
         </dependency>
         
         <!--
-            These are plugins that we want to install in the refimpl container.  They're maked as scope provided so the
+            These are plugins that we want to install in the refimpl container.  They're marked as scope provided so the
             Maven WAR plugin doesn't try to package them in WEB-INF/lib.
         -->
         <dependency>
@@ -184,6 +184,12 @@
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-ui-toolbox-plugin</artifactId>
+            <version>${pom.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.refapp</groupId>
+            <artifactId>atlassian-refapp-cache-plugin</artifactId>
             <version>${pom.version}</version>
             <scope>provided</scope>
         </dependency>
