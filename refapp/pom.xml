@@ -220,7 +220,7 @@
         <dependency>
             <groupId>com.atlassian.upm</groupId>
             <artifactId>atlassian-universal-plugin-manager</artifactId>
-            <version>1-SNAPSHOT</version>
+            <version>1.0.beta-01</version>
             <scope>provided</scope>
         </dependency>
 
