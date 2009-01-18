@@ -23,6 +23,11 @@
         <module>ui-toolbox-plugin</module>
         <module>refapp</module>
     </modules>
+    <scm>
+        <connection>scm:svn:https://studio.atlassian.com/svn/REFAPP/trunk</connection>
+        <developerConnection>scm:svn:https://studio.atlassian.com/svn/REFAPP/trunk</developerConnection>
+        <url>https://studio.atlassian.com/source/browse/REFAPP/trunk</url>
+    </scm>
     <build>
         <plugins>
             <plugin>
