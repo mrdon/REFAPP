@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.atlassian.pom</groupId>
@@ -8,7 +7,7 @@
     </parent>
     <groupId>com.atlassian.refapp</groupId>
     <artifactId>atlassian-refapp-parent</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>1.0.beta-01</version>
     <name>Atlassian Reference Application (parent pom)</name>
     <packaging>pom</packaging>
     <organization>
@@ -217,4 +216,10 @@
         <atlassian.plugins.version>2.2.0.beta4</atlassian.plugins.version>
         <sal.version>2.0.beta-01</sal.version>
     </properties>
+
+  <scm>
+    <connection>scm:svn:https://svn.atlassian.com/svn/public/atlassian/pom/atlassian-private-pom/tags/atlassian-refapp-parent-1.0.beta-01</connection>
+    <developerConnection>scm:svn:https://svn.atlassian.com/svn/public/atlassian/pom/atlassian-private-pom/tags/atlassian-refapp-parent-1.0.beta-01</developerConnection>
+    <url>https://svn.atlassian.com/svn/public/atlassian/pom/atlassian-private-pom/tags/atlassian-refapp-parent-1.0.beta-01</url>
+  </scm>
 </project>
