@@ -19,7 +19,8 @@
         <module>cache-plugin</module>
         <module>trusted-apps-plugin</module>
         <module>trusted-apps-client-plugin</module>
-        <module>ui-toolbox-plugin</module>
+        <!--module>ui-toolbox-plugin</module-->
+        <module>web-item-plugin</module>
         <module>refapp</module>
     </modules>
     <scm>
@@ -207,6 +208,12 @@
                 <version>${sal.version}</version>
                 <scope>provided</scope>
             </dependency>
+	        <dependency>
+	            <groupId>com.atlassian.templaterenderer</groupId>
+	            <artifactId>atlassian-template-renderer-api</artifactId>
+	            <version>0.1-SNAPSHOT</version>
+	            <scope>provided</scope>
+	        </dependency>
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>servlet-api</artifactId>
@@ -218,7 +225,7 @@
 
     <properties>
         <jdkLevel>1.5</jdkLevel>
-        <atlassian.plugins.version>2.2.0.beta4</atlassian.plugins.version>
+        <atlassian.plugins.version>2.2.0-SNAPSHOT</atlassian.plugins.version>
         <sal.version>2.0-SNAPSHOT</sal.version>
     </properties>
 </project>
