@@ -1,6 +1,5 @@
 package com.atlassian.refapp.webitem;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -76,13 +75,6 @@ public class WebFragmentHelperImpl implements WebFragmentHelper
 
     public String renderVelocityFragment(String fragment, Map<String, Object> context)
     {
-        try
-        {
-            return renderer.renderFragment(fragment, context);
-        }
-        catch (IOException e)
-        {
-            throw new RuntimeException(e);
-        }
+        return renderer.renderFragment(fragment, context);
     }
 }
