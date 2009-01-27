@@ -222,12 +222,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.upm</groupId>
-            <artifactId>atlassian-universal-plugin-manager</artifactId>
-            <version>1.0.beta-01</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>com.atlassian.templaterenderer</groupId>
             <artifactId>atlassian-template-renderer-api</artifactId>
             <version>0.1-SNAPSHOT</version>
