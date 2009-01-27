@@ -174,7 +174,6 @@
             <version>${pom.version}</version>
             <scope>provided</scope>
         </dependency>
-<!--
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-trusted-apps-client-plugin</artifactId>
@@ -199,7 +198,6 @@
             <version>0.1</version>
             <scope>provided</scope>
         </dependency>
--->
         <dependency>
             <groupId>com.atlassian.sal</groupId>
             <artifactId>sal-api</artifactId>
