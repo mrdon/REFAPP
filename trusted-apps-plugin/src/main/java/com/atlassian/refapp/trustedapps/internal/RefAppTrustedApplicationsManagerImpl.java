@@ -1,8 +1,6 @@
 package com.atlassian.refapp.trustedapps.internal;
 
 import java.security.KeyPair;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -24,28 +22,15 @@ public class RefAppTrustedApplicationsManagerImpl implements RefAppTrustedApplic
     private final CurrentApplication currentApplication;
     private final Map<String, TrustedApplication> trustedApplications;
 
-    public RefAppTrustedApplicationsManagerImpl(EncryptionProvider encryptionProvider)
+    public RefAppTrustedApplicationsManagerImpl(EncryptionProvider encryptionProvider, KeyFactory keyFactory)
     {
         this.encryptionProvider = encryptionProvider;
         
-        KeyPair keyPair;
-        try
-        {
-            keyPair = encryptionProvider.generateNewKeyPair();
-        }
-        catch (NoSuchAlgorithmException e)
-        {
-            throw new IllegalArgumentException("No such algorithm", e);
-        }
-        catch (NoSuchProviderException e)
-        {
-            throw new IllegalArgumentException("No such provider", e);
-        }
+        KeyPair keyPair = keyFactory.getKeyPair();
         
         currentApplication = new DefaultCurrentApplication(encryptionProvider, keyPair.getPublic(), keyPair.getPrivate(), "RefApp");
         trustedApplications = new HashMap<String, TrustedApplication>();
     }
-
 
     public CurrentApplication getCurrentApplication()
     {

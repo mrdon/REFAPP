@@ -5,7 +5,7 @@
         <vendor name="${pom.organization.name}" url="${pom.organization.url}" />
         <bundle-instructions>
             <Export-Package>
-                com.atlassian.user,com.atlassian.user.security.authentication,
+                com.atlassian.user,com.atlassian.user.util,com.atlassian.user.security.authentication,
                 com.atlassian.seraph.auth,com.atlassian.seraph.config</Export-Package>
         </bundle-instructions>
     </plugin-info>

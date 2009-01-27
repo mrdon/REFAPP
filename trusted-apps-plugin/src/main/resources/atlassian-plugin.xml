@@ -8,7 +8,9 @@
             <Import-Package>
                 com.atlassian.user,com.atlassian.seraph.auth,com.atlassian.seraph.config,
                 org.bouncycastle.jce.provider,org.bouncycastle.util.encoders,javax.crypto,
+<!--
                 org.apache.velocity.context,
+-->
                 javax.servlet.http,javax.servlet,
                 org.slf4j
             </Import-Package>
@@ -16,7 +18,9 @@
     </plugin-info>
     
     <component-import key="user-manager" interface="com.atlassian.user.UserManager" />
-    
+    <component-import key="plugin-settings-factory" interface="com.atlassian.sal.api.pluginsettings.PluginSettingsFactory" />
+
+    <component key="key-factory" class="com.atlassian.refapp.trustedapps.internal.KeyFactory" />
     <component key="encryption-provider" class="com.atlassian.security.auth.trustedapps.BouncyCastleEncryptionProvider" />
     <component key="trusted-apps-manager" class="com.atlassian.refapp.trustedapps.internal.RefAppTrustedApplicationsManagerImpl" public="true">
         <interface>com.atlassian.refapp.trustedapps.RefAppTrustedApplicationsManager</interface>
@@ -27,8 +31,10 @@
     <servlet-filter key="seraph-trusted-apps-filter" class="com.atlassian.security.auth.trustedapps.seraph.filter.SeraphTrustedApplicationsFilter" location="before-login" weight="1000000">
         <url-pattern>/*</url-pattern>
     </servlet-filter>
-    
+
+<!--
     <servlet key="trusted-apps-management-servlet" class="com.atlassian.refapp.trustedapps.internal.TrustedAppsManagementServlet">
         <url-pattern>/trusted-apps</url-pattern>
     </servlet>
+-->    
 </atlassian-plugin>
