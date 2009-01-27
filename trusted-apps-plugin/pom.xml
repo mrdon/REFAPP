@@ -13,13 +13,14 @@
         <atlassian.plugin.key>com.atlassian.refapp.trustedapps</atlassian.plugin.key>
     </properties>
     <build>
-        <plugins>
+    <plugins>
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
         <extensions>true</extensions>
         <configuration>
           <instructions>
+            <Bundle-SymbolicName>${atlassian.plugin.key}</Bundle-SymbolicName>
             <Import-Package>*</Import-Package>
             <Private-Package>com.atlassian.refapp.trustedapps.internal</Private-Package>
             <Export-Package>com.atlassian.refapp.trustedapps,com.atlassian.security.auth.trustedapps</Export-Package>
@@ -27,7 +28,6 @@
             <Embed-Transitive>true</Embed-Transitive>
             <Embed-Directory>META-INF/lib</Embed-Directory>
             <Bundle-ClassPath>.,{maven-dependencies}</Bundle-ClassPath>
-            <Spring-Context>*;timeout:=60</Spring-Context>
           </instructions>
         </configuration>
       </plugin>
