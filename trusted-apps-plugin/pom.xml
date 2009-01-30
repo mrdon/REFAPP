@@ -8,29 +8,35 @@
     <artifactId>atlassian-refapp-trusted-apps-plugin</artifactId>
     <name>Reference App Trusted Apps Plugin</name>
     <description>Plugin which can be used to add Trusted Applications support to the reference app</description>
-    <packaging>bundle</packaging>
+    <packaging>jar</packaging>
     <properties>
         <atlassian.plugin.key>com.atlassian.refapp.trustedapps</atlassian.plugin.key>
     </properties>
     <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Bundle-SymbolicName>${atlassian.plugin.key}</Bundle-SymbolicName>
-            <Import-Package>*</Import-Package>
-            <Private-Package>com.atlassian.refapp.trustedapps.internal</Private-Package>
-            <Export-Package>com.atlassian.refapp.trustedapps,com.atlassian.security.auth.trustedapps</Export-Package>
-            <Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency>
-            <Embed-Transitive>true</Embed-Transitive>
-            <Embed-Directory>META-INF/lib</Embed-Directory>
-            <Bundle-ClassPath>.,{maven-dependencies}</Bundle-ClassPath>
-          </instructions>
-        </configuration>
-      </plugin>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+<!--
+		<plugin>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>maven-bundle-plugin</artifactId>
+			<extensions>true</extensions>
+			<configuration>
+				<instructions>
+					<Bundle-SymbolicName>${atlassian.plugin.key}</Bundle-SymbolicName>
+					<Import-Package>*</Import-Package>
+					<Private-Package>com.atlassian.refapp.trustedapps.internal</Private-Package>
+					<Export-Package>com.atlassian.refapp.trustedapps,com.atlassian.security.auth.trustedapps</Export-Package>
+					<Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency>
+					<Embed-Transitive>true</Embed-Transitive>
+					<Embed-Directory>META-INF/lib</Embed-Directory>
+					<Bundle-ClassPath>.,{maven-dependencies}</Bundle-ClassPath>
+				</instructions>
+			</configuration>
+		</plugin>
+ -->
         </plugins>
         <resources>
             <resource>

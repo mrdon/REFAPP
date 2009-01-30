@@ -17,22 +17,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.outputDirectory}/META-INF/lib</outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>false</overWriteSnapshots>
-                            <overWriteIfNewer>true</overWriteIfNewer>
-                            <excludeScope>provided</excludeScope>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
         <resources>
