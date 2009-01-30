@@ -8,6 +8,9 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.atlassian.sal.api.pluginsettings.PluginSettings;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 import com.atlassian.security.auth.trustedapps.EncryptionProvider;
@@ -19,6 +22,8 @@ import com.atlassian.user.util.Base64Encoder;
  */
 public class KeyFactory
 {
+	private final Log log = LogFactory.getLog(getClass());
+	
     private EncryptionProvider encryptionProvider;
 	private PluginSettings pluginSettings;
 
@@ -77,7 +82,7 @@ public class KeyFactory
     
     private PrivateKey fetchPrivateKey()
     {
-    	String keyStr = (String) pluginSettings.get("public-key");
+    	String keyStr = (String) pluginSettings.get("private-key");
         final byte[] data = Base64Encoder.decode(keyStr.getBytes());
         try
         {
@@ -85,14 +90,17 @@ public class KeyFactory
         }
         catch (NoSuchProviderException e)
         {
+        	log.error(e);
             return new InvalidPrivateKey(e);
         }
         catch (NoSuchAlgorithmException e)
         {
+        	log.error(e);
             return new InvalidPrivateKey(e);
         }
         catch (InvalidKeySpecException e)
         {
+        	log.error(e);
             return new InvalidPrivateKey(e);
         }
     }
@@ -107,14 +115,17 @@ public class KeyFactory
         }
         catch (NoSuchProviderException e)
         {
+        	log.error(e);
             return new InvalidPublicKey(e);
         }
         catch (NoSuchAlgorithmException e)
         {
+        	log.error(e);
             return new InvalidPublicKey(e);
         }
         catch (InvalidKeySpecException e)
         {
+        	log.error(e);
             return new InvalidPublicKey(e);
         }
     }
