@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.atlassian.refapp</groupId>
-        <artifactId>atlassian-refapp-parent</artifactId>
+        <artifactId>atlassian-refapp-plugin-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>atlassian-refapp-auth-plugin</artifactId>
