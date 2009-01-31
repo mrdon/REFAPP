@@ -289,7 +289,7 @@
         </dependency>
         <dependency>
             <groupId>com.atlassian.templaterenderer</groupId>
-            <artifactId>atlassian-template-renderer-velocity1.5-plugin</artifactId>
+            <artifactId>atlassian-template-renderer-velocity1.6-plugin</artifactId>
             <version>0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
