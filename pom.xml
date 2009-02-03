@@ -209,12 +209,12 @@
                 <version>${sal.version}</version>
                 <scope>provided</scope>
             </dependency>
-	        <dependency>
-	            <groupId>com.atlassian.templaterenderer</groupId>
-	            <artifactId>atlassian-template-renderer-api</artifactId>
-	            <version>0.1-SNAPSHOT</version>
-	            <scope>provided</scope>
-	        </dependency>
+            <dependency>
+                <groupId>com.atlassian.templaterenderer</groupId>
+                <artifactId>atlassian-template-renderer-api</artifactId>
+                <version>${template.renderer.version}</version>
+                <scope>provided</scope>
+            </dependency>
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>servlet-api</artifactId>
@@ -227,6 +227,7 @@
     <properties>
         <jdkLevel>1.5</jdkLevel>
         <atlassian.plugins.version>2.2.0.beta7</atlassian.plugins.version>
-        <sal.version>2.0-SNAPSHOT</sal.version>
+        <sal.version>2.0-beta-2</sal.version>
+        <template.renderer.version>1.0.beta1</template.renderer.version>
     </properties>
 </project>

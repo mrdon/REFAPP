@@ -284,13 +284,13 @@
         <dependency>
             <groupId>com.atlassian.templaterenderer</groupId>
             <artifactId>atlassian-template-renderer-api</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>${template.renderer.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.templaterenderer</groupId>
             <artifactId>atlassian-template-renderer-velocity1.6-plugin</artifactId>
-            <version>0.1-SNAPSHOT</version>
+            <version>${template.renderer.version}</version>
             <scope>provided</scope>
         </dependency>
 
