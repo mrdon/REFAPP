@@ -226,7 +226,7 @@
 
     <properties>
         <jdkLevel>1.5</jdkLevel>
-        <atlassian.plugins.version>2.2.0.beta7</atlassian.plugins.version>
+        <atlassian.plugins.version>2.2.0-SNAPSHOT</atlassian.plugins.version>
         <sal.version>2.0-beta-2</sal.version>
         <template.renderer.version>1.0.beta1</template.renderer.version>
     </properties>
