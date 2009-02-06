@@ -21,6 +21,7 @@
         <module>trusted-apps-plugin</module>
         <module>trusted-apps-client-plugin</module>
         <!--module>ui-toolbox-plugin</module-->
+        <module>jquery-plugin</module>
         <module>web-item-plugin</module>
         <module>refapp</module>
     </modules>
@@ -227,7 +228,7 @@
     <properties>
         <jdkLevel>1.5</jdkLevel>
         <atlassian.plugins.version>2.2.0-SNAPSHOT</atlassian.plugins.version>
-        <sal.version>2.0-beta-2</sal.version>
+        <sal.version>2.1-SNAPSHOT</sal.version>
         <template.renderer.version>1.0.beta1</template.renderer.version>
     </properties>
 </project>
