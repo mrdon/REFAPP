@@ -299,31 +299,30 @@
             <version>${template.renderer.version}</version>
             <scope>provided</scope>
         </dependency>
-<dependency>
-    <groupId>com.google.collect</groupId>
-    <artifactId>com.springsource.com.google.common.collect</artifactId>
-    <version>0.8.0.20080820</version>
-    <scope>provided</scope>
-</dependency>
-<dependency>
-    <groupId>biz.aQute</groupId>
-    <artifactId>bndlib</artifactId>
-    <version>0.0.255</version>
-    <scope>provided</scope>
-</dependency>
-<dependency>
-  <groupId>com.atlassian.plugins.rest</groupId>
-  <artifactId>atlassian-rest-module</artifactId>
-  <version>0.3</version>
-  <scope>provided</scope>
-</dependency>
-<dependency>
-    <groupId>com.atlassian.plugin.rest</groupId>
-    <artifactId>atlassian-rest-plugin-manager-plugin</artifactId>
-    <version>0.2</version>
-    <scope>provided</scope>
-</dependency>
-
+        <dependency>
+            <groupId>com.google.collect</groupId>
+            <artifactId>com.springsource.com.google.common.collect</artifactId>
+            <version>0.8.0.20080820</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>biz.aQute</groupId>
+            <artifactId>bndlib</artifactId>
+            <version>0.0.255</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.plugins.rest</groupId>
+            <artifactId>atlassian-rest-module</artifactId>
+            <version>0.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.plugin.rest</groupId>
+            <artifactId>atlassian-rest-plugin-manager-plugin</artifactId>
+            <version>0.2</version>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>net.sourceforge.jwebunit</groupId>
