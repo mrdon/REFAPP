@@ -22,20 +22,20 @@ import com.atlassian.user.util.Base64Encoder;
  */
 public class KeyFactory
 {
-	private final Log log = LogFactory.getLog(getClass());
-	
-    private EncryptionProvider encryptionProvider;
-	private PluginSettings pluginSettings;
+    private final Log log = LogFactory.getLog(getClass());
 
-	public KeyFactory(EncryptionProvider encryptionProvider, PluginSettingsFactory pluginSettingsFactory)
+    private EncryptionProvider encryptionProvider;
+    private PluginSettings pluginSettings;
+
+    public KeyFactory(EncryptionProvider encryptionProvider, PluginSettingsFactory pluginSettingsFactory)
     {
         this.encryptionProvider = encryptionProvider;
         pluginSettings = pluginSettingsFactory.createSettingsForKey(getClass().getName());
     }
 
-	public KeyPair getKeyPair()
-	{
-		KeyPair keyPair;
+    public KeyPair getKeyPair()
+    {
+        KeyPair keyPair;
         if (pluginSettings.get("public-key") != null)
         {
             keyPair = fetchKeyPair();
@@ -46,8 +46,8 @@ public class KeyFactory
             storeKeyPair(keyPair);
         }
         return keyPair;
-	}
-	
+    }
+
     private KeyPair createKeyPair()
     {
         try
@@ -69,20 +69,20 @@ public class KeyFactory
         pluginSettings.put("public-key", encode(keyPair.getPublic()));
         pluginSettings.put("private-key", encode(keyPair.getPrivate()));
     }
-    
+
     private String encode(Key key)
     {
-    	return new String(Base64Encoder.encode(key.getEncoded()));
+        return new String(Base64Encoder.encode(key.getEncoded()));
     }
 
     private KeyPair fetchKeyPair()
     {
-    	return new KeyPair(fetchPublicKey(), fetchPrivateKey());
+        return new KeyPair(fetchPublicKey(), fetchPrivateKey());
     }
-    
+
     private PrivateKey fetchPrivateKey()
     {
-    	String keyStr = (String) pluginSettings.get("private-key");
+        String keyStr = (String) pluginSettings.get("private-key");
         final byte[] data = Base64Encoder.decode(keyStr.getBytes());
         try
         {
@@ -90,24 +90,24 @@ public class KeyFactory
         }
         catch (NoSuchProviderException e)
         {
-        	log.error(e);
+            log.error(e);
             return new InvalidPrivateKey(e);
         }
         catch (NoSuchAlgorithmException e)
         {
-        	log.error(e);
+            log.error(e);
             return new InvalidPrivateKey(e);
         }
         catch (InvalidKeySpecException e)
         {
-        	log.error(e);
+            log.error(e);
             return new InvalidPrivateKey(e);
         }
     }
-    
+
     private PublicKey fetchPublicKey()
     {
-    	String keyStr = (String) pluginSettings.get("public-key");
+        String keyStr = (String) pluginSettings.get("public-key");
         final byte[] data = Base64Encoder.decode(keyStr.getBytes());
         try
         {
@@ -115,17 +115,17 @@ public class KeyFactory
         }
         catch (NoSuchProviderException e)
         {
-        	log.error(e);
+            log.error(e);
             return new InvalidPublicKey(e);
         }
         catch (NoSuchAlgorithmException e)
         {
-        	log.error(e);
+            log.error(e);
             return new InvalidPublicKey(e);
         }
         catch (InvalidKeySpecException e)
         {
-        	log.error(e);
+            log.error(e);
             return new InvalidPublicKey(e);
         }
     }
