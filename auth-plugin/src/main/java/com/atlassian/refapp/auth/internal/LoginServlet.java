@@ -1,6 +1,14 @@
 package com.atlassian.refapp.auth.internal;
 
-import com.atlassian.seraph.auth.Authenticator;
+import java.io.IOException;
+import java.security.Principal;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -9,13 +17,7 @@ import org.apache.velocity.runtime.log.JdkLogChute;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.tools.generic.EscapeTool;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.security.Principal;
+import com.atlassian.seraph.auth.Authenticator;
 
 public class LoginServlet extends HttpServlet
 {
@@ -75,23 +77,16 @@ public class LoginServlet extends HttpServlet
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        StringBuilder redir = new StringBuilder(req.getContextPath());
-
-        String redirPath = req.getParameter("redir");
-        if (redirPath != null && redirPath.length() > 0)
-        {
-            if (!redirPath.startsWith("/"))
-            {
-                redir.append("/");
-            }
-            redir.append(redirPath);
-        }
-
-        resp.sendRedirect(redir.toString());
+        RedirectHelper.redirect(req, resp);
     }
 
     private String getContextRelativeRequestURL(HttpServletRequest request)
     {
+        if (request.getParameter("redir") != null)
+        {
+            return request.getParameter("redir");
+        }
+        
         StringBuilder redir = new StringBuilder(request.getServletPath());
         String path = request.getPathInfo();
         if (path != null && path.length() > 0)

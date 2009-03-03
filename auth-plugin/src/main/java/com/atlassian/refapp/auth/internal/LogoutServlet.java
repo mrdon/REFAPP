@@ -23,25 +23,12 @@ public class LogoutServlet extends HttpServlet
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         try
         {
-            auth.logout(req, resp);
-
-            StringBuilder redir = new StringBuilder(req.getContextPath());
-
-            String redirPath = req.getParameter("redir");
-            if (redirPath != null && redirPath.length() > 0)
-            {
-                if (!redirPath.startsWith("/"))
-                {
-                    redir.append("/");
-                }
-                redir.append(redirPath);
-            }
-
-            resp.sendRedirect(redir.toString());
+            auth.logout(request, response);
+            RedirectHelper.redirect(request, response);
         }
         catch (AuthenticatorException e)
         {
