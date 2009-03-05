@@ -30,9 +30,11 @@
     <component key="authenticationContext" class="com.atlassian.seraph.auth.AuthenticationContextImpl" public="true">
         <interface>com.atlassian.seraph.auth.AuthenticationContext</interface>
     </component>
+    <component key="roleMapper" class="com.atlassian.refapp.auth.internal.GroupRoleMapper" public="true">
+        <interface>com.atlassian.seraph.auth.RoleMapper</interface>
+    </component>
     
     <component key="seraphAuthenticator" class="com.atlassian.refapp.auth.internal.AtlassianUserAuthenticator" />
-    <component key="roleMapper" class="com.atlassian.refapp.auth.internal.GroupRoleMapper" />
     <component key="authenticationInitialization" class="com.atlassian.refapp.auth.internal.AuthenticationInitialization" />
     
     <servlet-filter key="login-filter" class="com.atlassian.seraph.filter.LoginFilter" location="before-login" weight="1000000">
