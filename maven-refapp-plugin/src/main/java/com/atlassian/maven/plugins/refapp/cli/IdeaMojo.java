@@ -37,7 +37,6 @@ public class IdeaMojo extends AbstractMojo {
      */
     protected PluginManager pluginManager;
 
-    @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         MavenGoals goals = new MavenGoals(project, session, pluginManager, getLog());
         goals.installIdeaPlugin();

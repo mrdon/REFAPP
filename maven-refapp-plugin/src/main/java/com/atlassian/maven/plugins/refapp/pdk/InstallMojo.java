@@ -15,7 +15,6 @@ import com.atlassian.maven.plugins.refapp.MavenGoals;
  */
 public class InstallMojo extends AbstractPdkMojo {
 
-    @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         MavenGoals goals = new MavenGoals(project, session, pluginManager, getLog());
 
