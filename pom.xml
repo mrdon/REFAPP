@@ -24,6 +24,7 @@
         <module>jquery-plugin</module>
         <module>web-item-plugin</module>
         <module>refapp</module>
+        <module>maven-refapp-plugin</module>
     </modules>
     <scm>
         <connection>scm:svn:https://studio.atlassian.com/svn/REFAPP/trunk</connection>
@@ -227,7 +228,7 @@
 
     <properties>
         <jdkLevel>1.5</jdkLevel>
-        <atlassian.plugins.version>2.2.0.beta11</atlassian.plugins.version>
+        <atlassian.plugins.version>2.2.0-SNAPSHOT</atlassian.plugins.version>
         <sal.version>2.1.beta1</sal.version>
         <template.renderer.version>1.0.beta3</template.renderer.version>
     </properties>

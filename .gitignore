@@ -1,10 +1,7 @@
-auth-plugin/target/
-cache-plugin/target/
-refapp/target/
-trusted-apps-client-plugin/target/
-trusted-apps-plugin/target/
-ui-toolbox-plugin/target/
-web-item-plugin/target/
 pluginsettings.xml
 refapp/pluginsettings.xml
-jquery-plugin/target
+refapp/overlays
+*.iml
+*.ipr
+*.iws
+target
