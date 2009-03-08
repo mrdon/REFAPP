@@ -59,8 +59,8 @@ public class MavenGoals {
 
         List<Element> configs = new ArrayList<Element>();
         configs.add(element(name("commands"),
-                            element(name("pi"), "clean resources compile org.twdata.maven:maven-refapp-plugin:copy-bundled-dependencies jar org.twdata.maven:maven-refapp-plugin:install"),
-                            element(name("pu"), "org.twdata.maven:maven-refapp-plugin:uninstall")));
+                            element(name("pi"), "resources compile com.atlassian.maven.plugins:maven-refapp-plugin:copy-bundled-dependencies jar com.atlassian.maven.plugins:maven-refapp-plugin:install"),
+                            element(name("pu"), "com.atlassian.maven.plugins:maven-refapp-plugin:uninstall")));
         if (port > 0)
         {
             configs.add(element(name("port"), String.valueOf(port)));
