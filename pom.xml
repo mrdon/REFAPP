@@ -228,8 +228,8 @@
 
     <properties>
         <jdkLevel>1.5</jdkLevel>
-        <atlassian.plugins.version>2.2.0.beta11</atlassian.plugins.version>
-        <sal.version>2.1.beta1</sal.version>
+        <atlassian.plugins.version>2.2.0.beta13</atlassian.plugins.version>
+        <sal.version>2.1.beta4</sal.version>
         <template.renderer.version>1.0.beta3</template.renderer.version>
     </properties>
 </project>

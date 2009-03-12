@@ -314,13 +314,13 @@
         <dependency>
             <groupId>com.atlassian.plugins.rest</groupId>
             <artifactId>atlassian-rest-module</artifactId>
-            <version>0.5.1</version>
+            <version>0.6</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.plugin.rest</groupId>
             <artifactId>atlassian-rest-plugin-manager-plugin</artifactId>
-            <version>0.2</version>
+            <version>0.3.2</version>
             <scope>provided</scope>
         </dependency>
 

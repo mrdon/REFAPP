@@ -11,26 +11,26 @@ public class RedirectHelper
 {
     public static void redirect(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
-        String redir = request.getContextPath();
+        String location = request.getContextPath();
 
-        String redirPath = request.getParameter("redir");
-        if (!StringUtils.isEmpty(redirPath))
+        String redirParam = request.getParameter("redir");
+        if (!StringUtils.isEmpty(redirParam))
         {
-            if (redirPath.startsWith("http:") || redirPath.startsWith("https:"))
+            if (redirParam.startsWith("http:") || redirParam.startsWith("https:"))
             {
-                redir = redirPath;
+                location = redirParam;
             }
             else 
             {
-                if (!redirPath.startsWith("/"))
+                if (!redirParam.startsWith("/"))
                 {
-                    redir += "/";
+                    location += "/";
                 }
-                redir += redirPath;
+                location += redirParam;
             }
         }
 
-        response.sendRedirect(redir);
+        response.sendRedirect(location);
     }
 
 }
