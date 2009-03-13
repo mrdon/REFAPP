@@ -7,8 +7,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.atlassian.plugin.AutowireCapablePlugin;
 import com.atlassian.plugin.Plugin;
-import com.atlassian.plugin.hostcontainer.HostContainer;
 import com.atlassian.plugin.web.Condition;
 import com.atlassian.plugin.web.ContextProvider;
 import com.atlassian.plugin.web.WebFragmentHelper;
@@ -21,12 +21,10 @@ public class WebFragmentHelperImpl implements WebFragmentHelper
 {
     private final Log logger = LogFactory.getLog(getClass());
     
-    private final HostContainer hostContainer;
     private final TemplateRenderer renderer;
 
-    public WebFragmentHelperImpl(HostContainer hostContainer, TemplateRendererFactory rendererFactory)
+    public WebFragmentHelperImpl(TemplateRendererFactory rendererFactory)
     {
-        this.hostContainer = hostContainer;
         this.renderer = rendererFactory.getInstance(getClass().getClassLoader());
     }
     
@@ -45,7 +43,15 @@ public class WebFragmentHelperImpl implements WebFragmentHelper
     {
         try
         {
-            return (Condition) hostContainer.create(plugin.loadClass(className, getClass()));
+            if (plugin instanceof AutowireCapablePlugin)
+            {
+                Class conditionClass = plugin.loadClass(className, getClass());
+                return (Condition) ((AutowireCapablePlugin) plugin).autowire(conditionClass);
+            }
+            else
+            {
+                throw new ConditionLoadingException("Plugin " + plugin.getKey() + " is not autowire capable, could not load condition.");
+            }
         }
         catch (IllegalArgumentException e)
         {
@@ -61,7 +67,15 @@ public class WebFragmentHelperImpl implements WebFragmentHelper
     {
         try
         {
-            return (ContextProvider) hostContainer.create(plugin.loadClass(className, getClass()));
+            if (plugin instanceof AutowireCapablePlugin)
+            {
+                Class conditionClass = plugin.loadClass(className, getClass());
+                return (ContextProvider) ((AutowireCapablePlugin) plugin).autowire(conditionClass);
+            }
+            else
+            {
+                throw new ConditionLoadingException("Plugin " + plugin.getKey() + " is not autowire capable, could not load context.");
+            }
         }
         catch (IllegalArgumentException e)
         {

@@ -3,9 +3,6 @@
         <description>${pom.description}</description>
         <version>${pom.version}</version>
         <vendor name="${pom.organization.name}" url="${pom.organization.url}" />
-        <bundle-instructions>
-            <Import-Package>*,com.atlassian.plugin.web.descriptors</Import-Package>
-        </bundle-instructions>
     </plugin-info>
     
     <component-import key="templateRenderer" interface="com.atlassian.templaterenderer.velocity.one.six.VelocityTemplateRendererFactory" />
@@ -18,5 +15,5 @@
         <interface>com.atlassian.plugin.web.WebInterfaceManager</interface>
     </component>
     
-    <module-type key="web-item" class="com.atlassian.plugin.web.descriptors.WebItemModuleDescriptor" />
+    <module-type key="web-item" class="com.atlassian.refapp.webitem.RefAppWebItemModuleDescriptor" />
 </atlassian-plugin>
