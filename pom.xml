@@ -7,7 +7,7 @@
     </parent>
     <groupId>com.atlassian.refapp</groupId>
     <artifactId>atlassian-refapp-parent</artifactId>
-    <version>1.0.beta10</version>
+    <version>1.0-SNAPSHOT</version>
     <name>Atlassian Reference Application (parent pom)</name>
     <packaging>pom</packaging>
     <organization>
@@ -27,9 +27,9 @@
         <module>maven-refapp-plugin</module>
     </modules>
     <scm>
-        <connection>scm:svn:https://studio.atlassian.com/svn/REFAPP/tags/1.0.beta10</connection>
-        <developerConnection>scm:svn:https://studio.atlassian.com/svn/REFAPP/tags/1.0.beta10</developerConnection>
-        <url>https://studio.atlassian.com/source/browse/REFAPP/tags/1.0.beta10</url>
+        <connection>scm:svn:https://studio.atlassian.com/svn/REFAPP/trunk</connection>
+        <developerConnection>scm:svn:https://studio.atlassian.com/svn/REFAPP/trunk</developerConnection>
+        <url>https://studio.atlassian.com/source/browse/REFAPP/trunk</url>
     </scm>
     <build>
         <plugins>
