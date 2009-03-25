@@ -223,6 +223,12 @@
         </dependency>
         <dependency>
             <groupId>com.atlassian.sal</groupId>
+            <artifactId>sal-refimpl-auth-plugin</artifactId>
+            <version>${sal.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.sal</groupId>
             <artifactId>sal-refimpl-component-plugin</artifactId>
             <version>${sal.version}</version>
             <scope>provided</scope>
@@ -266,6 +272,12 @@
         <dependency>
             <groupId>com.atlassian.sal</groupId>
             <artifactId>sal-refimpl-search-plugin</artifactId>
+            <version>${sal.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.sal</groupId>
+            <artifactId>sal-refimpl-scheduling-plugin</artifactId>
             <version>${sal.version}</version>
             <scope>provided</scope>
         </dependency>
