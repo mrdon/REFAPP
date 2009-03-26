@@ -201,7 +201,7 @@
         <dependency>
             <groupId>com.atlassian.pdkinstall</groupId>
             <artifactId>pdkinstall-plugin</artifactId>
-            <version>0.1</version>
+            <version>0.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
