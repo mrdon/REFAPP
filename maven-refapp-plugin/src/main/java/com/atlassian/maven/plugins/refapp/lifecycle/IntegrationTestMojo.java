@@ -1,10 +1,11 @@
 package com.atlassian.maven.plugins.refapp.lifecycle;
 
+import java.io.File;
+
 import org.apache.maven.plugin.MojoExecutionException;
+
 import com.atlassian.maven.plugins.refapp.AbstractRefappMojo;
 import com.atlassian.maven.plugins.refapp.MavenGoals;
-
-import java.io.File;
 
 /**
  * Run the integration tests against the refapp
@@ -21,7 +22,7 @@ public class IntegrationTestMojo
      *
      * @parameter expression="${functionalTestPattern}"
      */
-    private String functionalTestPattern = "it/**";
+    private final String functionalTestPattern = "it/**";
 
     /**
      * The directory containing generated test classes of the project being tested.
@@ -30,22 +31,6 @@ public class IntegrationTestMojo
      * @required
      */
     private File testClassesDirectory;
-
-    /**
-     * The build directory
-     *
-     * @parameter expression="${project.build.directory}"
-     * @required
-     */
-    private File targetDirectory;
-
-    /**
-     * The jar name
-     *
-     * @parameter expression="${project.build.finalName}"
-     * @required
-     */
-    private String finalName;
 
 
     public void execute()
@@ -56,16 +41,16 @@ public class IntegrationTestMojo
             getLog().info("No integration tests found");
             return;
         }
-        MavenGoals goals = new MavenGoals(project, session, pluginManager, getLog());
+        final MavenGoals goals = new MavenGoals(project, session, pluginManager, getLog());
 
         // Copy the refapp war to target
-        File refappWar = goals.copyRefappWar(determineVersion());
+        final File refappWar = goals.copyRefappWar(determineVersion());
 
-        File combinedRefappWar = addPlugins(goals, refappWar);
+        final File combinedRefappWar = addPlugins(goals, refappWar);
 
-        int actualHttpPort = goals.startRefapp(combinedRefappWar, containerId, httpPort, jvmArgs);
+        final int actualHttpPort = goals.startRefapp(combinedRefappWar, containerId, httpPort, jvmArgs);
 
-        String pluginJar = targetDirectory.getAbsolutePath() + "/" + finalName + ".jar";
+        final String pluginJar = targetDirectory.getAbsolutePath() + "/" + finalName + ".jar";
         goals.runTests(containerId, functionalTestPattern, actualHttpPort, pluginJar);
 
         goals.stopRefapp(containerId);

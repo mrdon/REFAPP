@@ -1,18 +1,27 @@
 package com.atlassian.maven.plugins.refapp;
 
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.PluginManager;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.project.MavenProject;
-import org.apache.maven.execution.MavenSession;
-import org.apache.maven.artifact.Artifact;
-import org.apache.commons.io.IOUtils;
-
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Properties;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
-import java.util.zip.ZipEntry;
-import java.io.*;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.maven.artifact.Artifact;
+import org.apache.maven.execution.MavenSession;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.PluginManager;
+import org.apache.maven.project.MavenProject;
 
 /**
  * Base class for refapp mojos
@@ -30,6 +39,22 @@ public abstract class AbstractRefappMojo extends AbstractMojo {
      * @parameter expression="${http.port}"
      */
     protected int httpPort = 9400;
+
+    /**
+     * The build directory
+     *
+     * @parameter expression="${project.build.directory}"
+     * @required
+     */
+    protected File targetDirectory;
+
+    /**
+     * The jar name
+     *
+     * @parameter expression="${project.build.finalName}"
+     * @required
+     */
+    protected String finalName;
 
     /**
      * JVM arguments to pass to cargo
@@ -71,7 +96,7 @@ public abstract class AbstractRefappMojo extends AbstractMojo {
     /**
      * @parameter
      */
-    private List<PluginArtifact> pluginArtifacts = Collections.emptyList();
+    private final List<PluginArtifact> pluginArtifacts = Collections.emptyList();
 
     /**
      * SAL version
@@ -95,14 +120,14 @@ public abstract class AbstractRefappMojo extends AbstractMojo {
 
     /**
      * Atlassian REST Plugin Manager version
-     * 
+     *
      * @parameter expression="${rpm.version}
      */
     private String rpmVersion;
 
     private List<PluginArtifact> getPluginArtifacts()
     {
-        List<PluginArtifact> artifacts = new ArrayList<PluginArtifact>(pluginArtifacts);
+        final List<PluginArtifact> artifacts = new ArrayList<PluginArtifact>(pluginArtifacts);
         if (salVersion != null)
         {
             artifacts.addAll(Arrays.asList(
@@ -140,26 +165,29 @@ public abstract class AbstractRefappMojo extends AbstractMojo {
     }
 
 
-    protected File addPlugins(MavenGoals goals, File refappWar) throws MojoExecutionException {
-        File pluginsDir = new File(new File("target"), "plugins");
+    protected File addPlugins(final MavenGoals goals, final File refappWar) throws MojoExecutionException {
+        final File pluginsDir = new File(new File("target"), "plugins");
         if (!pluginsDir.exists())
         {
             pluginsDir.mkdir();
         }
 
-        List<PluginArtifact> artifacts = getPluginArtifacts();
+        final List<PluginArtifact> artifacts = getPluginArtifacts();
         if (!artifacts.isEmpty())
         {
             goals.copyPlugins(pluginsDir, artifacts);
         }
 
-        File combinedRefappWar = new File(refappWar.getParentFile(), "refapp.war");
+        final String pluginJar = targetDirectory.getAbsolutePath() + "/" + finalName + ".jar";
+
+        final File combinedRefappWar = new File(refappWar.getParentFile(), "refapp.war");
 
         ZipInputStream zin = null;
         ZipOutputStream zout = null;
 
         try
         {
+            FileUtils.copyFile(new File(pluginJar), new File(pluginsDir, finalName + ".jar"));
             zin = new ZipInputStream(new FileInputStream(refappWar));
             zout = new ZipOutputStream(new FileOutputStream(combinedRefappWar));
 
@@ -167,26 +195,26 @@ public abstract class AbstractRefappMojo extends AbstractMojo {
             outer:
             while ((source = zin.getNextEntry()) != null)
             {
-                for (PluginArtifact plugin : artifacts)
+                for (final PluginArtifact plugin : artifacts)
                 {
                     if (source.getName().contains(plugin.getArtifactId()))
                     {
                         continue outer;
                     }
                 }
-                ZipEntry dest = new ZipEntry(source);
+                final ZipEntry dest = new ZipEntry(source);
                 zout.putNextEntry(dest);
                 IOUtils.copy(zin, zout);
             }
 
-            for (File pluginFile : pluginsDir.listFiles())
+            for (final File pluginFile : pluginsDir.listFiles())
             {
                 addFileToZip(zout, pluginFile);
             }
 
             addFileToZip(zout, artifact.getFile());
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new RuntimeException(e);
         } finally
         {
@@ -196,12 +224,12 @@ public abstract class AbstractRefappMojo extends AbstractMojo {
         return combinedRefappWar;
     }
 
-    private void addFileToZip(ZipOutputStream zout, File pluginFile) throws IOException {
+    private void addFileToZip(final ZipOutputStream zout, final File pluginFile) throws IOException {
         if (pluginFile == null)
         {
             return;
         }
-        ZipEntry dest = new ZipEntry("WEB-INF/plugins/"+pluginFile.getName());
+        final ZipEntry dest = new ZipEntry("WEB-INF/plugins/"+pluginFile.getName());
         dest.setTime(pluginFile.lastModified());
         zout.putNextEntry(dest);
 
@@ -220,7 +248,7 @@ public abstract class AbstractRefappMojo extends AbstractMojo {
     protected String determineVersion()
     {
         InputStream in = null;
-        Properties props = new Properties();
+        final Properties props = new Properties();
         try
         {
             in = getClass().getClassLoader().getResourceAsStream("META-INF/maven/com.atlassian.maven.plugins/maven-refapp-plugin/pom.properties");
@@ -229,7 +257,7 @@ public abstract class AbstractRefappMojo extends AbstractMojo {
                 props.load(in);
                 return props.getProperty("version");
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
             return null;
         }
