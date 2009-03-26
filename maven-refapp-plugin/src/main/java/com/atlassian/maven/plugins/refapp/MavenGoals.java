@@ -256,6 +256,10 @@ public class MavenGoals {
                                 element(name("property"),
                                         element(name("name"), "http.port"),
                                         element(name("value"), String.valueOf(httpPort))
+                                ),
+                                element(name("property"),
+                                        element(name("name"), "plugin.jar"),
+                                        element(name("value"), "${project.build.directory}/${project.build.finalName}")
                                 )
                         ),
                         element(name("reportsDirectory"), "${project.build.directory}/" + containerId + "/surefire-reports")
