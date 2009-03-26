@@ -31,6 +31,22 @@ public class IntegrationTestMojo
      */
     private File testClassesDirectory;
 
+    /**
+     * The build directory
+     *
+     * @parameter expression="${project.build.directory}"
+     * @required
+     */
+    private File targetDirectory;
+
+    /**
+     * The jar name
+     *
+     * @parameter expression="${project.build.finalName}"
+     * @required
+     */
+    private String finalName;
+
 
     public void execute()
             throws MojoExecutionException
@@ -49,7 +65,8 @@ public class IntegrationTestMojo
 
         int actualHttpPort = goals.startRefapp(combinedRefappWar, containerId, httpPort, jvmArgs);
 
-        goals.runTests(containerId, functionalTestPattern, actualHttpPort);
+        String pluginJar = targetDirectory.getAbsolutePath() + "/" + finalName + ".jar";
+        goals.runTests(containerId, functionalTestPattern, actualHttpPort, pluginJar);
 
         goals.stopRefapp(containerId);
 

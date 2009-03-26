@@ -238,7 +238,7 @@ public class MavenGoals {
         return actualHttpPort;
     }
 
-    public void runTests(String containerId, String functionalTestPattern, int httpPort) throws MojoExecutionException {
+    public void runTests(String containerId, String functionalTestPattern, int httpPort, String pluginJar) throws MojoExecutionException {
         executeMojo(
                 plugin(
                         groupId("org.apache.maven.plugins"),
@@ -259,7 +259,7 @@ public class MavenGoals {
                                 ),
                                 element(name("property"),
                                         element(name("name"), "plugin.jar"),
-                                        element(name("value"), "${project.build.directory}/${project.build.finalName}")
+                                        element(name("value"), pluginJar)
                                 )
                         ),
                         element(name("reportsDirectory"), "${project.build.directory}/" + containerId + "/surefire-reports")
