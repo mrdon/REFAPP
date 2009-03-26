@@ -343,7 +343,7 @@ public class MavenGoals {
             configuration(
                     element(name("username"), "admin"),
                     element(name("password"), "admin"),
-                    element(name("serverUrl"), "http://localhost:"+port),
+                    element(name("serverUrl"), "http://localhost:"+port+"/refapp"),
                     element(name("pluginKey"), pluginKey)
             ),
             executionEnvironment(project, session, pluginManager)
@@ -361,7 +361,7 @@ public class MavenGoals {
             configuration(
                     element(name("username"), "admin"),
                     element(name("password"), "admin"),
-                    element(name("serverUrl"), "http://localhost:"+port),
+                    element(name("serverUrl"), "http://localhost:"+port+"/refapp"),
                     element(name("pluginKey"), pluginKey)
             ),
             executionEnvironment(project, session, pluginManager)
