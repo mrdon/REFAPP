@@ -32,6 +32,13 @@ public class IntegrationTestMojo
      */
     private File testClassesDirectory;
 
+    /**
+     * Whether the reference application will not be started or not
+     *
+     * @parameter expression="${noRefapp}"
+     */
+    private boolean noRefapp = false;
+
 
     public void execute()
             throws MojoExecutionException
@@ -43,17 +50,24 @@ public class IntegrationTestMojo
         }
         final MavenGoals goals = new MavenGoals(project, session, pluginManager, getLog());
 
-        // Copy the refapp war to target
-        final File refappWar = goals.copyRefappWar(determineVersion());
-
-        final File combinedRefappWar = addPlugins(goals, refappWar);
-
-        final int actualHttpPort = goals.startRefapp(combinedRefappWar, containerId, httpPort, jvmArgs);
-
         final String pluginJar = targetDirectory.getAbsolutePath() + "/" + finalName + ".jar";
-        goals.runTests(containerId, functionalTestPattern, actualHttpPort, pluginJar);
+        
+        if (!noRefapp)
+        {
+            // Copy the refapp war to target
+            final File refappWar = goals.copyRefappWar(determineVersion());
 
-        goals.stopRefapp(containerId);
+            final File combinedRefappWar = addPlugins(goals, refappWar);
+
+            final int actualHttpPort = goals.startRefapp(combinedRefappWar, containerId, httpPort, jvmArgs);
+
+        }
+        goals.runTests(containerId, functionalTestPattern, 0, pluginJar);
+
+        if (!noRefapp)
+        {
+            goals.stopRefapp(containerId);
+        }
 
     }
 }

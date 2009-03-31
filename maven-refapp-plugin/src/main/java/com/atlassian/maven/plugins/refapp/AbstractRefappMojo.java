@@ -187,7 +187,6 @@ public abstract class AbstractRefappMojo extends AbstractMojo {
 
         try
         {
-            FileUtils.copyFile(new File(pluginJar), new File(pluginsDir, finalName + ".jar"));
             zin = new ZipInputStream(new FileInputStream(refappWar));
             zout = new ZipOutputStream(new FileOutputStream(combinedRefappWar));
 
@@ -235,8 +234,8 @@ public abstract class AbstractRefappMojo extends AbstractMojo {
 
         InputStream in = null;
         try
-                {
-                    in = new FileInputStream(pluginFile);
+        {
+            in = new FileInputStream(pluginFile);
             IOUtils.copy(in, zout);
         }
         finally
