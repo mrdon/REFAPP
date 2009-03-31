@@ -51,7 +51,8 @@ public class IntegrationTestMojo
         final MavenGoals goals = new MavenGoals(project, session, pluginManager, getLog());
 
         final String pluginJar = targetDirectory.getAbsolutePath() + "/" + finalName + ".jar";
-        
+
+        int actualHttpPort = 0;
         if (!noRefapp)
         {
             // Copy the refapp war to target
@@ -59,10 +60,10 @@ public class IntegrationTestMojo
 
             final File combinedRefappWar = addPlugins(goals, refappWar);
 
-            final int actualHttpPort = goals.startRefapp(combinedRefappWar, containerId, httpPort, jvmArgs);
+            actualHttpPort = goals.startRefapp(combinedRefappWar, containerId, httpPort, jvmArgs);
 
         }
-        goals.runTests(containerId, functionalTestPattern, 0, pluginJar);
+        goals.runTests(containerId, functionalTestPattern, actualHttpPort, pluginJar);
 
         if (!noRefapp)
         {
