@@ -35,7 +35,7 @@ public class MavenGoals {
     private final Map<String,String> defaultArtifactIdToVersionMap = new HashMap<String,String>()
     {{
             put("maven-cli-plugin", "0.6.2");
-            put("cargo-maven2-plugin", "1.0-beta-2");
+            put("cargo-maven2-plugin", "1.0-beta-2-db1");
             put("atlassian-pdk", "2.1.5");
 
         }};
@@ -194,7 +194,7 @@ public class MavenGoals {
 
         executeMojo(
                 plugin(
-                    groupId("org.codehaus.cargo"),
+                    groupId("org.twdata.maven"),
                     artifactId("cargo-maven2-plugin"),
                     version(pluginArtifactIdToVersionMap.get("cargo-maven2-plugin"))
                 ),
@@ -314,7 +314,7 @@ public class MavenGoals {
         Container container = findContainer(containerId);
         executeMojo(
             plugin(
-                groupId("org.codehaus.cargo"),
+                groupId("org.twdata.maven"),
                 artifactId("cargo-maven2-plugin"),
                 version(pluginArtifactIdToVersionMap.get("cargo-maven2-plugin"))
             ),

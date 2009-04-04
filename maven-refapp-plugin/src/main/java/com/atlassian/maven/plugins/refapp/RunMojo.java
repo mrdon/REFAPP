@@ -10,6 +10,7 @@ import java.io.IOException;
  *
  * @requiresDependencyResolution run
  * @goal run
+ * @execute phase="package"
  */
 public class RunMojo
         extends AbstractRefappMojo

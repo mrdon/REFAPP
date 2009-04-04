@@ -7,6 +7,7 @@ import org.apache.maven.plugin.MojoExecutionException;
  *
  * @requiresDependencyResolution debug
  * @goal debug
+ * @execute phase="package"
  */
 public class DebugMojo extends RunMojo
 {

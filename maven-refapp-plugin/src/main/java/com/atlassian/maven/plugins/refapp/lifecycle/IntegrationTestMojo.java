@@ -12,7 +12,7 @@ import com.atlassian.maven.plugins.refapp.MavenGoals;
  *
  * @requiresDependencyResolution integration-test
  * @goal integration-test
- * @phase integration-test
+ * 
  */
 public class IntegrationTestMojo
         extends AbstractRefappMojo {

@@ -187,6 +187,10 @@ public abstract class AbstractRefappMojo extends AbstractMojo {
 
         try
         {
+            // We can't just copy in the artifact.getFile() because that is only not null if the package phase has
+            // executed.  By running a forked lifecycle to the package phase before this goal, we ensure this jar
+            // will be availabe
+            FileUtils.copyFile(new File(pluginJar), new File(pluginsDir, finalName + ".jar"));
             zin = new ZipInputStream(new FileInputStream(refappWar));
             zout = new ZipOutputStream(new FileOutputStream(combinedRefappWar));
 
@@ -210,8 +214,6 @@ public abstract class AbstractRefappMojo extends AbstractMojo {
             {
                 addFileToZip(zout, pluginFile);
             }
-
-            addFileToZip(zout, artifact.getFile());
         }
         catch (final IOException e) {
             throw new RuntimeException(e);
