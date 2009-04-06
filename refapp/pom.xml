@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.atlassian.refapp</groupId>
         <artifactId>atlassian-refapp-parent</artifactId>
-        <version>1.0.beta13</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>atlassian-refapp</artifactId>
     <packaging>war</packaging>

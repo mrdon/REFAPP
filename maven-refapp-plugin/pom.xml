@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.atlassian.refapp</groupId>
         <artifactId>atlassian-refapp-plugin-parent</artifactId>
-        <version>1.0.beta13</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
     <groupId>com.atlassian.maven.plugins</groupId>
     <artifactId>maven-refapp-plugin</artifactId>
@@ -30,9 +30,9 @@
         </dependency>
     </dependencies>
     <scm>
-      <connection>scm:svn:http://studio.atlassian.com/svn/MRP/tags/1.0.beta13</connection>
-      <developerConnection>scm:svn:https://studio.atlassian.com/svn/MRP/tags/1.0.beta13</developerConnection>
-      <url>http://studio.atlassian.com/source/browse/MRP/tags/1.0.beta13</url>
+      <connection>scm:svn:http://studio.atlassian.com/svn/MRP/trunk</connection>
+      <developerConnection>scm:svn:https://studio.atlassian.com/svn/MRP/trunk</developerConnection>
+      <url>http://studio.atlassian.com/source/browse/MRP/trunk</url>
     </scm>
 
 
