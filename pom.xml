@@ -42,6 +42,11 @@
                     <target>${jdkLevel}</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+            </plugin>
         </plugins>
     </build>
 
@@ -231,5 +236,6 @@
         <atlassian.plugins.version>2.2.0.rc3</atlassian.plugins.version>
         <sal.version>2.0.0</sal.version>
         <template.renderer.version>1.0.beta3</template.renderer.version>
+        <oauth.version>1.0.beta1</oauth.version>
     </properties>
 </project>
