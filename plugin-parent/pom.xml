@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.atlassian.refapp</groupId>
         <artifactId>atlassian-refapp-parent</artifactId>
-        <version>16-SNAPSHOT</version>
+        <version>16</version>
     </parent>
     <artifactId>atlassian-refapp-plugin-parent</artifactId>
     <name>Reference App Plugins Parent POM</name>
