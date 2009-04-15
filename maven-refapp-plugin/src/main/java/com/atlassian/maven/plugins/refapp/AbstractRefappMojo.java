@@ -94,6 +94,11 @@ public abstract class AbstractRefappMojo extends AbstractMojo
     private final List<RefappArtifact> pluginArtifacts = Collections.emptyList();
 
     /**
+     * @parameter
+     */
+    private final List<RefappArtifact> libArtifacts = Collections.emptyList();
+
+    /**
      * SAL version
      *
      * @parameter expression="${sal.version}
@@ -121,7 +126,7 @@ public abstract class AbstractRefappMojo extends AbstractMojo
      */
     private String rpmVersion;
 
-    private List<RefappArtifact> getRefappArtifacts()
+    private List<RefappArtifact> getPluginsArtifacts()
     {
         final List<RefappArtifact> artifacts = new ArrayList<RefappArtifact>(pluginArtifacts);
         if (salVersion != null)
@@ -166,7 +171,15 @@ public abstract class AbstractRefappMojo extends AbstractMojo
         {
             final String refappDir = new File(project.getBuild().getDirectory(), "refapp").getAbsolutePath();
             unzip(refappWar, refappDir);
-            addPlugins(goals, refappDir);
+
+            addArtifactsToDirectory(goals, libArtifacts, new File(refappDir, "WEB-INF/lib"));
+
+            final File refappPluginsDir = new File(refappDir, "WEB-INF/plugins");
+            addArtifactsToDirectory(goals, getPluginsArtifacts(), refappPluginsDir);
+            addThisPluginToDirectory(refappPluginsDir);
+
+//            addLibs(goals, war);
+
             final File warFile = new File(refappWar.getParentFile(), "refapp.war");
             com.atlassian.core.util.FileUtils.createZipFile(new File(refappDir), warFile);
             return warFile;
@@ -177,7 +190,6 @@ public abstract class AbstractRefappMojo extends AbstractMojo
             throw new MojoExecutionException(e.getMessage());
         }
         // File war = refappWar;
-        // war = addLibs(goals, war);
         // return addBundledPlugins(goals, war);
     }
 
@@ -209,15 +221,21 @@ public abstract class AbstractRefappMojo extends AbstractMojo
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private void addPlugins(final MavenGoals goals, final String refappDir) throws MojoExecutionException, IOException
+    private void addThisPluginToDirectory(final File refappPluginsDir) throws IOException
     {
-        final File refappPluginsDir = new File(refappDir, "WEB-INF/plugins");
+        // add the plugin jar to the directory
+        final File thisPlugin = new File(project.getBuild().getDirectory(), finalName + ".jar");
+        FileUtils.copyFile(thisPlugin, new File(refappPluginsDir, thisPlugin.getName()));
+    }
+
+    private void addArtifactsToDirectory(final MavenGoals goals, final List<RefappArtifact> artifacts, final File refappPluginsDir)
+    throws MojoExecutionException
+    {
         // first remove plugins from the refapp that we want to update
-        for (final Iterator iterateFiles = FileUtils.iterateFiles(refappPluginsDir, null, false); iterateFiles.hasNext();)
+        for (final Iterator<?> iterateFiles = FileUtils.iterateFiles(refappPluginsDir, null, false); iterateFiles.hasNext();)
         {
             final File file = (File) iterateFiles.next();
-            for (final RefappArtifact refappArtifact : getRefappArtifacts())
+            for (final RefappArtifact refappArtifact : artifacts)
             {
                 if (!file.isDirectory() && file.getName().contains(refappArtifact.getArtifactId()))
                 {
@@ -227,15 +245,10 @@ public abstract class AbstractRefappMojo extends AbstractMojo
         }
 
         // copy the all the plugins we want in the refapp
-        final List<RefappArtifact> artifacts = getRefappArtifacts();
         if (!artifacts.isEmpty())
         {
             goals.copyPlugins(refappPluginsDir, artifacts);
         }
-
-        // add the plugin jar to the directory
-        final File thisPlugin = new File(project.getBuild().getDirectory(), finalName + ".jar");
-        FileUtils.copyFile(thisPlugin, new File(refappPluginsDir, thisPlugin.getName()));
     }
 
     protected String determineVersion()
