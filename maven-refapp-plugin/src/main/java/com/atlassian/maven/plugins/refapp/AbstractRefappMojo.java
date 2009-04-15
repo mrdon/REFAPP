@@ -99,6 +99,11 @@ public abstract class AbstractRefappMojo extends AbstractMojo
     private final List<RefappArtifact> libArtifacts = Collections.emptyList();
 
     /**
+     * @parameter
+     */
+    private final List<RefappArtifact> bundledArtifacts = Collections.emptyList();
+
+    /**
      * SAL version
      *
      * @parameter expression="${sal.version}
@@ -172,13 +177,18 @@ public abstract class AbstractRefappMojo extends AbstractMojo
             final String refappDir = new File(project.getBuild().getDirectory(), "refapp").getAbsolutePath();
             unzip(refappWar, refappDir);
 
-            addArtifactsToDirectory(goals, libArtifacts, new File(refappDir, "WEB-INF/lib"));
-
             final File refappPluginsDir = new File(refappDir, "WEB-INF/plugins");
-            addArtifactsToDirectory(goals, getPluginsArtifacts(), refappPluginsDir);
+            // add this plugin itself
             addThisPluginToDirectory(refappPluginsDir);
-
-//            addLibs(goals, war);
+            // add plugins2 plugins
+            addArtifactsToDirectory(goals, getPluginsArtifacts(), refappPluginsDir);
+            // add plugins1 plugins
+            addArtifactsToDirectory(goals, libArtifacts, new File(refappDir, "WEB-INF/lib"));
+            // add bundled plugins
+            final File bundledPluginsDir = new File(project.getBuild().getDirectory(), "refapp-bundled-plugins");
+            addArtifactsToDirectory(goals, bundledArtifacts, bundledPluginsDir);
+            com.atlassian.core.util.FileUtils.createZipFile(bundledPluginsDir, new File(refappDir,
+                    "WEB-INF/classes/atlassian-bundled-plugins.zip"));
 
             final File warFile = new File(refappWar.getParentFile(), "refapp.war");
             com.atlassian.core.util.FileUtils.createZipFile(new File(refappDir), warFile);
@@ -228,22 +238,24 @@ public abstract class AbstractRefappMojo extends AbstractMojo
         FileUtils.copyFile(thisPlugin, new File(refappPluginsDir, thisPlugin.getName()));
     }
 
-    private void addArtifactsToDirectory(final MavenGoals goals, final List<RefappArtifact> artifacts, final File refappPluginsDir)
-    throws MojoExecutionException
+    private void addArtifactsToDirectory(final MavenGoals goals, final List<RefappArtifact> artifacts,
+            final File refappPluginsDir) throws MojoExecutionException
     {
         // first remove plugins from the refapp that we want to update
-        for (final Iterator<?> iterateFiles = FileUtils.iterateFiles(refappPluginsDir, null, false); iterateFiles.hasNext();)
+        if (refappPluginsDir.isDirectory() && refappPluginsDir.exists())
         {
-            final File file = (File) iterateFiles.next();
-            for (final RefappArtifact refappArtifact : artifacts)
+            for (final Iterator<?> iterateFiles = FileUtils.iterateFiles(refappPluginsDir, null, false); iterateFiles.hasNext();)
             {
-                if (!file.isDirectory() && file.getName().contains(refappArtifact.getArtifactId()))
+                final File file = (File) iterateFiles.next();
+                for (final RefappArtifact refappArtifact : artifacts)
                 {
-                    file.delete();
+                    if (!file.isDirectory() && file.getName().contains(refappArtifact.getArtifactId()))
+                    {
+                        file.delete();
+                    }
                 }
             }
         }
-
         // copy the all the plugins we want in the refapp
         if (!artifacts.isEmpty())
         {
