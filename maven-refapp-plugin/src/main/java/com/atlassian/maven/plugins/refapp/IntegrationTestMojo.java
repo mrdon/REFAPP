@@ -55,7 +55,7 @@ public class IntegrationTestMojo
             // Copy the refapp war to target
             final File refappWar = goals.copyRefappWar(determineVersion());
 
-            final File combinedRefappWar = addPlugins(goals, refappWar);
+            final File combinedRefappWar = addArtifacts(goals, refappWar);
 
             actualHttpPort = goals.startRefapp(combinedRefappWar, containerId, httpPort, jvmArgs);
 

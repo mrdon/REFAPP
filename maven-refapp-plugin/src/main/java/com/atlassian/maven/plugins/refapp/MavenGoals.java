@@ -155,11 +155,11 @@ public class MavenGoals {
         return refappWarFile;
     }
 
-    public void copyPlugins(File pluginsDir, List<PluginArtifact> pluginArtifacts) throws MojoExecutionException {
+    public void copyPlugins(File pluginsDir, List<RefappArtifact> pluginArtifacts) throws MojoExecutionException {
         Element[] items = new Element[pluginArtifacts.size()];
         for (int x=0; x<pluginArtifacts.size(); x++)
         {
-            PluginArtifact artifact = pluginArtifacts.get(x);
+            RefappArtifact artifact = pluginArtifacts.get(x);
             items[x] = element(name("artifactItem"),
                             element(name("groupId"), artifact.getGroupId()),
                             element(name("artifactId"), artifact.getArtifactId()),

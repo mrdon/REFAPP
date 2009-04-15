@@ -1,22 +1,23 @@
 package com.atlassian.maven.plugins.refapp;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.maven.artifact.Artifact;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -26,7 +27,8 @@ import org.apache.maven.project.MavenProject;
 /**
  * Base class for refapp mojos
  */
-public abstract class AbstractRefappMojo extends AbstractMojo {
+public abstract class AbstractRefappMojo extends AbstractMojo
+{
     /**
      * Container to run in
      *
@@ -87,16 +89,9 @@ public abstract class AbstractRefappMojo extends AbstractMojo {
     protected PluginManager pluginManager;
 
     /**
-     * @parameter expression="${project.artifact}"
-     * @required
-     * @readonly
-     */
-    private Artifact artifact;
-
-    /**
      * @parameter
      */
-    private final List<PluginArtifact> pluginArtifacts = Collections.emptyList();
+    private final List<RefappArtifact> pluginArtifacts = Collections.emptyList();
 
     /**
      * SAL version
@@ -107,6 +102,7 @@ public abstract class AbstractRefappMojo extends AbstractMojo {
 
     /**
      * Atlassian Plugin Development Kit (PDK) version
+     *
      * @parameter expression="${pdk.version}
      */
     private String pdkVersion;
@@ -125,125 +121,121 @@ public abstract class AbstractRefappMojo extends AbstractMojo {
      */
     private String rpmVersion;
 
-    private List<PluginArtifact> getPluginArtifacts()
+    private List<RefappArtifact> getRefappArtifacts()
     {
-        final List<PluginArtifact> artifacts = new ArrayList<PluginArtifact>(pluginArtifacts);
+        final List<RefappArtifact> artifacts = new ArrayList<RefappArtifact>(pluginArtifacts);
         if (salVersion != null)
         {
-            artifacts.addAll(Arrays.asList(
-                    new PluginArtifact("com.atlassian.sal", "sal-api", salVersion),
-                    new PluginArtifact("com.atlassian.sal", "sal-refimpl-appproperties-plugin", salVersion),
-                    new PluginArtifact("com.atlassian.sal", "sal-refimpl-component-plugin", salVersion),
-                    new PluginArtifact("com.atlassian.sal", "sal-refimpl-executor-plugin", salVersion),
-                    new PluginArtifact("com.atlassian.sal", "sal-refimpl-lifecycle-plugin", salVersion),
-                    new PluginArtifact("com.atlassian.sal", "sal-refimpl-message-plugin", salVersion),
-                    new PluginArtifact("com.atlassian.sal", "sal-refimpl-net-plugin", salVersion),
-                    new PluginArtifact("com.atlassian.sal", "sal-refimpl-pluginsettings-plugin", salVersion),
-                    new PluginArtifact("com.atlassian.sal", "sal-refimpl-project-plugin", salVersion),
-                    new PluginArtifact("com.atlassian.sal", "sal-refimpl-search-plugin", salVersion),
-                    new PluginArtifact("com.atlassian.sal", "sal-refimpl-transaction-plugin", salVersion),
-                    new PluginArtifact("com.atlassian.sal", "sal-refimpl-upgrade-plugin", salVersion),
-                    new PluginArtifact("com.atlassian.sal", "sal-refimpl-user-plugin", salVersion)));
+            artifacts.addAll(Arrays.asList(new RefappArtifact("com.atlassian.sal", "sal-api", salVersion),
+                    new RefappArtifact("com.atlassian.sal", "sal-refimpl-appproperties-plugin", salVersion),
+                    new RefappArtifact("com.atlassian.sal", "sal-refimpl-component-plugin", salVersion),
+                    new RefappArtifact("com.atlassian.sal", "sal-refimpl-executor-plugin", salVersion),
+                    new RefappArtifact("com.atlassian.sal", "sal-refimpl-lifecycle-plugin", salVersion),
+                    new RefappArtifact("com.atlassian.sal", "sal-refimpl-message-plugin", salVersion),
+                    new RefappArtifact("com.atlassian.sal", "sal-refimpl-net-plugin", salVersion), new RefappArtifact(
+                            "com.atlassian.sal", "sal-refimpl-pluginsettings-plugin", salVersion), new RefappArtifact(
+                            "com.atlassian.sal", "sal-refimpl-project-plugin", salVersion), new RefappArtifact(
+                            "com.atlassian.sal", "sal-refimpl-search-plugin", salVersion), new RefappArtifact(
+                            "com.atlassian.sal", "sal-refimpl-transaction-plugin", salVersion), new RefappArtifact(
+                            "com.atlassian.sal", "sal-refimpl-upgrade-plugin", salVersion), new RefappArtifact(
+                            "com.atlassian.sal", "sal-refimpl-user-plugin", salVersion)));
         }
 
         if (pdkVersion != null)
         {
-            artifacts.add(new PluginArtifact("com.atlassian.pdkinstall", "pdkinstall-plugin", pdkVersion));
+            artifacts.add(new RefappArtifact("com.atlassian.pdkinstall", "pdkinstall-plugin", pdkVersion));
         }
 
         if (restVersion != null)
         {
-            artifacts.add(new PluginArtifact("com.atlassian.plugins.rest", "atlassian-rest-module", restVersion));
+            artifacts.add(new RefappArtifact("com.atlassian.plugins.rest", "atlassian-rest-module", restVersion));
         }
 
         if (rpmVersion != null)
         {
-            artifacts.add(new PluginArtifact("com.atlassian.plugins.rest", "atlassian-rest-plugin-manager-plugin", rpmVersion));
+            artifacts.add(new RefappArtifact("com.atlassian.plugins.rest", "atlassian-rest-plugin-manager-plugin",
+                    rpmVersion));
         }
 
         return artifacts;
     }
 
-
-    protected File addPlugins(final MavenGoals goals, final File refappWar) throws MojoExecutionException {
-        final File pluginsDir = new File(new File("target"), "plugins");
-        if (!pluginsDir.exists())
-        {
-            pluginsDir.mkdir();
-        }
-
-        final List<PluginArtifact> artifacts = getPluginArtifacts();
-        if (!artifacts.isEmpty())
-        {
-            goals.copyPlugins(pluginsDir, artifacts);
-        }
-
-        final String pluginJar = targetDirectory.getAbsolutePath() + "/" + finalName + ".jar";
-
-        final File combinedRefappWar = new File(refappWar.getParentFile(), "refapp.war");
-
-        ZipInputStream zin = null;
-        ZipOutputStream zout = null;
-
+    protected File addArtifacts(final MavenGoals goals, final File refappWar) throws MojoExecutionException
+    {
         try
         {
-            // We can't just copy in the artifact.getFile() because that is only not null if the package phase has
-            // executed.  By running a forked lifecycle to the package phase before this goal, we ensure this jar
-            // will be availabe
-            FileUtils.copyFile(new File(pluginJar), new File(pluginsDir, finalName + ".jar"));
-            zin = new ZipInputStream(new FileInputStream(refappWar));
-            zout = new ZipOutputStream(new FileOutputStream(combinedRefappWar));
+            final String refappDir = new File(project.getBuild().getDirectory(), "refapp").getAbsolutePath();
+            unzip(refappWar, refappDir);
+            addPlugins(goals, refappDir);
+            final File warFile = new File(refappWar.getParentFile(), "refapp.war");
+            com.atlassian.core.util.FileUtils.createZipFile(new File(refappDir), warFile);
+            return warFile;
 
-            ZipEntry source;
-            outer:
-            while ((source = zin.getNextEntry()) != null)
-            {
-                for (final PluginArtifact plugin : artifacts)
-                {
-                    if (source.getName().contains(plugin.getArtifactId()))
-                    {
-                        continue outer;
-                    }
-                }
-                final ZipEntry dest = new ZipEntry(source);
-                zout.putNextEntry(dest);
-                IOUtils.copy(zin, zout);
-            }
-
-            for (final File pluginFile : pluginsDir.listFiles())
-            {
-                addFileToZip(zout, pluginFile);
-            }
-        }
-        catch (final IOException e) {
-            throw new RuntimeException(e);
-        } finally
+        } catch (final Exception e)
         {
-            IOUtils.closeQuietly(zin);
-            IOUtils.closeQuietly(zout);
+            e.printStackTrace();
+            throw new MojoExecutionException(e.getMessage());
         }
-        return combinedRefappWar;
+        // File war = refappWar;
+        // war = addLibs(goals, war);
+        // return addBundledPlugins(goals, war);
     }
 
-    private void addFileToZip(final ZipOutputStream zout, final File pluginFile) throws IOException {
-        if (pluginFile == null)
+    private void unzip(final File refappWar, final String destDir) throws ZipException, IOException
+    {
+        final ZipFile zip = new ZipFile(refappWar);
+        final Enumeration<? extends ZipEntry> entries = zip.entries();
+        while (entries.hasMoreElements())
         {
-            return;
+            final ZipEntry zipEntry = entries.nextElement();
+            final File file = new File(destDir + "/" + zipEntry.getName());
+            if (zipEntry.isDirectory())
+            {
+                file.mkdirs();
+                continue;
+            }
+            InputStream is = null;
+            OutputStream fos = null;
+            try
+            {
+                is = zip.getInputStream(zipEntry);
+                fos = new FileOutputStream(file);
+                IOUtils.copy(is, fos);
+            } finally
+            {
+                IOUtils.closeQuietly(is);
+                IOUtils.closeQuietly(fos);
+            }
         }
-        final ZipEntry dest = new ZipEntry("WEB-INF/plugins/"+pluginFile.getName());
-        dest.setTime(pluginFile.lastModified());
-        zout.putNextEntry(dest);
+    }
 
-        InputStream in = null;
-        try
+    @SuppressWarnings("unchecked")
+    private void addPlugins(final MavenGoals goals, final String refappDir) throws MojoExecutionException, IOException
+    {
+        final File refappPluginsDir = new File(refappDir, "WEB-INF/plugins");
+        // first remove plugins from the refapp that we want to update
+        for (final Iterator iterateFiles = FileUtils.iterateFiles(refappPluginsDir, null, false); iterateFiles.hasNext();)
         {
-            in = new FileInputStream(pluginFile);
-            IOUtils.copy(in, zout);
+            final File file = (File) iterateFiles.next();
+            for (final RefappArtifact refappArtifact : getRefappArtifacts())
+            {
+                if (!file.isDirectory() && file.getName().contains(refappArtifact.getArtifactId()))
+                {
+                    file.delete();
+                }
+            }
         }
-        finally
+
+        // copy the all the plugins we want in the refapp
+        final List<RefappArtifact> artifacts = getRefappArtifacts();
+        if (!artifacts.isEmpty())
         {
-            IOUtils.closeQuietly(in);
+            goals.copyPlugins(refappPluginsDir, artifacts);
         }
+
+        // add the plugin jar to the directory
+        final File thisPlugin = new File(project.getBuild().getDirectory(), finalName + ".jar");
+        FileUtils.copyFile(thisPlugin, new File(refappPluginsDir, thisPlugin.getName()));
     }
 
     protected String determineVersion()
@@ -252,17 +244,18 @@ public abstract class AbstractRefappMojo extends AbstractMojo {
         final Properties props = new Properties();
         try
         {
-            in = getClass().getClassLoader().getResourceAsStream("META-INF/maven/com.atlassian.maven.plugins/maven-refapp-plugin/pom.properties");
+            in = getClass().getClassLoader().getResourceAsStream(
+                    "META-INF/maven/com.atlassian.maven.plugins/maven-refapp-plugin/pom.properties");
             if (in != null)
             {
                 props.load(in);
                 return props.getProperty("version");
             }
-        } catch (final IOException e) {
+        } catch (final IOException e)
+        {
             e.printStackTrace();
             return null;
-        }
-        finally
+        } finally
         {
             IOUtils.closeQuietly(in);
         }

@@ -1,9 +1,9 @@
 package com.atlassian.maven.plugins.refapp;
 
-import org.apache.maven.plugin.MojoExecutionException;
-
 import java.io.File;
 import java.io.IOException;
+
+import org.apache.maven.plugin.MojoExecutionException;
 
 /**
  * Run the refapp
@@ -18,12 +18,12 @@ public class RunMojo
     public void execute()
             throws MojoExecutionException
     {
-        MavenGoals goals = new MavenGoals(project, session, pluginManager, getLog());
+        final MavenGoals goals = new MavenGoals(project, session, pluginManager, getLog());
 
         // Copy the refapp war to target
-        File refappWar = goals.copyRefappWar(determineVersion());
+        final File refappWar = goals.copyRefappWar(determineVersion());
 
-        File combinedRefappWar = addPlugins(goals, refappWar);
+        final File combinedRefappWar = addArtifacts(goals, refappWar);
 
         // Start the refapp
         goals.startRefapp(combinedRefappWar, containerId, httpPort, jvmArgs);
@@ -32,7 +32,7 @@ public class RunMojo
         getLog().info("Type any key to exit");
         try {
             System.in.read();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             // ignore
         }
     }
