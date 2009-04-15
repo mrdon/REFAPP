@@ -1,12 +1,11 @@
-package com.atlassian.maven.plugins.refapp.lifecycle;
+package com.atlassian.maven.plugins.refapp;
 
+import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.PluginManager;
 import org.apache.maven.project.MavenProject;
-import org.apache.maven.execution.MavenSession;
-import com.atlassian.maven.plugins.refapp.MavenGoals;
 
 /**
  *
@@ -39,7 +38,7 @@ public class FilterPluginDescriptorMojo extends AbstractMojo {
     protected PluginManager pluginManager;
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        MavenGoals goals = new MavenGoals(project, session, pluginManager, getLog());
+        final MavenGoals goals = new MavenGoals(project, session, pluginManager, getLog());
         goals.filterPluginDescriptor();
     }
 }

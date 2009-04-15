@@ -1,18 +1,15 @@
-package com.atlassian.maven.plugins.refapp.lifecycle;
+package com.atlassian.maven.plugins.refapp;
 
 import java.io.File;
 
 import org.apache.maven.plugin.MojoExecutionException;
-
-import com.atlassian.maven.plugins.refapp.AbstractRefappMojo;
-import com.atlassian.maven.plugins.refapp.MavenGoals;
 
 /**
  * Run the integration tests against the refapp
  *
  * @requiresDependencyResolution integration-test
  * @goal integration-test
- * 
+ *
  */
 public class IntegrationTestMojo
         extends AbstractRefappMojo {
@@ -37,7 +34,7 @@ public class IntegrationTestMojo
      *
      * @parameter expression="${noRefapp}"
      */
-    private boolean noRefapp = false;
+    private final boolean noRefapp = false;
 
 
     public void execute()
