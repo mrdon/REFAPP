@@ -21,7 +21,7 @@ public class RunMojo
         final MavenGoals goals = new MavenGoals(project, session, pluginManager, getLog());
 
         // Copy the refapp war to target
-        final File refappWar = goals.copyRefappWar(determineVersion());
+        final File refappWar = goals.copyRefappWar(targetDirectory, determineVersion());
 
         final File combinedRefappWar = addArtifacts(goals, refappWar);
 

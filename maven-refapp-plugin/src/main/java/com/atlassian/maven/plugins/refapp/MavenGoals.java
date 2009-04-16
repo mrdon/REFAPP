@@ -1,16 +1,31 @@
 package com.atlassian.maven.plugins.refapp;
 
+import static org.twdata.maven.mojoexecutor.MojoExecutor.artifactId;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.configuration;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.element;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.executeMojo;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.executionEnvironment;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.goal;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.groupId;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.name;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.plugin;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.version;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.PluginManager;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
-import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.util.*;
+import org.twdata.maven.mojoexecutor.MojoExecutor.Element;
 
 /**
  * Executes specific maven goals
@@ -40,24 +55,24 @@ public class MavenGoals {
 
         }};
 
-    public MavenGoals(MavenProject project, MavenSession session, PluginManager pluginManager, Log log) {
+    public MavenGoals(final MavenProject project, final MavenSession session, final PluginManager pluginManager, final Log log) {
         this(project, session, pluginManager, log, Collections.<String, String>emptyMap());
     }
-    public MavenGoals(MavenProject project, MavenSession session, PluginManager pluginManager, Log log, Map<String,String> pluginToVersionMap) {
+    public MavenGoals(final MavenProject project, final MavenSession session, final PluginManager pluginManager, final Log log, final Map<String,String> pluginToVersionMap) {
         this.project = project;
         this.session = session;
         this.pluginManager = pluginManager;
         this.log = log;
 
-        Map<String,String> map = new HashMap<String, String>(defaultArtifactIdToVersionMap);
+        final Map<String,String> map = new HashMap<String, String>(defaultArtifactIdToVersionMap);
         map.putAll(pluginToVersionMap);
         this.pluginArtifactIdToVersionMap = Collections.unmodifiableMap(map);
 
     }
 
-    public void startCli(int port) throws MojoExecutionException {
+    public void startCli(final int port) throws MojoExecutionException {
 
-        List<Element> configs = new ArrayList<Element>();
+        final List<Element> configs = new ArrayList<Element>();
         configs.add(element(name("commands"),
                             element(name("pi"), "resources compile com.atlassian.maven.plugins:maven-refapp-plugin:copy-bundled-dependencies jar com.atlassian.maven.plugins:maven-refapp-plugin:install"),
                             element(name("pu"), "com.atlassian.maven.plugins:maven-refapp-plugin:uninstall")));
@@ -132,8 +147,8 @@ public class MavenGoals {
         );
     }
 
-    public File copyRefappWar(String refappVersion) throws MojoExecutionException {
-        File refappWarFile = new File(new File("target"), "refapp-original.war");
+    public File copyRefappWar(final File targetDirectory, final String refappVersion) throws MojoExecutionException {
+        final File refappWarFile = new File(targetDirectory, "refapp-original.war");
         executeMojo(
                 plugin(
                         groupId("org.apache.maven.plugins"),
@@ -155,11 +170,11 @@ public class MavenGoals {
         return refappWarFile;
     }
 
-    public void copyPlugins(File pluginsDir, List<RefappArtifact> pluginArtifacts) throws MojoExecutionException {
-        Element[] items = new Element[pluginArtifacts.size()];
+    public void copyPlugins(final File pluginsDir, final List<RefappArtifact> pluginArtifacts) throws MojoExecutionException {
+        final Element[] items = new Element[pluginArtifacts.size()];
         for (int x=0; x<pluginArtifacts.size(); x++)
         {
-            RefappArtifact artifact = pluginArtifacts.get(x);
+            final RefappArtifact artifact = pluginArtifacts.get(x);
             items[x] = element(name("artifactItem"),
                             element(name("groupId"), artifact.getGroupId()),
                             element(name("artifactId"), artifact.getArtifactId()),
@@ -179,10 +194,10 @@ public class MavenGoals {
         );
     }
 
-    public int startRefapp(File refappWar, String containerId, int httpPort, String jvmArgs) throws MojoExecutionException {
-        int rmiPort = pickFreePort(0);
-        int actualHttpPort = pickFreePort(httpPort);
-        Container container = findContainer(containerId);
+    public int startRefapp(final File refappWar, final String containerId, final int httpPort, String jvmArgs) throws MojoExecutionException {
+        final int rmiPort = pickFreePort(0);
+        final int actualHttpPort = pickFreePort(httpPort);
+        final Container container = findContainer(containerId);
         if (jvmArgs == null)
         {
             jvmArgs = "";
@@ -238,7 +253,7 @@ public class MavenGoals {
         return actualHttpPort;
     }
 
-    public void runTests(String containerId, String functionalTestPattern, int httpPort, String pluginJar) throws MojoExecutionException {
+    public void runTests(final String containerId, final String functionalTestPattern, final int httpPort, final String pluginJar) throws MojoExecutionException {
         executeMojo(
                 plugin(
                         groupId("org.apache.maven.plugins"),
@@ -268,9 +283,9 @@ public class MavenGoals {
         );
     }
 
-    private Container findContainer(String containerId)
+    private Container findContainer(final String containerId)
     {
-        Container container = idToContainerMap.get(containerId);
+        final Container container = idToContainerMap.get(containerId);
         if (container == null)
         {
             throw new IllegalArgumentException("Container " + containerId + " not supported");
@@ -278,7 +293,7 @@ public class MavenGoals {
         return container;
     }
 
-    private int pickFreePort(int requestedPort)
+    private int pickFreePort(final int requestedPort)
     {
         if (requestedPort > 0)
         {
@@ -290,7 +305,7 @@ public class MavenGoals {
             socket = new ServerSocket(0);
             return socket.getLocalPort();
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
             throw new RuntimeException("Error opening socket", e);
         }
@@ -302,7 +317,7 @@ public class MavenGoals {
                 {
                     socket.close();
                 }
-                catch (IOException e)
+                catch (final IOException e)
                 {
                     throw new RuntimeException("Error closing socket", e);
                 }
@@ -310,8 +325,8 @@ public class MavenGoals {
         }
     }
 
-    public void stopRefapp(String containerId) throws MojoExecutionException {
-        Container container = findContainer(containerId);
+    public void stopRefapp(final String containerId) throws MojoExecutionException {
+        final Container container = findContainer(containerId);
         executeMojo(
             plugin(
                 groupId("org.twdata.maven"),
@@ -332,7 +347,7 @@ public class MavenGoals {
         );
     }
 
-    public void installPlugin(String pluginKey, int port) throws MojoExecutionException {
+    public void installPlugin(final String pluginKey, final int port) throws MojoExecutionException {
         executeMojo(
             plugin(
                 groupId("com.atlassian.maven.plugins"),
@@ -350,7 +365,7 @@ public class MavenGoals {
         );
     }
 
-    public void uninstallPlugin(String pluginKey, int port) throws MojoExecutionException {
+    public void uninstallPlugin(final String pluginKey, final int port) throws MojoExecutionException {
         executeMojo(
             plugin(
                 groupId("com.atlassian.maven.plugins"),
@@ -378,7 +393,7 @@ public class MavenGoals {
                 goal("idea"),
                 configuration(),
                 executionEnvironment(project, session, pluginManager)
-        );    
+        );
     }
 
     private static class Container
@@ -387,14 +402,14 @@ public class MavenGoals {
         private final String type;
         private final String url;
 
-        public Container(String id, String url)
+        public Container(final String id, final String url)
         {
             this.id = id;
             this.type = "installed";
             this.url = url;
         }
 
-        public Container(String id)
+        public Container(final String id)
         {
             this.id = id;
             this.type = "embedded";
