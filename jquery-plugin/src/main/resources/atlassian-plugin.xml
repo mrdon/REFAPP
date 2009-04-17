@@ -7,4 +7,9 @@
     <web-resource name="jQuery" key="jquery-1.3.1">
         <resource type="download" name="jquery.js" location="jquery-1.3.1.js"/>
     </web-resource>
+
+    <web-resource name="jQuery-ui" key="jquery-ui-1.7.1">
+        <resource type="download" name="jquery-ui.js" location="jquery-ui-1.7.1-all-min.js"/>
+    </web-resource>
+
 </atlassian-plugin>
