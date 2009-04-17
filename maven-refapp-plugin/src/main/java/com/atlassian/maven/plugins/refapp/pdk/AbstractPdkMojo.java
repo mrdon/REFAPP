@@ -1,11 +1,9 @@
 package com.atlassian.maven.plugins.refapp.pdk;
 
+import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.PluginManager;
 import org.apache.maven.project.MavenProject;
-import org.apache.maven.execution.MavenSession;
 
 /**
  *
@@ -46,12 +44,20 @@ public abstract class AbstractPdkMojo extends AbstractMojo {
      * @parameter expression="${project.artifactId}"
     */
    protected String artifactId;
-    /**
-     * HTTP port for the servlet containers
+
+   /**
+    * HTTP port for the servlet containers
     *
-    * @parameter expression="${http.port}"
+    * @parameter expression="${http.port}" default-value="9400"
     */
-   protected int httpPort = 9400;
+   protected int httpPort;
+
+   /**
+    * Application context path
+    *
+    * @parameter expression="${context.path}" default-value="/refapp"
+    */
+   protected String contextPath;
 
 
     protected void ensurePluginKeyExists() {

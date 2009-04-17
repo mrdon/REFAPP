@@ -38,9 +38,16 @@ public abstract class AbstractRefappMojo extends AbstractMojo
     /**
      * HTTP port for the servlet containers
      *
-     * @parameter expression="${http.port}"
+     * @parameter expression="${http.port}" default-value="9400"
      */
-    protected int httpPort = 9400;
+     protected int httpPort;
+
+	/**
+     * Application context path
+     *
+     * @parameter expression="${context.path}" default-value="/refapp"
+     */
+    protected String contextPath;
 
     /**
      * The build directory

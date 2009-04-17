@@ -194,7 +194,7 @@ public class MavenGoals {
         );
     }
 
-    public int startRefapp(final File refappWar, final String containerId, final int httpPort, String jvmArgs) throws MojoExecutionException {
+    public int startRefapp(final File refappWar, final String containerId, final int httpPort, final String contextPath, String jvmArgs) throws MojoExecutionException {
         final int rmiPort = pickFreePort(0);
         final int actualHttpPort = pickFreePort(httpPort);
         final Container container = findContainer(containerId);
@@ -207,6 +207,7 @@ public class MavenGoals {
         log.info("Starting refapp on the " + container.getId() + " container on ports "
                 + actualHttpPort + " (http) and " + rmiPort + " (rmi)");
 
+        final String baseUrl = getBaseUrl(actualHttpPort, contextPath);
         executeMojo(
                 plugin(
                     groupId("org.twdata.maven"),
@@ -225,7 +226,8 @@ public class MavenGoals {
                             //element(name("output"), "${project.build.directory}/"+container.getId()+"/output-"+identifier+".log"),
                             //element(name("log"), "${project.build.directory}/"+container.getId()+"/cargo-"+identifier+".log"),
                             element(name("systemProperties"),
-                                    element(name("org.apache.commons.logging.Log"), "org.apache.commons.logging.impl.SimpleLog")
+                                    element(name("org.apache.commons.logging.Log"), "org.apache.commons.logging.impl.SimpleLog"),
+                                    element(name("baseurl"), baseUrl)
                             )
                     ),
                     element(name("configuration"),
@@ -253,7 +255,12 @@ public class MavenGoals {
         return actualHttpPort;
     }
 
-    public void runTests(final String containerId, final String functionalTestPattern, final int httpPort, final String pluginJar) throws MojoExecutionException {
+    private String getBaseUrl(final int actualHttpPort, final String contextPath)
+    {
+        return "http://localhost:"+actualHttpPort+contextPath;
+    }
+
+    public void runTests(final String containerId, final String functionalTestPattern, final int httpPort, final String contexPath, final String pluginJar) throws MojoExecutionException {
         executeMojo(
                 plugin(
                         groupId("org.apache.maven.plugins"),
@@ -271,6 +278,10 @@ public class MavenGoals {
                                 element(name("property"),
                                         element(name("name"), "http.port"),
                                         element(name("value"), String.valueOf(httpPort))
+                                ),
+                                element(name("property"),
+                                        element(name("name"), "context.path"),
+                                        element(name("value"), contexPath)
                                 ),
                                 element(name("property"),
                                         element(name("name"), "plugin.jar"),
@@ -347,7 +358,8 @@ public class MavenGoals {
         );
     }
 
-    public void installPlugin(final String pluginKey, final int port) throws MojoExecutionException {
+    public void installPlugin(final String pluginKey, final int port, final String contextPath) throws MojoExecutionException {
+        final String baseUrl = getBaseUrl(port, contextPath);
         executeMojo(
             plugin(
                 groupId("com.atlassian.maven.plugins"),
@@ -358,7 +370,7 @@ public class MavenGoals {
             configuration(
                     element(name("username"), "admin"),
                     element(name("password"), "admin"),
-                    element(name("serverUrl"), "http://localhost:"+port+"/refapp"),
+                    element(name("serverUrl"), baseUrl),
                     element(name("pluginKey"), pluginKey)
             ),
             executionEnvironment(project, session, pluginManager)

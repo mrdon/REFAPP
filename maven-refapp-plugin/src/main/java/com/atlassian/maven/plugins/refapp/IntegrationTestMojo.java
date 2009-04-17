@@ -57,10 +57,10 @@ public class IntegrationTestMojo
 
             final File combinedRefappWar = addArtifacts(goals, refappWar);
 
-            actualHttpPort = goals.startRefapp(combinedRefappWar, containerId, httpPort, jvmArgs);
+            actualHttpPort = goals.startRefapp(combinedRefappWar, containerId, httpPort, contextPath, jvmArgs);
 
         }
-        goals.runTests(containerId, functionalTestPattern, actualHttpPort, pluginJar);
+        goals.runTests(containerId, functionalTestPattern, actualHttpPort, contextPath, pluginJar);
 
         if (!noRefapp)
         {

@@ -26,9 +26,9 @@ public class RunMojo
         final File combinedRefappWar = addArtifacts(goals, refappWar);
 
         // Start the refapp
-        goals.startRefapp(combinedRefappWar, containerId, httpPort, jvmArgs);
+        final int actualHttpPort = goals.startRefapp(combinedRefappWar, containerId, httpPort, contextPath, jvmArgs);
 
-        getLog().info("Refapp started successfully and available at http://localhost:"+httpPort+"/refapp");
+        getLog().info("Refapp started successfully and available at http://localhost:" + actualHttpPort + contextPath);
         getLog().info("Type any key to exit");
         try {
             System.in.read();
