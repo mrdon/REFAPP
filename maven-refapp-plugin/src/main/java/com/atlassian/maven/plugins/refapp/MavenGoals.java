@@ -50,7 +50,7 @@ public class MavenGoals {
     private final Map<String,String> defaultArtifactIdToVersionMap = new HashMap<String,String>()
     {{
             put("maven-cli-plugin", "0.6.2");
-            put("cargo-maven2-plugin", "1.0-beta-2-db1");
+            put("cargo-maven2-plugin", "1.0-beta-2-db2");
             put("atlassian-pdk", "2.1.5");
 
         }};
