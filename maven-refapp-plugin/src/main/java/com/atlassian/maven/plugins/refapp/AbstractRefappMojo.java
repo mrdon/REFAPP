@@ -191,11 +191,15 @@ public abstract class AbstractRefappMojo extends AbstractMojo
             addArtifactsToDirectory(goals, getPluginsArtifacts(), refappPluginsDir);
             // add plugins1 plugins
             addArtifactsToDirectory(goals, libArtifacts, new File(refappDir, "WEB-INF/lib"));
+
             // add bundled plugins
-            final File bundledPluginsDir = new File(project.getBuild().getDirectory(), "refapp-bundled-plugins");
-            addArtifactsToDirectory(goals, bundledArtifacts, bundledPluginsDir);
-            com.atlassian.core.util.FileUtils.createZipFile(bundledPluginsDir, new File(refappDir,
-                    "WEB-INF/classes/atlassian-bundled-plugins.zip"));
+            if (!bundledArtifacts.isEmpty()) 
+            {
+                final File bundledPluginsDir = new File(project.getBuild().getDirectory(), "refapp-bundled-plugins");
+                addArtifactsToDirectory(goals, bundledArtifacts, bundledPluginsDir);
+                com.atlassian.core.util.FileUtils.createZipFile(bundledPluginsDir, new File(refappDir,
+                        "WEB-INF/classes/atlassian-bundled-plugins.zip"));
+            }
 
             final File warFile = new File(refappWar.getParentFile(), "refapp.war");
             com.atlassian.core.util.FileUtils.createZipFile(new File(refappDir), warFile);
