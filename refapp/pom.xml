@@ -247,6 +247,12 @@
         </dependency>
         <dependency>
             <groupId>com.atlassian.sal</groupId>
+            <artifactId>sal-refimpl-license-plugin</artifactId>
+            <version>${sal.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.sal</groupId>
             <artifactId>sal-refimpl-message-plugin</artifactId>
             <version>${sal.version}</version>
             <scope>provided</scope>
