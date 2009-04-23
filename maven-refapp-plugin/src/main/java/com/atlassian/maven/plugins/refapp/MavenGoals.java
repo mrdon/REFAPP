@@ -222,11 +222,10 @@ public class MavenGoals {
                             element(name("type"), container.getType()),
                             element(name("zipUrlInstaller"),
                                     element(name("url"), container.getUrl())
-                            ),
+                            )
                             //element(name("output"), "${project.build.directory}/"+container.getId()+"/output-"+identifier+".log"),
                             //element(name("log"), "${project.build.directory}/"+container.getId()+"/cargo-"+identifier+".log"),
                             element(name("systemProperties"),
-                                    element(name("org.apache.commons.logging.Log"), "org.apache.commons.logging.impl.SimpleLog"),
                                     element(name("baseurl"), baseUrl)
                             )
                     ),

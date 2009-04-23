@@ -71,6 +71,13 @@ public abstract class AbstractRefappMojo extends AbstractMojo
      * @parameter expression="${jvmargs}"
      */
     protected String jvmArgs = null;
+
+    /**
+     * A log4j properties file
+     * @parameter
+     */
+    protected File log4jProperties;
+
     /**
      * The Maven Project Object
      *
@@ -199,6 +206,12 @@ public abstract class AbstractRefappMojo extends AbstractMojo
                 addArtifactsToDirectory(goals, bundledArtifacts, bundledPluginsDir);
                 com.atlassian.core.util.FileUtils.createZipFile(bundledPluginsDir, new File(refappDir,
                         "WEB-INF/classes/atlassian-bundled-plugins.zip"));
+            }
+
+            // add log4j.properties file if specified
+            if (log4jProperties != null)
+            {
+                FileUtils.copyFile(log4jProperties, new File(refappDir, "WEB-INF/classes/log4j.properties"));
             }
 
             final File warFile = new File(refappWar.getParentFile(), "refapp.war");
