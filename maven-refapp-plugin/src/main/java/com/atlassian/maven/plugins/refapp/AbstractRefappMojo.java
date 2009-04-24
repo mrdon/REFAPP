@@ -40,14 +40,21 @@ public abstract class AbstractRefappMojo extends AbstractMojo
      *
      * @parameter expression="${http.port}" default-value="9400"
      */
-     protected int httpPort;
+    protected int httpPort;
 
-	/**
+    /**
      * Application context path
      *
      * @parameter expression="${context.path}" default-value="/refapp"
      */
     protected String contextPath;
+
+    /**
+     * Application server
+     *
+     * @parameter expression="${server}" default-value="localhost"
+     */
+    protected String server;
 
     /**
      * The build directory
@@ -158,11 +165,11 @@ public abstract class AbstractRefappMojo extends AbstractMojo
                     new RefappArtifact("com.atlassian.sal", "sal-refimpl-message-plugin", salVersion),
                     new RefappArtifact("com.atlassian.sal", "sal-refimpl-net-plugin", salVersion), new RefappArtifact(
                             "com.atlassian.sal", "sal-refimpl-pluginsettings-plugin", salVersion), new RefappArtifact(
-                            "com.atlassian.sal", "sal-refimpl-project-plugin", salVersion), new RefappArtifact(
-                            "com.atlassian.sal", "sal-refimpl-search-plugin", salVersion), new RefappArtifact(
-                            "com.atlassian.sal", "sal-refimpl-transaction-plugin", salVersion), new RefappArtifact(
-                            "com.atlassian.sal", "sal-refimpl-upgrade-plugin", salVersion), new RefappArtifact(
-                            "com.atlassian.sal", "sal-refimpl-user-plugin", salVersion)));
+                                    "com.atlassian.sal", "sal-refimpl-project-plugin", salVersion), new RefappArtifact(
+                                            "com.atlassian.sal", "sal-refimpl-search-plugin", salVersion), new RefappArtifact(
+                                                    "com.atlassian.sal", "sal-refimpl-transaction-plugin", salVersion), new RefappArtifact(
+                                                            "com.atlassian.sal", "sal-refimpl-upgrade-plugin", salVersion), new RefappArtifact(
+                                                                    "com.atlassian.sal", "sal-refimpl-user-plugin", salVersion)));
         }
 
         if (pdkVersion != null)
@@ -200,12 +207,12 @@ public abstract class AbstractRefappMojo extends AbstractMojo
             addArtifactsToDirectory(goals, libArtifacts, new File(refappDir, "WEB-INF/lib"));
 
             // add bundled plugins
-            if (!bundledArtifacts.isEmpty()) 
+            if (!bundledArtifacts.isEmpty())
             {
                 final File bundledPluginsDir = new File(project.getBuild().getDirectory(), "refapp-bundled-plugins");
                 addArtifactsToDirectory(goals, bundledArtifacts, bundledPluginsDir);
                 com.atlassian.core.util.FileUtils.createZipFile(bundledPluginsDir, new File(refappDir,
-                        "WEB-INF/classes/atlassian-bundled-plugins.zip"));
+                "WEB-INF/classes/atlassian-bundled-plugins.zip"));
             }
 
             // add log4j.properties file if specified
@@ -264,7 +271,7 @@ public abstract class AbstractRefappMojo extends AbstractMojo
 
     private void addArtifactsToDirectory(final MavenGoals goals, final List<RefappArtifact> artifacts,
             final File refappPluginsDir) throws MojoExecutionException
-    {
+            {
         // first remove plugins from the refapp that we want to update
         if (refappPluginsDir.isDirectory() && refappPluginsDir.exists())
         {
@@ -285,7 +292,7 @@ public abstract class AbstractRefappMojo extends AbstractMojo
         {
             goals.copyPlugins(refappPluginsDir, artifacts);
         }
-    }
+            }
 
     protected String determineVersion()
     {
@@ -294,7 +301,7 @@ public abstract class AbstractRefappMojo extends AbstractMojo
         try
         {
             in = getClass().getClassLoader().getResourceAsStream(
-                    "META-INF/maven/com.atlassian.maven.plugins/maven-refapp-plugin/pom.properties");
+            "META-INF/maven/com.atlassian.maven.plugins/maven-refapp-plugin/pom.properties");
             if (in != null)
             {
                 props.load(in);

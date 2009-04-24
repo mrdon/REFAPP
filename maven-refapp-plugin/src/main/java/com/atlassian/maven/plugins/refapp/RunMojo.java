@@ -13,10 +13,10 @@ import org.apache.maven.plugin.MojoExecutionException;
  * @execute phase="package"
  */
 public class RunMojo
-        extends AbstractRefappMojo
+extends AbstractRefappMojo
 {
     public void execute()
-            throws MojoExecutionException
+    throws MojoExecutionException
     {
         final MavenGoals goals = new MavenGoals(project, session, pluginManager, getLog());
 
@@ -26,7 +26,7 @@ public class RunMojo
         final File combinedRefappWar = addArtifacts(goals, refappWar);
 
         // Start the refapp
-        final int actualHttpPort = goals.startRefapp(combinedRefappWar, containerId, httpPort, contextPath, jvmArgs);
+        final int actualHttpPort = goals.startRefapp(combinedRefappWar, containerId, server, httpPort, contextPath, jvmArgs);
 
         getLog().info("Refapp started successfully and available at http://localhost:" + actualHttpPort + contextPath);
         getLog().info("Type any key to exit");

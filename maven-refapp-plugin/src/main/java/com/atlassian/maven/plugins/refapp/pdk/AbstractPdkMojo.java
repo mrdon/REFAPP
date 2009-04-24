@@ -34,30 +34,37 @@ public abstract class AbstractPdkMojo extends AbstractMojo {
     protected PluginManager pluginManager;
     /**
      * @parameter expression="${atlassian.plugin.key}"
-    */
-   protected String pluginKey;
+     */
+    protected String pluginKey;
     /**
      * @parameter expression="${project.groupId}"
-    */
-   protected String groupId;
+     */
+    protected String groupId;
     /**
      * @parameter expression="${project.artifactId}"
-    */
-   protected String artifactId;
+     */
+    protected String artifactId;
 
-   /**
-    * HTTP port for the servlet containers
-    *
-    * @parameter expression="${http.port}" default-value="9400"
-    */
-   protected int httpPort;
+    /**
+     * HTTP port for the servlet containers
+     *
+     * @parameter expression="${http.port}" default-value="9400"
+     */
+    protected int httpPort;
 
-   /**
-    * Application context path
-    *
-    * @parameter expression="${context.path}" default-value="/refapp"
-    */
-   protected String contextPath;
+    /**
+     * Application context path
+     *
+     * @parameter expression="${context.path}" default-value="/refapp"
+     */
+    protected String contextPath;
+
+    /**
+     * Application server
+     *
+     * @parameter expression="${server}" default-value="localhost"
+     */
+    protected String server;
 
 
     protected void ensurePluginKeyExists() {

@@ -39,21 +39,21 @@ public class MavenGoals {
 
     private final Map<String, Container> idToContainerMap = new HashMap<String, Container>()
     {{
-            put("tomcat5x", new Container("tomcat5x", "https://m2proxy.atlassian.com/repository/public/org/apache/tomcat/apache-tomcat/5.5.25/apache-tomcat-5.5.25.zip"));
-            put("tomcat6x", new Container("tomcat6x", "http://apache.mirror.aussiehq.net.au/tomcat/tomcat-6/v6.0.18/bin/apache-tomcat-6.0.18.zip"));
-            put("resin3x", new Container("resin3x", "http://www.caucho.com/download/resin-3.0.26.zip"));
-            put("jboss42x", new Container("jboss42x", "http://internode.dl.sourceforge.net/sourceforge/jboss/jboss-4.2.3.GA.zip"));
-            put("jetty6x", new Container("jetty6x"));
+        put("tomcat5x", new Container("tomcat5x", "https://m2proxy.atlassian.com/repository/public/org/apache/tomcat/apache-tomcat/5.5.25/apache-tomcat-5.5.25.zip"));
+        put("tomcat6x", new Container("tomcat6x", "http://apache.mirror.aussiehq.net.au/tomcat/tomcat-6/v6.0.18/bin/apache-tomcat-6.0.18.zip"));
+        put("resin3x", new Container("resin3x", "http://www.caucho.com/download/resin-3.0.26.zip"));
+        put("jboss42x", new Container("jboss42x", "http://internode.dl.sourceforge.net/sourceforge/jboss/jboss-4.2.3.GA.zip"));
+        put("jetty6x", new Container("jetty6x"));
 
-        }};
+    }};
 
     private final Map<String,String> defaultArtifactIdToVersionMap = new HashMap<String,String>()
     {{
-            put("maven-cli-plugin", "0.6.2");
-            put("cargo-maven2-plugin", "1.0-beta-2-db2");
-            put("atlassian-pdk", "2.1.5");
+        put("maven-cli-plugin", "0.6.2");
+        put("cargo-maven2-plugin", "1.0-beta-2-db2");
+        put("atlassian-pdk", "2.1.5");
 
-        }};
+    }};
 
     public MavenGoals(final MavenProject project, final MavenSession session, final PluginManager pluginManager, final Log log) {
         this(project, session, pluginManager, log, Collections.<String, String>emptyMap());
@@ -74,8 +74,8 @@ public class MavenGoals {
 
         final List<Element> configs = new ArrayList<Element>();
         configs.add(element(name("commands"),
-                            element(name("pi"), "resources compile com.atlassian.maven.plugins:maven-refapp-plugin:copy-bundled-dependencies jar com.atlassian.maven.plugins:maven-refapp-plugin:install"),
-                            element(name("pu"), "com.atlassian.maven.plugins:maven-refapp-plugin:uninstall")));
+                element(name("pi"), "resources compile com.atlassian.maven.plugins:maven-refapp-plugin:copy-bundled-dependencies jar com.atlassian.maven.plugins:maven-refapp-plugin:install"),
+                element(name("pu"), "com.atlassian.maven.plugins:maven-refapp-plugin:uninstall")));
         if (port > 0)
         {
             configs.add(element(name("port"), String.valueOf(port)));
@@ -99,11 +99,11 @@ public class MavenGoals {
                 ),
                 goal("copy-dependencies"),
                 configuration(
-                    element(name("includeScope"), "runtime"),
-                    element(name("excludeScope"), "provided"),
-                    element(name("excludeScope"), "test"),
-                    element(name("type"), "jar"),
-                    element(name("outputDirectory"), "${project.build.outputDirectory}/META-INF/lib")
+                        element(name("includeScope"), "runtime"),
+                        element(name("excludeScope"), "provided"),
+                        element(name("excludeScope"), "test"),
+                        element(name("type"), "jar"),
+                        element(name("outputDirectory"), "${project.build.outputDirectory}/META-INF/lib")
                 ),
                 executionEnvironment(project, session, pluginManager)
         );
@@ -117,15 +117,15 @@ public class MavenGoals {
                 ),
                 goal("copy-resources"),
                 configuration(
-                    element(name("resources"),
-                            element(name("resource"),
-                                    element(name("directory"), "src/main/resources"),
-                                    element(name("filtering"), "true"),
-                                    element(name("includes"),
-                                            element(name("include"), "atlassian-plugin.xml"))
-                                    )
-                            ),
-                    element(name("outputDirectory"), "${project.build.outputDirectory}")
+                        element(name("resources"),
+                                element(name("resource"),
+                                        element(name("directory"), "src/main/resources"),
+                                        element(name("filtering"), "true"),
+                                        element(name("includes"),
+                                                element(name("include"), "atlassian-plugin.xml"))
+                                )
+                        ),
+                        element(name("outputDirectory"), "${project.build.outputDirectory}")
                 ),
                 executionEnvironment(project, session, pluginManager)
         );
@@ -139,9 +139,9 @@ public class MavenGoals {
                 ),
                 goal("test"),
                 configuration(
-                    element(name("excludes"),
-                            element(name("exclude"), "it/**"),
-                            element(name("exclude"), "**/*$*"))
+                        element(name("excludes"),
+                                element(name("exclude"), "it/**"),
+                                element(name("exclude"), "**/*$*"))
                 ),
                 executionEnvironment(project, session, pluginManager)
         );
@@ -156,14 +156,14 @@ public class MavenGoals {
                 ),
                 goal("copy"),
                 configuration(
-                    element(name("artifactItems"),
-                            element(name("artifactItem"),
-                                    element(name("groupId"), "com.atlassian.refapp"),
-                                    element(name("artifactId"), "atlassian-refapp"),
-                                    element(name("type"), "war"),
-                                    element(name("version"), refappVersion),
-                                    element(name("destFileName"), refappWarFile.getName()))),
-                    element(name("outputDirectory"), "${project.build.directory}")
+                        element(name("artifactItems"),
+                                element(name("artifactItem"),
+                                        element(name("groupId"), "com.atlassian.refapp"),
+                                        element(name("artifactId"), "atlassian-refapp"),
+                                        element(name("type"), "war"),
+                                        element(name("version"), refappVersion),
+                                        element(name("destFileName"), refappWarFile.getName()))),
+                                        element(name("outputDirectory"), "${project.build.directory}")
                 ),
                 executionEnvironment(project, session, pluginManager)
         );
@@ -176,9 +176,9 @@ public class MavenGoals {
         {
             final RefappArtifact artifact = pluginArtifacts.get(x);
             items[x] = element(name("artifactItem"),
-                            element(name("groupId"), artifact.getGroupId()),
-                            element(name("artifactId"), artifact.getArtifactId()),
-                            element(name("version"), artifact.getVersion()));
+                    element(name("groupId"), artifact.getGroupId()),
+                    element(name("artifactId"), artifact.getArtifactId()),
+                    element(name("version"), artifact.getVersion()));
         }
         executeMojo(
                 plugin(
@@ -187,14 +187,14 @@ public class MavenGoals {
                 ),
                 goal("copy"),
                 configuration(
-                    element(name("artifactItems"), items),
-                    element(name("outputDirectory"), pluginsDir.getPath())
+                        element(name("artifactItems"), items),
+                        element(name("outputDirectory"), pluginsDir.getPath())
                 ),
                 executionEnvironment(project, session, pluginManager)
         );
     }
 
-    public int startRefapp(final File refappWar, final String containerId, final int httpPort, final String contextPath, String jvmArgs) throws MojoExecutionException {
+    public int startRefapp(final File refappWar, final String containerId, final String server, final int httpPort, final String contextPath, String jvmArgs) throws MojoExecutionException {
         final int rmiPort = pickFreePort(0);
         final int actualHttpPort = pickFreePort(httpPort);
         final Container container = findContainer(containerId);
@@ -207,56 +207,56 @@ public class MavenGoals {
         log.info("Starting refapp on the " + container.getId() + " container on ports "
                 + actualHttpPort + " (http) and " + rmiPort + " (rmi)");
 
-        final String baseUrl = getBaseUrl(actualHttpPort, contextPath);
+        final String baseUrl = getBaseUrl(server, actualHttpPort, contextPath);
         executeMojo(
                 plugin(
-                    groupId("org.twdata.maven"),
-                    artifactId("cargo-maven2-plugin"),
-                    version(pluginArtifactIdToVersionMap.get("cargo-maven2-plugin"))
+                        groupId("org.twdata.maven"),
+                        artifactId("cargo-maven2-plugin"),
+                        version(pluginArtifactIdToVersionMap.get("cargo-maven2-plugin"))
                 ),
                 goal("start"),
                 configuration(
-                    element(name("wait"), "false"),
-                    element(name("container"),
-                            element(name("containerId"), container.getId()),
-                            element(name("type"), container.getType()),
-                            element(name("zipUrlInstaller"),
-                                    element(name("url"), container.getUrl())
-                            ),
-                            //element(name("output"), "${project.build.directory}/"+container.getId()+"/output-"+identifier+".log"),
-                            //element(name("log"), "${project.build.directory}/"+container.getId()+"/cargo-"+identifier+".log"),
-                            element(name("systemProperties"),
-                                    element(name("baseurl"), baseUrl)
-                            )
-                    ),
-                    element(name("configuration"),
-                            element(name("home"), "${project.build.directory}/" + container.getId() + "/server"),
-                            element(name("properties"),
-                                    element(name("cargo.servlet.port"), String.valueOf(actualHttpPort)),
-                                    element(name("cargo.rmi.port"), String.valueOf(rmiPort)),
-                                    element(name("cargo.jvmargs"), jvmArgs)
-                            ),
-                            element(name("deployables"),
-                                    element(name("deployable"),
-                                            element(name("groupId"), "com.atlassian.refapp"),
-                                            element(name("artifactId"), "atlassian-refapp"),
-                                            element(name("type"), "war"),
-                                            element(name("location"), refappWar.getPath())
-                                            //element(name("properties"),
-                                            //        element(name("context"), "/")
-                                            //)
-                                    )
-                            )
-                    )
+                        element(name("wait"), "false"),
+                        element(name("container"),
+                                element(name("containerId"), container.getId()),
+                                element(name("type"), container.getType()),
+                                element(name("zipUrlInstaller"),
+                                        element(name("url"), container.getUrl())
+                                ),
+                                //element(name("output"), "${project.build.directory}/"+container.getId()+"/output-"+identifier+".log"),
+                                //element(name("log"), "${project.build.directory}/"+container.getId()+"/cargo-"+identifier+".log"),
+                                element(name("systemProperties"),
+                                        element(name("baseurl"), baseUrl)
+                                )
+                        ),
+                        element(name("configuration"),
+                                element(name("home"), "${project.build.directory}/" + container.getId() + "/server"),
+                                element(name("properties"),
+                                        element(name("cargo.servlet.port"), String.valueOf(actualHttpPort)),
+                                        element(name("cargo.rmi.port"), String.valueOf(rmiPort)),
+                                        element(name("cargo.jvmargs"), jvmArgs)
+                                ),
+                                element(name("deployables"),
+                                        element(name("deployable"),
+                                                element(name("groupId"), "com.atlassian.refapp"),
+                                                element(name("artifactId"), "atlassian-refapp"),
+                                                element(name("type"), "war"),
+                                                element(name("location"), refappWar.getPath())
+                                                //element(name("properties"),
+                                                //        element(name("context"), "/")
+                                                //)
+                                        )
+                                )
+                        )
                 ),
                 executionEnvironment(project, session, pluginManager)
-            );
+        );
         return actualHttpPort;
     }
 
-    private String getBaseUrl(final int actualHttpPort, final String contextPath)
+    private String getBaseUrl(final String server, final int actualHttpPort, final String contextPath)
     {
-        return "http://localhost:"+actualHttpPort+contextPath;
+        return "http://"+server+":"+actualHttpPort+contextPath;
     }
 
     public void runTests(final String containerId, final String functionalTestPattern, final int httpPort, final String contexPath, final String pluginJar) throws MojoExecutionException {
@@ -338,59 +338,59 @@ public class MavenGoals {
     public void stopRefapp(final String containerId) throws MojoExecutionException {
         final Container container = findContainer(containerId);
         executeMojo(
-            plugin(
-                groupId("org.twdata.maven"),
-                artifactId("cargo-maven2-plugin"),
-                version(pluginArtifactIdToVersionMap.get("cargo-maven2-plugin"))
-            ),
-            goal("stop"),
-            configuration(
-                    element(name("container"),
-                            element(name("containerId"), container.getId()),
-                            element(name("type"), container.getType())
-                    ),
-                    element(name("configuration"),
-                            element(name("home"), "${project.build.directory}/" + container.getId() + "/server")
-                    )
-            ),
-            executionEnvironment(project, session, pluginManager)
+                plugin(
+                        groupId("org.twdata.maven"),
+                        artifactId("cargo-maven2-plugin"),
+                        version(pluginArtifactIdToVersionMap.get("cargo-maven2-plugin"))
+                ),
+                goal("stop"),
+                configuration(
+                        element(name("container"),
+                                element(name("containerId"), container.getId()),
+                                element(name("type"), container.getType())
+                        ),
+                        element(name("configuration"),
+                                element(name("home"), "${project.build.directory}/" + container.getId() + "/server")
+                        )
+                ),
+                executionEnvironment(project, session, pluginManager)
         );
     }
 
-    public void installPlugin(final String pluginKey, final int port, final String contextPath) throws MojoExecutionException {
-        final String baseUrl = getBaseUrl(port, contextPath);
+    public void installPlugin(final String pluginKey, final String server, final int port, final String contextPath) throws MojoExecutionException {
+        final String baseUrl = getBaseUrl(server, port, contextPath);
         executeMojo(
-            plugin(
-                groupId("com.atlassian.maven.plugins"),
-                artifactId("atlassian-pdk"),
-                version(pluginArtifactIdToVersionMap.get("atlassian-pdk"))
-            ),
-            goal("install"),
-            configuration(
-                    element(name("username"), "admin"),
-                    element(name("password"), "admin"),
-                    element(name("serverUrl"), baseUrl),
-                    element(name("pluginKey"), pluginKey)
-            ),
-            executionEnvironment(project, session, pluginManager)
+                plugin(
+                        groupId("com.atlassian.maven.plugins"),
+                        artifactId("atlassian-pdk"),
+                        version(pluginArtifactIdToVersionMap.get("atlassian-pdk"))
+                ),
+                goal("install"),
+                configuration(
+                        element(name("username"), "admin"),
+                        element(name("password"), "admin"),
+                        element(name("serverUrl"), baseUrl),
+                        element(name("pluginKey"), pluginKey)
+                ),
+                executionEnvironment(project, session, pluginManager)
         );
     }
 
     public void uninstallPlugin(final String pluginKey, final int port) throws MojoExecutionException {
         executeMojo(
-            plugin(
-                groupId("com.atlassian.maven.plugins"),
-                artifactId("atlassian-pdk"),
-                version(pluginArtifactIdToVersionMap.get("atlassian-pdk"))
-            ),
-            goal("uninstall"),
-            configuration(
-                    element(name("username"), "admin"),
-                    element(name("password"), "admin"),
-                    element(name("serverUrl"), "http://localhost:"+port+"/refapp"),
-                    element(name("pluginKey"), pluginKey)
-            ),
-            executionEnvironment(project, session, pluginManager)
+                plugin(
+                        groupId("com.atlassian.maven.plugins"),
+                        artifactId("atlassian-pdk"),
+                        version(pluginArtifactIdToVersionMap.get("atlassian-pdk"))
+                ),
+                goal("uninstall"),
+                configuration(
+                        element(name("username"), "admin"),
+                        element(name("password"), "admin"),
+                        element(name("serverUrl"), "http://localhost:"+port+"/refapp"),
+                        element(name("pluginKey"), pluginKey)
+                ),
+                executionEnvironment(project, session, pluginManager)
         );
     }
 

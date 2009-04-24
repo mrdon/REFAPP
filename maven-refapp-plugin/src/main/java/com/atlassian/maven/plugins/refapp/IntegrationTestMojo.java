@@ -12,7 +12,7 @@ import org.apache.maven.plugin.MojoExecutionException;
  *
  */
 public class IntegrationTestMojo
-        extends AbstractRefappMojo {
+extends AbstractRefappMojo {
 
     /**
      * Pattern for to use to find integration tests
@@ -38,7 +38,7 @@ public class IntegrationTestMojo
 
 
     public void execute()
-            throws MojoExecutionException
+    throws MojoExecutionException
     {
         if (!new File(testClassesDirectory, "it").exists())
         {
@@ -57,7 +57,7 @@ public class IntegrationTestMojo
 
             final File combinedRefappWar = addArtifacts(goals, refappWar);
 
-            actualHttpPort = goals.startRefapp(combinedRefappWar, containerId, httpPort, contextPath, jvmArgs);
+            actualHttpPort = goals.startRefapp(combinedRefappWar, containerId, server, httpPort, contextPath, jvmArgs);
 
         }
         goals.runTests(containerId, functionalTestPattern, actualHttpPort, contextPath, pluginJar);
