@@ -4,12 +4,18 @@
         <version>${pom.version}</version>
         <vendor name="${pom.organization.name}" url="${pom.organization.url}" />
     </plugin-info>
+    
     <web-resource name="jQuery" key="jquery-1.3.1">
         <resource type="download" name="jquery.js" location="jquery-1.3.1.js"/>
     </web-resource>
 
     <web-resource name="jQuery-ui" key="jquery-ui-1.7.1">
         <resource type="download" name="jquery-ui.js" location="jquery-ui-1.7.1-all-min.js"/>
+    </web-resource>
+    
+    <web-resource name="jQuery-ui-css-smoothness" key="jquery-ui-1.7.1-css-smoothness">
+        <resource type="download" name="jquery-ui-1.7.1.custom.css" location="css/smoothness/jquery-ui-1.7.1.custom.css"/>
+        <resource type="download" name="images/" location="css/smoothness/images/"/>
     </web-resource>
 
 </atlassian-plugin>
