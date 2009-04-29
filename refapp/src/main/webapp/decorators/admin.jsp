@@ -13,13 +13,12 @@
     </head>
 
     <body>
-
         <h2>
             <img src="<%= request.getContextPath() + "/images/atlassian.png"%>" alt="Atlassian"/> RefApp Administration
         </h2>
         <decorator:body />
-        <hr>
-        <div style="text-align:center">
+        <div class="refapp-footer" style="text-align:center">
+            <hr>
             Atlassian Plugins -
             <a href="http://jira.atlassian.com/browse/PLUG">Issues</a> |
             <a href="http://bamboo.developer.atlassian.com/browse/ATLASSIANPLUGINS">Builds</a> |
