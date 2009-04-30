@@ -14,10 +14,16 @@
 
     <body>
         <h2>
-            <img src="<%= request.getContextPath() + "/images/atlassian.png"%>" alt="Atlassian"/> RefApp Administration
+            <img src="<%=request.getContextPath() + "/images/atlassian.png"%>" alt="Atlassian"/> RefApp Administration
         </h2>
-        <decorator:body />
-        <div class="refapp-footer" style="text-align:center">
+        <hr />
+		<table style="width: 100%">
+			<tr valign="top">
+				<td style="width:200px"><img src="<%=request.getContextPath() + "/images/admin-menu-screenshot.png"%>" alt="Admin menu" /></td>
+				<td><decorator:body /></td>
+			</tr>
+		</table>
+		<div class="refapp-footer" style="text-align:center">
             <hr>
             Atlassian Plugins -
             <a href="http://jira.atlassian.com/browse/PLUG">Issues</a> |
