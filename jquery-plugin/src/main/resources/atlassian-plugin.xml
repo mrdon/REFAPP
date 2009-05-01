@@ -13,6 +13,10 @@
         <resource type="download" name="jquery-ui.js" location="jquery-ui-1.7.1-all-min.js"/>
     </web-resource>
     
+    <web-resource name="jQuery-form" key="jquery-form-2.18">
+        <resource type="download" name="jquery.form.js" location="plugins/jquery.form/jquery.form-2.18.js"/>
+    </web-resource>
+    
     <web-resource name="jQuery-ui-css-smoothness" key="jquery-ui-1.7.1-css-smoothness">
         <resource type="download" name="jquery-ui-1.7.1.custom.css" location="css/smoothness/jquery-ui-1.7.1.custom.css"/>
         <resource type="download" name="images/" location="css/smoothness/images/"/>
