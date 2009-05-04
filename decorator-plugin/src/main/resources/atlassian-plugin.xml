@@ -9,8 +9,6 @@
     <component-import key="webInterfaceManager" interface="com.atlassian.plugin.web.WebInterfaceManager"/>
     <component-import key="userManager" interface="com.atlassian.sal.api.user.UserManager"/>
 
-    <component key="refappHelper" name="RefApp Context Helper" class="com.atlassian.refapp.decorator.RefAppHelper"/>
-
     <template-context-item key="webInterfaceManagerContextItem" context-key="webInterfaceManager"
             component-ref="webInterfaceManager"/>
 

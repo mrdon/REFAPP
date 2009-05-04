@@ -2,9 +2,7 @@ package com.atlassian.refapp.decorator;
 
 import com.atlassian.plugin.webresource.WebResourceManager;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.CharArrayWriter;
-import java.util.Map;
 
 public class WebResourceIncluder
 {

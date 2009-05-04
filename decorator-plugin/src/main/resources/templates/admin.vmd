@@ -13,12 +13,12 @@ $webResourceManager.requireResource("com.atlassian.refapp.decorator:decorator-re
           RefApp Administration
         </h1>
         <ul class="admin-menu">
-        #foreach($section in $webInterfaceManager.getDisplayableSections("system.admin", $helper))
+        #foreach($section in $webInterfaceManager.getDisplayableSections("system.admin", $context))
           <li class="admin-menu-section">
             <ul>
-              <li class="admin-menu-section-heading">$section.webLabel.getDisplayableLabel($request, $helper)</li>
-            #foreach($item in $webInterfaceManager.getDisplayableItems("system.admin/$section.key", $helper))
-              <li><a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $helper)">$item.webLabel.getDisplayableLabel($request, $helper)</a></li>
+              <li class="admin-menu-section-heading">$section.webLabel.getDisplayableLabel($request, $context)</li>
+            #foreach($item in $webInterfaceManager.getDisplayableItems("system.admin/$section.key", $context))
+              <li><a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $context)">$item.webLabel.getDisplayableLabel($request, $context)</a></li>
             #end
             </ul>
           </li>
@@ -30,11 +30,11 @@ $webResourceManager.requireResource("com.atlassian.refapp.decorator:decorator-re
         <div class="refapp-footer" style="text-align:center">
             <hr/>
             Atlassian Plugins -
-            #set($items = $webInterfaceManager.getDisplayableItems("footer.links", $helper))
+            #set($items = $webInterfaceManager.getDisplayableItems("footer.links", $context))
             #set($first = true)
             #foreach($item in $items)
               #if (!$first)|#end #set($first = false)
-              <a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $helper)">$item.webLabel.getDisplayableLabel($request, $helper)</a>
+              <a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $context)">$item.webLabel.getDisplayableLabel($request, $context)</a>
             #end
         </div>
     </body>
