@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+$webResourceManager.requireResource("com.atlassian.refapp.decorator:decorator-resources")
+<html>
+    <head>
+        <title>#if ($title)$title#else Welcome!#end</title>
+        $head
+        $webResourceIncluder.includeResources()
+    </head>
+    <body>
+        <h1>
+		  <img src="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/atlassian.png")" alt="Atlassian"/>
+          RefApp Administration
+        </h1>
+        <ul class="admin-menu">
+        #foreach($section in $webInterfaceManager.getDisplayableSections("system.admin", $helper))
+          <li class="admin-menu-section">
+            <ul>
+              <li class="admin-menu-section-heading">$section.webLabel.getDisplayableLabel($request, $helper)</li>
+            #foreach($item in $webInterfaceManager.getDisplayableItems("system.admin/$section.key", $helper))
+              <li><a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $helper)">$item.webLabel.getDisplayableLabel($request, $helper)</a></li>
+            #end
+            </ul>
+          </li>
+        #end
+        </ul>
+        <div class="refapp-body">
+        $body
+        </div>
+        <div class="refapp-footer" style="text-align:center">
+            <hr/>
+            Atlassian Plugins -
+            #set($items = $webInterfaceManager.getDisplayableItems("footer.links", $helper))
+            #set($first = true)
+            #foreach($item in $items)
+              #if (!$first)|#end #set($first = false)
+              <a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $helper)">$item.webLabel.getDisplayableLabel($request, $helper)</a>
+            #end
+        </div>
+    </body>
+</html>

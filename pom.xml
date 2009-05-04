@@ -23,6 +23,7 @@
         <!--module>ui-toolbox-plugin</module-->
         <module>jquery-plugin</module>
         <module>web-item-plugin</module>
+        <module>decorator-plugin</module>
         <module>refapp</module>
         <module>maven-refapp-plugin</module>
     </modules>
@@ -233,7 +234,7 @@
 
     <properties>
         <jdkLevel>1.5</jdkLevel>
-        <atlassian.plugins.version>2.2.1-SNAPSHOT</atlassian.plugins.version>
+        <atlassian.plugins.version>2.3.0-SNAPSHOT</atlassian.plugins.version>
         <sal.version>2.0.0</sal.version>
         <template.renderer.version>1.0-SNAPSHOT</template.renderer.version>
         <oauth.version>1.0.beta4</oauth.version>

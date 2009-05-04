@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>${!user.fullName}'s profile</title>
-    <meta name="decorator" content="atl.general"/>
+    <meta name="decorator" content="atl.admin"/>
 </head>
 <body>
 

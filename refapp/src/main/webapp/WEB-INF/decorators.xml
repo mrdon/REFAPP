@@ -1,0 +1,4 @@
+<decorators defaultdir="/decorators">
+    <decorator name="atl.general" page="/plugins/servlet/refappdecorator/general.vmd" />
+    <decorator name="atl.admin" page="/plugins/servlet/refappdecorator/admin.vmd" />
+</decorators>

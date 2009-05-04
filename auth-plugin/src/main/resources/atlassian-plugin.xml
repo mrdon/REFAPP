@@ -64,4 +64,14 @@
         <url-pattern>/users/*</url-pattern>
     </servlet>
 
+    <web-item key="userManagementLink" section="system.admin/general" weight="10">
+        <label key="User Management"/>
+        <link linkId="userManagement">/plugins/servlet/users</link>
+    </web-item>
+
+    <web-item key="loginLink" section="footer.links" weight="40">
+        <label key="Login"/>
+        <link linkId="login">/plugins/servlet/login</link>
+    </web-item>
+
 </atlassian-plugin>

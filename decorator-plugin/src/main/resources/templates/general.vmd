@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+$webResourceManager.requireResource("com.atlassian.refapp.decorator:decorator-resources")
+<html>
+    <head>
+        <title>#if ($title)$title#else Welcome!#end</title>
+        $head
+        $webResourceIncluder.includeResources()
+    </head>
+    <body>
+        <h1>
+		  <img src="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/atlassian.png")" alt="Atlassian"/>
+          RefApp
+        </h1>
+        $body
+        <div class="refapp-footer" style="text-align:center">
+            <hr/>
+            Atlassian Plugins -
+            #set($items = $webInterfaceManager.getDisplayableItems("footer.links", $helper))
+            #set($first = true)
+            #foreach($item in $items)
+              #if (!$first)|#end #set($first = false)
+              <a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $helper)">$item.webLabel.getDisplayableLabel($request, $helper)</a>
+            #end
+        </div>
+    </body>
+</html>

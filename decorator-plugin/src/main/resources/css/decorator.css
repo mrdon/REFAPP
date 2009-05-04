@@ -1,0 +1,55 @@
+body {
+    font-family: Helvetica,Arial,sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #003366;
+}
+
+h1 {
+    font-size: 18pt;
+}
+
+.admin-menu {
+    float: left;
+    padding: 0 10px;
+    width: 170px;
+    margin: 0;
+    color: #183765;
+}
+
+.admin-menu a {
+    color: #183765;
+    text-decoration: none;
+}
+
+.admin-menu-section {
+    list-style: none;
+    border-top: 1px solid #6A8EB2;
+    border-bottom: 1px solid #6A8EB2;
+    padding: 5px;
+    margin: 0 0 -1px;
+}
+
+.admin-menu-section ul {
+    padding: 0;
+    margin: 0;
+}
+
+.admin-menu-section .admin-menu-section-heading {
+    font-weight: bold;
+    font-size: 11pt;
+    margin: 0;
+}
+
+.admin-menu-section li {
+    font-size: 10pt;
+    margin: 0 0 0 10px;
+    padding: 3px 0;
+    list-style: none;
+    line-height: 1;
+}
+
+.refapp-body {
+    margin-left: 190px;
+}

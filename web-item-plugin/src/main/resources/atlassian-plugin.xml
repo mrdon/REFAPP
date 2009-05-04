@@ -16,4 +16,7 @@
     </component>
     
     <module-type key="web-item" class="com.atlassian.refapp.webitem.RefAppWebItemModuleDescriptor" />
+
+    <module-type key="web-section" class="com.atlassian.refapp.webitem.RefAppWebSectionModuleDescriptor" />
+
 </atlassian-plugin>
