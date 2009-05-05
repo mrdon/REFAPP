@@ -3,6 +3,7 @@ package com.atlassian.maven.plugins.refapp;
 import java.io.File;
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.artifact.handler.manager.ArtifactHandlerManager;
 
 /**
  * Run the integration tests against the refapp
@@ -36,10 +37,18 @@ extends AbstractRefappMojo {
      */
     private final boolean noRefapp = false;
 
+    /**
+     * @component
+     */
+    private ArtifactHandlerManager artifactHandlerManager;
 
     public void execute()
     throws MojoExecutionException
     {
+
+        // workaround for MNG-1682/MNG-2426: force maven to install artifact using the "jar" handler
+        project.getArtifact().setArtifactHandler(artifactHandlerManager.getArtifactHandler("jar"));        
+
         if (!new File(testClassesDirectory, "it").exists())
         {
             getLog().info("No integration tests found");
