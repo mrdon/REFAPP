@@ -15,8 +15,6 @@
     <template-context-item key="webResourceIncluder" context-key="webResourceIncluder"
             class="com.atlassian.refapp.decorator.WebResourceIncluder"/>
 
-    <template-context-item key="helperContextItem" context-key="helper" component-ref="refappHelper"/>
-
     <servlet key="decoratorServlet" class="com.atlassian.refapp.decorator.DecoratorServlet">
         <url-pattern>/refappdecorator</url-pattern>
         <url-pattern>/refappdecorator/*</url-pattern>
