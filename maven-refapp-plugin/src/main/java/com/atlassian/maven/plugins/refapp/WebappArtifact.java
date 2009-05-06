@@ -3,7 +3,8 @@ package com.atlassian.maven.plugins.refapp;
 /**
  * Represents a plugin artifact to be retrieved
  */
-public class RefappArtifact {
+public class WebappArtifact
+{
 
     /**
      * @parameter
@@ -23,15 +24,15 @@ public class RefappArtifact {
      */
     private String version;
 
-    public RefappArtifact() {
+    public WebappArtifact() {
     }
 
-    public RefappArtifact(String groupId, String artifactId) {
+    public WebappArtifact(String groupId, String artifactId) {
         this.groupId = groupId;
         this.artifactId = artifactId;
     }
 
-    public RefappArtifact(String groupId, String artifactId, String version) {
+    public WebappArtifact(String groupId, String artifactId, String version) {
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.version = version;

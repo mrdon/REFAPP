@@ -26,6 +26,7 @@
         <module>decorator-plugin</module>
         <module>refapp</module>
         <module>maven-refapp-plugin</module>
+        <module>maven-confluence-plugin</module>
     </modules>
     <scm>
         <connection>scm:svn:https://studio.atlassian.com/svn/REFAPP/branches/atlassian-refapp-2.2.x</connection>

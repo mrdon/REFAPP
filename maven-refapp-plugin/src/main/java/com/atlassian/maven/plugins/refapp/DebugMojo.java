@@ -3,7 +3,7 @@ package com.atlassian.maven.plugins.refapp;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
- * Debug the refapp
+ * Debug the webapp
  *
  * @requiresDependencyResolution debug
  * @goal debug
@@ -31,7 +31,7 @@ public class DebugMojo extends RunMojo
     {
         if (jvmArgs == null)
         {
-            jvmArgs = "";
+            jvmArgs = "-Xmx512m -XX:MaxPermSize=160m";
         }
         jvmArgs += " -Xdebug -Xrunjdwp:transport=dt_socket,address="+String.valueOf(jvmDebugPort)+",suspend="+(jvmDebugSuspend?"y":"n")+",server=y ";
         super.execute();
