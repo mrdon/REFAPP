@@ -238,6 +238,6 @@
         <atlassian.plugins.version>2.2.1.rc2</atlassian.plugins.version>
         <sal.version>2.0.4</sal.version>
         <template.renderer.version>1.0.beta4</template.renderer.version>
-        <oauth.version>1.0.beta4</oauth.version>
+        <oauth.version>1.0.beta5</oauth.version>
     </properties>
 </project>
