@@ -56,6 +56,13 @@ public abstract class AbstractWebappMojo extends AbstractMojo
     protected String server;
 
     /**
+     * Webapp version
+     *
+     * @parameter expression="${webapp.version}"
+     */
+    protected String webappVersion;
+
+    /**
      * The build directory
      *
      * @parameter expression="${project.build.directory}"
@@ -276,6 +283,11 @@ public abstract class AbstractWebappMojo extends AbstractMojo
                 IOUtils.closeQuietly(fos);
             }
         }
+    }
+
+    protected String getVersion()
+    {
+        return (webappVersion == null ? getWebappHandler().getVersion() : webappVersion);    
     }
 
     private void addThisPluginToDirectory(final File pluginsDir) throws IOException
