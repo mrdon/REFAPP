@@ -1,14 +1,14 @@
 package com.atlassian.maven.plugins.conf;
 
-import com.atlassian.maven.plugins.refapp.RunMojo;
-import com.atlassian.maven.plugins.refapp.MavenContext;
-import com.atlassian.maven.plugins.refapp.WebappHandler;
-
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.commons.io.FileUtils;
+import org.apache.maven.plugin.MojoExecutionException;
+
+import com.atlassian.maven.plugins.refapp.MavenContext;
+import com.atlassian.maven.plugins.refapp.RunMojo;
+import com.atlassian.maven.plugins.refapp.WebappHandler;
 
 /**
  * @extendsPlugin refapp
@@ -25,27 +25,27 @@ public class ConfluenceRunMojo extends RunMojo
     protected String testResourcesVersion;
 
     @Override
-    protected void prepareWebapp(File webappWar) throws MojoExecutionException
+    protected void prepareWebapp(final File webappWar) throws MojoExecutionException
     {
-        ConfluenceMavenGoals goals = new ConfluenceMavenGoals(new MavenContext(project, session, pluginManager, getLog()));
+        final ConfluenceMavenGoals goals = new ConfluenceMavenGoals(new MavenContext(project, session, pluginManager, getLog()));
         final File outputDir = new File(project.getBuild().getDirectory());
-        File confHomeZip = goals.copyConfluenceHome(outputDir, testResourcesVersion);
-        File tmpDir = new File(project.getBuild().getDirectory(), "tmp-resources");
+        final File confHomeZip = goals.copyConfluenceHome(outputDir, testResourcesVersion);
+        final File tmpDir = new File(project.getBuild().getDirectory(), "tmp-resources");
         tmpDir.mkdir();
 
-        File confHome = new File(outputDir, "confluence-home");
+        final File confHome = new File(outputDir, "confluence-home");
         try
         {
             unzip(confHomeZip, tmpDir.getPath());
             FileUtils.copyDirectory(new File(tmpDir.listFiles()[0], "confluence-home"),
                    confHome);
 
-            File cfgFile = new File(confHome, "confluence.cfg.xml");
+            final File cfgFile = new File(confHome, "confluence.cfg.xml");
             String config = FileUtils.readFileToString(cfgFile);
-            config = config.replaceAll("@project-dir@", project.getBuild().getDirectory());
+            config = config.replace("@project-dir@", project.getBuild().getDirectory());
             FileUtils.writeStringToFile(cfgFile, config);
         }
-        catch (IOException ex)
+        catch (final IOException ex)
         {
             throw new MojoExecutionException("Unable to prepare confluence webapp", ex);
         }
