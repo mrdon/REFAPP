@@ -63,7 +63,7 @@ extends AbstractWebappMojo
         if (!noWebapp)
         {
             // Copy the webapp war to target
-            final File webappWar = goals.copyWebappWar(targetDirectory, getWebappHandler().getVersion());
+            final File webappWar = goals.copyWebappWar(targetDirectory, getVersion());
 
             final File combinedWebappWar = addArtifacts(goals, webappWar);
 
