@@ -354,7 +354,7 @@ public class MavenGoals {
                                 element(name("type"), container.getType())
                         ),
                         element(name("configuration"),
-                                element(name("home"), "${project.build.directory}/" + container.getId() + "/server")
+                                element(name("home"), "${project.build.directory}/" + container.getId())
                         )
                 ),
                 executionEnvironment(project, session, pluginManager)
