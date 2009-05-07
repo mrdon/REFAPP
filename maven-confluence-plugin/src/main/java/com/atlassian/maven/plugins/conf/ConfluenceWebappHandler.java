@@ -7,6 +7,7 @@ import com.atlassian.maven.plugins.refapp.MavenContext;
 import java.util.Map;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Arrays;
 import java.io.File;
 
 import org.apache.maven.project.MavenProject;
@@ -35,7 +36,9 @@ public class ConfluenceWebappHandler implements WebappHandler
 
     public Collection<WebappArtifact> getSalArtifacts(String salVersion)
     {
-        throw new UnsupportedOperationException("Confluence SAL artifacts not supported");
+        return Arrays.asList(
+                new WebappArtifact("com.atlassian.sal", "sal-api", salVersion),
+                new WebappArtifact("com.atlassian.sal", "sal-confluence-plugin", salVersion));
     }
 
     public File getPluginsDirectory(String webappDir)
