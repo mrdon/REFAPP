@@ -38,7 +38,12 @@ public class CopyBundledDependenciesMojo extends AbstractMojo {
     protected PluginManager pluginManager;
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        final MavenGoals goals = new MavenGoals(project, session, pluginManager, getLog());
+        MavenGoals goals = new MavenGoals(new MavenContext(project, session, pluginManager, getLog()), getWebappHandler());
         goals.copyBundledDependencies();
+    }
+
+    protected WebappHandler getWebappHandler()
+    {
+         return new RefappWebappHandler();
     }
 }

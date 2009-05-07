@@ -59,12 +59,6 @@
 									<include>org.twdata.maven:mojo-executor</include>
 								</includes>
 							</artifactSet>
-							<relocations>
-								<relocation>
-									<pattern>org.twdata.maven.mojoexecutor</pattern>
-									<shadedPattern>org.shaded.mojoexecutor</shadedPattern>
-								</relocation>
-							</relocations>
 							<transformers>
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ComponentsXmlResourceTransformer" />
 							</transformers>

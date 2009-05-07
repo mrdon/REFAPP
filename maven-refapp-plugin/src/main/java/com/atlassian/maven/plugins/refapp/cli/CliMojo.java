@@ -7,6 +7,9 @@ import org.apache.maven.plugin.PluginManager;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.execution.MavenSession;
 import com.atlassian.maven.plugins.refapp.MavenGoals;
+import com.atlassian.maven.plugins.refapp.MavenContext;
+import com.atlassian.maven.plugins.refapp.WebappHandler;
+import com.atlassian.maven.plugins.refapp.RefappWebappHandler;
 
 /**
  * @goal cli
@@ -37,13 +40,19 @@ public class CliMojo extends AbstractMojo {
      */
     protected PluginManager pluginManager;
 
+
     /**
      * @parameter expression="${cli.port}"
      */
     private int port = 4330;
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        MavenGoals goals = new MavenGoals(project, session, pluginManager, getLog());
+        MavenGoals goals = new MavenGoals(new MavenContext(project, session, pluginManager, getLog()), getWebappHandler());
         goals.startCli(port);
+    }
+
+    protected WebappHandler getWebappHandler()
+    {
+         return new RefappWebappHandler();
     }
 }

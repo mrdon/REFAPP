@@ -7,6 +7,9 @@ import org.apache.maven.plugin.PluginManager;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.execution.MavenSession;
 import com.atlassian.maven.plugins.refapp.MavenGoals;
+import com.atlassian.maven.plugins.refapp.WebappHandler;
+import com.atlassian.maven.plugins.refapp.RefappWebappHandler;
+import com.atlassian.maven.plugins.refapp.MavenContext;
 
 /**
  * @goal idea
@@ -38,7 +41,12 @@ public class IdeaMojo extends AbstractMojo {
     protected PluginManager pluginManager;
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        MavenGoals goals = new MavenGoals(project, session, pluginManager, getLog());
+        MavenGoals goals = new MavenGoals(new MavenContext(project, session, pluginManager, getLog()), getWebappHandler());
         goals.installIdeaPlugin();
+    }
+    
+    protected WebappHandler getWebappHandler()
+    {
+         return new RefappWebappHandler();
     }
 }

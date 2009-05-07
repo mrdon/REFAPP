@@ -4,6 +4,10 @@ import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.PluginManager;
 import org.apache.maven.project.MavenProject;
+import com.atlassian.maven.plugins.refapp.MavenGoals;
+import com.atlassian.maven.plugins.refapp.MavenContext;
+import com.atlassian.maven.plugins.refapp.WebappHandler;
+import com.atlassian.maven.plugins.refapp.RefappWebappHandler;
 
 /**
  *
@@ -55,7 +59,7 @@ public abstract class AbstractPdkMojo extends AbstractMojo {
     /**
      * Application context path
      *
-     * @parameter expression="${context.path}" default-value="/refapp"
+     * @parameter expression="${context.path}"
      */
     protected String contextPath;
 
@@ -66,11 +70,23 @@ public abstract class AbstractPdkMojo extends AbstractMojo {
      */
     protected String server;
 
+    public AbstractPdkMojo()
+    {
+        if (contextPath == null)
+        {
+            contextPath = "/" + getWebappHandler().getId();
+        }
+    }
 
     protected void ensurePluginKeyExists() {
         if (pluginKey == null)
         {
             pluginKey = groupId + "." + artifactId;
         }
+    }
+    
+    protected WebappHandler getWebappHandler()
+    {
+         return new RefappWebappHandler();
     }
 }

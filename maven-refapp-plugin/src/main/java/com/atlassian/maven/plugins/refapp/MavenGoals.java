@@ -36,6 +36,7 @@ public class MavenGoals {
     private final PluginManager pluginManager;
     private final Log log;
     private final Map<String, String> pluginArtifactIdToVersionMap;
+    private final WebappHandler webappHandler;
 
     private final Map<String, Container> idToContainerMap = new HashMap<String, Container>()
     {{
@@ -55,14 +56,15 @@ public class MavenGoals {
 
     }};
 
-    public MavenGoals(final MavenProject project, final MavenSession session, final PluginManager pluginManager, final Log log) {
-        this(project, session, pluginManager, log, Collections.<String, String>emptyMap());
+    public MavenGoals(MavenContext ctx, WebappHandler webappHandler) {
+        this(ctx, webappHandler, Collections.<String, String>emptyMap());
     }
-    public MavenGoals(final MavenProject project, final MavenSession session, final PluginManager pluginManager, final Log log, final Map<String,String> pluginToVersionMap) {
-        this.project = project;
-        this.session = session;
-        this.pluginManager = pluginManager;
-        this.log = log;
+    public MavenGoals(MavenContext ctx, WebappHandler webappHandler, final Map<String,String> pluginToVersionMap) {
+        this.project = ctx.getProject();
+        this.session = ctx.getSession();
+        this.pluginManager = ctx.getPluginManager();
+        this.log = ctx.getLog();
+        this.webappHandler = webappHandler;
 
         final Map<String,String> map = new HashMap<String, String>(defaultArtifactIdToVersionMap);
         map.putAll(pluginToVersionMap);
@@ -74,8 +76,9 @@ public class MavenGoals {
 
         final List<Element> configs = new ArrayList<Element>();
         configs.add(element(name("commands"),
-                element(name("pi"), "resources compile com.atlassian.maven.plugins:maven-refapp-plugin:copy-bundled-dependencies jar com.atlassian.maven.plugins:maven-refapp-plugin:install"),
-                element(name("pu"), "com.atlassian.maven.plugins:maven-refapp-plugin:uninstall")));
+                element(name("pi"), "resources compile com.atlassian.maven.plugins:maven-"+webappHandler.getId()
+                        +"-plugin:copy-bundled-dependencies jar com.atlassian.maven.plugins:maven-"+webappHandler.getId()+"-plugin:install"),
+                element(name("pu"), "com.atlassian.maven.plugins:maven-"+webappHandler.getId()+"-plugin:uninstall")));
         if (port > 0)
         {
             configs.add(element(name("port"), String.valueOf(port)));
@@ -147,8 +150,8 @@ public class MavenGoals {
         );
     }
 
-    public File copyRefappWar(final File targetDirectory, final String refappVersion) throws MojoExecutionException {
-        final File refappWarFile = new File(targetDirectory, "refapp-original.war");
+    public File copyWebappWar(final File targetDirectory, final String webappVersion) throws MojoExecutionException {
+        final File webappWarFile = new File(targetDirectory, webappHandler.getId()+"-original.war");
         executeMojo(
                 plugin(
                         groupId("org.apache.maven.plugins"),
@@ -158,23 +161,23 @@ public class MavenGoals {
                 configuration(
                         element(name("artifactItems"),
                                 element(name("artifactItem"),
-                                        element(name("groupId"), "com.atlassian.refapp"),
-                                        element(name("artifactId"), "atlassian-refapp"),
+                                        element(name("groupId"), webappHandler.getGroupId()),
+                                        element(name("artifactId"), webappHandler.getArtifactId()),
                                         element(name("type"), "war"),
-                                        element(name("version"), refappVersion),
-                                        element(name("destFileName"), refappWarFile.getName()))),
+                                        element(name("version"), webappVersion),
+                                        element(name("destFileName"), webappWarFile.getName()))),
                                         element(name("outputDirectory"), "${project.build.directory}")
                 ),
                 executionEnvironment(project, session, pluginManager)
         );
-        return refappWarFile;
+        return webappWarFile;
     }
 
-    public void copyPlugins(final File pluginsDir, final List<RefappArtifact> pluginArtifacts) throws MojoExecutionException {
+    public void copyPlugins(final File pluginsDir, final List<WebappArtifact> pluginArtifacts) throws MojoExecutionException {
         final Element[] items = new Element[pluginArtifacts.size()];
         for (int x=0; x<pluginArtifacts.size(); x++)
         {
-            final RefappArtifact artifact = pluginArtifacts.get(x);
+            final WebappArtifact artifact = pluginArtifacts.get(x);
             items[x] = element(name("artifactItem"),
                     element(name("groupId"), artifact.getGroupId()),
                     element(name("artifactId"), artifact.getArtifactId()),
@@ -194,20 +197,28 @@ public class MavenGoals {
         );
     }
 
-    public int startRefapp(final File refappWar, final String containerId, final String server, final int httpPort, final String contextPath, String jvmArgs) throws MojoExecutionException {
+    public int startWebapp(final File webappWar, final String containerId, final String server, final int httpPort, final String contextPath, String jvmArgs) throws MojoExecutionException {
         final int rmiPort = pickFreePort(0);
         final int actualHttpPort = pickFreePort(httpPort);
         final Container container = findContainer(containerId);
+        List<Element> sysProps = new ArrayList<Element>();
         if (jvmArgs == null)
         {
-            jvmArgs = "";
+            jvmArgs = "-Xmx512m -XX:MaxPermSize=160m";
         }
-        jvmArgs += " -Dosgi.cache=${project.build.directory}/osgi-cache";//"-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005";
+        for (Map.Entry<String,String> entry : webappHandler.getSystemProperties(project).entrySet())
+        {
+            jvmArgs += " -D" + entry.getKey() + "=" + entry.getValue();
+            sysProps.add(element(name(entry.getKey()), entry.getValue()));
+        }
 
-        log.info("Starting refapp on the " + container.getId() + " container on ports "
+        log.info("Starting "+webappHandler.getId()+" on the " + container.getId() + " container on ports "
                 + actualHttpPort + " (http) and " + rmiPort + " (rmi)");
 
         final String baseUrl = getBaseUrl(server, actualHttpPort, contextPath);
+        sysProps.add(element(name("baseurl"), baseUrl));
+
+        File serverDir = new File("${project.build.directory}/" + container.getId());
         executeMojo(
                 plugin(
                         groupId("org.twdata.maven"),
@@ -223,14 +234,10 @@ public class MavenGoals {
                                 element(name("zipUrlInstaller"),
                                         element(name("url"), container.getUrl())
                                 ),
-                                //element(name("output"), "${project.build.directory}/"+container.getId()+"/output-"+identifier+".log"),
-                                //element(name("log"), "${project.build.directory}/"+container.getId()+"/cargo-"+identifier+".log"),
-                                element(name("systemProperties"),
-                                        element(name("baseurl"), baseUrl)
-                                )
+                                element(name("systemProperties"), sysProps.toArray(new Element[sysProps.size()]))
                         ),
                         element(name("configuration"),
-                                element(name("home"), "${project.build.directory}/" + container.getId() + "/server"),
+                                element(name("home"), "${project.build.directory}/" + container.getId()),
                                 element(name("properties"),
                                         element(name("cargo.servlet.port"), String.valueOf(actualHttpPort)),
                                         element(name("cargo.rmi.port"), String.valueOf(rmiPort)),
@@ -238,13 +245,10 @@ public class MavenGoals {
                                 ),
                                 element(name("deployables"),
                                         element(name("deployable"),
-                                                element(name("groupId"), "com.atlassian.refapp"),
-                                                element(name("artifactId"), "atlassian-refapp"),
+                                                element(name("groupId"), webappHandler.getGroupId()),
+                                                element(name("artifactId"), webappHandler.getArtifactId()),
                                                 element(name("type"), "war"),
-                                                element(name("location"), refappWar.getPath())
-                                                //element(name("properties"),
-                                                //        element(name("context"), "/")
-                                                //)
+                                                element(name("location"), webappWar.getPath())
                                         )
                                 )
                         )
@@ -335,7 +339,7 @@ public class MavenGoals {
         }
     }
 
-    public void stopRefapp(final String containerId) throws MojoExecutionException {
+    public void stopWebapp(final String containerId) throws MojoExecutionException {
         final Container container = findContainer(containerId);
         executeMojo(
                 plugin(
@@ -387,7 +391,7 @@ public class MavenGoals {
                 configuration(
                         element(name("username"), "admin"),
                         element(name("password"), "admin"),
-                        element(name("serverUrl"), "http://localhost:"+port+"/refapp"),
+                        element(name("serverUrl"), "http://localhost:"+port+"/"+webappHandler.getId()),
                         element(name("pluginKey"), pluginKey)
                 ),
                 executionEnvironment(project, session, pluginManager)

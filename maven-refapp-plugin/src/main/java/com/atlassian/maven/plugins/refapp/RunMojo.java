@@ -6,34 +6,40 @@ import java.io.IOException;
 import org.apache.maven.plugin.MojoExecutionException;
 
 /**
- * Run the refapp
+ * Run the webapp
  *
  * @requiresDependencyResolution run
  * @goal run
  * @execute phase="package"
  */
 public class RunMojo
-extends AbstractRefappMojo
+extends AbstractWebappMojo
 {
     public void execute()
     throws MojoExecutionException
     {
-        final MavenGoals goals = new MavenGoals(project, session, pluginManager, getLog());
+        MavenGoals goals = new MavenGoals(new MavenContext(project, session, pluginManager, getLog()), getWebappHandler());
 
-        // Copy the refapp war to target
-        final File refappWar = goals.copyRefappWar(targetDirectory, determineVersion());
+        // Copy the webapp war to target
+        final File webappWar = goals.copyWebappWar(targetDirectory, getWebappHandler().getVersion());
 
-        final File combinedRefappWar = addArtifacts(goals, refappWar);
+        final File combinedWebappWar = addArtifacts(goals, webappWar);
+
+        prepareWebapp(webappWar);
 
         // Start the refapp
-        final int actualHttpPort = goals.startRefapp(combinedRefappWar, containerId, server, httpPort, contextPath, jvmArgs);
+        final int actualHttpPort = goals.startWebapp(combinedWebappWar, containerId, server, httpPort, contextPath, jvmArgs);
 
-        getLog().info("Refapp started successfully and available at http://localhost:" + actualHttpPort + contextPath);
+        getLog().info(getWebappHandler().getId() + " started successfully and available at http://localhost:" + actualHttpPort + contextPath);
         getLog().info("Type any key to exit");
         try {
             System.in.read();
         } catch (final IOException e) {
             // ignore
         }
+    }
+
+    protected void prepareWebapp(File webappWar) throws MojoExecutionException
+    {
     }
 }

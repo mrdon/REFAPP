@@ -6,14 +6,15 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.artifact.handler.manager.ArtifactHandlerManager;
 
 /**
- * Run the integration tests against the refapp
+ * Run the integration tests against the webapp
  *
  * @requiresDependencyResolution integration-test
  * @goal integration-test
  *
  */
 public class IntegrationTestMojo
-extends AbstractRefappMojo {
+extends AbstractWebappMojo
+{
 
     /**
      * Pattern for to use to find integration tests
@@ -33,9 +34,9 @@ extends AbstractRefappMojo {
     /**
      * Whether the reference application will not be started or not
      *
-     * @parameter expression="${noRefapp}"
+     * @parameter expression="${noWebapp}"
      */
-    private final boolean noRefapp = false;
+    private final boolean noWebapp = false;
 
     /**
      * @component
@@ -54,26 +55,26 @@ extends AbstractRefappMojo {
             getLog().info("No integration tests found");
             return;
         }
-        final MavenGoals goals = new MavenGoals(project, session, pluginManager, getLog());
+        MavenGoals goals = new MavenGoals(new MavenContext(project, session, pluginManager, getLog()), getWebappHandler());
 
         final String pluginJar = targetDirectory.getAbsolutePath() + "/" + finalName + ".jar";
 
         int actualHttpPort = 0;
-        if (!noRefapp)
+        if (!noWebapp)
         {
-            // Copy the refapp war to target
-            final File refappWar = goals.copyRefappWar(targetDirectory, determineVersion());
+            // Copy the webapp war to target
+            final File webappWar = goals.copyWebappWar(targetDirectory, getWebappHandler().getVersion());
 
-            final File combinedRefappWar = addArtifacts(goals, refappWar);
+            final File combinedWebappWar = addArtifacts(goals, webappWar);
 
-            actualHttpPort = goals.startRefapp(combinedRefappWar, containerId, server, httpPort, contextPath, jvmArgs);
+            actualHttpPort = goals.startWebapp(combinedWebappWar, containerId, server, httpPort, contextPath, jvmArgs);
 
         }
         goals.runTests(containerId, functionalTestPattern, actualHttpPort, contextPath, pluginJar);
 
-        if (!noRefapp)
+        if (!noWebapp)
         {
-            goals.stopRefapp(containerId);
+            goals.stopWebapp(containerId);
         }
 
     }
