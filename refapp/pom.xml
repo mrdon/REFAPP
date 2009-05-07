@@ -418,7 +418,7 @@
         <dependency>
             <groupId>com.atlassian.aui</groupId>
             <artifactId>auiplugin</artifactId>
-            <version>1.1</version>
+            <version>1.1.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
