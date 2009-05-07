@@ -24,6 +24,7 @@
         <module>jquery-plugin</module>
         <module>web-item-plugin</module>
         <module>decorator-plugin</module>
+        <module>jsr305</module>
         <module>refapp</module>
         <module>maven-refapp-plugin</module>
         <module>maven-confluence-plugin</module>
