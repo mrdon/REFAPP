@@ -10,9 +10,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
 import org.apache.commons.io.FileUtils;
@@ -199,7 +197,8 @@ public abstract class AbstractWebappMojo extends AbstractMojo
         try
         {
             final String webappDir = new File(project.getBuild().getDirectory(), "webapp").getAbsolutePath();
-            unzip(webappWar, webappDir);
+            if (!new File(webappDir).exists())
+                unzip(webappWar, webappDir);
 
             final File pluginsDir = getWebappHandler().getPluginsDirectory(webappDir);
             final File bundledPluginsDir = new File(project.getBuild().getDirectory(), "bundled-plugins");
@@ -231,7 +230,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
 
             if (bundledPluginsDir.list().length > 0)
             {
-                File bundledPluginsZip = new File(webappDir, getWebappHandler().getBundledPluginPath());
+                final File bundledPluginsZip = new File(webappDir, getWebappHandler().getBundledPluginPath());
                 if (bundledPluginsZip.exists()) {
                     unzip(bundledPluginsZip, bundledPluginsDir.getPath());
                 }
@@ -287,7 +286,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
 
     protected String getVersion()
     {
-        return (webappVersion == null ? getWebappHandler().getVersion() : webappVersion);    
+        return (webappVersion == null ? getWebappHandler().getVersion() : webappVersion);
     }
 
     private void addThisPluginToDirectory(final File pluginsDir) throws IOException
