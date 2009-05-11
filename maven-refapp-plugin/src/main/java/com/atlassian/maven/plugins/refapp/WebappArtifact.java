@@ -27,12 +27,12 @@ public class WebappArtifact
     public WebappArtifact() {
     }
 
-    public WebappArtifact(String groupId, String artifactId) {
+    public WebappArtifact(final String groupId, final String artifactId) {
         this.groupId = groupId;
         this.artifactId = artifactId;
     }
 
-    public WebappArtifact(String groupId, String artifactId, String version) {
+    public WebappArtifact(final String groupId, final String artifactId, final String version) {
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.version = version;
@@ -42,7 +42,7 @@ public class WebappArtifact
         return groupId;
     }
 
-    public void setGroupId(String groupId) {
+    public void setGroupId(final String groupId) {
         this.groupId = groupId;
     }
 
@@ -50,7 +50,7 @@ public class WebappArtifact
         return artifactId;
     }
 
-    public void setArtifactId(String artifactId) {
+    public void setArtifactId(final String artifactId) {
         this.artifactId = artifactId;
     }
 
@@ -58,7 +58,13 @@ public class WebappArtifact
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(final String version) {
         this.version = version;
+    }
+
+    @Override
+    public String toString()
+    {
+        return new StringBuilder(groupId).append(":").append(artifactId).append(":").append(version).toString();
     }
 }
