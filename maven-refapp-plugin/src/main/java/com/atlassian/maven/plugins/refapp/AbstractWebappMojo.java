@@ -98,6 +98,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
      * @readonly
      */
     protected MavenProject project;
+
     /**
      * The Maven Session Object
      *
@@ -113,6 +114,13 @@ public abstract class AbstractWebappMojo extends AbstractMojo
      * @required
      */
     protected PluginManager pluginManager;
+
+    /**
+     * The test resources version
+     *
+     * @parameter expression="${testResourcesVersion}" default-value="RELEASE"
+     */
+    protected String testResourcesVersion;
 
     /**
      * @parameter
@@ -156,6 +164,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
      * @parameter expression="${rpm.version}
      */
     private String rpmVersion;
+
 
     public AbstractWebappMojo()
     {
@@ -255,7 +264,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
         }
     }
 
-    protected void unzip(final File zipFile, final String destDir) throws IOException
+    public void unzip(final File zipFile, final String destDir) throws IOException
     {
         final ZipFile zip = new ZipFile(zipFile);
         final Enumeration<? extends ZipEntry> entries = zip.entries();
@@ -330,5 +339,25 @@ public abstract class AbstractWebappMojo extends AbstractMojo
     protected WebappHandler getWebappHandler()
     {
         return new RefappWebappHandler();
+    }
+
+    public MavenProject getProject()
+    {
+        return project;
+    }
+
+    public MavenSession getSession()
+    {
+        return session;
+    }
+
+    public PluginManager getPluginManager()
+    {
+        return pluginManager;
+    }
+
+    public String getTestResourcesVersion()
+    {
+        return testResourcesVersion;
     }
 }

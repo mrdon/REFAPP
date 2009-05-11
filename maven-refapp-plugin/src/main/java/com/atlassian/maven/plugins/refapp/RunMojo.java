@@ -18,14 +18,14 @@ extends AbstractWebappMojo
     public void execute()
     throws MojoExecutionException
     {
-        MavenGoals goals = new MavenGoals(new MavenContext(project, session, pluginManager, getLog()), getWebappHandler());
+        final MavenGoals goals = new MavenGoals(new MavenContext(project, session, pluginManager, getLog()), getWebappHandler());
 
         // Copy the webapp war to target
         final File webappWar = goals.copyWebappWar(targetDirectory, getVersion());
 
         final File combinedWebappWar = addArtifacts(goals, webappWar);
 
-        prepareWebapp(webappWar);
+        getWebappHandler().prepareWebapp(combinedWebappWar, this);
 
         // Start the refapp
         final int actualHttpPort = goals.startWebapp(combinedWebappWar, containerId, server, httpPort, contextPath, jvmArgs);
@@ -37,9 +37,5 @@ extends AbstractWebappMojo
         } catch (final IOException e) {
             // ignore
         }
-    }
-
-    protected void prepareWebapp(File webappWar) throws MojoExecutionException
-    {
     }
 }

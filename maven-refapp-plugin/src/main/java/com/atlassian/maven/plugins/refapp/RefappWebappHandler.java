@@ -1,16 +1,17 @@
 package com.atlassian.maven.plugins.refapp;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.maven.project.MavenProject;
-
-import java.util.Map;
-import java.util.Collections;
-import java.util.Collection;
-import java.util.Arrays;
-import java.util.Properties;
 import java.io.File;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Properties;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.project.MavenProject;
 
 public class RefappWebappHandler implements WebappHandler
 {
@@ -29,12 +30,12 @@ public class RefappWebappHandler implements WebappHandler
         return "atlassian-refapp";
     }
 
-    public Map<String, String> getSystemProperties(MavenProject project)
+    public Map<String, String> getSystemProperties(final MavenProject project)
     {
         return Collections.singletonMap("osgi.cache", "${project.build.directory}/osgi-cache");
     }
 
-    public Collection<WebappArtifact> getSalArtifacts(String salVersion)
+    public Collection<WebappArtifact> getSalArtifacts(final String salVersion)
     {
         return Arrays.asList(
                 new WebappArtifact("com.atlassian.sal", "sal-api", salVersion),
@@ -52,7 +53,7 @@ public class RefappWebappHandler implements WebappHandler
                 new WebappArtifact("com.atlassian.sal", "sal-refimpl-user-plugin", salVersion));
     }
 
-    public File getPluginsDirectory(String webappDir)
+    public File getPluginsDirectory(final String webappDir)
     {
         return new File(webappDir, "WEB-INF/plugins");
     }
@@ -87,6 +88,11 @@ public class RefappWebappHandler implements WebappHandler
             IOUtils.closeQuietly(in);
         }
         return null;
+    }
+
+    public void prepareWebapp(final File webappWar, final AbstractWebappMojo webappMojo) throws MojoExecutionException
+    {
+        // no test data for refapp
     }
 
 }

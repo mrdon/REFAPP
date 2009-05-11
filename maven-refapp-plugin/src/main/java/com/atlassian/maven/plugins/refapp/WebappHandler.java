@@ -1,10 +1,11 @@
 package com.atlassian.maven.plugins.refapp;
 
-import org.apache.maven.project.MavenProject;
-
-import java.util.Map;
-import java.util.Collection;
 import java.io.File;
+import java.util.Collection;
+import java.util.Map;
+
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.project.MavenProject;
 
 /**
  * Handler for webapp-specific settings
@@ -53,4 +54,14 @@ public interface WebappHandler
      * @return the path to the bundled plugins zip within the webapp
      */
     String getBundledPluginPath();
+
+    /**
+     * Prepares initial data for application.
+     *
+     * @param webappWar
+     * @param webappMojo
+     * @throws MojoExecutionException
+     */
+    void prepareWebapp(File webappWar, final AbstractWebappMojo webappMojo) throws MojoExecutionException;
+
 }
