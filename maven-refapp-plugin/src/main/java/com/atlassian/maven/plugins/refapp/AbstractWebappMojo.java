@@ -211,7 +211,13 @@ public abstract class AbstractWebappMojo extends AbstractMojo
 
             final File pluginsDir = getWebappHandler().getPluginsDirectory(webappDir);
             final File bundledPluginsDir = new File(project.getBuild().getDirectory(), "bundled-plugins");
+
             bundledPluginsDir.mkdir();
+            // add bundled plugins
+            final File bundledPluginsZip = new File(webappDir, getWebappHandler().getBundledPluginPath());
+            if (bundledPluginsZip.exists()) {
+                unzip(bundledPluginsZip, bundledPluginsDir.getPath());
+            }
 
             if (pluginsDir != null)
             {
@@ -231,7 +237,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
             // add plugins1 plugins
             addArtifactsToDirectory(goals, libArtifacts, new File(webappDir, "WEB-INF/lib"));
 
-            // add bundled plugins
+
             if (!bundledArtifacts.isEmpty())
             {
                 addArtifactsToDirectory(goals, bundledArtifacts, bundledPluginsDir);
@@ -239,10 +245,6 @@ public abstract class AbstractWebappMojo extends AbstractMojo
 
             if (bundledPluginsDir.list().length > 0)
             {
-                final File bundledPluginsZip = new File(webappDir, getWebappHandler().getBundledPluginPath());
-                if (bundledPluginsZip.exists()) {
-                    unzip(bundledPluginsZip, bundledPluginsDir.getPath());
-                }
                 com.atlassian.core.util.FileUtils.createZipFile(bundledPluginsDir,bundledPluginsZip);
             }
 
