@@ -86,10 +86,10 @@ public class ConfluenceWebappHandler implements WebappHandler
             config = config.replace("@project-dir@", webappMojo.getProject().getBuild().getDirectory());
             FileUtils.writeStringToFile(cfgFile, config);
 
-//            final File dbFile = new File(new File(confHome,"database"), "confluencedb.script");
-//            String db = FileUtils.readFileToString(dbFile);
-//            db = db.replace("<baseUrl>http://localhost:8080</baseUrl>", "<baseUrl>http://"+server+":"+httpPort+"/"+contextPath+"</baseUrl>");
-//            FileUtils.writeStringToFile(dbFile, db);
+            final File dbFile = new File(new File(confHome,"database"), "confluencedb.script");
+            String db = FileUtils.readFileToString(dbFile);
+            db = db.replace("<baseUrl>http://localhost:8080</baseUrl>", "<baseUrl>http://"+webappMojo.getServer()+":"+webappMojo.getHttpPort()+"/"+webappMojo.getContextPath().replaceAll("^/|/$", "")+"</baseUrl>");
+            FileUtils.writeStringToFile(dbFile, db);
         }
         catch (final IOException ex)
         {

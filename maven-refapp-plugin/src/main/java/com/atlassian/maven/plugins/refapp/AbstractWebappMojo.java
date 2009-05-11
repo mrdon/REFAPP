@@ -362,4 +362,20 @@ public abstract class AbstractWebappMojo extends AbstractMojo
     {
         return testResourcesVersion;
     }
+
+    public int getHttpPort()
+    {
+        return httpPort;
+    }
+
+    public String getContextPath()
+    {
+        return contextPath;
+    }
+
+    public String getServer()
+    {
+        return server;
+    }
+
 }
