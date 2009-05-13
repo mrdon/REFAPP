@@ -37,7 +37,7 @@ public class JiraWebappHandler implements WebappHandler
 
     public WebappArtifact getTestResourcesArtifact()
     {
-        return new WebappArtifact("com.atlassian.jira.plugins", "jira-plugin-test-resources", "RELEASE");
+        return new WebappArtifact("com.atlassian.jira.plugins", "jira-plugin-test-resources", "LATEST");
     }
 
     public Map<String, String> getSystemProperties(final MavenProject project)
