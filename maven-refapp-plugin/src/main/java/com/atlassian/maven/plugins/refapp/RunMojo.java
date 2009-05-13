@@ -23,12 +23,12 @@ extends AbstractWebappMojo
         // Copy the webapp war to target
         final File webappWar = goals.copyWebappWar(targetDirectory, getVersion());
 
-        final File combinedWebappWar = addArtifacts(goals, webappWar);
+        File homeDir = extractAndProcessHomeDirectory(goals);
 
-        getWebappHandler().prepareWebapp(combinedWebappWar, this);
+        final File combinedWebappWar = addArtifacts(goals, homeDir, webappWar);
 
         // Start the refapp
-        final int actualHttpPort = goals.startWebapp(combinedWebappWar, containerId, server, httpPort, contextPath, jvmArgs);
+        final int actualHttpPort = goals.startWebapp(createWebappContext(combinedWebappWar));
 
         getLog().info(getWebappHandler().getId() + " started successfully and available at http://localhost:" + actualHttpPort + contextPath);
         getLog().info("Type any key to exit");

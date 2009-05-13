@@ -65,9 +65,11 @@ extends AbstractWebappMojo
             // Copy the webapp war to target
             final File webappWar = goals.copyWebappWar(targetDirectory, getVersion());
 
-            final File combinedWebappWar = addArtifacts(goals, webappWar);
+            File homeDir = extractAndProcessHomeDirectory(goals);
 
-            actualHttpPort = goals.startWebapp(combinedWebappWar, containerId, server, httpPort, contextPath, jvmArgs);
+            final File combinedWebappWar = addArtifacts(goals, homeDir, webappWar);
+
+            actualHttpPort = goals.startWebapp(createWebappContext(combinedWebappWar));
 
         }
         goals.runTests(containerId, functionalTestPattern, actualHttpPort, contextPath, pluginJar);

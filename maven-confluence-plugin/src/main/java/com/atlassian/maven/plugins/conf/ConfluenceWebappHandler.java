@@ -6,15 +6,21 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.goal;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.configuration;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.element;
+import static org.twdata.maven.mojoexecutor.MojoExecutor.name;
 
 import com.atlassian.maven.plugins.refapp.AbstractWebappMojo;
 import com.atlassian.maven.plugins.refapp.MavenContext;
 import com.atlassian.maven.plugins.refapp.WebappArtifact;
 import com.atlassian.maven.plugins.refapp.WebappHandler;
+import com.atlassian.maven.plugins.refapp.util.ConfigFileUtils;
 
 public class ConfluenceWebappHandler implements WebappHandler
 {
@@ -23,14 +29,14 @@ public class ConfluenceWebappHandler implements WebappHandler
         return "confluence";
     }
 
-    public String getGroupId()
+    public WebappArtifact getArtifact()
     {
-        return "com.atlassian.confluence";
+        return new WebappArtifact("com.atlassian.confluence", "confluence-webapp", "RELEASE");
     }
 
-    public String getArtifactId()
+    public WebappArtifact getTestResourcesArtifact()
     {
-        return "confluence-webapp";
+        return new WebappArtifact("com.atlassian.confluence.plugins", "confluence-plugin-test-resources", "LATEST");
     }
 
     public Map<String, String> getSystemProperties(final MavenProject project)
@@ -45,10 +51,15 @@ public class ConfluenceWebappHandler implements WebappHandler
                 new WebappArtifact("com.atlassian.sal", "sal-confluence-plugin", salVersion));
     }
 
-    public File getPluginsDirectory(final String webappDir)
+    public File getPluginsDirectory(final String webappDir, File homeDir)
     {
         // indicates plugins should be bundled
         return null;
+    }
+
+    public List<WebappArtifact> getExtraContainerDependencies()
+    {
+        return Collections.emptyList();
     }
 
     public String getBundledPluginPath()
@@ -56,45 +67,18 @@ public class ConfluenceWebappHandler implements WebappHandler
         return "WEB-INF/classes/com/atlassian/confluence/setup/atlassian-bundled-plugins.zip";
     }
 
-    public String getVersion()
-    {
-        return "RELEASE";
-    }
-
     public File getHomeDirectory(final MavenProject project)
     {
         return new File(project.getBuild().getDirectory(), "confluence-home");
     }
 
-    public void prepareWebapp(final File webappWar, final AbstractWebappMojo webappMojo) throws MojoExecutionException
+    public void processHomeDirectory(MavenProject project, File homeDir, AbstractWebappMojo webappMojo) throws MojoExecutionException
     {
-        final ConfluenceMavenGoals goals = new ConfluenceMavenGoals(new MavenContext(webappMojo.getProject(), webappMojo.getSession(), webappMojo.getPluginManager(), webappMojo.getLog()));
-        final File outputDir = new File(webappMojo.getProject().getBuild().getDirectory());
-        final File confHomeZip = goals.copyConfluenceHome(outputDir, webappMojo.getTestResourcesVersion());
-        final File tmpDir = new File(webappMojo.getProject().getBuild().getDirectory(), "tmp-resources");
-        tmpDir.mkdir();
+        ConfigFileUtils.replace(new File(homeDir, "confluence.cfg.xml"), "@project-dir@", project.getBuild().getDirectory());
 
-        final File confHome = new File(outputDir, "confluence-home");
-        try
-        {
-            webappMojo.unzip(confHomeZip, tmpDir.getPath());
-            FileUtils.copyDirectory(new File(tmpDir.listFiles()[0], "confluence-home"),
-                   confHome);
-
-            final File cfgFile = new File(confHome, "confluence.cfg.xml");
-            String config = FileUtils.readFileToString(cfgFile);
-            config = config.replace("@project-dir@", webappMojo.getProject().getBuild().getDirectory());
-            FileUtils.writeStringToFile(cfgFile, config);
-
-            final File dbFile = new File(new File(confHome,"database"), "confluencedb.script");
-            String db = FileUtils.readFileToString(dbFile);
-            db = db.replace("<baseUrl>http://localhost:8080</baseUrl>", "<baseUrl>http://"+webappMojo.getServer()+":"+webappMojo.getHttpPort()+"/"+webappMojo.getContextPath().replaceAll("^/|/$", "")+"</baseUrl>");
-            FileUtils.writeStringToFile(dbFile, db);
-        }
-        catch (final IOException ex)
-        {
-            throw new MojoExecutionException("Unable to prepare confluence webapp", ex);
-        }
+        ConfigFileUtils.replace(new File(new File(homeDir,"database"), "confluencedb.script"),
+                "<baseUrl>http://localhost:8080</baseUrl>",
+                "<baseUrl>http://"+webappMojo.getServer()+":"+webappMojo.getHttpPort()+"/"+webappMojo.getContextPath().replaceAll("^/|/$", "")+"</baseUrl>");
     }
 
 }

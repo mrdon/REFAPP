@@ -20,6 +20,10 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.PluginManager;
 import org.apache.maven.project.MavenProject;
+import org.apache.maven.artifact.factory.ArtifactFactory;
+import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.resolver.ArtifactResolver;
+import com.atlassian.maven.plugins.refapp.util.ArtifactRetriever;
 
 /**
  * Base class for webapp mojos
@@ -115,6 +119,43 @@ public abstract class AbstractWebappMojo extends AbstractMojo
      */
     protected PluginManager pluginManager;
 
+        /**
+     * The artifact resolver is used to dynamically resolve JARs that have to be in the embedded
+     * container's classpaths. Another solution would have been to statitically define them a
+     * dependencies in the plugin's POM. Resolving them in a dynamic manner is much better as only
+     * the required JARs for the defined embedded container are downloaded.
+     *
+     * @component
+     */
+    private ArtifactResolver artifactResolver;
+
+    /**
+     * The local Maven repository. This is used by the artifact resolver to download resolved
+     * JARs and put them in the local repository so that they won't have to be fetched again next
+     * time the plugin is executed.
+     *
+     * @parameter expression="${localRepository}"
+     */
+    private ArtifactRepository localRepository;
+
+    /**
+     * The remote Maven repositories used by the artifact resolver to look for JARs.
+     *
+     * @parameter expression="${project.remoteArtifactRepositories}"
+     */
+    private List repositories;
+
+    /**
+     * The artifact factory is used to create valid Maven
+     * {@link org.apache.maven.artifact.Artifact} objects. This is used to pass Maven artifacts to
+     * the artifact resolver so that it can download the required JARs to put in the embedded
+     * container's classpaths.
+     *
+     * @component
+     */
+    private ArtifactFactory artifactFactory;
+
+
     /**
      * The test resources version
      *
@@ -201,7 +242,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
         return artifacts;
     }
 
-    protected File addArtifacts(final MavenGoals goals, final File webappWar) throws MojoExecutionException
+    protected File addArtifacts(final MavenGoals goals, File homeDir, final File webappWar) throws MojoExecutionException
     {
         try
         {
@@ -209,7 +250,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
             if (!new File(webappDir).exists())
                 unzip(webappWar, webappDir);
 
-            final File pluginsDir = getWebappHandler().getPluginsDirectory(webappDir);
+            final File pluginsDir = getWebappHandler().getPluginsDirectory(webappDir, homeDir);
             final File bundledPluginsDir = new File(project.getBuild().getDirectory(), "bundled-plugins");
 
             bundledPluginsDir.mkdir();
@@ -295,9 +336,36 @@ public abstract class AbstractWebappMojo extends AbstractMojo
         }
     }
 
+    protected File extractAndProcessHomeDirectory(MavenGoals goals) throws MojoExecutionException
+    {
+        if (getWebappHandler().getTestResourcesArtifact() != null)
+        {
+
+            final File outputDir = new File(project.getBuild().getDirectory());
+            final File confHomeZip = goals.copyHome(outputDir, getTestResourcesVersion());
+            final File tmpDir = new File(project.getBuild().getDirectory(), "tmp-resources");
+            tmpDir.mkdir();
+
+            try
+            {
+                unzip(confHomeZip, tmpDir.getPath());
+                FileUtils.copyDirectory(tmpDir.listFiles()[0],
+                        outputDir);
+            }
+            catch (IOException ex)
+            {
+                throw new MojoExecutionException("Unable to copy home directory", ex);
+            }
+            File homeDir = new File(outputDir, tmpDir.listFiles()[0].listFiles()[0].getName());
+            getWebappHandler().processHomeDirectory(project, homeDir, this);
+            return homeDir;
+        }
+        return null;
+    }
+
     protected String getVersion()
     {
-        return (webappVersion == null ? getWebappHandler().getVersion() : webappVersion);
+        return (webappVersion == null ? getWebappHandler().getArtifact().getVersion() : webappVersion);
     }
 
     private void addThisPluginToDirectory(final File pluginsDir) throws IOException
@@ -343,6 +411,19 @@ public abstract class AbstractWebappMojo extends AbstractMojo
         return new RefappWebappHandler();
     }
 
+    protected WebappContext createWebappContext(File war)
+    {
+        WebappContext ctx = new WebappContext();
+        ctx.setWebappWar(war);
+        ctx.setContainerId(containerId);
+        ctx.setServer(server);
+        ctx.setHttpPort(httpPort);
+        ctx.setContextPath(contextPath);
+        ctx.setJvmArgs(jvmArgs);
+        ctx.setArtifactRetriever(new ArtifactRetriever(artifactResolver, artifactFactory, localRepository, repositories));
+        return ctx;
+    }
+
     public MavenProject getProject()
     {
         return project;
@@ -360,7 +441,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
 
     public String getTestResourcesVersion()
     {
-        return testResourcesVersion;
+        return (testResourcesVersion != null ? testResourcesVersion : getWebappHandler().getTestResourcesArtifact().getVersion());
     }
 
     public int getHttpPort()

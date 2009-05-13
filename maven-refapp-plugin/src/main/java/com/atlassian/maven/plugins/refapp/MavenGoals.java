@@ -161,8 +161,8 @@ public class MavenGoals {
                 configuration(
                         element(name("artifactItems"),
                                 element(name("artifactItem"),
-                                        element(name("groupId"), webappHandler.getGroupId()),
-                                        element(name("artifactId"), webappHandler.getArtifactId()),
+                                        element(name("groupId"), webappHandler.getArtifact().getGroupId()),
+                                        element(name("artifactId"), webappHandler.getArtifact().getArtifactId()),
                                         element(name("type"), "war"),
                                         element(name("version"), webappVersion),
                                         element(name("destFileName"), webappWarFile.getName()))),
@@ -197,28 +197,45 @@ public class MavenGoals {
         );
     }
 
-    public int startWebapp(final File webappWar, final String containerId, final String server, final int httpPort, final String contextPath, String jvmArgs) throws MojoExecutionException {
+    public int startWebapp(WebappContext webappContext) throws MojoExecutionException {
         final int rmiPort = pickFreePort(0);
-        final int actualHttpPort = pickFreePort(httpPort);
-        final Container container = findContainer(containerId);
+        final int actualHttpPort = pickFreePort(webappContext.getHttpPort());
+        final Container container = findContainer(webappContext.getContainerId());
         List<Element> sysProps = new ArrayList<Element>();
-        if (jvmArgs == null)
+        if (webappContext.getJvmArgs() == null)
         {
-            jvmArgs = "-Xmx512m -XX:MaxPermSize=160m";
+            webappContext.setJvmArgs("-Xmx512m -XX:MaxPermSize=160m");
         }
         for (Map.Entry<String,String> entry : webappHandler.getSystemProperties(project).entrySet())
         {
-            jvmArgs += " -D" + entry.getKey() + "=" + entry.getValue();
+            webappContext.setJvmArgs(webappContext.getJvmArgs() + " -D" + entry.getKey() + "=" + entry.getValue());
             sysProps.add(element(name(entry.getKey()), entry.getValue()));
         }
 
         log.info("Starting "+webappHandler.getId()+" on the " + container.getId() + " container on ports "
                 + actualHttpPort + " (http) and " + rmiPort + " (rmi)");
 
-        final String baseUrl = getBaseUrl(server, actualHttpPort, contextPath);
+        final String baseUrl = getBaseUrl(webappContext.getServer(), actualHttpPort, webappContext.getContextPath());
         sysProps.add(element(name("baseurl"), baseUrl));
 
-        File serverDir = new File("${project.build.directory}/" + container.getId());
+        List<Element> deps = new ArrayList<Element>();
+        for (WebappArtifact dep : webappHandler.getExtraContainerDependencies())
+
+        {
+            deps.add(element(name("dependency"),
+                        element(name("location"), webappContext.getArtifactRetriever().resolve(dep))
+                    ));
+        }
+
+        List<Element> props = new ArrayList<Element>();
+        for (Map.Entry<String,String> entry : webappHandler.getSystemProperties(project).entrySet())
+        {
+            props.add(element(name(entry.getKey()), entry.getValue()));
+        }
+        props.add(element(name("cargo.servlet.port"), String.valueOf(actualHttpPort)));
+        props.add(element(name("cargo.rmi.port"), String.valueOf(rmiPort)));
+        props.add(element(name("cargo.jvmargs"), webappContext.getJvmArgs()));
+
         executeMojo(
                 plugin(
                         groupId("org.twdata.maven"),
@@ -234,21 +251,18 @@ public class MavenGoals {
                                 element(name("zipUrlInstaller"),
                                         element(name("url"), container.getUrl())
                                 ),
-                                element(name("systemProperties"), sysProps.toArray(new Element[sysProps.size()]))
+                                element(name("systemProperties"), sysProps.toArray(new Element[sysProps.size()])),
+                                element(name("dependencies"), deps.toArray(new Element[deps.size()]))
                         ),
                         element(name("configuration"),
                                 element(name("home"), "${project.build.directory}/" + container.getId()),
-                                element(name("properties"),
-                                        element(name("cargo.servlet.port"), String.valueOf(actualHttpPort)),
-                                        element(name("cargo.rmi.port"), String.valueOf(rmiPort)),
-                                        element(name("cargo.jvmargs"), jvmArgs)
-                                ),
+                                element(name("properties"), props.toArray(new Element[props.size()])),
                                 element(name("deployables"),
                                         element(name("deployable"),
-                                                element(name("groupId"), webappHandler.getGroupId()),
-                                                element(name("artifactId"), webappHandler.getArtifactId()),
+                                                element(name("groupId"), webappHandler.getArtifact().getGroupId()),
+                                                element(name("artifactId"), webappHandler.getArtifact().getArtifactId()),
                                                 element(name("type"), "war"),
-                                                element(name("location"), webappWar.getPath())
+                                                element(name("location"), webappContext.getWebappWar().getPath())
                                         )
                                 )
                         )
@@ -409,6 +423,30 @@ public class MavenGoals {
                 configuration(),
                 executionEnvironment(project, session, pluginManager)
         );
+    }
+
+    public File copyHome(File targetDirectory, String testResourcesVersion) throws MojoExecutionException
+    {
+        final File testResourcesZip = new File(targetDirectory, "test-resources.zip");
+        executeMojo(
+                plugin(
+                        groupId("org.apache.maven.plugins"),
+                        artifactId("maven-dependency-plugin")
+                ),
+                goal("copy"),
+                configuration(
+                        element(name("artifactItems"),
+                                element(name("artifactItem"),
+                                        element(name("groupId"), webappHandler.getTestResourcesArtifact().getGroupId()),
+                                        element(name("artifactId"), webappHandler.getTestResourcesArtifact().getArtifactId()),
+                                        element(name("type"), "zip"),
+                                        element(name("version"), testResourcesVersion),
+                                        element(name("destFileName"), testResourcesZip.getName()))),
+                                        element(name("outputDirectory"), testResourcesZip.getParent())
+                ),
+                executionEnvironment(project, session, pluginManager)
+        );
+        return testResourcesZip;
     }
 
     private static class Container

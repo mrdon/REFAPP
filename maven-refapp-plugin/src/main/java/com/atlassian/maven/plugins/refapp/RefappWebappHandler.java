@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -20,14 +21,14 @@ public class RefappWebappHandler implements WebappHandler
         return "refapp";
     }
 
-    public String getGroupId()
+    public WebappArtifact getArtifact()
     {
-        return "com.atlassian.refapp";
+        return new WebappArtifact("com.atlassian.refapp", "atlassian-refapp", getVersion());
     }
 
-    public String getArtifactId()
+    public WebappArtifact getTestResourcesArtifact()
     {
-        return "atlassian-refapp";
+        return null;
     }
 
     public Map<String, String> getSystemProperties(final MavenProject project)
@@ -53,9 +54,14 @@ public class RefappWebappHandler implements WebappHandler
                 new WebappArtifact("com.atlassian.sal", "sal-refimpl-user-plugin", salVersion));
     }
 
-    public File getPluginsDirectory(final String webappDir)
+    public File getPluginsDirectory(final String webappDir, File homeDir)
     {
         return new File(webappDir, "WEB-INF/plugins");
+    }
+
+    public List<WebappArtifact> getExtraContainerDependencies()
+    {
+        return Collections.emptyList();
     }
 
     public String getBundledPluginPath()
@@ -63,7 +69,11 @@ public class RefappWebappHandler implements WebappHandler
         return "WEB-INF/classes/atlassian-bundled-plugins.zip";
     }
 
-    public String getVersion()
+    public void processHomeDirectory(MavenProject project, File homeDir, AbstractWebappMojo webappMojo) throws MojoExecutionException
+    {
+    }
+
+    private String getVersion()
     {
         InputStream in = null;
         final Properties props = new Properties();
@@ -88,11 +98,6 @@ public class RefappWebappHandler implements WebappHandler
             IOUtils.closeQuietly(in);
         }
         return null;
-    }
-
-    public void prepareWebapp(final File webappWar, final AbstractWebappMojo webappMojo) throws MojoExecutionException
-    {
-        // no test data for refapp
     }
 
 }

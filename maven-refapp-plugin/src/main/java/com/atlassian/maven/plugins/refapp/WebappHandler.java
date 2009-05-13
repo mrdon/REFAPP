@@ -3,6 +3,7 @@ package com.atlassian.maven.plugins.refapp;
 import java.io.File;
 import java.util.Collection;
 import java.util.Map;
+import java.util.List;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
@@ -18,19 +19,14 @@ public interface WebappHandler
     String getId();
 
     /**
-     * @return the webapp maven group id
+     * @return the webapp artifact
      */
-    String getGroupId();
+    WebappArtifact getArtifact();
 
     /**
-     * @return the webapp maven artifact id
+     * @return the test resources artifact
      */
-    String getArtifactId();
-
-    /**
-     * @return the webapp version
-     */
-    String getVersion();
+    WebappArtifact getTestResourcesArtifact();
 
     /**
      * @param project The current project
@@ -48,20 +44,14 @@ public interface WebappHandler
      * @param webappDir the webapp directory
      * @return the directory to store plugins into.  Return null to force plugins into the bundled plugins zip.
      */
-    File getPluginsDirectory(String webappDir);
+    File getPluginsDirectory(String webappDir, File homeDir);
+
+    List<WebappArtifact> getExtraContainerDependencies();
 
     /**
      * @return the path to the bundled plugins zip within the webapp
      */
     String getBundledPluginPath();
 
-    /**
-     * Prepares initial data for application.
-     *
-     * @param webappWar
-     * @param webappMojo
-     * @throws MojoExecutionException
-     */
-    void prepareWebapp(File webappWar, final AbstractWebappMojo webappMojo) throws MojoExecutionException;
-
+    void processHomeDirectory(MavenProject project, File homeDir, AbstractWebappMojo webappMojo) throws MojoExecutionException;
 }
