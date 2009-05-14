@@ -10,10 +10,9 @@ import org.apache.maven.artifact.handler.manager.ArtifactHandlerManager;
  *
  * @requiresDependencyResolution integration-test
  * @goal integration-test
- *
  */
 public class IntegrationTestMojo
-extends AbstractWebappMojo
+        extends AbstractWebappMojo
 {
 
     /**
@@ -43,12 +42,11 @@ extends AbstractWebappMojo
      */
     private ArtifactHandlerManager artifactHandlerManager;
 
-    public void execute()
-    throws MojoExecutionException
+    protected void doExecute() throws MojoExecutionException
     {
 
         // workaround for MNG-1682/MNG-2426: force maven to install artifact using the "jar" handler
-        project.getArtifact().setArtifactHandler(artifactHandlerManager.getArtifactHandler("jar"));        
+        project.getArtifact().setArtifactHandler(artifactHandlerManager.getArtifactHandler("jar"));
 
         if (!new File(testClassesDirectory, "it").exists())
         {

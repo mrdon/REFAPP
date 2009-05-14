@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -19,6 +20,7 @@ import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.PluginManager;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.repository.ArtifactRepository;
@@ -159,7 +161,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
     /**
      * The test resources version
      *
-     * @parameter expression="${testResourcesVersion}" default-value="RELEASE"
+     * @parameter expression="${testResourcesVersion}" default-value="LATEST"
      */
     protected String testResourcesVersion;
 
@@ -177,6 +179,30 @@ public abstract class AbstractWebappMojo extends AbstractMojo
      * @parameter
      */
     private final List<WebappArtifact> bundledArtifacts = Collections.emptyList();
+
+    /**
+     * Comma-delimited list of plugin artifacts in GROUP_ID:ARTIFACT_ID:VERSION form, where version can be
+     * ommitted, defaulting to LATEST
+     *
+     * @parameter expression="${plugin.artifacts}
+     */
+    private String pluginArtifactsString;
+
+    /**
+     * Comma-delimited list of lib artifacts in GROUP_ID:ARTIFACT_ID:VERSION form, where version can be
+     * ommitted, defaulting to LATEST
+     *
+     * @parameter expression="${plugin.artifacts}
+     */
+    private String libArtifactsString;
+
+    /**
+     * Comma-delimited list of bundled plugin artifacts in GROUP_ID:ARTIFACT_ID:VERSION form, where version can be
+     * ommitted, defaulting to LATEST
+     *
+     * @parameter expression="${plugin.artifacts}
+     */
+    private String bundledArtifactsString;
 
     /**
      * SAL version
@@ -459,4 +485,37 @@ public abstract class AbstractWebappMojo extends AbstractMojo
         return server;
     }
 
+
+
+    private List<WebappArtifact> stringToArtifactList(String val, List<WebappArtifact> artifacts)
+    {
+        if (val == null || val.trim().length() == 0)
+        {
+            return artifacts;
+        }
+
+        for (String ptn : val.split(","))
+        {
+            String[] items = ptn.split(":");
+            if (items.length < 2 || items.length > 3)
+            {
+                throw new IllegalArgumentException("Invalid artifact pattern: " + ptn);
+            }
+            String groupId = items[0];
+            String artifactId = items[1];
+            String version = (items.length == 3 ? items[2] : "LATEST");
+            artifacts.add(new WebappArtifact(groupId, artifactId, version));
+        }
+        return artifacts;
+    }
+
+    public final void execute() throws MojoExecutionException, MojoFailureException
+    {
+        stringToArtifactList(pluginArtifactsString, pluginArtifacts);
+        stringToArtifactList(libArtifactsString, libArtifacts);
+        stringToArtifactList(bundledArtifactsString, bundledArtifacts);
+        doExecute();
+    }
+
+    protected abstract void doExecute() throws MojoExecutionException, MojoFailureException;
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 
 /**
  * Run the webapp
@@ -13,10 +14,9 @@ import org.apache.maven.plugin.MojoExecutionException;
  * @execute phase="package"
  */
 public class RunMojo
-extends AbstractWebappMojo
+        extends AbstractWebappMojo
 {
-    public void execute()
-    throws MojoExecutionException
+    protected void doExecute() throws MojoExecutionException, MojoFailureException
     {
         final MavenGoals goals = new MavenGoals(new MavenContext(project, session, pluginManager, getLog()), getWebappHandler());
 
@@ -32,9 +32,12 @@ extends AbstractWebappMojo
 
         getLog().info(getWebappHandler().getId() + " started successfully and available at http://localhost:" + actualHttpPort + contextPath);
         getLog().info("Type any key to exit");
-        try {
+        try
+        {
             System.in.read();
-        } catch (final IOException e) {
+        }
+        catch (final IOException e)
+        {
             // ignore
         }
     }

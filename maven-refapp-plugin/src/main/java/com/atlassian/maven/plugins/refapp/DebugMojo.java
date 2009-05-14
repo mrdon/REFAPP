@@ -1,6 +1,7 @@
 package com.atlassian.maven.plugins.refapp;
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 
 /**
  * Debug the webapp
@@ -27,7 +28,7 @@ public class DebugMojo extends RunMojo
 
 
     @Override
-    public void execute() throws MojoExecutionException
+    protected void doExecute() throws MojoExecutionException, MojoFailureException
     {
         if (jvmArgs == null)
         {
