@@ -35,6 +35,6 @@ public class DebugMojo extends RunMojo
             jvmArgs = "-Xmx512m -XX:MaxPermSize=160m";
         }
         jvmArgs += " -Xdebug -Xrunjdwp:transport=dt_socket,address="+String.valueOf(jvmDebugPort)+",suspend="+(jvmDebugSuspend?"y":"n")+",server=y ";
-        super.execute();
+        super.doExecute();
     }
 }
