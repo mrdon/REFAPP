@@ -69,12 +69,12 @@ public class ConfluenceWebappHandler implements WebappHandler
 
     public File getHomeDirectory(final MavenProject project)
     {
-        return new File(project.getBuild().getDirectory(), "confluence-home");
+        return new File(new File(project.getBuild().getDirectory(), getId()), "confluence-home");
     }
 
     public void processHomeDirectory(MavenProject project, File homeDir, AbstractWebappMojo webappMojo) throws MojoExecutionException
     {
-        ConfigFileUtils.replace(new File(homeDir, "confluence.cfg.xml"), "@project-dir@", project.getBuild().getDirectory());
+        ConfigFileUtils.replace(new File(homeDir, "confluence.cfg.xml"), "@project-dir@", homeDir.getParent());
 
         ConfigFileUtils.replace(new File(new File(homeDir,"database"), "confluencedb.script"),
                 "<baseUrl>http://localhost:8080</baseUrl>",

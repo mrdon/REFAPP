@@ -168,23 +168,23 @@ public abstract class AbstractWebappMojo extends AbstractMojo
     /**
      * @parameter
      */
-    private final List<WebappArtifact> pluginArtifacts = Collections.emptyList();
+    private List<WebappArtifact> pluginArtifacts = new ArrayList<WebappArtifact>();
 
     /**
      * @parameter
      */
-    private final List<WebappArtifact> libArtifacts = Collections.emptyList();
+    private List<WebappArtifact> libArtifacts = new ArrayList<WebappArtifact>();
 
     /**
      * @parameter
      */
-    private final List<WebappArtifact> bundledArtifacts = Collections.emptyList();
+    private List<WebappArtifact> bundledArtifacts = new ArrayList<WebappArtifact>();
 
     /**
      * Comma-delimited list of plugin artifacts in GROUP_ID:ARTIFACT_ID:VERSION form, where version can be
      * ommitted, defaulting to LATEST
      *
-     * @parameter expression="${plugin.artifacts}
+     * @parameter expression="${plugins}
      */
     private String pluginArtifactsString;
 
@@ -192,7 +192,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
      * Comma-delimited list of lib artifacts in GROUP_ID:ARTIFACT_ID:VERSION form, where version can be
      * ommitted, defaulting to LATEST
      *
-     * @parameter expression="${plugin.artifacts}
+     * @parameter expression="${lib.plugins}
      */
     private String libArtifactsString;
 
@@ -200,7 +200,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
      * Comma-delimited list of bundled plugin artifacts in GROUP_ID:ARTIFACT_ID:VERSION form, where version can be
      * ommitted, defaulting to LATEST
      *
-     * @parameter expression="${plugin.artifacts}
+     * @parameter expression="${bundled.plugins}
      */
     private String bundledArtifactsString;
 
@@ -241,6 +241,13 @@ public abstract class AbstractWebappMojo extends AbstractMojo
         }
     }
 
+    protected File getBaseDirectory()
+    {
+        File dir = new File(project.getBuild().getDirectory(), getWebappHandler().getId());
+        dir.mkdir();
+        return dir;
+    }
+
     private List<WebappArtifact> getPluginsArtifacts()
     {
         final List<WebappArtifact> artifacts = new ArrayList<WebappArtifact>(pluginArtifacts);
@@ -272,12 +279,12 @@ public abstract class AbstractWebappMojo extends AbstractMojo
     {
         try
         {
-            final String webappDir = new File(project.getBuild().getDirectory(), "webapp").getAbsolutePath();
+            final String webappDir = new File(getBaseDirectory(), "webapp").getAbsolutePath();
             if (!new File(webappDir).exists())
                 unzip(webappWar, webappDir);
 
             final File pluginsDir = getWebappHandler().getPluginsDirectory(webappDir, homeDir);
-            final File bundledPluginsDir = new File(project.getBuild().getDirectory(), "bundled-plugins");
+            final File bundledPluginsDir = new File(getBaseDirectory(), "bundled-plugins");
 
             bundledPluginsDir.mkdir();
             // add bundled plugins
@@ -367,9 +374,9 @@ public abstract class AbstractWebappMojo extends AbstractMojo
         if (getWebappHandler().getTestResourcesArtifact() != null)
         {
 
-            final File outputDir = new File(project.getBuild().getDirectory());
+            final File outputDir = getBaseDirectory();
             final File confHomeZip = goals.copyHome(outputDir, getTestResourcesVersion());
-            final File tmpDir = new File(project.getBuild().getDirectory(), "tmp-resources");
+            final File tmpDir = new File(getBaseDirectory(), "tmp-resources");
             tmpDir.mkdir();
 
             try

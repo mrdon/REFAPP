@@ -21,7 +21,7 @@ public class RunMojo
         final MavenGoals goals = new MavenGoals(new MavenContext(project, session, pluginManager, getLog()), getWebappHandler());
 
         // Copy the webapp war to target
-        final File webappWar = goals.copyWebappWar(targetDirectory, getVersion());
+        final File webappWar = goals.copyWebappWar(getBaseDirectory(), getVersion());
 
         File homeDir = extractAndProcessHomeDirectory(goals);
 

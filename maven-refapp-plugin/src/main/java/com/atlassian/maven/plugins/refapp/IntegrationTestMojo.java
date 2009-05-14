@@ -61,7 +61,7 @@ public class IntegrationTestMojo
         if (!noWebapp)
         {
             // Copy the webapp war to target
-            final File webappWar = goals.copyWebappWar(targetDirectory, getVersion());
+            final File webappWar = goals.copyWebappWar(getBaseDirectory(), getVersion());
 
             File homeDir = extractAndProcessHomeDirectory(goals);
 

@@ -45,7 +45,7 @@ public class JiraWebappHandler implements WebappHandler
         return new HashMap<String,String>() {{
             put("jira.home", getHomeDirectory(project).getPath());
             put("cargo.datasource.datasource",
-                         "cargo.datasource.url=jdbc:hsqldb:" + project.getBuild().getDirectory() + "/jira-home/database|" +
+                         "cargo.datasource.url=jdbc:hsqldb:" + project.getBuild().getDirectory() + "/" + getId() + "/jira-home/database|" +
                              "cargo.datasource.driver=org.hsqldb.jdbcDriver|" +
                              "cargo.datasource.username=sa|" +
                              "cargo.datasource.password=|" +
@@ -93,11 +93,11 @@ public class JiraWebappHandler implements WebappHandler
 
     public File getHomeDirectory(final MavenProject project)
     {
-        return new File(project.getBuild().getDirectory(), "jira-home");
+       return new File(new File(project.getBuild().getDirectory(), getId()),  "jira-home");
     }
 
     public void processHomeDirectory(MavenProject project, File homeDir, AbstractWebappMojo webappMojo) throws MojoExecutionException
     {
-        ConfigFileUtils.replace(new File(homeDir, "database.script"), "@project-dir@", project.getBuild().getDirectory());
+        ConfigFileUtils.replace(new File(homeDir, "database.script"), "@project-dir@", homeDir.getParent());
     }
 }

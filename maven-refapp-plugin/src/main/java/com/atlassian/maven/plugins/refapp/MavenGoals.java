@@ -166,7 +166,7 @@ public class MavenGoals {
                                         element(name("type"), "war"),
                                         element(name("version"), webappVersion),
                                         element(name("destFileName"), webappWarFile.getName()))),
-                                        element(name("outputDirectory"), "${project.build.directory}")
+                                        element(name("outputDirectory"), targetDirectory.getPath())
                 ),
                 executionEnvironment(project, session, pluginManager)
         );
@@ -211,7 +211,6 @@ public class MavenGoals {
             webappContext.setJvmArgs(webappContext.getJvmArgs() + " -D" + entry.getKey() + "=" + entry.getValue());
             sysProps.add(element(name(entry.getKey()), entry.getValue()));
         }
-
         log.info("Starting "+webappHandler.getId()+" on the " + container.getId() + " container on ports "
                 + actualHttpPort + " (http) and " + rmiPort + " (rmi)");
 
@@ -255,7 +254,7 @@ public class MavenGoals {
                                 element(name("dependencies"), deps.toArray(new Element[deps.size()]))
                         ),
                         element(name("configuration"),
-                                element(name("home"), "${project.build.directory}/" + container.getId()),
+                                element(name("home"), "${project.build.directory}/" + webappHandler.getId() + "/" + container.getId()),
                                 element(name("properties"), props.toArray(new Element[props.size()])),
                                 element(name("deployables"),
                                         element(name("deployable"),
@@ -305,7 +304,7 @@ public class MavenGoals {
                                         element(name("value"), pluginJar)
                                 )
                         ),
-                        element(name("reportsDirectory"), "${project.build.directory}/" + containerId + "/surefire-reports")
+                        element(name("reportsDirectory"), "${project.build.directory}/" + webappHandler.getId() + "/" + containerId + "/surefire-reports")
                 ),
                 executionEnvironment(project, session, pluginManager)
         );
@@ -368,7 +367,7 @@ public class MavenGoals {
                                 element(name("type"), container.getType())
                         ),
                         element(name("configuration"),
-                                element(name("home"), "${project.build.directory}/" + container.getId())
+                                element(name("home"), "${project.build.directory}/" + webappHandler.getId() + "/" + container.getId())
                         )
                 ),
                 executionEnvironment(project, session, pluginManager)
