@@ -15,6 +15,6 @@ public class InstallMojo extends AbstractPdkMojo {
         MavenGoals goals = new MavenGoals(new MavenContext(project, session, pluginManager, getLog()), getWebappHandler());
 
         ensurePluginKeyExists();
-        goals.installPlugin(pluginKey, server, httpPort, contextPath);
+        goals.installPlugin(pluginKey, server, getHttpPort(), contextPath);
     }
 }

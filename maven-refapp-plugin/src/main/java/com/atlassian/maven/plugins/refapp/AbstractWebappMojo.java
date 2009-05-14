@@ -41,9 +41,9 @@ public abstract class AbstractWebappMojo extends AbstractMojo
     /**
      * HTTP port for the servlet containers
      *
-     * @parameter expression="${http.port}" default-value="9400"
+     * @parameter expression="${http.port}"
      */
-    protected int httpPort;
+    private int httpPort = 0;
 
     /**
      * Application context path
@@ -450,7 +450,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
         ctx.setWebappWar(war);
         ctx.setContainerId(containerId);
         ctx.setServer(server);
-        ctx.setHttpPort(httpPort);
+        ctx.setHttpPort(getHttpPort());
         ctx.setContextPath(contextPath);
         ctx.setJvmArgs(jvmArgs);
         ctx.setArtifactRetriever(new ArtifactRetriever(artifactResolver, artifactFactory, localRepository, repositories));
@@ -479,7 +479,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
 
     public int getHttpPort()
     {
-        return httpPort;
+        return httpPort == 0 ? getWebappHandler().getDefaultHttpPort() : httpPort;
     }
 
     public String getContextPath()

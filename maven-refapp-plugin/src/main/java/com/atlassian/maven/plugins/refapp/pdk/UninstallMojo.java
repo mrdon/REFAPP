@@ -15,6 +15,6 @@ public class UninstallMojo extends AbstractPdkMojo {
         MavenGoals goals = new MavenGoals(new MavenContext(project, session, pluginManager, getLog()), getWebappHandler());
 
         ensurePluginKeyExists();
-        goals.uninstallPlugin(pluginKey, httpPort);
+        goals.uninstallPlugin(pluginKey, getHttpPort());
     }
 }

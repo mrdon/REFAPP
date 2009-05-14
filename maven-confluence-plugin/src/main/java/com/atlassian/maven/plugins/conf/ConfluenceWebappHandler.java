@@ -39,6 +39,11 @@ public class ConfluenceWebappHandler implements WebappHandler
         return new WebappArtifact("com.atlassian.confluence.plugins", "confluence-plugin-test-resources", "LATEST");
     }
 
+    public int getDefaultHttpPort()
+    {
+        return 1990;
+    }
+
     public Map<String, String> getSystemProperties(final MavenProject project)
     {
         return Collections.singletonMap("confluence.home", getHomeDirectory(project).getPath());

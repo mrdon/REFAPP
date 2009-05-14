@@ -40,6 +40,11 @@ public class JiraWebappHandler implements WebappHandler
         return new WebappArtifact("com.atlassian.jira.plugins", "jira-plugin-test-resources", "LATEST");
     }
 
+    public int getDefaultHttpPort()
+    {
+        return 2990;
+    }
+
     public Map<String, String> getSystemProperties(final MavenProject project)
     {
         return new HashMap<String,String>() {{

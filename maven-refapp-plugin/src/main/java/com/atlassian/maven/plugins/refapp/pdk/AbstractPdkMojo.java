@@ -52,9 +52,9 @@ public abstract class AbstractPdkMojo extends AbstractMojo {
     /**
      * HTTP port for the servlet containers
      *
-     * @parameter expression="${http.port}" default-value="9400"
+     * @parameter expression="${http.port}"
      */
-    protected int httpPort;
+    private int httpPort;
 
     /**
      * Application context path
@@ -88,5 +88,10 @@ public abstract class AbstractPdkMojo extends AbstractMojo {
     protected WebappHandler getWebappHandler()
     {
          return new RefappWebappHandler();
+    }
+
+    protected int getHttpPort()
+    {
+        return httpPort == 0 ? getWebappHandler().getDefaultHttpPort() : httpPort;
     }
 }

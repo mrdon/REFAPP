@@ -28,6 +28,8 @@ public interface WebappHandler
      */
     WebappArtifact getTestResourcesArtifact();
 
+    int getDefaultHttpPort();
+
     /**
      * @param project The current project
      * @return the system properties to set when executing the webapp

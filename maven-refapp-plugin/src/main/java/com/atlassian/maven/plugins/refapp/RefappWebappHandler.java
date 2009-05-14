@@ -31,6 +31,11 @@ public class RefappWebappHandler implements WebappHandler
         return null;
     }
 
+    public int getDefaultHttpPort()
+    {
+        return 5990;
+    }
+
     public Map<String, String> getSystemProperties(final MavenProject project)
     {
         return Collections.singletonMap("osgi.cache", "${project.build.directory}/osgi-cache");
