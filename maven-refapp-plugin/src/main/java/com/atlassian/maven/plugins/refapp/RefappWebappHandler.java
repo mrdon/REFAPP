@@ -3,12 +3,7 @@ package com.atlassian.maven.plugins.refapp;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Properties;
-import java.util.List;
+import java.util.*;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -38,7 +33,10 @@ public class RefappWebappHandler implements WebappHandler
 
     public Map<String, String> getSystemProperties(final MavenProject project)
     {
-        return Collections.singletonMap("osgi.cache", "${project.build.directory}/osgi-cache");
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("refapp.home", getHomeDirectory(project).getPath());
+        map.put("osgi.cache", "${project.build.directory}/osgi-cache");
+        return map;
     }
 
     public Collection<WebappArtifact> getSalArtifacts(final String salVersion)
@@ -76,6 +74,17 @@ public class RefappWebappHandler implements WebappHandler
 
     public void processHomeDirectory(MavenProject project, File homeDir, AbstractWebappMojo webappMojo) throws MojoExecutionException
     {
+    }
+
+    public File getHomeDirectory(final MavenProject project)
+    {
+        File homeDir = new File(new File(project.getBuild().getDirectory(), getId()), "refapp-home");
+        // Make sure it exists
+        if (!homeDir.exists())
+        {
+            homeDir.mkdirs();
+        }
+        return homeDir;
     }
 
     private String getVersion()

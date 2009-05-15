@@ -393,7 +393,10 @@ public abstract class AbstractWebappMojo extends AbstractMojo
             getWebappHandler().processHomeDirectory(project, homeDir, this);
             return homeDir;
         }
-        return null;
+        else
+        {
+            return getWebappHandler().getHomeDirectory(project);
+        }
     }
 
     protected String getVersion()

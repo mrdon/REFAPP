@@ -56,4 +56,9 @@ public interface WebappHandler
     String getBundledPluginPath();
 
     void processHomeDirectory(MavenProject project, File homeDir, AbstractWebappMojo webappMojo) throws MojoExecutionException;
+
+    /**
+     * Necessary if the plugin doesn't have test resources
+     */
+    File getHomeDirectory(MavenProject project);
 }
