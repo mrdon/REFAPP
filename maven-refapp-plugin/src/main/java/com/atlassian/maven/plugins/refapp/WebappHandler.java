@@ -61,4 +61,11 @@ public interface WebappHandler
      * Necessary if the plugin doesn't have test resources
      */
     File getHomeDirectory(MavenProject project);
+    
+    List<WebappArtifact> getDefaultPlugins();
+
+    List<WebappArtifact> getDefaultLibPlugins();
+
+    List<WebappArtifact> getDefaultBundledPlugins();
+
 }

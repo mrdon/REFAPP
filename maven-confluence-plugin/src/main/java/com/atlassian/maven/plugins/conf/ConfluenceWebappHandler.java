@@ -86,4 +86,19 @@ public class ConfluenceWebappHandler implements WebappHandler
                 "<baseUrl>http://"+webappMojo.getServer()+":"+webappMojo.getHttpPort()+"/"+webappMojo.getContextPath().replaceAll("^/|/$", "")+"</baseUrl>");
     }
 
+    public List<WebappArtifact> getDefaultPlugins()
+    {
+        return Collections.emptyList();
+    }
+
+    public List<WebappArtifact> getDefaultLibPlugins()
+    {
+        return Collections.emptyList();
+    }
+
+    public List<WebappArtifact> getDefaultBundledPlugins()
+    {
+        return Collections.emptyList();
+    }
+
 }

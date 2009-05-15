@@ -11,6 +11,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.Comparator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -250,7 +251,9 @@ public abstract class AbstractWebappMojo extends AbstractMojo
 
     private List<WebappArtifact> getPluginsArtifacts()
     {
-        final List<WebappArtifact> artifacts = new ArrayList<WebappArtifact>(pluginArtifacts);
+        final List<WebappArtifact> artifacts = new ArrayList<WebappArtifact>();
+        artifacts.addAll(getWebappHandler().getDefaultPlugins());
+        artifacts.addAll(pluginArtifacts);
         if (salVersion != null)
         {
             artifacts.addAll(getWebappHandler().getSalArtifacts(salVersion));
@@ -309,13 +312,17 @@ public abstract class AbstractWebappMojo extends AbstractMojo
             }
 
             // add plugins1 plugins
-            addArtifactsToDirectory(goals, libArtifacts, new File(webappDir, "WEB-INF/lib"));
 
+            List<WebappArtifact> artifacts = new ArrayList<WebappArtifact>();
+            artifacts.addAll(getWebappHandler().getDefaultLibPlugins());
+            artifacts.addAll(libArtifacts);
+            addArtifactsToDirectory(goals, artifacts, new File(webappDir, "WEB-INF/lib"));
 
-            if (!bundledArtifacts.isEmpty())
-            {
-                addArtifactsToDirectory(goals, bundledArtifacts, bundledPluginsDir);
-            }
+            artifacts = new ArrayList<WebappArtifact>();
+            artifacts.addAll(getWebappHandler().getDefaultBundledPlugins());
+            artifacts.addAll(bundledArtifacts);
+
+            addArtifactsToDirectory(goals, artifacts, bundledPluginsDir);
 
             if (bundledPluginsDir.list().length > 0)
             {
@@ -524,6 +531,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
         stringToArtifactList(pluginArtifactsString, pluginArtifacts);
         stringToArtifactList(libArtifactsString, libArtifacts);
         stringToArtifactList(bundledArtifactsString, bundledArtifacts);
+
         doExecute();
     }
 

@@ -105,4 +105,19 @@ public class JiraWebappHandler implements WebappHandler
     {
         ConfigFileUtils.replace(new File(homeDir, "database.script"), "@project-dir@", homeDir.getParent());
     }
+
+    public List<WebappArtifact> getDefaultPlugins()
+    {
+        return Collections.singletonList(new WebappArtifact("com.atlassian.pdkinstall", "pdkinstall-plugin", "0.2"));
+    }
+
+    public List<WebappArtifact> getDefaultLibPlugins()
+    {
+        return Collections.emptyList();
+    }
+
+    public List<WebappArtifact> getDefaultBundledPlugins()
+    {
+        return Collections.emptyList();
+    }
 }
