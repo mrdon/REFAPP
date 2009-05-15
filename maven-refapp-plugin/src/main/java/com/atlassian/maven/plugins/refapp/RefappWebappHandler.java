@@ -85,6 +85,7 @@ public class RefappWebappHandler implements WebappHandler
             homeDir.mkdirs();
         }
         return homeDir;
+    }
     
     public List<WebappArtifact> getDefaultPlugins()
     {
