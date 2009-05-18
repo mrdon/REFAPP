@@ -6,10 +6,10 @@
         <bundle-instructions>
             <Export-Package>
                 com.atlassian.user,com.atlassian.user.util,com.atlassian.user.security.authentication,
-                com.atlassian.seraph.auth,com.atlassian.seraph.config</Export-Package>
+                com.atlassian.seraph.auth,com.atlassian.seraph.config,com.atlassian.refapp.auth.web.conditions</Export-Package>
         </bundle-instructions>
     </plugin-info>
-    
+
     <component key="repositoryIdentifier" class="com.atlassian.refapp.auth.internal.AuthPluginRepositoryIdentifier">
         <interface>com.atlassian.user.repository.RepositoryIdentifier</interface>
     </component>
@@ -65,13 +65,38 @@
     </servlet>
 
     <web-item key="userManagementLink" section="system.admin/general" weight="10">
-        <label key="User Management"/>
+        <label key="com.atlassian.refapp.auth.user-management"/>
         <link linkId="userManagement">/plugins/servlet/users</link>
     </web-item>
 
-    <web-item key="loginLink" section="footer.links" weight="40">
-        <label key="Login"/>
+    <web-item key="loginFooterLink" section="footer.links" weight="40">
+        <label key="com.atlassian.refapp.auth.login"/>
         <link linkId="login">/plugins/servlet/login</link>
     </web-item>
+
+    <web-item key="administrationLink" section="header.links" weight="10">
+        <label key="com.atlassian.refapp.auth.administration"/>
+        <link linkId="administration">/plugins/servlet/users</link>
+        <condition class="com.atlassian.refapp.auth.web.conditions.UserIsSystemAdministratorCondition"/>
+    </web-item>
+
+    <web-item key="userLink" section="header.links" weight="20">
+        <label key="com.atlassian.refapp.auth.user">
+            <param name="param0">$userHelper.remoteUser.fullName</param>
+        </label>
+        <link linkId="administration">/plugins/servlet/users/$userHelper.remoteUser.name</link>
+        <condition class="com.atlassian.refapp.auth.web.conditions.UserIsLoggedInCondition"/>
+    </web-item>
+
+    <web-item key="loginHeaderLink" section="header.links" weight="20">
+        <label key="com.atlassian.refapp.auth.login"/>
+        <link linkId="login">/plugins/servlet/login</link>
+        <condition class="com.atlassian.refapp.auth.web.conditions.UserIsNotLoggedInCondition"/>
+    </web-item>
+
+    <resource type="i18n" name="i18n" location="i18n" />    
+
+    <template-context-item key="userHelperContextItem" name="User Helper Context Item" global="true"
+            class="com.atlassian.refapp.auth.internal.UserContextHelper" context-key="userHelper"/>
 
 </atlassian-plugin>

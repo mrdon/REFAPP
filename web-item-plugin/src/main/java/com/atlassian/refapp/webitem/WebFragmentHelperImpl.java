@@ -36,7 +36,13 @@ public class WebFragmentHelperImpl implements WebFragmentHelper
             return key;
         }
         I18nResolver i18n = (I18nResolver) context.get("i18n");
-        return i18n.getText(key, arguments == null ? new Serializable[] {} : arguments.toArray());
+        Serializable[] params = new Serializable[0];
+        if (arguments != null)
+        {
+            // Just hope it's Serializable...
+            params = arguments.toArray(params);
+        }
+        return i18n.getText(key, params);
     }
 
     public Condition loadCondition(String className, Plugin plugin) throws ConditionLoadingException

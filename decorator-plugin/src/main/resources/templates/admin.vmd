@@ -8,6 +8,12 @@ $webResourceManager.requireResource("com.atlassian.refapp.decorator:decorator-re
         $webResourceIncluder.includeResources()
     </head>
     <body>
+        <ul class="header-links">
+        #foreach($item in $webInterfaceManager.getDisplayableItems("header.links", $context))
+          <li><a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $context)">$item.webLabel.getDisplayableLabel($request, $context)</a></li>
+        #end
+        </ul>
+
         <h1>
 		  <img src="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/atlassian.png")" alt="Atlassian"/>
           RefApp Administration

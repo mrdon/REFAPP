@@ -10,6 +10,28 @@ h1 {
     font-size: 18pt;
 }
 
+.header-links {
+    float: right;
+    margin: 0;
+    padding: 0;
+}
+
+.header-links li {
+    list-style: none;
+    padding: 0 5px;
+    margin: 0;
+    float: right;
+    display: inline;
+}
+
+.header-links li a {
+    list-style: none;
+    float: right;
+    display: inline;
+    color: #003366;
+    font-size: 11pt;
+}
+
 .admin-menu {
     float: left;
     padding: 0 10px;
