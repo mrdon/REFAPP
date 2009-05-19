@@ -76,7 +76,8 @@ public class MavenGoals {
 
         final List<Element> configs = new ArrayList<Element>();
         configs.add(element(name("commands"),
-                element(name("pi"), "resources compile com.atlassian.maven.plugins:maven-"+webappHandler.getId()
+                element(name("pi"), "resources com.atlassian.maven.plugins:maven-"+webappHandler.getId()+"-plugin:filter-plugin-descriptor "
+                        + "compile com.atlassian.maven.plugins:maven-"+webappHandler.getId()
                         +"-plugin:copy-bundled-dependencies jar com.atlassian.maven.plugins:maven-"+webappHandler.getId()+"-plugin:install"),
                 element(name("pu"), "com.atlassian.maven.plugins:maven-"+webappHandler.getId()+"-plugin:uninstall")));
         if (port > 0)

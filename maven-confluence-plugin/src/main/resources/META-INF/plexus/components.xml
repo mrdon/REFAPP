@@ -16,7 +16,8 @@
                                 com.atlassian.maven.plugins:maven-confluence-plugin:copy-bundled-dependencies
                             </generate-resources>
                             <process-resources>
-                                org.apache.maven.plugins:maven-resources-plugin:resources
+                                org.apache.maven.plugins:maven-resources-plugin:resources,
+                                com.atlassian.maven.plugins:maven-confluence-plugin:filter-plugin-descriptor
                             </process-resources>
                             <compile>org.apache.maven.plugins:maven-compiler-plugin:compile</compile>
                             <process-test-resources>
