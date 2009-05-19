@@ -26,6 +26,7 @@ import org.apache.maven.plugin.PluginManager;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.twdata.maven.mojoexecutor.MojoExecutor.Element;
+import com.atlassian.maven.plugins.refapp.util.VersionUtils;
 
 /**
  * Executes specific maven goals
@@ -53,6 +54,7 @@ public class MavenGoals {
         put("maven-cli-plugin", "0.6.2");
         put("cargo-maven2-plugin", "1.0-beta-2-db2");
         put("atlassian-pdk", "2.1.6");
+        put("maven-archetype-plugin", "2.0-alpha-4");
 
     }};
 
@@ -95,6 +97,25 @@ public class MavenGoals {
                 executionEnvironment(project, session, pluginManager)
         );
     }
+
+    public void createPlugin() throws MojoExecutionException {
+
+        executeMojo(
+                plugin(
+                        groupId("org.apache.maven.plugins"),
+                        artifactId("maven-archetype-plugin"),
+                        version(defaultArtifactIdToVersionMap.get("maven-archetype-plugin"))
+                ),
+                goal("generate"),
+                configuration(
+                        element(name("archetypeGroupId"), "com.atlassian.maven.archetypes"),
+                        element(name("archetypeArtifactId"), webappHandler.getId() + "-plugin-archetype"),
+                        element(name("archetypeVersion"), VersionUtils.getVersion())
+                ),
+                executionEnvironment(project, session, pluginManager)
+        );
+    }
+
     public void copyBundledDependencies() throws MojoExecutionException {
         executeMojo(
                 plugin(

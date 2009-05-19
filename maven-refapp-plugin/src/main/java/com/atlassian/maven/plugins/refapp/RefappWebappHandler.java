@@ -8,6 +8,7 @@ import java.util.*;
 import org.apache.commons.io.IOUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
+import com.atlassian.maven.plugins.refapp.util.VersionUtils;
 
 public class RefappWebappHandler implements WebappHandler
 {
@@ -18,7 +19,7 @@ public class RefappWebappHandler implements WebappHandler
 
     public WebappArtifact getArtifact()
     {
-        return new WebappArtifact("com.atlassian.refapp", "atlassian-refapp", getVersion());
+        return new WebappArtifact("com.atlassian.refapp", "atlassian-refapp", VersionUtils.getVersion());
     }
 
     public WebappArtifact getTestResourcesArtifact()
@@ -101,32 +102,4 @@ public class RefappWebappHandler implements WebappHandler
     {
         return Collections.emptyList();
     }
-
-    private String getVersion()
-    {
-        InputStream in = null;
-        final Properties props = new Properties();
-        try
-        {
-            in = getClass().getClassLoader()
-                    .getResourceAsStream(
-                            "META-INF/maven/com.atlassian.maven.plugins/maven-refapp-plugin/pom.properties");
-            if (in != null)
-            {
-                props.load(in);
-                return props.getProperty("version");
-            }
-        }
-        catch (final IOException e)
-        {
-            e.printStackTrace();
-            return null;
-        }
-        finally
-        {
-            IOUtils.closeQuietly(in);
-        }
-        return null;
-    }
-
 }
