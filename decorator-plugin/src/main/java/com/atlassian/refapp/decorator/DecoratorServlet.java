@@ -89,18 +89,18 @@ public class DecoratorServlet extends HttpServlet
         Map<String, Object> velocityParams = new HashMap<String, Object>();
 
         velocityParams.put("page", page);
-        velocityParams.put("title", page.getTitle());
+        velocityParams.put("titleHtml", page.getTitle());
 
         StringWriter bodyBuffer = new StringWriter();
         page.writeBody(OutputConverter.getWriter(bodyBuffer));
-        velocityParams.put("body", bodyBuffer);
+        velocityParams.put("bodyHtml", bodyBuffer);
 
         if (page instanceof HTMLPage)
         {
             HTMLPage htmlPage = (HTMLPage) page;
             StringWriter buffer = new StringWriter();
             htmlPage.writeHead(OutputConverter.getWriter(buffer));
-            velocityParams.put("head", buffer.toString());
+            velocityParams.put("headHtml", buffer.toString());
         }
 
         velocityParams.put("request", request);

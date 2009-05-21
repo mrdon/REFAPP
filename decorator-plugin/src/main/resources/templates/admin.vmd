@@ -3,10 +3,10 @@
 $webResourceManager.requireResource("com.atlassian.refapp.decorator:decorator-resources")
 <html>
     <head>
-        <title>#if ($title)$title#else Welcome!#end</title>
+        <title>#if ($titleHtml)$titleHtml#else Welcome!#end</title>
         <link href="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/developer16.ico")" rel="shortcut icon"/>
         <link href="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/developer16.png")" type="image/png" rel="icon"/>
-        $head
+        $headHtml
         $webResourceIncluder.includeResources()
     </head>
     <body>
@@ -33,7 +33,7 @@ $webResourceManager.requireResource("com.atlassian.refapp.decorator:decorator-re
         #end
         </ul>
         <div class="refapp-body">
-        $body
+        $bodyHtml
         </div>
         <div class="refapp-footer" style="text-align:center">
             <hr/>
