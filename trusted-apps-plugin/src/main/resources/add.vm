@@ -1,8 +1,10 @@
 <html>
   <head>
     <title>Add Trusted App</title>
+    <meta name="decorator" content="atl.admin"/>
   </head>
   <body>
+      <h3>Add Trusted App</h3>  
     <form>
       <label for="url">URL</label>: <input type="text" id="url" name="url" value=""/><span class="error">$!urlError</span><br/>
       <label for="urlPatterns">URL Patterns: <input type="text" id="urlPatterns" name="urlPatterns" value=""/><span class="error">$!urlPatternsError</span><br/>

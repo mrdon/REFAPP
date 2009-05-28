@@ -1,14 +1,17 @@
 <html>
   <head>
     <title>Trusted Apps Client</title>
+    <meta name="decorator" content="atl.general"/>
   </head>
   <body>
+    <h3>Trusted Apps Client</h3>
+    <p>Use this to check if a remote system trusts you.</p>
     <form>
       <label for="url">URL</label> <input type="text" id="url" name="url" value="$!url" />
       <input type="submit" value="Send Request" />
     </form>
-    Status code: $responseStatusCode<br/>
-    Status text: $responseStatusText<br/>
-    Response body: <pre>$esc.xml($responseBody)</pre>
+    Status code: $!responseStatusCode<br/>
+    Status text: $!responseStatusText<br/>
+    Response body: <pre>$esc.xml($!responseBody)</pre>
   </body>
 </html>

@@ -13,4 +13,10 @@
     <servlet key="trusted-apps-client-servlet" class="com.atlassian.refapp.trustedapps.client.TrustedAppsClientServlet">
         <url-pattern>/trusted-apps-client</url-pattern>
     </servlet>
+
+    <web-item key="trustedAppsClientWebItem" section="system.admin/general">
+        <label key="Trusted Apps Client"/>
+        <link linkId="trustedApps">/plugins/servlet/trusted-apps-client</link>
+    </web-item>
+
 </atlassian-plugin>

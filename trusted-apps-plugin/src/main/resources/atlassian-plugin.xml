@@ -32,9 +32,12 @@
         <url-pattern>/*</url-pattern>
     </servlet-filter>
 
-<!--
     <servlet key="trusted-apps-management-servlet" class="com.atlassian.refapp.trustedapps.internal.TrustedAppsManagementServlet">
         <url-pattern>/trusted-apps</url-pattern>
     </servlet>
--->    
+
+    <web-item key="trustedAppsManagementWebItem" section="system.admin/general">
+        <label key="Trusted Apps"/>
+        <link linkId="trustedApps">/plugins/servlet/trusted-apps</link>
+    </web-item>
 </atlassian-plugin>

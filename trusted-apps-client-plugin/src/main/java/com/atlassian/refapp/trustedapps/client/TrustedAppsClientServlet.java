@@ -46,6 +46,7 @@ public class TrustedAppsClientServlet extends HttpServlet
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
+        response.setContentType("text/html");
         Map<String, Object> params = new HashMap<String, Object>();
         if (!StringUtils.isBlank(request.getParameter("url")))
         {

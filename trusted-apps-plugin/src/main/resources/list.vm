@@ -1,12 +1,14 @@
 <html>
   <head>
     <title>Trusted Apps</title>
+    <meta name="decorator" content="atl.admin"/>
   </head>
   <body>
+    <h3>Trusted Apps</h3>
     <table>
       #foreach ($trustedApp in $trustedApplications)
       <tr>
-        <td>$trustedApp.getID()</td>
+        <td>$trustedApp.getID()</td><td><a href="$request.contextPath/plugins/servlet/trusted-apps?a=delete&id=$trustedApp.getID()">Delete</a></td>
       </tr>
       #end
     </table>
