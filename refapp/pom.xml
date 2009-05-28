@@ -200,6 +200,12 @@
         </dependency>
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
+            <artifactId>atlassian-refapp-charlie-plugin</artifactId>
+            <version>${pom.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-jquery-plugin</artifactId>
             <version>${pom.version}</version>
             <scope>provided</scope>

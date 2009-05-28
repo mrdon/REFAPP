@@ -75,3 +75,7 @@ h1 {
 .refapp-body {
     margin-left: 190px;
 }
+
+.refapp-footer {
+    clear: both;
+}

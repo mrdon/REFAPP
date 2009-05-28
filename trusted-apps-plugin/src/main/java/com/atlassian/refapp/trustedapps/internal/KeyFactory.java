@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.Random;
 
 import com.atlassian.sal.api.pluginsettings.PluginSettings;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
@@ -19,6 +20,7 @@ public class KeyFactory
 {
     private static final String PRIVATE_KEY = "trustedapps.private-key";
     private static final String PUBLIC_KEY = "trustedapps.public-key";
+    private static final String APPLICTAION_ID = "trustedapps.application-id";
 
     private EncryptionProvider encryptionProvider;
     private PluginSettings pluginSettings;
@@ -44,6 +46,11 @@ public class KeyFactory
         return keyPair;
     }
 
+    public String getApplicationId()
+    {
+        return (String) pluginSettings.get(APPLICTAION_ID);
+    }
+
     private KeyPair createKeyPair()
     {
         try
@@ -64,6 +71,7 @@ public class KeyFactory
     {
         pluginSettings.put(PUBLIC_KEY, KeyUtils.encode(keyPair.getPublic()));
         pluginSettings.put(PRIVATE_KEY, KeyUtils.encode(keyPair.getPrivate()));
+        pluginSettings.put(APPLICTAION_ID, "refapp:" + Integer.toString(new Random().nextInt(90000) + 10000));
     }
 
     private KeyPair fetchKeyPair()

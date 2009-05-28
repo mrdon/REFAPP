@@ -1,0 +1,33 @@
+<html>
+<head>
+  <title>Charlies Administration</title>
+  <meta name="decorator" content="atl.admin"/>
+</head>
+<body>
+  <h3>Charlies Administration</h3>
+  <p><a href="http://www.atlassian.com/summit/awards.jsp">Charlie</a> is the nickname we've given to the Atlassian logo.
+    The RefApp uses Charlie as a representation of the abstract "keys" supported by SAL and other plugins.</p>
+  <p>While in JIRA and Confluence, these keys represent a project or space, a Charlie in the RefApp does nothing,
+    just like the RefApp does nothing.  However, some cross product plugins might find
+    it useful to be able to refer to a set of valid keys, either using the SAL ProjectManager interface, or when
+    storing data by key in the SAL PluginSettingsFactory interface.
+    You can create Charlies to test your own cross product plugins if they need to use these keys.</p>
+
+  <div class="charlies-form">
+  <form name="charlies-admin-form" action="charlieadmin" method="POST">
+    Charlie Key: <input type="text" name="key"/><br/>
+    Charlie Name: <input type="text" name="name"/><br/>
+    <input type="submit" value="Add"/>
+  </form>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Key</th><th>Name</th><th>&nbsp;</th></tr>
+    </thead>
+    <tbody>
+    #foreach($charlie in $charlies.entrySet())
+      <tr><td>$charlie.key</td><td>$charlie.value</td><td><a href="charlieadmin?delete=$charlie.key">Delete</a></td></tr>
+    #end
+    </tbody>
+  </table>

@@ -20,6 +20,10 @@
         <url-pattern>/refappdecorator/*</url-pattern>
     </servlet>
 
+    <servlet-filter key="indexServletFilter" class="com.atlassian.refapp.decorator.DecoratorServletFilter" location="before-dispatch" weight="1000001">
+        <url-pattern>/*</url-pattern>
+    </servlet-filter>
+
     <web-resource key="decorator-resources" name="decorator-resources" >
         <resource type="download" name="decorator.css" location="css/decorator.css" />
         <resource type="download" name="images/" location="images/"/>
@@ -43,6 +47,11 @@
     <web-item key="docsFooterLink" section="footer.links" weight="10">
         <label key="Documentation"/>
         <link linkId="docsFooterLink">http://confluence.atlassian.com/display/PLUGINFRAMEWORK</link>
+    </web-item>
+
+    <web-item key="oldRefAppHomePageLink" section="index.links" weight="10">
+        <label key="Old RefApp Home Page"/>
+        <link linkId="oldRefAppHomePageLink">/index.jsp</link>
     </web-item>
 
 </atlassian-plugin>

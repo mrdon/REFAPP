@@ -17,7 +17,7 @@
 
     <component key="passwordEncryptor" class="com.atlassian.user.impl.osuser.security.password.OSUPasswordEncryptor" public="true">
         <interface>com.atlassian.user.security.password.PasswordEncryptor</interface>
-    </component>    
+    </component>
     <component key="userManager" class="com.atlassian.user.impl.memory.MemoryUserManager" public="true">
         <interface>com.atlassian.user.UserManager</interface>
     </component>
@@ -33,10 +33,10 @@
     <component key="roleMapper" class="com.atlassian.refapp.auth.internal.GroupRoleMapper" public="true">
         <interface>com.atlassian.seraph.auth.RoleMapper</interface>
     </component>
-    
+
     <component key="seraphAuthenticator" class="com.atlassian.refapp.auth.internal.AtlassianUserAuthenticator" />
     <component key="authenticationInitialization" class="com.atlassian.refapp.auth.internal.AuthenticationInitialization" />
-    
+
     <servlet-filter key="login-filter" class="com.atlassian.seraph.filter.LoginFilter" location="before-login" weight="1000000">
         <url-pattern>/*</url-pattern>
     </servlet-filter>
@@ -50,11 +50,11 @@
     <servlet-filter key="copy-authentication-context" class="com.atlassian.refapp.auth.internal.AuthenticationContextCopyFilter" location="before-login" weight="1000001">
         <url-pattern>/*</url-pattern>
     </servlet-filter>
-    
+
     <servlet key="login-servlet" class="com.atlassian.refapp.auth.internal.LoginServlet">
         <url-pattern>/login</url-pattern>
     </servlet>
-    
+
     <servlet key="logout" class="com.atlassian.refapp.auth.internal.LogoutServlet">
         <url-pattern>/logout</url-pattern>
     </servlet>
@@ -74,13 +74,19 @@
         <link linkId="login">/plugins/servlet/login</link>
     </web-item>
 
-    <web-item key="administrationLink" section="header.links" weight="10">
+    <web-item key="logoutHeaderLink" section="header.links" weight="10">
+        <label key="com.atlassian.refapp.auth.logout"/>
+        <link linkId="login">/plugins/servlet/logout</link>
+        <condition class="com.atlassian.refapp.auth.web.conditions.UserIsLoggedInCondition"/>
+    </web-item>
+
+    <web-item key="administrationLink" section="header.links" weight="20">
         <label key="com.atlassian.refapp.auth.administration"/>
-        <link linkId="administration">/plugins/servlet/users</link>
+        <link linkId="administration">/admin</link>
         <condition class="com.atlassian.refapp.auth.web.conditions.UserIsSystemAdministratorCondition"/>
     </web-item>
 
-    <web-item key="userLink" section="header.links" weight="20">
+    <web-item key="userLink" section="header.links" weight="30">
         <label key="com.atlassian.refapp.auth.user">
             <param name="param0">$userHelper.remoteUser.fullName</param>
         </label>
@@ -94,7 +100,7 @@
         <condition class="com.atlassian.refapp.auth.web.conditions.UserIsNotLoggedInCondition"/>
     </web-item>
 
-    <resource type="i18n" name="i18n" location="i18n" />    
+    <resource type="i18n" name="i18n" location="i18n" />
 
     <template-context-item key="userHelperContextItem" name="User Helper Context Item" global="true"
             class="com.atlassian.refapp.auth.internal.UserContextHelper" context-key="userHelper"/>

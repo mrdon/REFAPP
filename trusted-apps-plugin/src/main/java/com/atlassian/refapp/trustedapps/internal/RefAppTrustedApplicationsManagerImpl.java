@@ -39,7 +39,7 @@ public class RefAppTrustedApplicationsManagerImpl implements RefAppTrustedApplic
         KeyPair keyPair = keyFactory.getKeyPair();
 
         currentApplication = new DefaultCurrentApplication(encryptionProvider, keyPair.getPublic(),
-            keyPair.getPrivate(), "RefApp");
+            keyPair.getPrivate(), keyFactory.getApplicationId());
     }
 
     public CurrentApplication getCurrentApplication()
