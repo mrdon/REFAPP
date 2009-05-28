@@ -17,19 +17,22 @@ import com.atlassian.security.auth.trustedapps.EncryptionProvider;
  */
 public class KeyFactory
 {
+    private static final String PRIVATE_KEY = "trustedapps.private-key";
+    private static final String PUBLIC_KEY = "trustedapps.public-key";
+
     private EncryptionProvider encryptionProvider;
     private PluginSettings pluginSettings;
 
     public KeyFactory(EncryptionProvider encryptionProvider, PluginSettingsFactory pluginSettingsFactory)
     {
         this.encryptionProvider = encryptionProvider;
-        pluginSettings = pluginSettingsFactory.createSettingsForKey(getClass().getName());
+        pluginSettings = pluginSettingsFactory.createGlobalSettings();
     }
 
     public KeyPair getKeyPair()
     {
         KeyPair keyPair;
-        if (pluginSettings.get("public-key") != null)
+        if (pluginSettings.get(PRIVATE_KEY) != null)
         {
             keyPair = fetchKeyPair();
         }
@@ -59,8 +62,8 @@ public class KeyFactory
 
     private void storeKeyPair(KeyPair keyPair)
     {
-        pluginSettings.put("public-key", KeyUtils.encode(keyPair.getPublic()));
-        pluginSettings.put("private-key", KeyUtils.encode(keyPair.getPrivate()));
+        pluginSettings.put(PUBLIC_KEY, KeyUtils.encode(keyPair.getPublic()));
+        pluginSettings.put(PRIVATE_KEY, KeyUtils.encode(keyPair.getPrivate()));
     }
 
     private KeyPair fetchKeyPair()
@@ -70,13 +73,13 @@ public class KeyFactory
 
     private PrivateKey fetchPrivateKey()
     {
-        String keyStr = (String) pluginSettings.get("private-key");
+        String keyStr = (String) pluginSettings.get(PRIVATE_KEY);
         return KeyUtils.decodePrivateKey(encryptionProvider, keyStr);
     }
 
     private PublicKey fetchPublicKey()
     {
-        String keyStr = (String) pluginSettings.get("public-key");
+        String keyStr = (String) pluginSettings.get(PUBLIC_KEY);
         return KeyUtils.decodePublicKey(encryptionProvider, keyStr);
     }
 
