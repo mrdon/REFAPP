@@ -28,6 +28,7 @@
         <module>refapp</module>
         <module>maven-refapp-plugin</module>
         <module>maven-confluence-plugin</module>
+        <module>maven-bamboo-plugin</module>
         <module>maven-jira-plugin</module>
         <module>refapp-plugin-archetype</module>
     </modules>
