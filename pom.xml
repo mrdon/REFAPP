@@ -24,7 +24,6 @@
         <module>jquery-plugin</module>
         <module>web-item-plugin</module>
         <module>decorator-plugin</module>
-        <module>jsr305</module>
         <module>refapp</module>
         <module>maven-refapp-plugin</module>
         <module>maven-confluence-plugin</module>
@@ -239,6 +238,8 @@
         <atlassian.plugins.version>2.2.1</atlassian.plugins.version>
         <sal.version>2.0.4</sal.version>
         <template.renderer.version>1.0.beta4</template.renderer.version>
-        <oauth.version>1.0.beta7</oauth.version>
+        <oauth.version>1.0.beta10</oauth.version>
+        <rest.module.version>1.0.1</rest.module.version>
+        <google.collections.version>1.0-rc1</google.collections.version>
     </properties>
 </project>
