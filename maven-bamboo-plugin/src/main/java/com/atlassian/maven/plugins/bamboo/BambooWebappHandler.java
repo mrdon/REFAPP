@@ -74,6 +74,8 @@ public class BambooWebappHandler implements WebappHandler
     {
         ConfigFileUtils.replace(new File(homeDir, "bamboo.cfg.xml"), "@project-dir@", homeDir.getParent());
         ConfigFileUtils.replace(new File(homeDir, "bamboo.cfg.xml"), "${bambooHome}", homeDir.getAbsolutePath());
+        ConfigFileUtils.replace(new File(homeDir, "/xml-data/configuration/administration.xml"),
+                "http://192.168.15.145:8085", "http://" + webappMojo.getServer() + ":" + webappMojo.getHttpPort() + "/" + webappMojo.getContextPath().replaceAll("^/|/$", ""));
     }
 
     public List<WebappArtifact> getDefaultPlugins()
