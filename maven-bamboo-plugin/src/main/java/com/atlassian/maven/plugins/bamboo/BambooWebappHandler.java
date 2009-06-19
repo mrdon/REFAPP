@@ -34,7 +34,7 @@ public class BambooWebappHandler implements WebappHandler
 
     public int getDefaultHttpPort()
     {
-        return 1990;
+        return 5990;
     }
 
     public Map<String, String> getSystemProperties(final MavenProject project)
