@@ -81,9 +81,19 @@ public class ConfluenceWebappHandler implements WebappHandler
     {
         ConfigFileUtils.replace(new File(homeDir, "confluence.cfg.xml"), "@project-dir@", homeDir.getParent());
 
-        ConfigFileUtils.replace(new File(new File(homeDir,"database"), "confluencedb.script"),
-                "<baseUrl>http://localhost:8080</baseUrl>",
-                "<baseUrl>http://"+webappMojo.getServer()+":"+webappMojo.getHttpPort()+"/"+webappMojo.getContextPath().replaceAll("^/|/$", "")+"</baseUrl>");
+        File script = new File(new File(homeDir, "database"), "confluencedb.script");
+        if (script.exists())
+        {
+            ConfigFileUtils.replace(new File(new File(homeDir,"database"), "confluencedb.script"),
+                    "<baseUrl>http://localhost:8080</baseUrl>",
+                    "<baseUrl>http://"+webappMojo.getServer()+":"+webappMojo.getHttpPort()+"/"+webappMojo.getContextPath().replaceAll("^/|/$", "")+"</baseUrl>");
+        }
+        else
+        {
+            ConfigFileUtils.replace(new File(new File(homeDir,"database"), "confluencedb.log"),
+                    "<baseUrl>http://localhost:8080</baseUrl>",
+                    "<baseUrl>http://"+webappMojo.getServer()+":"+webappMojo.getHttpPort()+"/"+webappMojo.getContextPath().replaceAll("^/|/$", "")+"</baseUrl>");
+        }
     }
 
     public List<WebappArtifact> getDefaultPlugins()
