@@ -6,26 +6,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
-import java.util.StringTokenizer;
-import java.util.Comparator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.maven.execution.MavenSession;
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.PluginManager;
-import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.project.MavenProject;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.resolver.ArtifactResolver;
+import org.apache.maven.execution.MavenSession;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.PluginManager;
+import org.apache.maven.project.MavenProject;
+
 import com.atlassian.maven.plugins.refapp.util.ArtifactRetriever;
 
 /**
@@ -44,7 +42,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
      *
      * @parameter expression="${http.port}"
      */
-    private int httpPort = 0;
+    private final int httpPort = 0;
 
     /**
      * Application context path
@@ -122,7 +120,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
      */
     protected PluginManager pluginManager;
 
-        /**
+    /**
      * The artifact resolver is used to dynamically resolve JARs that have to be in the embedded
      * container's classpaths. Another solution would have been to statitically define them a
      * dependencies in the plugin's POM. Resolving them in a dynamic manner is much better as only
@@ -169,17 +167,17 @@ public abstract class AbstractWebappMojo extends AbstractMojo
     /**
      * @parameter
      */
-    private List<WebappArtifact> pluginArtifacts = new ArrayList<WebappArtifact>();
+    private final List<WebappArtifact> pluginArtifacts = new ArrayList<WebappArtifact>();
 
     /**
      * @parameter
      */
-    private List<WebappArtifact> libArtifacts = new ArrayList<WebappArtifact>();
+    private final List<WebappArtifact> libArtifacts = new ArrayList<WebappArtifact>();
 
     /**
      * @parameter
      */
-    private List<WebappArtifact> bundledArtifacts = new ArrayList<WebappArtifact>();
+    private final List<WebappArtifact> bundledArtifacts = new ArrayList<WebappArtifact>();
 
     /**
      * Comma-delimited list of plugin artifacts in GROUP_ID:ARTIFACT_ID:VERSION form, where version can be
@@ -244,7 +242,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
 
     protected File getBaseDirectory()
     {
-        File dir = new File(project.getBuild().getDirectory(), getWebappHandler().getId());
+        final File dir = new File(project.getBuild().getDirectory(), getWebappHandler().getId());
         dir.mkdir();
         return dir;
     }
@@ -278,7 +276,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
         return artifacts;
     }
 
-    protected File addArtifacts(final MavenGoals goals, File homeDir, final File webappWar) throws MojoExecutionException
+    protected File addArtifacts(final MavenGoals goals, final File homeDir, final File webappWar) throws MojoExecutionException
     {
         try
         {
@@ -376,7 +374,7 @@ public abstract class AbstractWebappMojo extends AbstractMojo
         }
     }
 
-    protected File extractAndProcessHomeDirectory(MavenGoals goals) throws MojoExecutionException
+    protected File extractAndProcessHomeDirectory(final MavenGoals goals) throws MojoExecutionException
     {
         if (getWebappHandler().getTestResourcesArtifact() != null)
         {
@@ -386,17 +384,21 @@ public abstract class AbstractWebappMojo extends AbstractMojo
             final File tmpDir = new File(getBaseDirectory(), "tmp-resources");
             tmpDir.mkdir();
 
+            final File homeDir;
             try
             {
                 unzip(confHomeZip, tmpDir.getPath());
-                FileUtils.copyDirectory(tmpDir.listFiles()[0],
-                        outputDir);
+                FileUtils.copyDirectory(tmpDir.listFiles()[0], outputDir);
+
+                final String homeDirName = tmpDir.listFiles()[0].listFiles()[0].getName();
+                homeDir = new File(outputDir, homeDirName);
+                overrideAndPatchHomeDir(homeDirName);
             }
-            catch (IOException ex)
+            catch (final IOException ex)
             {
                 throw new MojoExecutionException("Unable to copy home directory", ex);
             }
-            File homeDir = new File(outputDir, tmpDir.listFiles()[0].listFiles()[0].getName());
+
             getWebappHandler().processHomeDirectory(project, homeDir, this);
             return homeDir;
         }
@@ -404,6 +406,14 @@ public abstract class AbstractWebappMojo extends AbstractMojo
         {
             return getWebappHandler().getHomeDirectory(project);
         }
+    }
+
+    private void overrideAndPatchHomeDir(final String homeDirName) throws IOException
+    {
+
+        final File srcDir = new File(project.getBasedir(), "src/test/resources/"+homeDirName);
+        final File outputDir = new File(getBaseDirectory(), homeDirName);
+        FileUtils.copyDirectory(srcDir, outputDir);
     }
 
     protected String getVersion()
@@ -424,18 +434,18 @@ public abstract class AbstractWebappMojo extends AbstractMojo
     }
 
     private void addArtifactsToDirectory(final MavenGoals goals, final List<WebappArtifact> artifacts,
-                                         final File pluginsDir) throws MojoExecutionException
-    {
+            final File pluginsDir) throws MojoExecutionException
+            {
         // first remove plugins from the webapp that we want to update
         if (pluginsDir.isDirectory() && pluginsDir.exists())
         {
-            for (final Iterator<?> iterateFiles = FileUtils.iterateFiles(pluginsDir, null, false); iterateFiles.hasNext();)
+            for (final Iterator<?> iterateFiles = FileUtils.iterateFiles(pluginsDir, null, false); iterateFiles
+            .hasNext();)
             {
                 final File file = (File) iterateFiles.next();
                 for (final WebappArtifact webappArtifact : artifacts)
                 {
-                    if (!file.isDirectory() && file.getName()
-                            .contains(webappArtifact.getArtifactId()))
+                    if (!file.isDirectory() && file.getName().contains(webappArtifact.getArtifactId()))
                     {
                         file.delete();
                     }
@@ -447,16 +457,16 @@ public abstract class AbstractWebappMojo extends AbstractMojo
         {
             goals.copyPlugins(pluginsDir, artifacts);
         }
-    }
+            }
 
     protected WebappHandler getWebappHandler()
     {
         return new RefappWebappHandler();
     }
 
-    protected WebappContext createWebappContext(File war)
+    protected WebappContext createWebappContext(final File war)
     {
-        WebappContext ctx = new WebappContext();
+        final WebappContext ctx = new WebappContext();
         ctx.setWebappWar(war);
         ctx.setContainerId(containerId);
         ctx.setServer(server);
@@ -504,23 +514,23 @@ public abstract class AbstractWebappMojo extends AbstractMojo
 
 
 
-    private List<WebappArtifact> stringToArtifactList(String val, List<WebappArtifact> artifacts)
+    private List<WebappArtifact> stringToArtifactList(final String val, final List<WebappArtifact> artifacts)
     {
         if (val == null || val.trim().length() == 0)
         {
             return artifacts;
         }
 
-        for (String ptn : val.split(","))
+        for (final String ptn : val.split(","))
         {
-            String[] items = ptn.split(":");
+            final String[] items = ptn.split(":");
             if (items.length < 2 || items.length > 3)
             {
                 throw new IllegalArgumentException("Invalid artifact pattern: " + ptn);
             }
-            String groupId = items[0];
-            String artifactId = items[1];
-            String version = (items.length == 3 ? items[2] : "LATEST");
+            final String groupId = items[0];
+            final String artifactId = items[1];
+            final String version = (items.length == 3 ? items[2] : "LATEST");
             artifacts.add(new WebappArtifact(groupId, artifactId, version));
         }
         return artifacts;
