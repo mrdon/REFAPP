@@ -330,9 +330,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.google.collect</groupId>
-            <artifactId>com.springsource.com.google.common.collect</artifactId>
-            <version>0.8.0.20080820</version>
+            <groupId>com.atlassian.bundles</groupId>
+            <artifactId>google-collections</artifactId>
+            <version>${google.collections.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -344,7 +344,7 @@
         <dependency>
             <groupId>com.atlassian.plugins.rest</groupId>
             <artifactId>atlassian-rest-module</artifactId>
-            <version>1.0.0.rc1</version>
+            <version>${rest.module.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -419,6 +419,18 @@
             <groupId>net.jcip</groupId>
             <artifactId>com.springsource.net.jcip.annotations</artifactId>
             <version>1.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.aui</groupId>
+            <artifactId>auiplugin</artifactId>
+            <version>1.1.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.bundles</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>1.0</version>
             <scope>provided</scope>
         </dependency>
 
