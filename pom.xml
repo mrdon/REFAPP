@@ -242,7 +242,7 @@
         <atlassian.plugins.version>2.3.0.beta1</atlassian.plugins.version>
         <sal.version>2.0.11</sal.version>
         <template.renderer.version>1.0.beta6</template.renderer.version>
-        <oauth.version>1.0.beta12</oauth.version>
+        <oauth.version>1.0.rc2</oauth.version>
         <rest.module.version>1.0.2</rest.module.version>
         <google.collections.version>1.0-rc1</google.collections.version>
     </properties>
