@@ -12,7 +12,6 @@
 
     <build>
         <plugins>
-            <!-- copy the bundled plugins to a temp directory -->
             <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
@@ -23,32 +22,13 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/bundled-plugins</outputDirectory>
+                            <outputDirectory>
+                                ${project.build.directory}/${project.build.finalName}/WEB-INF/plugins
+                            </outputDirectory>
                             <includeScope>provided</includeScope>
                             <includeTypes>jar,bundle</includeTypes>
                             <excludeTransitive>true</excludeTransitive>
                         </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.2-beta-2</version>
-                <configuration>
-                    <descriptors>
-                        <descriptor>src/main/assembly/bundled-plugins.xml</descriptor>
-                    </descriptors>
-                    <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
-                    <finalName>atlassian-bundled-plugins</finalName>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>zip-bundled-plugins</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>attached</goal>
-                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -177,7 +157,7 @@
             <groupId>com.atlassian.extras</groupId>
             <artifactId>atlassian-extras</artifactId>
         </dependency>
-
+        
         <!--
             These are plugins that we want to install in the refimpl container.  They're marked as scope provided so the
             Maven WAR plugin doesn't try to package them in WEB-INF/lib.
@@ -475,9 +455,9 @@
         <rmi.port>8580</rmi.port>
         <baseurl>http://localhost:${http.port}/atlassian-refapp</baseurl>
         <tomcat.installer.url>
-            <!--
-                        file:///tmp/apache-tomcat-5.5.25.zip
-            -->
+<!--
+            file:///tmp/apache-tomcat-5.5.25.zip
+-->
             https://m2proxy.atlassian.com/repository/public/org/apache/tomcat/apache-tomcat/5.5.25/apache-tomcat-5.5.25.zip
         </tomcat.installer.url>
         <cargo.wait>false</cargo.wait>
