@@ -28,9 +28,9 @@
         <module>refapp</module>
     </modules>
     <scm>
-        <connection>scm:svn:https://studio.atlassian.com/svn/REFAPP/branches/atlassian-refapp-2.4.0-SNAPSHOT</connection>
-        <developerConnection>scm:svn:https://studio.atlassian.com/svn/REFAPP/branches/atlassian-refapp-2.4.0-SNAPSHOT</developerConnection>
-        <url>https://studio.atlassian.com/source/browse/REFAPP/branches/atlassian-refapp-2.4.0-SNAPSHOT</url>
+        <connection>scm:svn:https://studio.atlassian.com/svn/REFAPP/branches/atlassian-refapp-2.4.0</connection>
+        <developerConnection>scm:svn:https://studio.atlassian.com/svn/REFAPP/branches/atlassian-refapp-2.4.0</developerConnection>
+        <url>https://studio.atlassian.com/source/browse/REFAPP/branches/atlassian-refapp-2.4.0</url>
     </scm>
     <build>
         <plugins>
