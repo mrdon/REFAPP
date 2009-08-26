@@ -411,7 +411,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient-osgi</artifactId>
-            <version>4.0-beta2</version>
+            <version>4.0</version>
             <type>bundle</type>
             <scope>provided</scope>
         </dependency>
