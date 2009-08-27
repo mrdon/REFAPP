@@ -2,8 +2,8 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.atlassian.pom</groupId>
-        <artifactId>atlassian-private-pom</artifactId>
-        <version>20</version>
+        <artifactId>atlassian-closedsource-pom</artifactId>
+        <version>17</version>
     </parent>
     <groupId>com.atlassian.refapp</groupId>
     <artifactId>atlassian-refapp-parent</artifactId>
