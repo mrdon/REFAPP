@@ -66,7 +66,7 @@
                         <containerId>tomcat5x</containerId>
                         <zipUrlInstaller>
                             <url>${tomcat.installer.url}</url>
-                            <installDir>${project.build.directory}/tomcat5x</installDir>
+                            <installDir>${project.build.directory}</installDir>
                         </zipUrlInstaller>
                         <output>${project.build.directory}/output.log</output>
                         <log>${project.build.directory}/cargo-log.log</log>
@@ -75,6 +75,7 @@
                         </systemProperties>
                     </container>
                     <configuration>
+                        <home>${project.build.directory}/tomcat5x</home>
                         <deployables>
                             <deployable>
                                 <properties>
