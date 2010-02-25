@@ -24,7 +24,7 @@
     &lt;/web-item&gt;
 </pre>
 
-  <p>Other places you can add links to include <tt>admin.links/general</tt>, <tt>header.links</tt> and
+  <p>Other places you can add links to include <tt>system.admin/general</tt>, <tt>header.links</tt> and
     <tt>footer.links</tt>.  You might want to log in, by default, three users are available, admin, fred and
     barney.  Their passwords are the same as their usernames.</p>
 
