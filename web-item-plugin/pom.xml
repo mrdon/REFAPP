@@ -60,5 +60,10 @@
             <groupId>com.atlassian.templaterenderer</groupId>
             <artifactId>atlassian-template-renderer-api</artifactId>
         </dependency>
+		<dependency>
+            <groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<scope>provided</scope>
+		</dependency>
     </dependencies>
 </project>
