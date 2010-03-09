@@ -8,6 +8,7 @@ import com.atlassian.plugin.web.DefaultWebInterfaceManager;
 import com.atlassian.plugin.web.WebFragmentHelper;
 import com.atlassian.plugin.web.WebInterfaceManager;
 import com.atlassian.plugin.web.descriptors.WebItemModuleDescriptor;
+import com.atlassian.plugin.web.descriptors.WebPanel;
 import com.atlassian.plugin.web.descriptors.WebSectionModuleDescriptor;
 
 /**
@@ -40,6 +41,16 @@ public class WebInterfaceManagerImpl implements WebInterfaceManager
     public List<WebSectionModuleDescriptor> getSections(String location)
     {
         return webInterfaceManager.getSections(location);
+    }
+
+    public List<WebPanel> getDisplayableWebPanels(String s, Map<String, Object> stringObjectMap)
+    {
+        return webInterfaceManager.getDisplayableWebPanels(s, stringObjectMap);
+    }
+
+    public List<WebPanel> getWebPanels(String s)
+    {
+        return webInterfaceManager.getWebPanels(s);
     }
 
     public WebFragmentHelper getWebFragmentHelper()

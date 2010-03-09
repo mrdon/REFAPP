@@ -236,7 +236,7 @@
         <jdkLevel>1.5</jdkLevel>
         <atlassian.plugins.version>2.5.0-SNAPSHOT</atlassian.plugins.version>
         <sal.version>2.0.11</sal.version>
-        <template.renderer.version>1.0.5</template.renderer.version>
+        <template.renderer.version>1.1-SNAPSHOT</template.renderer.version>
         <oauth.version>1.0.0</oauth.version>
         <rest.module.version>1.0.6</rest.module.version>
         <google.collections.version>1.0-rc1</google.collections.version>

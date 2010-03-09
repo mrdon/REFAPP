@@ -1,5 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
+
+#* @vtlvariable name="webInterfaceManager" type="com.atlassian.plugin.web.WebInterfaceManager" *#
+
 $webResourceManager.requireResource("com.atlassian.refapp.decorator:decorator-resources")
 $webResourceManager.requireResourcesForContext("atl.admin")
 <html>
@@ -36,12 +39,24 @@ $webResourceManager.requireResourcesForContext("atl.admin")
         <div class="refapp-body">
         $bodyHtml
         </div>
+
+        <div>
+        WebPanels below this point:
+        #set($first = true)
+        #foreach($item in $webInterfaceManager.getDisplayableWebPanels("body.panels", $context))
+            #if (!$first)<hr>#end #set($first = false)
+            <div>
+                $item.getHtml($context)
+            </div>
+        #end
+        </div>
+        
         <div class="refapp-footer" style="text-align:center">
             <hr/>
             Atlassian Plugins -
-            #set($items = $webInterfaceManager.getDisplayableItems("footer.links", $context))
+            #set($panels = $webInterfaceManager.getDisplayableItems("footer.links", $context))
             #set($first = true)
-            #foreach($item in $items)
+            #foreach($item in $panels)
               #if (!$first)|#end #set($first = false)
               <a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $context)">$item.webLabel.getDisplayableLabel($request, $context)</a>
             #end

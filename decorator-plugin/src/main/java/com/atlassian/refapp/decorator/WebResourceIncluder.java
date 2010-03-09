@@ -15,6 +15,7 @@ public class WebResourceIncluder
     }
 
     @HtmlSafe
+    @com.atlassian.velocity.htmlsafe.HtmlSafe
     public CharArrayWriter includeResources()
     {
         CharArrayWriter writer = new CharArrayWriter();
