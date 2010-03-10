@@ -1,9 +1,9 @@
 package com.atlassian.refapp.decorator;
 
-import java.io.CharArrayWriter;
-
 import com.atlassian.plugin.webresource.WebResourceManager;
 import com.atlassian.templaterenderer.annotations.HtmlSafe;
+
+import java.io.CharArrayWriter;
 
 public class WebResourceIncluder
 {
@@ -14,7 +14,7 @@ public class WebResourceIncluder
         this.webResourceManager = webResourceManager;
     }
 
-    @HtmlSafe
+    @HtmlSafe //this is required for backwards-compatibility with atlassian-template-renderer versions prior to 2.5.0
     @com.atlassian.velocity.htmlsafe.HtmlSafe
     public CharArrayWriter includeResources()
     {
