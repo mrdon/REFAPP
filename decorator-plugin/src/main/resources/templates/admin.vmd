@@ -2,6 +2,7 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 
 #* @vtlvariable name="webInterfaceManager" type="com.atlassian.plugin.web.WebInterfaceManager" *#
+#parse ("templates/webpanel.vm")
 
 $webResourceManager.requireResource("com.atlassian.refapp.decorator:decorator-resources")
 $webResourceManager.requireResourcesForContext("atl.admin")
@@ -40,15 +41,9 @@ $webResourceManager.requireResourcesForContext("atl.admin")
         $bodyHtml
         </div>
 
-        <div>
-        WebPanels below this point:
-        #set($first = true)
-        #foreach($item in $webInterfaceManager.getDisplayableWebPanels("body.panels", $context))
-            #if (!$first)<hr>#end #set($first = false)
-            <div>
-                $item.getHtml($context)
-            </div>
-        #end
+        <div class="refapp-body">
+            Below is a Web Panel section. To include your Web Panel, use <tt>location="atl.admin.body"</tt>:
+            #webpanels("atl.admin.body", $context)
         </div>
         
         <div class="refapp-footer" style="text-align:center">
