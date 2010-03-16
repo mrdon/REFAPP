@@ -8,8 +8,8 @@ import com.atlassian.plugin.web.DefaultWebInterfaceManager;
 import com.atlassian.plugin.web.WebFragmentHelper;
 import com.atlassian.plugin.web.WebInterfaceManager;
 import com.atlassian.plugin.web.descriptors.WebItemModuleDescriptor;
-import com.atlassian.plugin.web.descriptors.WebPanel;
 import com.atlassian.plugin.web.descriptors.WebSectionModuleDescriptor;
+import com.atlassian.plugin.web.model.WebPanel;
 
 /**
  * Needed to force constructor injection
