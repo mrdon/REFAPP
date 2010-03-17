@@ -104,6 +104,7 @@ public class DecoratorServlet extends HttpServlet
         }
 
         velocityParams.put("request", request);
+        velocityParams.put("response", response);   // as of 2.5.0 both req and resp must be available in all apps
         return velocityParams;
     }
 }
