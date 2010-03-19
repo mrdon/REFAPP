@@ -19,7 +19,7 @@
 
     <module-type key="web-section" class="com.atlassian.refapp.webitem.RefAppWebSectionModuleDescriptor" />
 
-    <module-type key="web-panel" class="com.atlassian.refapp.webpanel.RefAppWebPanelModuleDescriptor" />
+    <module-type key="web-panel" class="com.atlassian.plugin.web.descriptors.DefaultWebPanelModuleDescriptor" />
 
     <module-type key="web-panel-renderer" class="com.atlassian.refapp.webpanel.RefAppWebPanelRendererModuleDescriptor" />
 </atlassian-plugin>
