@@ -55,6 +55,7 @@ $webResourceManager.requireResourcesForContext("atl.admin")
               #if (!$first)|#end #set($first = false)
               <a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $context)">$item.webLabel.getDisplayableLabel($request, $context)</a>
             #end
+            #webpanels("footer.links", $context)
         </div>
     </body>
 </html>
