@@ -40,6 +40,8 @@
     </web-item>
 
     <web-item key="buildsFooterLink" section="footer.links" weight="20">
+        <!-- this useless condition is here to force the condition parsing logic to run -->
+        <condition class="com.atlassian.plugin.web.conditions.AlwaysDisplayCondition"/>
         <label key="Builds"/>
         <link linkId="buildsFooterLink">http://bamboo.developer.atlassian.com/browse/ATLASSIANPLUGINS"</link>
     </web-item>
