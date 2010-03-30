@@ -64,7 +64,7 @@ public class TrustedAppsClientServlet extends HttpServlet
 
     private Map<String, Object> makeRequest(String url) throws ResponseException
     {
-        Request<?> request = requestFactory.createRequest(MethodType.GET, url);
+        Request request = requestFactory.createRequest(MethodType.GET, url);
         request.addTrustedTokenAuthentication();
         final Map<String, Object> responseData = new HashMap<String, Object>();
         request.execute(new ResponseHandler()
