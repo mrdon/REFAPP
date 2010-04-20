@@ -13,13 +13,28 @@
         <interface>com.atlassian.templaterenderer.TemplateRenderer</interface>
     </component-import>
 
+    <component-import key="projectManager">
+        <interface>com.atlassian.sal.api.project.ProjectManager</interface>
+    </component-import>
+
     <servlet key="charlieAdminServlet" class="com.atlassian.refapp.charlie.CharlieAdminServlet">
         <url-pattern>/charlieadmin</url-pattern>
+    </servlet>
+
+    <servlet key="charlieLandingPage" class="com.atlassian.refapp.charlie.CharlieLandingPage">
+        <url-pattern>/charlie/*</url-pattern>
     </servlet>
 
     <web-item key="charlieManagementLink" section="system.admin/general" weight="5">
         <label key="Charlie Management"/>
         <link linkId="charlieManagement">/plugins/servlet/charlieadmin</link>
     </web-item>
+
+    <template-context-item key="pluginSettingsFactoryContextItem" component-ref="pluginSettingsFactory"
+        context-key="pluginSettingsFactory" global="true" name="pluginSettingsFactory Context Item"/>
+
+    <web-panel key="projectList" location="atl.refapp.index" weight="1">
+        <resource name="view" type="velocity" location="templates/projectlist.vm"/>
+    </web-panel>
 
 </atlassian-plugin>

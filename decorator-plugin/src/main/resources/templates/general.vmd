@@ -2,6 +2,7 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 $webResourceManager.requireResource("com.atlassian.refapp.decorator:decorator-resources")
 $webResourceManager.requireResourcesForContext("atl.general")
+#parse ("templates/webpanel.vm")
 <html>
     <head>
         <title>#if ($title)$titleHtml#else Welcome!#end</title>

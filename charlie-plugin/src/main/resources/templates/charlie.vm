@@ -1,0 +1,20 @@
+#parse ("templates/webpanel.vm")
+<html>
+<head>
+  <title>Landing Page for Project ${charlieKey}</title>
+  <meta name="decorator" content="atl.general"/>
+</head>
+<body>
+  <h3>${charlieKey}: $!charlieName</h3>
+
+    <p>
+        This is the landing page for Charlie/Project "${charlieKey}".
+    </p>
+    <p>
+        This page contains the "atl.refapp.project" Web Panel location.
+    </p>
+    <p>
+        #webpanels("atl.refapp.project", $context)
+    </p>
+</body>
+</html>

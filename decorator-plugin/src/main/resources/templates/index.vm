@@ -1,3 +1,4 @@
+#parse ("templates/webpanel.vm")
 <html>
 <head>
   <title>Welcome to the Atlassian RefApp!</title>
@@ -14,6 +15,9 @@
     <li><a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $context)">$item.webLabel.getDisplayableLabel($request, $context)</a></li>
   #end
   </ul>
+  <div>
+      #webpanels("atl.refapp.index", $context)
+  </div>
 
   <p>Wondering how the above links got there?  Just add a web item to your plugin:</p>
 
@@ -22,6 +26,14 @@
         &lt;label key="My Link Name or I18n Key"&gt;
         &lt;link linkId="myLinkId"&gt;/relative/or/absolute/path/to/my/link&lt;/link&gt;
     &lt;/web-item&gt;
+</pre>
+
+  <p>In addition to Web Items, you can also add Web Panels to the above section, for example:</p>
+
+<pre>
+    &lt;web-panel key="myPanel" location="atl.refapp.index"&gt;
+        &lt;resource name="view" type="velocity" location="/relative/or/absolute/path/to/my/panel.vm"/&gt;
+    &lt;/web-panel&gt;
 </pre>
 
   <p>Other places you can add links to include <tt>system.admin/general</tt>, <tt>header.links</tt> and
