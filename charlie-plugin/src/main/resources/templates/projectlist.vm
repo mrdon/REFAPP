@@ -14,12 +14,10 @@
         <tbody>
         #foreach ($key in $pluginSettingsFactory.createGlobalSettings().get("charlie.keys"))
             <tr>
-                <td><a href="">$key</a></td>
+                <td><a href="$applicationProperties.baseUrl/plugins/servlet/charlie/$key">$key</a></td>
                 <td>$pluginSettingsFactory.createSettingsForKey($key).get("charlie.name")</td>
             </tr>
         #end
         </tbody>
     </table>
-    <ul>
-    </ul>
 </div>

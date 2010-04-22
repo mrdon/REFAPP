@@ -13,8 +13,8 @@
         <interface>com.atlassian.templaterenderer.TemplateRenderer</interface>
     </component-import>
 
-    <component-import key="projectManager">
-        <interface>com.atlassian.sal.api.project.ProjectManager</interface>
+    <component-import key="applicationProperties">
+        <interface>com.atlassian.sal.api.ApplicationProperties</interface>
     </component-import>
 
     <servlet key="charlieAdminServlet" class="com.atlassian.refapp.charlie.CharlieAdminServlet">
@@ -29,6 +29,9 @@
         <label key="Charlie Management"/>
         <link linkId="charlieManagement">/plugins/servlet/charlieadmin</link>
     </web-item>
+
+    <template-context-item key="applicationPropertiesContextItem" component-ref="applicationProperties"
+        context-key="applicationProperties" global="true" name="applicationProperties Context Item"/>
 
     <template-context-item key="pluginSettingsFactoryContextItem" component-ref="pluginSettingsFactory"
         context-key="pluginSettingsFactory" global="true" name="pluginSettingsFactory Context Item"/>
