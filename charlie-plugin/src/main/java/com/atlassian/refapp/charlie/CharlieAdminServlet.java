@@ -1,5 +1,6 @@
 package com.atlassian.refapp.charlie;
 
+import com.atlassian.plugin.web.WebInterfaceManager;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 import com.atlassian.templaterenderer.TemplateRenderer;
 
@@ -11,9 +12,9 @@ import java.util.*;
 
 public class CharlieAdminServlet extends CharlieServlet
 {
-    public CharlieAdminServlet(TemplateRenderer templateRenderer, PluginSettingsFactory pluginSettingsFactory)
+    public CharlieAdminServlet(PluginSettingsFactory pluginSettingsFactory, TemplateRenderer templateRenderer, WebInterfaceManager webInterfaceManager)
     {
-        super(pluginSettingsFactory, templateRenderer);
+        super(pluginSettingsFactory, templateRenderer, webInterfaceManager);
     }
 
     @Override protected void doGet(HttpServletRequest request, HttpServletResponse response)

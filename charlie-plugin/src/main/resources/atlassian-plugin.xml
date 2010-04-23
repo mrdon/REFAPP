@@ -5,6 +5,10 @@
         <vendor name="${pom.organization.name}" url="${pom.organization.url}" />
     </plugin-info>
 
+    <component-import key="webInterfaceManager">
+        <interface>com.atlassian.plugin.web.WebInterfaceManager</interface>
+    </component-import>
+
     <component-import key="pluginSettingsFactory">
         <interface>com.atlassian.sal.api.pluginsettings.PluginSettingsFactory</interface>
     </component-import>
@@ -35,6 +39,9 @@
 
     <template-context-item key="pluginSettingsFactoryContextItem" component-ref="pluginSettingsFactory"
         context-key="pluginSettingsFactory" global="true" name="pluginSettingsFactory Context Item"/>
+
+    <template-context-item key="webInterfaceManagerContextItem" component-ref="webInterfaceManager"
+        context-key="webInterfaceManager" global="true" name="webInterfaceManager Context Item"/>
 
     <web-panel key="projectList" location="atl.refapp.index" weight="1">
         <resource name="view" type="velocity" location="templates/projectlist.vm"/>

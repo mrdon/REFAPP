@@ -43,6 +43,12 @@
             <artifactId>sal-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.atlassian.plugins</groupId>
+            <artifactId>atlassian-plugins-webfragment</artifactId>
+            <version>${atlassian.plugins.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
         </dependency>

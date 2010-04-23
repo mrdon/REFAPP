@@ -1,5 +1,6 @@
 package com.atlassian.refapp.charlie;
 
+import com.atlassian.plugin.web.WebInterfaceManager;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 import com.atlassian.templaterenderer.TemplateRenderer;
 
@@ -15,9 +16,9 @@ import java.util.Map;
  */
 public class CharlieLandingPage extends CharlieServlet
 {
-    public CharlieLandingPage(TemplateRenderer templateRenderer, PluginSettingsFactory pluginSettingsFactory)
+    public CharlieLandingPage(PluginSettingsFactory pluginSettingsFactory, TemplateRenderer templateRenderer, WebInterfaceManager webInterfaceManager)
     {
-        super(pluginSettingsFactory, templateRenderer);
+        super(pluginSettingsFactory, templateRenderer, webInterfaceManager);
     }
 
     @Override
@@ -27,8 +28,8 @@ public class CharlieLandingPage extends CharlieServlet
         final Map<String, Object> context = new HashMap<String, Object>();
 
         if (getCharlies().contains(key)) {
-            context.put("charlieKey", key);
-            context.put("charlieName", getCharlieName(key));
+            context.put("projectKey", key);
+            context.put("projectName", getCharlieName(key));
             render("/templates/charlie.vm", context, response);
         } else {
             response.sendError(404, "Charlie with key " + key + " does not exist.");

@@ -1,5 +1,6 @@
 package com.atlassian.refapp.charlie;
 
+import com.atlassian.plugin.web.WebInterfaceManager;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 import com.atlassian.templaterenderer.TemplateRenderer;
 
@@ -21,11 +22,13 @@ public class CharlieServlet extends HttpServlet
     public static final String CHARLIE_NAME = "charlie.name";
     protected final PluginSettingsFactory pluginSettingsFactory;
     protected final TemplateRenderer templateRenderer;
+    protected final WebInterfaceManager webInterfaceManager;
 
-    public CharlieServlet(PluginSettingsFactory pluginSettingsFactory, TemplateRenderer templateRenderer)
+    public CharlieServlet(PluginSettingsFactory pluginSettingsFactory, TemplateRenderer templateRenderer, WebInterfaceManager webInterfaceManager)
     {
         this.pluginSettingsFactory = pluginSettingsFactory;
         this.templateRenderer = templateRenderer;
+        this.webInterfaceManager = webInterfaceManager;
     }
 
     protected List<String> getCharlies()
