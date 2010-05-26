@@ -28,6 +28,7 @@ public class LogoutServlet extends HttpServlet
         try
         {
             auth.logout(request, response);
+            request.getSession().invalidate();
             RedirectHelper.redirect(request, response);
         }
         catch (AuthenticatorException e)
