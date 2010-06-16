@@ -5,7 +5,7 @@
         <vendor name="${pom.organization.name}" url="${pom.organization.url}" />
         <bundle-instructions>
             <Private-Package>com.atlassian.refapp.trustedapps.internal</Private-Package>
-            <Export-Package>com.atlassian.refapp.trustedapps,com.atlassian.security.auth.trustedapps</Export-Package>
+            <Export-Package>com.atlassian.refapp.trustedapps,com.atlassian.security.auth.trustedapps,com.atlassian.security.auth.trustedapps.request</Export-Package>
 <!--
             <Import-Package>
                 com.atlassian.user,com.atlassian.seraph.auth,com.atlassian.seraph.config,

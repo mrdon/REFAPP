@@ -82,7 +82,7 @@
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity</artifactId>
         </dependency>
-        <!-- should provided by the app or another plugin -->
+        <!-- should be provided by the app or another plugin -->
         <dependency>
             <groupId>com.atlassian.seraph</groupId>
             <artifactId>atlassian-seraph</artifactId>
