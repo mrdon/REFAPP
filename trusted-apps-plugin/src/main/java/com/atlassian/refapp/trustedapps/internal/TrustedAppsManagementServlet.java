@@ -1,12 +1,9 @@
 package com.atlassian.refapp.trustedapps.internal;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static org.apache.commons.lang.StringUtils.isBlank;
+
+import com.atlassian.security.auth.trustedapps.RequestConditions;
+import com.atlassian.security.auth.trustedapps.TrustedApplicationsConfigurationManager;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -21,7 +21,6 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.log.JdkLogChute;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
-import com.atlassian.refapp.trustedapps.RefAppTrustedApplicationsManager;
 import com.atlassian.security.auth.trustedapps.Application;
 import com.atlassian.security.auth.trustedapps.ApplicationRetriever.RetrievalException;
 import com.atlassian.security.auth.trustedapps.IPAddressFormatException;
@@ -29,9 +28,10 @@ import com.atlassian.security.auth.trustedapps.IPAddressFormatException;
 public class TrustedAppsManagementServlet extends HttpServlet
 {
     private final VelocityEngine velocity;
-    private final RefAppTrustedApplicationsManager trustedAppsManager;
+    private final TrustedApplicationsConfigurationManager trustedAppsManager;
 
-    public TrustedAppsManagementServlet(RefAppTrustedApplicationsManager trustedAppsManager) throws Exception
+    public TrustedAppsManagementServlet(final TrustedApplicationsConfigurationManager trustedAppsManager)
+            throws Exception
     {
         this.trustedAppsManager = trustedAppsManager;
 
@@ -43,7 +43,8 @@ public class TrustedAppsManagementServlet extends HttpServlet
     }
 
     @Override
-    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    protected void service(final HttpServletRequest request, final HttpServletResponse response)
+            throws ServletException, IOException
     {
         String action = request.getParameter("a");
         if (action == null)
@@ -64,23 +65,26 @@ public class TrustedAppsManagementServlet extends HttpServlet
         }
     }
 
-    private void list(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
+    private void list(final HttpServletRequest request, final HttpServletResponse response)
+            throws IOException, ServletException
     {
         response.setContentType("text/html");
         render("/list.vm", Collections.<String, Object>singletonMap("trustedApplications",
             trustedAppsManager.getTrustedApplications()), request, response);
     }
 
-    private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
+    private void delete(final HttpServletRequest request, final HttpServletResponse response)
+            throws IOException, ServletException
     {
         trustedAppsManager.deleteApplication(request.getParameter("id"));
         response.sendRedirect(request.getRequestURL().toString());
     }
 
-    private void add(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
+    private void add(final HttpServletRequest request, final HttpServletResponse response)
+            throws IOException, ServletException
     {
         response.setContentType("text/html");
-        Map<String, Object> context = new HashMap<String, Object>();
+        final Map<String, Object> context = new HashMap<String, Object>();
         if (request.getParameterMap().containsKey("s"))
         {
             boolean succeeded = true;
@@ -103,13 +107,13 @@ public class TrustedAppsManagementServlet extends HttpServlet
                     succeeded = false;
                 }
             }
-            long certificateTimeout = 1000;
+            long certificateTimeout = 1000L;
             try
             {
                 if (!isBlank(request.getParameter("timeout")))
                 {
                     certificateTimeout = Long.parseLong(request.getParameter("timeout"));
-                    if (certificateTimeout < 0)
+                    if (certificateTimeout < 0L)
                     {
                         context.put("timeoutError", "timeout cannot be < 0");
                         succeeded = false;
@@ -122,23 +126,24 @@ public class TrustedAppsManagementServlet extends HttpServlet
                 succeeded = false;
             }
 
-            Set<String> urlPatterns = new HashSet<String>();
-            if (!isBlank(request.getParameter("urlPatterns")))
-            {
-                urlPatterns.addAll(Arrays.asList(request.getParameter("urlPatterns").split(",")));
-            }
+            final String[] urlPatterns = isBlank(request.getParameter("urlPatterns")) ?
+                    new String[]{} :
+                    request.getParameter("urlPatterns").split(",");
 
-            Set<String> ipPatterns = new HashSet<String>();
-            if (!isBlank(request.getParameter("ipPatterns")))
-            {
-                ipPatterns.addAll(Arrays.asList(request.getParameter("ipPatterns").split(",")));
-            }
+            final String[] ipPatterns = isBlank(request.getParameter("ipPatterns")) ?
+                    new String[]{} :
+                    request.getParameter("ipPatterns").split(",");
 
             if (succeeded)
             {
                 try
                 {
-                    trustedAppsManager.addTrustedApplication(app, certificateTimeout, urlPatterns, ipPatterns);
+                    trustedAppsManager.addTrustedApplication(app, RequestConditions
+                            .builder()
+                            .setCertificateTimeout(certificateTimeout)
+                            .addURLPattern(urlPatterns)
+                            .addIPPattern(ipPatterns)
+                            .build());
                     response.sendRedirect(request.getRequestURL().toString());
                     return;
                 }
@@ -157,12 +162,13 @@ public class TrustedAppsManagementServlet extends HttpServlet
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    protected void doPost(final HttpServletRequest request, final HttpServletResponse response)
+            throws ServletException, IOException
     {
         doGet(request, response);
     }
 
-    private Template getTemplate(String templateName) throws ServletException
+    private Template getTemplate(final String templateName) throws ServletException
     {
         try
         {
@@ -174,8 +180,8 @@ public class TrustedAppsManagementServlet extends HttpServlet
         }
     }
 
-    private void render(String templateName, Map<String, Object> params, HttpServletRequest request,
-        HttpServletResponse response) throws IOException, ServletException
+    private void render(final String templateName, final Map<String, Object> params, final HttpServletRequest request,
+        final HttpServletResponse response) throws IOException, ServletException
     {
         Template template = getTemplate(templateName);
         VelocityContext context = new VelocityContext();
