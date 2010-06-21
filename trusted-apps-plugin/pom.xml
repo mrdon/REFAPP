@@ -62,7 +62,7 @@
         <dependency>
             <groupId>com.atlassian.security.auth.trustedapps</groupId>
             <artifactId>atlassian-trusted-apps-seraph-integration</artifactId>
-            <version>2.2.beta1</version>
+            <version>2.2.beta3</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.atlassian.seraph</groupId>
