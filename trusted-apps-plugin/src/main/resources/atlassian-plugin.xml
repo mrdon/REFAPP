@@ -23,7 +23,7 @@
     <component key="key-factory" class="com.atlassian.refapp.trustedapps.internal.KeyFactory" />
     <component key="encryption-provider" class="com.atlassian.security.auth.trustedapps.BouncyCastleEncryptionProvider" />
     <component key="trusted-apps-manager" class="com.atlassian.refapp.trustedapps.internal.RefAppTrustedApplicationsManagerImpl" public="true">
-        <interface>com.atlassian.refapp.trustedapps.RefAppTrustedApplicationsManager</interface>
+        <interface>com.atlassian.security.auth.trustedapps.TrustedApplicationsConfigurationManager</interface>
         <interface>com.atlassian.security.auth.trustedapps.TrustedApplicationsManager</interface>
     </component>
     <component key="user-resolver" class="com.atlassian.refapp.trustedapps.internal.RefAppUserResolverImpl" />

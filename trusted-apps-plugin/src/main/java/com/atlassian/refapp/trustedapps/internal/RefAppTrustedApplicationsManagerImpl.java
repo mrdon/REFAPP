@@ -1,9 +1,15 @@
 package com.atlassian.refapp.trustedapps.internal;
 
 import java.security.KeyPair;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 
-import com.atlassian.refapp.trustedapps.RefAppTrustedApplicationsManager;
 import com.atlassian.security.auth.trustedapps.Application;
 import com.atlassian.security.auth.trustedapps.CurrentApplication;
 import com.atlassian.security.auth.trustedapps.DefaultCurrentApplication;
@@ -11,12 +17,17 @@ import com.atlassian.security.auth.trustedapps.DefaultIPMatcher;
 import com.atlassian.security.auth.trustedapps.DefaultTrustedApplication;
 import com.atlassian.security.auth.trustedapps.DefaultURLMatcher;
 import com.atlassian.security.auth.trustedapps.EncryptionProvider;
+import com.atlassian.security.auth.trustedapps.RequestConditions;
 import com.atlassian.security.auth.trustedapps.TrustedApplication;
 import com.atlassian.security.auth.trustedapps.ApplicationRetriever.RetrievalException;
 import com.atlassian.sal.api.pluginsettings.PluginSettings;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
+import com.atlassian.security.auth.trustedapps.TrustedApplicationsConfigurationManager;
+import com.atlassian.security.auth.trustedapps.TrustedApplicationsManager;
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 
-public class RefAppTrustedApplicationsManagerImpl implements RefAppTrustedApplicationsManager
+public class RefAppTrustedApplicationsManagerImpl implements TrustedApplicationsManager, TrustedApplicationsConfigurationManager
 {
     private static final String TRUSTED_APPS_KEY = "trustedapps";
     private static final String TRUSTED_APP_KEY_PREFIX = "trustedapp.";
@@ -47,36 +58,35 @@ public class RefAppTrustedApplicationsManagerImpl implements RefAppTrustedApplic
         return currentApplication;
     }
 
-    public synchronized TrustedApplication getTrustedApplication(String id)
+    public synchronized TrustedApplication getTrustedApplication(final String id)
     {
         return load(id);
     }
 
-    public Application getApplicationCertificate(String url) throws RetrievalException
+    public Application getApplicationCertificate(final String url) throws RetrievalException
     {
         return encryptionProvider.getApplicationCertificate(url);
     }
 
-    public synchronized TrustedApplication addTrustedApplication(Application app, long certificateTimeout,
-        Set<String> urlPatterns, Set<String> ipPatterns)
+    public TrustedApplication addTrustedApplication(final Application app, final RequestConditions conditions)
     {
-        TrustedApplication trustedApp = new DefaultTrustedApplication(
+        final TrustedApplication trustedApp = new DefaultTrustedApplication(
             encryptionProvider,
             app.getPublicKey(),
             app.getID(),
-            certificateTimeout,
-            new DefaultURLMatcher(urlPatterns),
-            new DefaultIPMatcher(ipPatterns)
+            conditions.getCertificateTimeout(),
+            conditions.getURLMatcher(),
+            conditions.getIPMatcher()
         );
-        store(app, certificateTimeout, urlPatterns, ipPatterns);
+        store(app, conditions);
         return trustedApp;
     }
 
     public Collection<TrustedApplication> getTrustedApplications()
     {
-        PluginSettings pluginSettings = pluginSettingsFactory.createGlobalSettings();
-        List<String> ids = (List<String>) pluginSettings.get(TRUSTED_APPS_KEY);
-        Collection<TrustedApplication> trustedApplications = new ArrayList<TrustedApplication>();
+        final PluginSettings pluginSettings = pluginSettingsFactory.createGlobalSettings();
+        final List<String> ids = (List<String>) pluginSettings.get(TRUSTED_APPS_KEY);
+        final Collection<TrustedApplication> trustedApplications = new ArrayList<TrustedApplication>();
         if (ids != null)
         {
             for (String id : ids)
@@ -91,10 +101,10 @@ public class RefAppTrustedApplicationsManagerImpl implements RefAppTrustedApplic
         return trustedApplications;
     }
 
-    public void deleteApplication(String id)
+    public boolean deleteApplication(final String id)
     {
-        PluginSettings pluginSettings = pluginSettingsFactory.createGlobalSettings();
-        List<String> ids = (List<String>) pluginSettings.get(TRUSTED_APPS_KEY);
+        final PluginSettings pluginSettings = pluginSettingsFactory.createGlobalSettings();
+        final List<String> ids = (List<String>) pluginSettings.get(TRUSTED_APPS_KEY);
         if (ids != null && ids.contains(id))
         {
             ids.remove(id);
@@ -107,18 +117,14 @@ public class RefAppTrustedApplicationsManagerImpl implements RefAppTrustedApplic
                 pluginSettings.put(TRUSTED_APPS_KEY, ids);
             }
         }
-        pluginSettings.remove(TRUSTED_APP_KEY_PREFIX + id);
+        return pluginSettings.remove(TRUSTED_APP_KEY_PREFIX + id) != null;
     }
 
-    private void store(Application application, long certificateTimeout, Set<String> urlPatterns,
-        Set<String> ipPatterns)
+    private void store(final Application application, final RequestConditions conditions)
     {
-        PluginSettings pluginSettings = pluginSettingsFactory.createGlobalSettings();
-        List<String> ids = (List<String>) pluginSettings.get(TRUSTED_APPS_KEY);
-        if (ids == null)
-        {
-            ids = new ArrayList<String>();
-        }
+        final PluginSettings pluginSettings = pluginSettingsFactory.createGlobalSettings();
+        final List<String> ids = (List<String>) ObjectUtils.defaultIfNull(
+                pluginSettings.get(TRUSTED_APPS_KEY), new ArrayList<String>());
         if (!ids.contains(application.getID()))
         {
             ids.add(application.getID());
@@ -126,9 +132,9 @@ public class RefAppTrustedApplicationsManagerImpl implements RefAppTrustedApplic
         pluginSettings.put(TRUSTED_APPS_KEY, ids);
         Properties props = new Properties();
         props.put(PUBLIC_KEY_KEY, KeyUtils.encode(application.getPublicKey()));
-        props.put(TIMEOUT_KEY, Long.toString(certificateTimeout));
-        props.put(URLS_KEY, setToString(urlPatterns));
-        props.put(IPS_KEY, setToString(ipPatterns));
+        props.put(TIMEOUT_KEY, Long.toString(conditions.getCertificateTimeout()));
+        props.put(URLS_KEY, iterableToString(conditions.getURLPatterns()));
+        props.put(IPS_KEY, iterableToString(conditions.getIPPatterns()));
         pluginSettings.put(TRUSTED_APP_KEY_PREFIX + application.getID(), props);
     }
 
@@ -148,16 +154,9 @@ public class RefAppTrustedApplicationsManagerImpl implements RefAppTrustedApplic
             publicKey), id, timeout, new DefaultURLMatcher(urls), new DefaultIPMatcher(ips));
     }
 
-    private static String setToString(Set<String> set)
+    private static String iterableToString(final Iterable<String> iterable)
     {
-        StringBuilder sb = new StringBuilder();
-        String sep = "";
-        for (String item : set)
-        {
-            sb.append(sep).append(item);
-            sep = ",";
-        }
-        return sb.toString();
+        return StringUtils.join(iterable.iterator(), ',');
     }
 
     private static Set<String> stringToSet(String str)
