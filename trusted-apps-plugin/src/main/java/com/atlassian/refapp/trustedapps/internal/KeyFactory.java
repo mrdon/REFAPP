@@ -1,6 +1,5 @@
 package com.atlassian.refapp.trustedapps.internal;
 
-import java.security.Key;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;

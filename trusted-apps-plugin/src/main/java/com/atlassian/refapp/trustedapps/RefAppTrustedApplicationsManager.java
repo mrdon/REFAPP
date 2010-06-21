@@ -1,6 +1,5 @@
 package com.atlassian.refapp.trustedapps;
 
-import java.util.Map;
 import java.util.Set;
 import java.util.Collection;
 
