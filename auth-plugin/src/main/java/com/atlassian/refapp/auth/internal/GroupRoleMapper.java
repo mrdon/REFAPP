@@ -2,6 +2,7 @@ package com.atlassian.refapp.auth.internal;
 
 import java.security.Principal;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +19,6 @@ import com.atlassian.user.GroupManager;
 import com.atlassian.user.User;
 import com.atlassian.user.search.page.Pager;
 
-import edu.emory.mathcs.backport.java.util.Collections;
 
 public class GroupRoleMapper implements RoleMapper
 {
