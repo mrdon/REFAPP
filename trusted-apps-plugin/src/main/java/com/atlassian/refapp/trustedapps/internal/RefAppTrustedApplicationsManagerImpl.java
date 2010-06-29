@@ -2,20 +2,14 @@ package com.atlassian.refapp.trustedapps.internal;
 
 import java.security.KeyPair;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 import com.atlassian.security.auth.trustedapps.Application;
 import com.atlassian.security.auth.trustedapps.CurrentApplication;
 import com.atlassian.security.auth.trustedapps.DefaultCurrentApplication;
-import com.atlassian.security.auth.trustedapps.DefaultIPMatcher;
 import com.atlassian.security.auth.trustedapps.DefaultTrustedApplication;
-import com.atlassian.security.auth.trustedapps.DefaultURLMatcher;
 import com.atlassian.security.auth.trustedapps.EncryptionProvider;
 import com.atlassian.security.auth.trustedapps.RequestConditions;
 import com.atlassian.security.auth.trustedapps.TrustedApplication;
@@ -74,10 +68,7 @@ public class RefAppTrustedApplicationsManagerImpl implements TrustedApplications
             encryptionProvider,
             app.getPublicKey(),
             app.getID(),
-            conditions.getCertificateTimeout(),
-            conditions.getURLMatcher(),
-            conditions.getIPMatcher()
-        );
+            conditions);
         store(app, conditions);
         return trustedApp;
     }
@@ -138,20 +129,28 @@ public class RefAppTrustedApplicationsManagerImpl implements TrustedApplications
         pluginSettings.put(TRUSTED_APP_KEY_PREFIX + application.getID(), props);
     }
 
-    private TrustedApplication load(String id)
+    private TrustedApplication load(final String id)
     {
-        PluginSettings pluginSettings = pluginSettingsFactory.createGlobalSettings();
-        Properties props = (Properties) pluginSettings.get(TRUSTED_APP_KEY_PREFIX + id);
+        final PluginSettings pluginSettings = pluginSettingsFactory.createGlobalSettings();
+        final Properties props = (Properties) pluginSettings.get(TRUSTED_APP_KEY_PREFIX + id);
         if (props == null)
         {
             return null;
         }
-        String publicKey = props.getProperty(PUBLIC_KEY_KEY);
-        long timeout = Long.parseLong(props.getProperty(TIMEOUT_KEY));
-        Set<String> urls = stringToSet(props.getProperty(URLS_KEY));
-        Set<String> ips = stringToSet(props.getProperty(IPS_KEY));
-        return new DefaultTrustedApplication(encryptionProvider, KeyUtils.decodePublicKey(encryptionProvider,
-            publicKey), id, timeout, new DefaultURLMatcher(urls), new DefaultIPMatcher(ips));
+        else
+        {
+            final String publicKey = props.getProperty(PUBLIC_KEY_KEY);
+            final long timeout = Long.parseLong(props.getProperty(TIMEOUT_KEY));
+            final String[] urls = decodeCommaSeparatedString(props.getProperty(URLS_KEY));
+            final String[] ips = decodeCommaSeparatedString(props.getProperty(IPS_KEY));
+            return new DefaultTrustedApplication(encryptionProvider, KeyUtils.decodePublicKey(encryptionProvider,
+                publicKey), id, RequestConditions
+                    .builder()
+                    .setCertificateTimeout(timeout)
+                    .addURLPattern(urls)
+                    .addIPPattern(ips)
+                    .build());
+        }
     }
 
     private static String iterableToString(final Iterable<String> iterable)
@@ -159,13 +158,13 @@ public class RefAppTrustedApplicationsManagerImpl implements TrustedApplications
         return StringUtils.join(iterable.iterator(), ',');
     }
 
-    private static Set<String> stringToSet(String str)
+    private static String[] decodeCommaSeparatedString(final String str)
     {
         if (str == null || str.length() == 0)
         {
-            return Collections.emptySet();
+            return new String[]{};
         }
-        return new HashSet<String>(Arrays.asList(str.split(",")));
+        return str.split(",");
     }
 
 }
