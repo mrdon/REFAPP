@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.atlassian.refapp</groupId>
+        <artifactId>atlassian-refapp-plugin-parent</artifactId>
+        <version>2.5.3</version>
+    </parent>
+    <artifactId>atlassian-refapp-cache-plugin</artifactId>
+    <name>Reference App Cache Provider Plugin</name>
+    <description>Plugin which can be used to add an Atlassian Cache provider to the reference app</description>
+    <packaging>jar</packaging>
+    <properties>
+        <atlassian.plugin.key>com.atlassian.refapp.cache</atlassian.plugin.key>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>atlassian-plugin.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+                <excludes>
+                    <exclude>atlassian-plugin.xml</exclude>
+                </excludes>
+            </resource>
+        </resources>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>com.atlassian.cache</groupId>
+            <artifactId>atlassian-cache-memory</artifactId>
+            <version>0.1</version>
+        </dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <title>Add Trusted App</title>
+    <meta name="decorator" content="atl.admin"/>
+  </head>
+  <body>
+      <h3>Add Trusted App</h3>  
+    <form>
+      <label for="url">URL</label>: <input type="text" id="url" name="url" value=""/><span class="error">$!urlError</span><br/>
+      <label for="urlPatterns">URL Patterns: <input type="text" id="urlPatterns" name="urlPatterns" value=""/><span class="error">$!urlPatternsError</span><br/>
+      <label for="ipPatterns">IP Patterns: <input type="text" id="ipPatterns" name="ipPatterns" value=""/><span class="error">$!ipPatternsError</span><br/>
+      <label for="timeout">Certificate Timeout: <input type="text" id="timeout" name="timeout" value=""/><span class="error">$!timeoutError</span><br/>
+      <input type="hidden" name="a" value="add" />
+      <input type="submit" name="s" value="Save" />
+    </form>
+  </body>
+</html>
