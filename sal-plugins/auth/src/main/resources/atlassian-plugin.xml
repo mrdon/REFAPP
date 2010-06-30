@@ -1,0 +1,23 @@
+<atlassian-plugin key="com.atlassian.sal.refimpl.auth" name="${project.name}" system="true" pluginsVersion="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${pom.version}</version>
+        <vendor name="Atlassian Software Systems Pty Ltd" url="http://www.atlassian.com"/>
+    </plugin-info>
+    
+    <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties" />
+    <component-import key="roleMapper" interface="com.atlassian.seraph.auth.RoleMapper" />
+    
+    <component key="authController" class="com.atlassian.sal.core.auth.SeraphAuthenticationController" public="true">
+        <interface>com.atlassian.sal.api.auth.AuthenticationController</interface>
+    </component>
+
+    <component key="authListener" class="com.atlassian.sal.core.auth.SeraphAuthenticationListener" public="true">
+        <interface>com.atlassian.sal.api.auth.AuthenticationListener</interface>
+    </component>
+    
+    <component key="loginUriProvider" class="com.atlassian.sal.refimpl.auth.LoginUriProviderImpl" public="true">
+        <interface>com.atlassian.sal.api.auth.LoginUriProvider</interface>
+    </component>
+</atlassian-plugin>
+

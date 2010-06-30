@@ -1,0 +1,24 @@
+<atlassian-plugin key="com.atlassian.sal.refimpl.message" name="${project.name}" system="true" pluginsVersion="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${pom.version}</version>
+        <vendor name="Atlassian Software Systems Pty Ltd" url="http://www.atlassian.com"/>
+    </plugin-info>
+    
+    <component key="i18nResolver" name="I18n Resolver"
+               class="com.atlassian.sal.refimpl.message.RefimplI18nResolver"
+               system="true" public="true">
+        <interface>com.atlassian.sal.api.message.I18nResolver</interface>
+    </component>
+    <component key="localeResolver" name="Locale Resolver"
+               class="com.atlassian.sal.refimpl.message.RefimplLocaleResolver"
+               system="true" public="true">
+        <interface>com.atlassian.sal.api.message.LocaleResolver</interface>
+    </component>
+
+    <component key="resourceBundleResolver" name="Resource Bundle Resolver"
+               class="com.atlassian.sal.refimpl.message.ResourceBundleResolverImpl">
+        <interface>com.atlassian.sal.refimpl.message.ResourceBundleResolver</interface>
+    </component>
+</atlassian-plugin>
+

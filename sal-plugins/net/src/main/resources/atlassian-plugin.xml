@@ -1,0 +1,20 @@
+<atlassian-plugin key="com.atlassian.sal.refimpl.net" name="${project.name}" system="true" pluginsVersion="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${pom.version}</version>
+        <vendor name="Atlassian Software Systems Pty Ltd" url="http://www.atlassian.com"/>
+    </plugin-info>
+
+    <component-import key="trustedApplicationsManager" interface="com.atlassian.security.auth.trustedapps.TrustedApplicationsManager" />
+    <component-import key="salUserManagerManager" interface="com.atlassian.sal.api.user.UserManager" />
+
+    <component name="Non-Marshalling Request Factory" key="requestFactory"
+               class="com.atlassian.sal.core.net.HttpClientRequestFactory" system="true" public="true">
+        <interface>com.atlassian.sal.api.net.NonMarshallingRequestFactory</interface>
+    </component>
+    <component name="Refimpl Certificate Factory" key="certificateFactory"
+               class="com.atlassian.sal.refimpl.trusted.RefImplCertificateFactory" system="true">
+        <interface>com.atlassian.sal.core.trusted.CertificateFactory</interface>
+    </component>
+</atlassian-plugin>
+

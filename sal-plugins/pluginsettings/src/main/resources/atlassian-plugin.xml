@@ -1,0 +1,17 @@
+<atlassian-plugin key="com.atlassian.sal.refimpl.pluginsettings" name="${project.name}" system="true" pluginsVersion="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${pom.version}</version>
+        <vendor name="Atlassian Software Systems Pty Ltd" url="http://www.atlassian.com"/>
+    </plugin-info>
+
+    <component-import key="applicationProperties" name="SAL Application Properties Import" system="true">
+        <interface>com.atlassian.sal.api.ApplicationProperties</interface>
+    </component-import>
+
+    <component key="pluginSettingsFactory" name="Plugin settings factory"
+               class="com.atlassian.sal.refimpl.pluginsettings.RefimplPluginSettingsFactory"
+               system="true" public="true">
+        <interface>com.atlassian.sal.api.pluginsettings.PluginSettingsFactory</interface>
+    </component>
+</atlassian-plugin>

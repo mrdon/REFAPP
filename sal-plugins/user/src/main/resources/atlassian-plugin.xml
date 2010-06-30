@@ -1,0 +1,19 @@
+<atlassian-plugin key="com.atlassian.sal.refimpl.user" name="${project.name}" system="true" pluginsVersion="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${pom.version}</version>
+        <vendor name="Atlassian Software Systems Pty Ltd" url="http://www.atlassian.com"/>
+    </plugin-info>
+
+    <component-import key="authenticator" interface="com.atlassian.user.security.authentication.Authenticator" />
+    <component-import key="atlassianUserManager" interface="com.atlassian.user.UserManager" />
+    <component-import key="groupManager" interface="com.atlassian.user.GroupManager" />
+    <component-import key="authenticationContext" interface="com.atlassian.seraph.auth.AuthenticationContext" />
+
+    <component key="salUserManager" name="User Manager"
+               class="com.atlassian.sal.refimpl.user.RefImplUserManager"
+               system="true" public="true">
+        <interface>com.atlassian.sal.api.user.UserManager</interface>
+    </component>
+</atlassian-plugin>
+

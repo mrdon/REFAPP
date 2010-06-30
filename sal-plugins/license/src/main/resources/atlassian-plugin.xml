@@ -1,0 +1,13 @@
+<atlassian-plugin key="com.atlassian.sal.refimpl.license" name="${project.name}" system="true" pluginsVersion="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${pom.version}</version>
+        <vendor name="Atlassian Software Systems Pty Ltd" url="http://www.atlassian.com"/>
+    </plugin-info>
+
+    <component name="License Handler" key="licenseHandler"
+               class="com.atlassian.sal.refimpl.license.RefimplLicenseHandler" system="true" public="true">
+        <interface>com.atlassian.sal.api.license.LicenseHandler</interface>
+    </component>
+</atlassian-plugin>
+

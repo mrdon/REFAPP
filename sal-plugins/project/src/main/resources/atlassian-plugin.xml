@@ -1,0 +1,17 @@
+<atlassian-plugin key="com.atlassian.sal.refimpl.project" name="${project.name}" system="true" pluginsVersion="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${pom.version}</version>
+        <vendor name="Atlassian Software Systems Pty Ltd" url="http://www.atlassian.com"/>
+    </plugin-info>
+
+    <component-import key="pluginSettingsFactory" name="SAL PluginSettingsFactory Import" system="true">
+        <interface>com.atlassian.sal.api.pluginsettings.PluginSettingsFactory</interface>
+    </component-import>
+
+    <component name="Refimpl Project Manager" key="RefimplProjectManager"
+               class="com.atlassian.sal.refimpl.project.RefimplProjectManager" system="true" public="true">
+        <interface>com.atlassian.sal.api.project.ProjectManager</interface>
+    </component>
+</atlassian-plugin>
+

@@ -247,93 +247,108 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.sal</groupId>
+            <groupId>com.atlassian.refapp</groupId>
             <artifactId>sal-refimpl-appproperties-plugin</artifactId>
-            <version>${sal.version}</version>
+            <version>${project.version}</version>
+            <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.sal</groupId>
+            <groupId>com.atlassian.refapp</groupId>
             <artifactId>sal-refimpl-auth-plugin</artifactId>
-            <version>${sal.version}</version>
+            <version>${project.version}</version>
+            <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.sal</groupId>
+            <groupId>com.atlassian.refapp</groupId>
             <artifactId>sal-refimpl-component-plugin</artifactId>
-            <version>${sal.version}</version>
+            <version>${project.version}</version>
+            <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.sal</groupId>
+            <groupId>com.atlassian.refapp</groupId>
             <artifactId>sal-refimpl-executor-plugin</artifactId>
-            <version>${sal.version}</version>
+            <version>${project.version}</version>
+            <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.sal</groupId>
+            <groupId>com.atlassian.refapp</groupId>
             <artifactId>sal-refimpl-lifecycle-plugin</artifactId>
-            <version>${sal.version}</version>
+            <version>${project.version}</version>
+            <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.sal</groupId>
+            <groupId>com.atlassian.refapp</groupId>
             <artifactId>sal-refimpl-license-plugin</artifactId>
-            <version>${sal.version}</version>
+            <version>${project.version}</version>
+            <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.sal</groupId>
+            <groupId>com.atlassian.refapp</groupId>
             <artifactId>sal-refimpl-message-plugin</artifactId>
-            <version>${sal.version}</version>
+            <version>${project.version}</version>
+            <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.sal</groupId>
+            <groupId>com.atlassian.refapp</groupId>
             <artifactId>sal-refimpl-net-plugin</artifactId>
-            <version>${sal.version}</version>
+            <version>${project.version}</version>
+            <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.sal</groupId>
+            <groupId>com.atlassian.refapp</groupId>
             <artifactId>sal-refimpl-pluginsettings-plugin</artifactId>
-            <version>${sal.version}</version>
+            <version>${project.version}</version>
+            <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.sal</groupId>
+            <groupId>com.atlassian.refapp</groupId>
             <artifactId>sal-refimpl-project-plugin</artifactId>
-            <version>${sal.version}</version>
+            <version>${project.version}</version>
+            <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.sal</groupId>
+            <groupId>com.atlassian.refapp</groupId>
             <artifactId>sal-refimpl-search-plugin</artifactId>
-            <version>${sal.version}</version>
+            <version>${project.version}</version>
+            <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.sal</groupId>
+            <groupId>com.atlassian.refapp</groupId>
             <artifactId>sal-refimpl-scheduling-plugin</artifactId>
-            <version>${sal.version}</version>
+            <version>${project.version}</version>
+            <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.sal</groupId>
+            <groupId>com.atlassian.refapp</groupId>
             <artifactId>sal-refimpl-transaction-plugin</artifactId>
-            <version>${sal.version}</version>
+            <version>${project.version}</version>
+            <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.sal</groupId>
+            <groupId>com.atlassian.refapp</groupId>
             <artifactId>sal-refimpl-upgrade-plugin</artifactId>
-            <version>${sal.version}</version>
+            <version>${project.version}</version>
+            <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.sal</groupId>
+            <groupId>com.atlassian.refapp</groupId>
             <artifactId>sal-refimpl-user-plugin</artifactId>
-            <version>${sal.version}</version>
+            <version>${project.version}</version>
+            <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
