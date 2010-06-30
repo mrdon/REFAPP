@@ -367,12 +367,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.plugin.rest</groupId>
-            <artifactId>atlassian-rest-plugin-manager-plugin</artifactId>
-            <version>0.3.2</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>com.atlassian.oauth</groupId>
             <artifactId>atlassian-oauth-api</artifactId>
             <version>${oauth.version}</version>
