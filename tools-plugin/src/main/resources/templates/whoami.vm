@@ -1,0 +1,45 @@
+<html>
+<head>
+  <title>Application Links Authentication Information</title>
+    ${webResources.get()}
+  <meta name="decorator" content="atl.general"/>
+</head>
+<body>
+<h3>AppLinks Distributed Authentication Information</h3>
+<p>
+    The table below shows your distributed authentication status across the Application Links.
+</p>
+<p>
+<table class="aui">
+  <thead>
+    <tr><th>&nbsp;</th><th>AppLink</th><th>Whoami</th></tr>
+  </thead>
+  <tbody>
+  #foreach($record in $records.entrySet())
+    <tr>
+        <td>
+        <img src="$record.key.iconUrl">
+        </td>
+        <td><a href="$!record.key.displayUrl">$record.key.name</a></td>
+        <td>
+            <!-- status: $record.value.status -->
+            <!-- username: $record.value.username -->
+
+            #if ($record.value.status == "ACCEPTED")
+                $!record.value.username
+            #elseif ($record.value.status == "CREDENTIALS_REQUIRED")
+                <em>credentials required; <a href="$!record.value.authorisationURL">click here to log in</em>
+            #elseif ($record.value.status == "COMMUNICATION_ERROR")
+                <div class="error">Communication error: $!record.value.errorMessage</div>
+            #elseif ($record.value.status == "ANONYMOUS")
+                <em>not logged in</em>
+            #end
+        </td>
+    </tr>
+  #end
+  </tbody>
+</table>
+</p>
+
+</body>
+</html>
