@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.atlassian.refapp</groupId>
         <artifactId>sal-refimpl-plugins</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.0.0-backup-SNAPSHOT</version>
     </parent>
 
     <artifactId>sal-refimpl-scheduling-plugin</artifactId>

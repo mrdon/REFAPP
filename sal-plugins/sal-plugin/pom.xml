@@ -6,9 +6,9 @@
         <version>3.0.0-backup-SNAPSHOT</version>
     </parent>
 
-    <artifactId>sal-refimpl-component-plugin</artifactId>
-    <name>Shared Application Access Layer Reference Implementation Component Plugin</name>
+    <artifactId>sal-refapp-plugin</artifactId>
     <packaging>bundle</packaging>
+    <name>SAL Refapp Plugin</name>
 
     <build>
         <plugins>
@@ -18,12 +18,16 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Bundle-SymbolicName>com.atlassian.sal.refimpl.component</Bundle-SymbolicName>
+                        <Bundle-SymbolicName>com.atlassian.refapp.sal</Bundle-SymbolicName>
                         <Import-Package>
-                            com.atlassian.sal.api.component;version="[2.0.0,3.0.0)",org.springframework.osgi.context,org.osgi.framework,
-                            org.apache.commons.logging
+                            com.atlassian.sal.api.backup,
+                            org.apache.log4j,
+                            com.google.common.collect,
                         </Import-Package>
-                        <Private-Package>com.atlassian.sal.refimpl.component</Private-Package>
+                        <Private-Package>
+                            com.atlassian.sal.core.backup,
+                        </Private-Package>
+                        <Bundle-ClassPath>.,{maven-dependencies}</Bundle-ClassPath>
                         <Spring-Context>*;timeout:=60</Spring-Context>
                     </instructions>
                 </configuration>
@@ -36,19 +40,12 @@
             <groupId>com.atlassian.sal</groupId>
             <artifactId>sal-api</artifactId>
             <version>${sal.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.atlassian.plugins</groupId>
-            <artifactId>atlassian-plugins-refimpl</artifactId>
-            <classifier>classes</classifier>
-            <version>2.2.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.osgi</groupId>
-            <artifactId>spring-osgi-core</artifactId>
-            <version>1.1.3</version>
-            <scope>provided</scope>
+            <groupId>com.atlassian.sal</groupId>
+            <artifactId>sal-core</artifactId>
+            <version>${sal.version}</version>
         </dependency>
     </dependencies>
 </project>
