@@ -15,7 +15,12 @@
         <url-pattern>/whoami-applinks</url-pattern>
     </servlet>
 
-    <web-item key="applinksWhoamiLink" section="system.admin/applinks">
+    <web-item key="applinksWhoamiIndexLink" section="index.links">
+        <label key="Distributed Auth Status"/>
+        <link linkId="applinksWhoamiIndex">/plugins/servlet/whoami-applinks</link>
+    </web-item>
+
+    <web-item key="applinksWhoamiLink" section="system.admin/general">
         <label key="Distributed Auth Status"/>
         <link linkId="applinksWhoami">/plugins/servlet/whoami-applinks</link>
     </web-item>
