@@ -27,7 +27,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class WhoamiApplinksServlet extends HttpServlet
 {
     private static final String TEMPLATE = "/templates/whoami.vm";
-    private static final String ENDPOINT = "/plugins/servlet/whoami";
+    private static final String ENDPOINT = "/plugins/servlet/applinks/whoami";
 
     private final TemplateRenderer templateRenderer;
     private final ApplicationLinkService applicationLinkService;
@@ -88,7 +88,7 @@ public class WhoamiApplinksServlet extends HttpServlet
                             else
                             {
                                 status.set(AuthenticationStatus.COMMUNICATION_ERROR);
-                                errorMessage.set(String.format("%s: %s", response.getStatusCode(), response.getResponseBodyAsString()));
+                                errorMessage.set(String.format("%s: %s", response.getStatusCode(), response.getStatusText()));
                             }
                         }
                     });

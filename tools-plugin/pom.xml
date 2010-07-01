@@ -54,7 +54,7 @@
         <dependency>
             <groupId>com.atlassian.applinks</groupId>
             <artifactId>applinks-api</artifactId>
-            <version>3.0-fecrudev-r62590</version>
+            <version>3.0-fecrudev-r62901</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.atlassian.sal</groupId>
@@ -65,7 +65,7 @@
         <dependency>
             <groupId>com.atlassian.applinks</groupId>
             <artifactId>applinks-spi</artifactId>
-            <version>3.0-fecrudev-r62590</version>
+            <version>3.0-fecrudev-r62901</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.atlassian.applinks</groupId>

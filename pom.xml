@@ -241,6 +241,6 @@
         <rest.module.version>2.0.0</rest.module.version>
         <oauth.version>1.0.13.beta3</oauth.version>
         <google.collections.version>1.0</google.collections.version>
-        <applinks.version>3.0-fecrudev-r62590</applinks.version>
+        <applinks.version>3.0-fecrudev-r62901</applinks.version>
     </properties>
 </project>
