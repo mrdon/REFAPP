@@ -221,7 +221,7 @@
             <dependency>
                 <groupId>com.atlassian.templaterenderer</groupId>
                 <artifactId>atlassian-template-renderer-api</artifactId>
-                <version>${template.renderer.version}</version>
+                <version>${atr.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
@@ -237,9 +237,10 @@
         <jdkLevel>1.5</jdkLevel>
         <atlassian.plugins.version>2.5.0.rc1</atlassian.plugins.version>
         <sal.version>2.1.0</sal.version>
-        <template.renderer.version>1.1.0.beta1</template.renderer.version>
+        <atr.version>1.1.0.beta1</atr.version>
         <oauth.version>1.0.13.beta3</oauth.version>
-        <rest.module.version>2.0.0.rc1</rest.module.version>
+        <rest.version>2.0.0.rc1</rest.version>
+        <aui.version>3.0.6</aui.version>
         <google.collections.version>1.0</google.collections.version>
     </properties>
 </project>
