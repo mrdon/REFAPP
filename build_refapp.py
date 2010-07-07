@@ -163,5 +163,4 @@ if not isBuildSuccessful(build_refapp):
 
 # write the maven build output to log file and display result on the screen
 writeFile("%s/refapp_build.out" % log_dir, build_refapp[1])
-print build_refapp[1]
 print "refapp built"
