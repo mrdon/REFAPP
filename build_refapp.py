@@ -73,7 +73,7 @@ def listSvnDirs(svn_url, svn_credential):
 	"""
 	# simple issue svn list and parse the result
 	print "retrieving info from svn......."
-	list_cmd = "svn list %s %s" % (svn_url, svn_credential)
+	list_cmd = "svn list %s %s --non-interactive" % (svn_url, svn_credential)
 	(list_svn_status, list_svn_output) = commands.getstatusoutput(list_cmd)
 	if list_svn_status != 0:
 		raise RuntimeError, "having trouble trying to connect to svn:\n" + list_svn_output
@@ -138,7 +138,7 @@ if (mkdir_status != 0):
 	raise RuntimeError, "problem while creating build layout:%s\n%s\n" % (log_dir, message)
 
 print "checking out refapp"
-(checkout_refapp_status, checkout_refapp_output) = commands.getstatusoutput("svn checkout %s/branches/%s %s/refapp %s" % (refapp_base, refapp_branch, build_dir, svn_credential))
+(checkout_refapp_status, checkout_refapp_output) = commands.getstatusoutput("svn checkout %s/branches/%s %s/refapp %s --non-interactive" % (refapp_base, refapp_branch, build_dir, svn_credential))
 # if the checkout of refapp is unsuccessful
 if (checkout_refapp_status != 0) or (not isCheckoutSuccessful(checkout_refapp_output)):
 	raise RuntimeError, "problem while checking out refapp:\n" + checkout_refapp_output
@@ -146,7 +146,7 @@ if (checkout_refapp_status != 0) or (not isCheckoutSuccessful(checkout_refapp_ou
 print "refapp checked out"
 
 print "checking out %s" % project_name
-(checkout_project_status, checkout_project_output) = commands.getstatusoutput("svn checkout %s/%s/branches/%s %s/project %s" % (project_svn_base, project_name, project_branch, build_dir, svn_credential))
+(checkout_project_status, checkout_project_output) = commands.getstatusoutput("svn checkout %s/%s/branches/%s %s/project %s --non-interactive" % (project_svn_base, project_name, project_branch, build_dir, svn_credential))
 # if the checkout of project is unsuccessful
 if (checkout_project_status != 0) or (not isCheckoutSuccessful(checkout_project_output)):
 	raise RuntimeError, "problem while checking out project:\n" + checkout_project_output
