@@ -11,6 +11,7 @@ build_refapp.py can be used to automate the build of plugin project and reffapp.
    project = the plugin project which has to match the project name in svn under https://studio.atlassian.com/svn
    project branch = the branch we want to build
    refapp branch = the branch of refapp that we want the new project's jar to be included
+5. By default, the tool will automatically delete the build working directory upon successful or leave it upon failure. To force not to delete, supply the "no_delete" flag eg. "python build_refapp.py no_delete".
 
 ===Known issues===
 1. There is a bug with svn code in maven which from time to time result in something such as:-

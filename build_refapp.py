@@ -6,6 +6,9 @@ from xml.dom import minidom
 refapp_base = "https://studio.atlassian.com/svn/REFAPP"
 project_svn_base = "https://studio.atlassian.com/svn"
 
+# the flag for not deleting the working directory if the build is successful
+no_delete = "no_delete"
+
 # environment pre-conditions
 if sys.version_info[:3] < (2, 4, 3):
     raise RuntimeError, "Requires python >= 2.4.3"
@@ -63,15 +66,6 @@ def getPomVersion(pom_dom):
 def fixPomVersion(pom_dom, version):
 	if not fixElementValue(pom_dom.childNodes[0].childNodes, "version", version):
 		raise RuntimeError, "/project/version not found in %s " % pom_location
-
-def findModules(pom_dom):
-	output = []
-	modules_element = findChildElement(pom_dom.childNodes[0].childNodes, "modules")
-	if modules_element:
-		for node in modules_element.childNodes:
-			if node.nodeType == minidom.Node.ELEMENT_NODE and node.tagName == "module":
-				output.append(node.childNodes[0].nodeValue)
-	return output
 
 def listSvnDirs(svn_url, svn_credential):
 	"""
@@ -173,14 +167,13 @@ project_build_cmd = """cd %s/project;
                        mvn release:prepare -DreleaseVersion=%s -DdevelopmentVersion=%s -DautoVersionSubmodules=true --batch-mode;
                        mvn release:perform""" % (build_dir, timestamped_version, old_project_version)
 (build_project_status, build_project_output) = commands.getstatusoutput(project_build_cmd)
+# write the maven build output to log file
+writeFile("%s/project_build.out" % log_dir, build_project_output)
 # if the build of project is unsuccessful
 if (build_project_status != 0) or (not isBuildSuccessful(build_project_output)):
 	raise RuntimeError, "problem while building project:\n" + build_project_output
 
-# write the maven build output to log file and display result on the screen
-writeFile("%s/project_build.out" % log_dir, build_project_output)
-print "%s built" % project_name
-print "project version %s deployed" % timestamped_version
+print "%s version %s built and deployed" % (project_name, timestamped_version)
 
 # now fix up the refapp pom before build
 refapp_pom = "%s/refapp/pom.xml" % build_dir
@@ -197,19 +190,35 @@ for node in refapp_props.childNodes:
 writeFile(refapp_pom, refapp_dom.toxml())
 
 # build refapp
+# get the old artifact version in refapp pom
+old_refapp_version = getPomVersion(refapp_dom)
+# now reformat it with timestamp and then replace the old version in the pom
+refapp_timestamped_version = "%s.b%s" % (old_refapp_version.replace("-SNAPSHOT", ""), timestamp)
+print "refapp version transformed %s => %s" % (old_refapp_version, refapp_timestamped_version)
 print "building refapp"
-(build_refapp_status, build_refapp_output) = commands.getstatusoutput("cd %s/refapp; mvn deploy -Dmaven.test.skip=true" % build_dir)
-# if the build of refapp is unsuccessful
-if (build_refapp_status != 0) or (not isBuildSuccessful(build_refapp_output)):
-	raise RuntimeError, "problem while building refapp:\n" + build_refapp_output
+refapp_build_cmd = """cd %s/refapp;
+                      mvn release:prepare -DreleaseVersion=%s -DdevelopmentVersion=%s -DautoVersionSubmodules=true --batch-mode;
+                      mvn release:perform""" % (build_dir, refapp_timestamped_version, old_refapp_version)
+(build_refapp_status, build_refapp_output) = commands.getstatusoutput(refapp_build_cmd)
 
 # write the maven build output to log file and display result on the screen
 writeFile("%s/refapp_build.out" % log_dir, build_refapp_output)
 
-# final message to user
-print "refapp built"
-print "the build result can be found at %s" % build_dir
-print "the build logs can be found at %s" % log_dir
+# if the build of refapp is unsuccessful
+if (build_refapp_status != 0) or (not isBuildSuccessful(build_refapp_output)):
+	raise RuntimeError, "problem while building refapp:\n" + build_refapp_output
+
+# (possibly) the final message to user
+print "refapp version %s built and deployed" % refapp_timestamped_version
+
+# delete the working dir if the whole thing is successful
+if sys.argv[1:].__contains__("no_delete"):
+	print "=========================================================="
+	print "the build result can be found at %s" % build_dir
+	print "the build logs can be found at %s" % log_dir
+	print "=========================================================="
+else:
+	commands.getstatusoutput("rm -rf %s" % build_dir_base)
 
 # return a successful code
 sys.exit(0)
