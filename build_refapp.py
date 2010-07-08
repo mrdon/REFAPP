@@ -1,18 +1,26 @@
-import os, time, string
+import os, sys, time, string
 import commands, getpass
 from xml.dom import minidom
 
+# location configs
+refapp_base = "https://studio.atlassian.com/svn/REFAPP"
+project_svn_base = "https://studio.atlassian.com/svn"
+
+# environment pre-conditions
+if sys.version_info[:3] < (2, 4, 3):
+    raise RuntimeError, "Requires python >= 2.4.3"
+
 def isCheckoutSuccessful(captured_output):
-	lines = captured_output[1].split("\n")
-	if (captured_output[0] == 0) and (lines[len(lines)-1].find("Checked out revision") == -1):
-		return False	
+	lines = captured_output.split("\n")
+	if lines[len(lines)-1].find("Checked out revision") == -1:
+		return False
 	else:
 		return True
 
 def isBuildSuccessful(captured_output):
-	lines = captured_output[1].split("\n")
-	if (captured_output[0] == 0) and (lines[len(lines)-6].find("BUILD SUCCESSFUL") == -1):
-		return False	
+	lines = captured_output.split("\n")
+	if lines[len(lines)-6].find("BUILD SUCCESSFUL") == -1:
+		return False
 	else:
 		return True
 
@@ -64,11 +72,8 @@ def findModules(pom_dom):
 			if node.nodeType == minidom.Node.ELEMENT_NODE and node.tagName == "module":
 				output.append(node.childNodes[0].nodeValue)
 	return output
-	
-# location configs
-refapp_base = "https://studio.atlassian.com/svn/REFAPP"
-project_svn_base = "https://studio.atlassian.com/svn"
 
+#getting inputs from users
 project_name = raw_input("project:")
 project_branch = raw_input("project branch:")
 refapp_branch = raw_input("refapp branch:")
@@ -88,32 +93,32 @@ print "trying to build the project at %s" % build_dir_base
 # create build layout structure
 (mkdir_status, message) = commands.getstatusoutput("mkdir " + build_dir_base)
 if (mkdir_status != 0):
-	raise Exception, "problem while creating build layout:%s\n%s\n" % (build_dir_base, message)
+	raise RuntimeError, "problem while creating build layout:%s\n%s\n" % (build_dir_base, message)
 (mkdir_status, message) = commands.getstatusoutput("mkdir " + build_dir)
 if (mkdir_status != 0):
-	raise Exception, "problem while creating build layout:%s\n%s\n" % (build_dir, message)
+	raise RuntimeError, "problem while creating build layout:%s\n%s\n" % (build_dir, message)
 (mkdir_status, message) = commands.getstatusoutput("mkdir " + log_dir)
 if (mkdir_status != 0):
-	raise Exception, "problem while creating build layout:%s\n%s\n" % (log_dir, message)
+	raise RuntimeError, "problem while creating build layout:%s\n%s\n" % (log_dir, message)
 
 # if user/passwd are needed for svn
 svn_credential = ""
-if (len(svn_user) != 0):
+if svn_user == "":
 	svn_credential = """ --username "%s" --password "%s" """ % (svn_user, svn_passwd)
 
 print "checking out refapp"
-checkout_refapp = commands.getstatusoutput("svn checkout %s/branches/%s %s/refapp %s" % (refapp_base, refapp_branch, build_dir, svn_credential))
+(checkout_refapp_status, checkout_refapp_output) = commands.getstatusoutput("svn checkout %s/branches/%s %s/refapp %s" % (refapp_base, refapp_branch, build_dir, svn_credential))
 # if the checkout of refapp is unsuccessful
-if (not isCheckoutSuccessful(checkout_refapp)):
-	raise Exception, "problem while checking out refapp:\n" + checkout_refapp
+if (checkout_refapp_status != 0) or (not isCheckoutSuccessful(checkout_refapp_output)):
+	raise RuntimeError, "problem while checking out refapp:\n" + checkout_refapp_output
 
 print "refapp checked out"
 
 print "checking out %s" % project_name
-checkout_project = commands.getstatusoutput("svn checkout %s/%s/branches/%s %s/project %s" % (project_svn_base, project_name, project_branch, build_dir, svn_credential))
+(checkout_project_status, checkout_project_output) = commands.getstatusoutput("svn checkout %s/%s/branches/%s %s/project %s" % (project_svn_base, project_name, project_branch, build_dir, svn_credential))
 # if the checkout of project is unsuccessful
-if not isCheckoutSuccessful(checkout_project):
-	raise Exception, "problem while checking out project:\n" + checkout_project
+if (checkout_project_status != 0) or (not isCheckoutSuccessful(checkout_project_output)):
+	raise RuntimeError, "problem while checking out project:\n" + checkout_project_output
 print "%s checked out" % project_name
 
 # now fix the project version number to the timestamp
@@ -127,15 +132,16 @@ print "project version transformed %s => %s" % (old_project_version, timestamped
 
 # build project
 print "building %s" % project_name
-build_project = commands.getstatusoutput("""cd %s/project; 
-                                            mvn release:prepare -DreleaseVersion=%s -DdevelopmentVersion=%s -DautoVersionSubmodules=true --batch-mode;
-                                            mvn release:perform""" % (build_dir, timestamped_version, old_project_version))
+project_build_cmd = """cd %s/project;
+                       mvn release:prepare -DreleaseVersion=%s -DdevelopmentVersion=%s -DautoVersionSubmodules=true --batch-mode;
+                       mvn release:perform""" % (build_dir, timestamped_version, old_project_version)
+(build_project_status, build_project_output) = commands.getstatusoutput(project_build_cmd)
 # if the build of project is unsuccessful
-if not isBuildSuccessful(build_project):
-	raise RuntimeError, "problem while building project:\n" + build_project[1]
+if (build_project_status != 0) or (not isBuildSuccessful(build_project_output)):
+	raise RuntimeError, "problem while building project:\n" + build_project_output
 
 # write the maven build output to log file and display result on the screen
-writeFile("%s/project_build.out" % log_dir, build_project[1])
+writeFile("%s/project_build.out" % log_dir, build_project_output)
 print "%s built" % project_name
 print "project version %s deployed" % timestamped_version
 
@@ -149,18 +155,24 @@ refapp_props = refapp_props[len(refapp_props)-1]
 for node in refapp_props.childNodes:
 	if node.nodeType == minidom.Node.ELEMENT_NODE and node.tagName == "%s.version" % project_name.lower():
 		node.childNodes[0].nodeValue=timestamped_version
-#		node.childNodes[0].nodeValue=upload_version
 		break
 # overwrite the old refapp pom
 writeFile(refapp_pom, refapp_dom.toxml())
 
 # build refapp
 print "building refapp"
-build_refapp = commands.getstatusoutput("cd %s/refapp; mvn deploy -Dmaven.test.skip=true" % build_dir)
+(build_refapp_status, build_refapp_output) = commands.getstatusoutput("cd %s/refapp; mvn deploy -Dmaven.test.skip=true" % build_dir)
 # if the build of refapp is unsuccessful
-if not isBuildSuccessful(build_refapp):
-	raise RuntimeError, "problem while building refapp:\n" + build_refapp[1]
+if (build_refapp_status != 0) or (not isBuildSuccessful(build_refapp_output)):
+	raise RuntimeError, "problem while building refapp:\n" + build_refapp_output
 
 # write the maven build output to log file and display result on the screen
-writeFile("%s/refapp_build.out" % log_dir, build_refapp[1])
+writeFile("%s/refapp_build.out" % log_dir, build_refapp_output)
+
+# final message to user
 print "refapp built"
+print "the build result can be found at %s" % build_dir
+print "the build logs can be found at %s" % log_dir
+
+# return a successful code
+sys.exit(0)
