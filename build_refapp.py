@@ -2,7 +2,7 @@ import os, sys, time, string
 import commands, getpass
 from xml.dom import minidom
 
-# location configs
+# location configs ***** NO ENDING WITH '/' *****
 refapp_base = "https://studio.atlassian.com/svn/REFAPP"
 project_svn_base = "https://studio.atlassian.com/svn"
 
@@ -73,14 +73,56 @@ def findModules(pom_dom):
 				output.append(node.childNodes[0].nodeValue)
 	return output
 
-#getting inputs from users
-project_name = raw_input("project:")
-project_branch = raw_input("project branch:")
-refapp_branch = raw_input("refapp branch:")
+def listSvnDirs(svn_url, svn_credential):
+	"""
+		list all the dirs under the given svn_url
+	"""
+	# simple issue svn list and parse the result
+	print "retrieving info from svn......."
+	list_cmd = "svn list %s %s" % (svn_url, svn_credential)
+	(list_svn_status, list_svn_output) = commands.getstatusoutput(list_cmd)
+	if list_svn_status != 0:
+		raise RuntimeError, "having trouble trying to connect to svn:\n" + list_svn_output
+	svn_output_lines = list_svn_output.split("\n")
+	# only dirs are of our interest here. all dirs end with '/'
+	return map(lambda x:x[:-1], filter(lambda x:x.endswith("/"), svn_output_lines))
+
+def takeUserDirChoice(prompt_text, svn_url, svn_credential):
+	"""
+		prompt until user makes a valid choice.
+		if user inputs something without listing the choices, we assume
+		the user knows what he is doing and bypass the checking process
+		with remote svn to save time.
+	"""
+	choice = raw_input(prompt_text)
+	choices = None
+	while choice == "":
+		# read from svn only for the first time
+		if not choices:
+			choices = listSvnDirs(svn_url, svn_credential)
+		# print out all available choices
+		print "available choices = [" + ", ".join(choices) + "]\n"
+		choice = raw_input(prompt_text)
+		# if user enters a non-existing project name, we don't accept it
+		if not choices.__contains__(choice):
+			choice = ""
+	return choice
+
+# getting inputs from users
 svn_user = raw_input("svn username(leave blank=no user/passwd):")
 svm_passwd = ""
 if (svn_user != ""):
 	svn_passwd = getpass.getpass("svn passwd:")
+
+# construct user/passwd parameters for svn command line
+svn_credential = ""
+if svn_user != "":
+	svn_credential = """ --username "%s" --password "%s" """ % (svn_user, svn_passwd)
+
+# getting projects to build
+project_name = takeUserDirChoice("project(blank for listing):", project_svn_base, svn_credential)
+project_branch = takeUserDirChoice("project branch(blank for listing):", "%s/%s/branches" % (project_svn_base, project_name), svn_credential)
+refapp_branch = takeUserDirChoice("refapp branch(blank for listing):", "%s/branches" % refapp_base, svn_credential)
 
 # build layout
 timestamp = str(time.time()).replace(".", "")
@@ -100,11 +142,6 @@ if (mkdir_status != 0):
 (mkdir_status, message) = commands.getstatusoutput("mkdir " + log_dir)
 if (mkdir_status != 0):
 	raise RuntimeError, "problem while creating build layout:%s\n%s\n" % (log_dir, message)
-
-# if user/passwd are needed for svn
-svn_credential = ""
-if svn_user == "":
-	svn_credential = """ --username "%s" --password "%s" """ % (svn_user, svn_passwd)
 
 print "checking out refapp"
 (checkout_refapp_status, checkout_refapp_output) = commands.getstatusoutput("svn checkout %s/branches/%s %s/refapp %s" % (refapp_base, refapp_branch, build_dir, svn_credential))
