@@ -7,11 +7,9 @@
     
     <component-import key="applicationLinkService" interface="com.atlassian.applinks.api.ApplicationLinkService" />
 
-    <component-import key="templateRenderer">
-        <interface>com.atlassian.templaterenderer.TemplateRenderer</interface>
-    </component-import>
+    <component-import key="templateRenderer" interface="com.atlassian.templaterenderer.TemplateRenderer"/>
     
-    <servlet key="applinksAuthenticationStatus" class="com.atlassian.refapp.tools.WhoamiApplinksServlet">
+    <servlet key="applinksAuthenticationStatus" class="com.atlassian.refapp.applinks.WhoamiApplinksServlet">
         <url-pattern>/whoami-applinks</url-pattern>
     </servlet>
 

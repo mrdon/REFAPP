@@ -1,7 +1,6 @@
 <html>
 <head>
   <title>Application Links Authentication Information</title>
-    ${webResources.get()}
   <meta name="decorator" content="atl.general"/>
 </head>
 <body>
@@ -18,13 +17,12 @@
   #foreach($record in $records.entrySet())
     <tr>
         <td>
-        <img src="$record.key.iconUrl">
+            <img src="$record.key.iconUrl">
         </td>
-        <td><a href="$!record.key.displayUrl">$record.key.name</a></td>
         <td>
-            <!-- status: $record.value.status -->
-            <!-- username: $record.value.username -->
-
+            <a href="$!record.key.displayUrl">$record.key.name</a>
+        </td>
+        <td>
             #if ($record.value.status == "ACCEPTED")
                 $!record.value.username
             #elseif ($record.value.status == "CREDENTIALS_REQUIRED")

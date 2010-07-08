@@ -1,4 +1,4 @@
-package com.atlassian.refapp.tools;
+package com.atlassian.refapp.applinks;
 
 import com.atlassian.applinks.api.ApplicationLink;
 import com.atlassian.applinks.api.ApplicationLinkRequestFactory;
@@ -10,7 +10,6 @@ import com.atlassian.sal.api.net.Response;
 import com.atlassian.sal.api.net.ResponseException;
 import com.atlassian.sal.api.net.ResponseHandler;
 import com.atlassian.templaterenderer.TemplateRenderer;
-import com.atlassian.velocity.htmlsafe.HtmlSafe;
 import com.google.common.collect.ImmutableMap;
 
 import javax.servlet.ServletException;
@@ -20,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -126,22 +124,7 @@ public class WhoamiApplinksServlet extends HttpServlet
     {
         response.setContentType("text/html; charset=utf-8");
         webResourceManager.requireResource("com.atlassian.auiplugin:ajs");
-
-        context = new HashMap<String, Object>(context);
-        context.put("webResources", new HtmlSafeContent()
-        {
-            public CharSequence get()
-            {
-                return webResourceManager.getRequiredResources();
-            }
-        });
         templateRenderer.render(template, context, response.getWriter());
-    }
-
-    public interface HtmlSafeContent
-    {
-        @HtmlSafe
-        CharSequence get();
     }
 
     public static class AuthenticationInformation

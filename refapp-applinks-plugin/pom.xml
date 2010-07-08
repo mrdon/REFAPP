@@ -5,26 +5,26 @@
         <artifactId>atlassian-refapp-plugin-parent</artifactId>
         <version>2.5.5-SNAPSHOT</version>
     </parent>
-    <artifactId>atlassian-refapp-tools-plugin</artifactId>
+    <artifactId>atlassian-refapp-applinks-plugin</artifactId>
     <name>Reference App UI Tools Plugin</name>
     <description>Plugin which adds functionality to the Ref App to make it a little less useless.</description>
     <packaging>jar</packaging>
     <properties>
-        <atlassian.plugin.key>com.atlassian.refapp.tools</atlassian.plugin.key>
+        <atlassian.plugin.key>com.atlassian.refapp.applinks</atlassian.plugin.key>
+        <applinks.api.version>3.0-fecrudev-r63214</applinks.api.version>
     </properties>
     <build>
         <plugins>
-		<plugin>
-			<groupId>org.apache.felix</groupId>
-			<artifactId>maven-bundle-plugin</artifactId>
-			<extensions>true</extensions>
-			<configuration>
-				<instructions>
-					<Bundle-SymbolicName>${atlassian.plugin.key}</Bundle-SymbolicName>
-					<Import-Package>*</Import-Package>
-					<Export-Package>
-                        com.atlassian.applinks.api,
-                        com.atlassian.applinks.api.*,
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                <instructions>
+                    <Bundle-SymbolicName>${atlassian.plugin.key}</Bundle-SymbolicName>
+                    <Export-Package>
+                        com.atlassian.applinks.api;version="${applinks.api.version}",
+                        com.atlassian.applinks.api.*;version="${applinks.api.version}"
                     </Export-Package>
 				</instructions>
 			</configuration>
@@ -54,7 +54,7 @@
         <dependency>
             <groupId>com.atlassian.applinks</groupId>
             <artifactId>applinks-api</artifactId>
-            <version>3.0-fecrudev-r62901</version>
+            <version>${applinks.api.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.atlassian.sal</groupId>
@@ -65,7 +65,7 @@
         <dependency>
             <groupId>com.atlassian.applinks</groupId>
             <artifactId>applinks-spi</artifactId>
-            <version>3.0-fecrudev-r62901</version>
+            <version>${applinks.api.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.atlassian.applinks</groupId>
