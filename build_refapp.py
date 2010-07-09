@@ -2,9 +2,11 @@ import os, sys, time, string
 import commands, getpass
 from xml.dom import minidom
 
-# location configs ***** NO ENDING WITH '/' *****
+# configs
 refapp_base = "https://studio.atlassian.com/svn/REFAPP"
 project_svn_base = "https://studio.atlassian.com/svn"
+# the first %s will be replaced by the major+minor version number, the second by currentMillis()
+version_format = "%s.alpha%s"
 
 # the flag for not deleting the working directory if the build is successful
 no_delete = "no_delete"
@@ -79,7 +81,7 @@ def listSvnDirs(svn_url, svn_credential):
 		raise RuntimeError, "having trouble trying to connect to svn:\n" + list_svn_output
 	svn_output_lines = list_svn_output.split("\n")
 	# only dirs are of our interest here. all dirs end with '/'
-	return map(lambda x:x[:-1], filter(lambda x:x.endswith("/"), svn_output_lines))
+	return map(lambda x:x.rstrip("/"), svn_output_lines)
 
 def takeUserDirChoice(prompt_text, svn_url, svn_credential):
 	"""
@@ -90,17 +92,21 @@ def takeUserDirChoice(prompt_text, svn_url, svn_credential):
 	"""
 	choice = raw_input(prompt_text)
 	choices = None
-	while choice == "":
+	while choice == "" or choice.isspace():
 		# read from svn only for the first time
 		if not choices:
 			choices = listSvnDirs(svn_url, svn_credential)
 		# print out all available choices
-		print "available choices = [" + ", ".join(choices) + "]\n"
+		print "available choices = ['" + "', '".join(choices) + "']\n"
 		choice = raw_input(prompt_text)
 		# if user enters a non-existing project name, we don't accept it
 		if not choices.__contains__(choice):
 			choice = ""
 	return choice
+
+# clean up configs
+refapp_base = refapp_base.rstrip("/")
+project_svn_base = project_svn_base.rstrip("/")
 
 # getting inputs from users
 svn_user = raw_input("svn username(leave blank=no user/passwd):")
@@ -158,7 +164,7 @@ project_dom = minidom.parse(project_pom)
 # get the old artifact version in project pom
 old_project_version = getPomVersion(project_dom)
 # now reformat it with timestamp and then replace the old version in the pom
-timestamped_version = "%s.b%s" % (old_project_version.replace("-SNAPSHOT", ""), timestamp)
+timestamped_version = version_format % (old_project_version.replace("-SNAPSHOT", ""), timestamp)
 print "project version transformed %s => %s" % (old_project_version, timestamped_version)
 
 # build project
@@ -193,7 +199,7 @@ writeFile(refapp_pom, refapp_dom.toxml())
 # get the old artifact version in refapp pom
 old_refapp_version = getPomVersion(refapp_dom)
 # now reformat it with timestamp and then replace the old version in the pom
-refapp_timestamped_version = "%s.b%s" % (old_refapp_version.replace("-SNAPSHOT", ""), timestamp)
+refapp_timestamped_version = version_format % (old_refapp_version.replace("-SNAPSHOT", ""), timestamp)
 print "refapp version transformed %s => %s" % (old_refapp_version, refapp_timestamped_version)
 print "building refapp"
 refapp_build_cmd = """cd %s/refapp;
