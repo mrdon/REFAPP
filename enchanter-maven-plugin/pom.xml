@@ -59,8 +59,8 @@
   <build>
     <plugins>
         <plugin>
-            <groupId>com.atlassian</groupId>
-            <artifactId>enchanter-plugin</artifactId>
+            <groupId>com.atlassian.refapp</groupId>
+            <artifactId>enchanter-maven-plugin</artifactId>
             <version>0.1-SNAPSHOT</version>
             <configuration>
                 <scriptFile>date.py</scriptFile>
