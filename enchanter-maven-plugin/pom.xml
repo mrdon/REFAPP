@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.atlassian.pom</groupId>
-    <artifactId>atlassian-closedsource-pom</artifactId>
-    <version>23</version>
+    <groupId>com.atlassian.refapp</groupId>
+    <artifactId>atlassian-refapp-parent</artifactId>
+    <version>2.6.0-SNAPSHOT</version>
   </parent>
 
   <groupId>com.atlassian.refapp</groupId>
@@ -33,13 +33,13 @@
     <dependency>
       <groupId>org.twdata.enchanter</groupId>
       <artifactId>enchanter-core</artifactId>
-      <version>0.6-SNAPSHOT</version>
+      <version>0.6.1</version>
     </dependency>
 
     <dependency>
       <groupId>org.twdata.enchanter</groupId>
       <artifactId>enchanter-python</artifactId>
-      <version>0.6-SNAPSHOT</version>
+      <version>0.6.1</version>
     </dependency>
 
     <dependency>
