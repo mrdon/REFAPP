@@ -143,6 +143,7 @@ if (mkdir_status != 0):
 if (mkdir_status != 0):
 	raise RuntimeError, "problem while creating build layout:%s\n%s\n" % (log_dir, message)
 
+print "==========START BUILDING=========="
 print "checking out refapp"
 (checkout_refapp_status, checkout_refapp_output) = commands.getstatusoutput("svn checkout %s/branches/%s %s/refapp %s --non-interactive" % (refapp_base, refapp_branch, build_dir, svn_credential))
 # if the checkout of refapp is unsuccessful
@@ -181,30 +182,21 @@ if (build_project_status != 0) or (not isBuildSuccessful(build_project_output)):
 
 print "%s version %s built and deployed" % (project_name, timestamped_version)
 
-# now fix up the refapp pom before build
-refapp_pom = "%s/refapp/pom.xml" % build_dir
-refapp_dom = minidom.parse(refapp_pom)
-refapp_props = refapp_dom.getElementsByTagName("properties")
-# we just want to last one
-refapp_props = refapp_props[len(refapp_props)-1]
-# fix the project version
-for node in refapp_props.childNodes:
-	if node.nodeType == minidom.Node.ELEMENT_NODE and node.tagName == "%s.version" % project_name.lower():
-		node.childNodes[0].nodeValue=timestamped_version
-		break
-# overwrite the old refapp pom
-writeFile(refapp_pom, refapp_dom.toxml())
 
 # build refapp
 # get the old artifact version in refapp pom
+refapp_pom = "%s/refapp/pom.xml" % build_dir
+refapp_dom = minidom.parse(refapp_pom)
 old_refapp_version = getPomVersion(refapp_dom)
+# the property key to point to the project version
+project_version_key = "%s.version" % project_name.lower()
 # now reformat it with timestamp and then replace the old version in the pom
 refapp_timestamped_version = version_format % (old_refapp_version.replace("-SNAPSHOT", ""), timestamp)
 print "refapp version transformed %s => %s" % (old_refapp_version, refapp_timestamped_version)
 print "building refapp"
 refapp_build_cmd = """cd %s/refapp;
-                      mvn release:prepare -DreleaseVersion=%s -DdevelopmentVersion=%s -DautoVersionSubmodules=true --batch-mode;
-                      mvn release:perform""" % (build_dir, refapp_timestamped_version, old_refapp_version)
+                      mvn release:prepare -DreleaseVersion=%s -DdevelopmentVersion=%s -DautoVersionSubmodules=true --batch-mode -D%s=%s;
+                      mvn release:perform -D%s=%s""" % (build_dir, refapp_timestamped_version, old_refapp_version, project_version_key, timestamped_version, project_version_key, timestamped_version)
 (build_refapp_status, build_refapp_output) = commands.getstatusoutput(refapp_build_cmd)
 
 # write the maven build output to log file and display result on the screen
@@ -216,6 +208,7 @@ if (build_refapp_status != 0) or (not isBuildSuccessful(build_refapp_output)):
 
 # (possibly) the final message to user
 print "refapp version %s built and deployed" % refapp_timestamped_version
+print "==========SUCCESSFULLY BUILT REFAPP=========="
 
 # delete the working dir if the whole thing is successful
 if sys.argv[1:].__contains__("no_delete"):
