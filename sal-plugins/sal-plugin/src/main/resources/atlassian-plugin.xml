@@ -5,6 +5,14 @@
         <vendor name="Atlassian Software Systems Pty Ltd" url="http://www.atlassian.com"/>
     </plugin-info>
 
+    <component name="Refapp Data Source Provider" key="refapp-datasource-provider"
+               class="com.atlassian.sal.refimpl.sql.RefimplDataSourceProvider" public="true">
+        <interface>com.atlassian.sal.api.sql.DataSourceProvider</interface>
+    </component>
+
+    <component name="Refapp Hsql Data Source" key="refapp-datasource"
+               class="com.atlassian.sal.refimpl.sql.HsqlDataSource" public="false"/>
+
     <component name="Refapp Backup Registry" key="refapp-backup-registry"
                class="com.atlassian.sal.core.backup.MemoryBackupRegistry" public="true">
         <interface>com.atlassian.sal.api.backup.BackupRegistry</interface>

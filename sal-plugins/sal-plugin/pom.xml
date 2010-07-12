@@ -20,12 +20,16 @@
                     <instructions>
                         <Bundle-SymbolicName>com.atlassian.refapp.sal</Bundle-SymbolicName>
                         <Import-Package>
+                            com.atlassian.sal.api,
                             com.atlassian.sal.api.backup,
-                            org.apache.log4j,
+                            com.atlassian.sal.api.sql,
+                            org.slf4j,
+                            com.google.common.base,
                             com.google.common.collect,
                         </Import-Package>
                         <Private-Package>
                             com.atlassian.sal.core.backup,
+                            com.atlassian.sql.refimpl.sql,
                         </Private-Package>
                         <Bundle-ClassPath>.,{maven-dependencies}</Bundle-ClassPath>
                         <Spring-Context>*;timeout:=60</Spring-Context>
@@ -43,9 +47,21 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>com.atlassian.sal</groupId>
             <artifactId>sal-core</artifactId>
             <version>${sal.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.collections</groupId>
+            <artifactId>google-collections</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
