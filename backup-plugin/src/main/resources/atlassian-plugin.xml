@@ -9,9 +9,18 @@
         <url-pattern>/backup</url-pattern>
     </servlet>
 
+    <servlet name="Restore Servlet" class="com.atlassian.refapp.backup.RestoreServlet" key="restore-servlet">
+        <url-pattern>/restore</url-pattern>
+    </servlet>
+
     <web-item name="Backup Link" key="backupLink" section="index.links" weight="40" application="refapp">
         <label key="Backup"/>
         <link linkId="backupLink">/plugins/servlet/backup</link>
+    </web-item>
+
+    <web-item name="Restore Link" key="restoreLink" section="index.links" weight="40" application="refapp">
+        <label key="Restore"/>
+        <link linkId="restoreLink">/plugins/servlet/restore</link>
     </web-item>
 
     <component name="Backup Manager" key="backup-manager" class="com.atlassian.refapp.backup.RefAppBackupManager"/>

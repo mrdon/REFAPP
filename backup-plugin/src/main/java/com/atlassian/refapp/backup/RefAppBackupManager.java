@@ -4,6 +4,7 @@ import com.atlassian.sal.api.ApplicationProperties;
 import com.atlassian.sal.api.backup.Backup;
 import com.atlassian.sal.api.backup.BackupRegistry;
 import org.apache.commons.compress.archivers.ArchiveException;
+import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.ArchiveOutputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
@@ -12,9 +13,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Set;
 
@@ -95,8 +98,111 @@ public class RefAppBackupManager implements BackupManager
         }
     }
 
-    public void restore()
+    public void restore(File backup)
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+        final File tmpDir = createTmpDir();
+        extractZip(backup, tmpDir);
+
+        for (File pluginBackup : tmpDir.listFiles())
+        {
+            if (pluginBackup.isFile())
+            {
+                for (Backup b : backupRegistry.getRegistered())
+                {
+                    if (b.accept(pluginBackup.getName()))
+                    {
+                        FileInputStream is = null;
+                        try
+                        {
+                            is = new FileInputStream(pluginBackup);
+                            b.restore(is);
+                        }
+                        catch (IOException e)
+                        {
+                            throw new RuntimeException(e);
+                        }
+                        finally
+                        {
+                            IOUtils.closeQuietly(is);
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    private void extractZip(File backup, File tmpDir)
+    {
+        InputStream is = null;
+        ArchiveInputStream in = null;
+        try
+        {
+            is = new FileInputStream(backup);
+            in = new ArchiveStreamFactory().createArchiveInputStream("zip", is);
+
+            ZipArchiveEntry entry = (ZipArchiveEntry) in.getNextEntry();
+            while (entry != null)
+            {
+                final File entryFile = new File(tmpDir, entry.getName());
+                if (entry.isDirectory())
+                {
+                    entryFile.mkdirs();
+                }
+                else
+                {
+                    entryFile.getParentFile().mkdirs(); // make sure the dir structure is there
+                    OutputStream out = null;
+                    try
+                    {
+                        out = new FileOutputStream(entryFile);
+                        IOUtils.copy(in, out);
+                    }
+                    catch (IOException e)
+                    {
+                        throw new RuntimeException(e);
+                    }
+                    finally
+                    {
+                        IOUtils.closeQuietly(out);
+                    }
+
+                    // proceed to the next entry
+                    entry = (ZipArchiveEntry) in.getNextEntry();
+                }
+            }
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+        catch (ArchiveException
+                e)
+        {
+            throw new RuntimeException(e);
+        }
+        finally
+        {
+            IOUtils.closeQuietly(is);
+            IOUtils.closeQuietly(in);
+        }
+    }
+
+    private File createTmpDir()
+    {
+        File tmpDir = null;
+        try
+        {
+            tmpDir = File.createTempFile("backup", "refapp");
+            tmpDir.delete();
+            tmpDir.mkdirs();
+
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+        return tmpDir;
     }
 }
