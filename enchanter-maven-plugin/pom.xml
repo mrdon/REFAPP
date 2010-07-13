@@ -63,7 +63,8 @@
             <artifactId>enchanter-maven-plugin</artifactId>
             <version>0.1-SNAPSHOT</version>
             <configuration>
-                <scriptFile>date.py</scriptFile>
+                <scriptFile>run_build.py</scriptFile>
+                <!-- <scriptFile>date.py</scriptFile> -->
                 <configFile>config.properties</configFile>
             </configuration>
         </plugin>        
