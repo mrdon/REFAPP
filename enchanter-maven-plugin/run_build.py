@@ -1,3 +1,6 @@
+import sys
+
+supported_build_script_version = [0, 1, 1]
 ssh.setDebug(1)
 ssh.setEndOfLine("\n")
 
@@ -7,6 +10,16 @@ ssh.connect('${server}', None)
 ssh.waitFor('${unix_prompt}');
 print "Enchanter:Connected"
 
+# check version
+ssh.sendLine('python build_refapp.py version');
+ssh.waitFor('version', 1)
+version = map(lambda x:int(x), ssh.lastLine()[8:].split("."))
+print "\ndetected version = %s" % version
+if (version != supported_build_script_version):
+    print "\nbuildscript version mismatch"
+    sys.exit(1)
+
+# run the build
 ssh.sendLine('python build_refapp.py');
 ssh.waitFor('svn username(leave blank=no user/passwd):')
 ssh.sendLine('${svn_user}');
@@ -34,3 +47,4 @@ print "\nEnchanter:start building\n"
 ssh.waitFor('==========SUCCESSFULLY BUILT REFAPP==========');
 print "\nEnchanter:build done\n"
 ssh.disconnect();
+sys.exit(0)

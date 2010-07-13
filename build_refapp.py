@@ -8,12 +8,19 @@ project_svn_base = "https://studio.atlassian.com/svn"
 # the first %s will be replaced by the major+minor version number, the second by currentMillis()
 version_format = "%s.alpha%s"
 
+# current script version
+script_version = [0, 1, 1]
+
 # the flag for not deleting the working directory if the build is successful
 no_delete = "no_delete"
 
 # environment pre-conditions
-if sys.version_info[:3] < (2, 4, 3):
-    raise RuntimeError, "Requires python >= 2.4.3"
+if sys.version_info[:3] < [2, 4, 3]:
+    	raise RuntimeError, "Requires python >= 2.4.3"
+
+if sys.argv[1:].__contains__("version"):
+	print "version %s" % ".".join(map(lambda x:str(x), script_version))
+	sys.exit(0)
 
 def isCheckoutSuccessful(captured_output):
 	lines = captured_output.split("\n")
