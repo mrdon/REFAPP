@@ -40,4 +40,5 @@ if (not os.path.isdir(maven_m2_location)) or (not os.path.isfile(maven_settings_
         if status != 0:
             raise RuntimeError, "trouble while trying to download build_refapp.py file: %s" % msg
 # good exit
+print "========== SETUP DONE =========="
 sys.exit(0)
