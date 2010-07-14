@@ -36,45 +36,16 @@ def isBuildSuccessful(captured_output):
 	else:
 		return True
 
-def findChildElement(childNodes, elementName):
-	for node in childNodes:
-		if node.nodeType == minidom.Node.ELEMENT_NODE and node.tagName == elementName:
-			return node
-	return None
-
-def fixElementValue(childNodes, elementName, newValue):
-	done = False
-	for node in childNodes:
-		if node.nodeType == minidom.Node.ELEMENT_NODE and node.tagName == elementName:
-			node.childNodes[0].nodeValue = newValue
-			done = True
-			break
-	return done
-
 def writeFile(file_location, content):
 	fp = open(file_location, "w")
 	fp.write(content)
 	fp.close()
-
-def fixParentPomVersion(pom_location, parentVersion):
-	# load the dom and fix it in memory
-	dom = minidom.parse(pom_location)
-	parentElement = findChildElement(dom.childNodes[0].childNodes, "parent")
-	if parentElement:
-		if not fixElementValue(parentElement.childNodes, "version", parentVersion):
-			raise RuntimeError, "/project/parent/version not found in %s " % pom_location
-	# overwrite the old file
-	writeFile(pom_location, dom.toxml())
 
 def getPomVersion(pom_dom):
 	for node in pom_dom.childNodes[0].childNodes:
 		if node.nodeType == minidom.Node.ELEMENT_NODE and node.tagName == "version":
 			return node.childNodes[0].nodeValue
 	return None
-
-def fixPomVersion(pom_dom, version):
-	if not fixElementValue(pom_dom.childNodes[0].childNodes, "version", version):
-		raise RuntimeError, "/project/version not found in %s " % pom_location
 
 def listSvnDirs(svn_url, svn_credential):
 	"""
@@ -166,11 +137,12 @@ if (checkout_project_status != 0) or (not isCheckoutSuccessful(checkout_project_
 	raise RuntimeError, "problem while checking out project:\n" + checkout_project_output
 print "%s checked out" % project_name
 
-# now fix the project version number to the timestamp
+# now generate the new project version number
+# get the existing artifact version in project pom
 project_pom = "%s/project/pom.xml" % build_dir
 project_dom = minidom.parse(project_pom)
-# get the old artifact version in project pom
 old_project_version = getPomVersion(project_dom)
+
 # now reformat it with timestamp and then replace the old version in the pom
 timestamped_version = version_format % (old_project_version.replace("-SNAPSHOT", ""), timestamp)
 print "project version transformed %s => %s" % (old_project_version, timestamped_version)
