@@ -1,12 +1,14 @@
 import sys
 
+# generic configuration part
 supported_build_script_version = [0, 1, 1]
 ssh.setDebug(1)
 ssh.setEndOfLine("\n")
 
+# connect to a remote host
 print "Enchanter:Connecting to ${server}"
-
 ssh.connect('${server}', None)
+# wait instead of prompt *****************************************************************
 ssh.waitFor('${unix_prompt}');
 print "Enchanter:Connected"
 
@@ -19,7 +21,7 @@ if (version != supported_build_script_version):
     print "\nbuildscript version mismatch"
     sys.exit(1)
 
-# run the build
+# run the build by answering the command line questions.
 ssh.sendLine('python build_refapp.py');
 ssh.waitFor('svn username(leave blank=no user/passwd):')
 ssh.sendLine('${svn_user}');
