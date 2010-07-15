@@ -36,6 +36,21 @@ def isBuildSuccessful(captured_output):
 	else:
 		return True
 
+def findChildElement(childNodes, elementName):
+	for node in childNodes:
+		if node.nodeType == minidom.Node.ELEMENT_NODE and node.tagName == elementName:
+			return node
+	return None
+
+def fixElementValue(childNodes, elementName, newValue):
+	done = False
+	for node in childNodes:
+		if node.nodeType == minidom.Node.ELEMENT_NODE and node.tagName == elementName:
+			node.childNodes[0].nodeValue = newValue
+			done = True
+			break
+	return done
+
 def writeFile(file_location, content):
 	fp = open(file_location, "w")
 	fp.write(content)
@@ -148,6 +163,7 @@ timestamped_version = version_format % (old_project_version.replace("-SNAPSHOT",
 print "project version transformed %s => %s" % (old_project_version, timestamped_version)
 
 # build project
+# TODO: What if mvn release:prepare here fails? It can result in inconsistent state as usual. How should I deal with this?
 print "building %s" % project_name
 project_build_cmd = """cd %s/project;
                        mvn release:prepare -DreleaseVersion=%s -DdevelopmentVersion=%s -DautoVersionSubmodules=true --batch-mode;
@@ -172,14 +188,40 @@ project_version_key = "%s.version" % project_name.lower()
 # now reformat it with timestamp and then replace the old version in the pom
 refapp_timestamped_version = version_format % (old_refapp_version.replace("-SNAPSHOT", ""), timestamp)
 print "refapp version transformed %s => %s" % (old_refapp_version, refapp_timestamped_version)
+
+# change the project version in refapp's parent pom here and commit
+print "prepare refapp for building"
+propsElem = findChildElement(refapp_dom.childNodes[0].childNodes, "properties")
+fixElementValue(propsElem.childNodes, project_version_key, timestamped_version)
+writeFile(refapp_pom, refapp_dom.toxml())
+
+# prepare commit
+prepare_commit_cmd = """cd %s/refapp
+                        svn commit -m "[build_refapp] prepare to build" --non-interactive""" % build_dir
+(prepare_commit_status, prepare_commit_output) = commands.getstatusoutput(prepare_commit_cmd)
+if prepare_commit_status != 0:
+    raise RuntimeError, "failed while preparing to build refapp:%s" % prepare_commit_output
+
 print "building refapp"
 refapp_build_cmd = """cd %s/refapp;
-                      mvn release:prepare -DreleaseVersion=%s -DdevelopmentVersion=%s -DautoVersionSubmodules=true --batch-mode -D%s=%s;
-                      mvn release:perform -D%s=%s""" % (build_dir, refapp_timestamped_version, old_refapp_version, project_version_key, timestamped_version, project_version_key, timestamped_version)
+                      mvn release:prepare -DreleaseVersion=%s -DdevelopmentVersion=%s -DautoVersionSubmodules=true --batch-mode;
+                      mvn release:perform""" % (build_dir, refapp_timestamped_version, old_refapp_version)
 (build_refapp_status, build_refapp_output) = commands.getstatusoutput(refapp_build_cmd)
 
 # write the maven build output to log file and display result on the screen
 writeFile("%s/refapp_build.out" % log_dir, build_refapp_output)
+
+# revert the project version in refapp's parent pom here and commit
+print "finishing refapp building"
+fixElementValue(propsElem.childNodes, project_version_key, old_project_version)
+writeFile(refapp_pom, refapp_dom.toxml())
+
+# prepare commit
+finish_commit_cmd = """cd %s/refapp
+                       svn commit -m "[build_refapp] finishing build" --non-interactive""" % build_dir
+(finish_commit_status, finish_commit_output) = commands.getstatusoutput(finish_commit_cmd)
+if finish_commit_status != 0:
+    raise RuntimeError, "failed while finishing build of refapp:%s" % finish_commit_output
 
 # if the build of refapp is unsuccessful
 if (build_refapp_status != 0) or (not isBuildSuccessful(build_refapp_output)):
