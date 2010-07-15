@@ -5,8 +5,10 @@ from xml.dom import minidom
 # configs
 refapp_base = "https://studio.atlassian.com/svn/REFAPP"
 project_svn_base = "https://studio.atlassian.com/svn"
+
 # the first %s will be replaced by the major+minor version number, the second by currentMillis()
-version_format = "%s.alpha%s"
+version_component = ".alpha"
+version_format = "%s" + version_component + "%s"
 
 # current script version
 script_version = [0, 1, 1]
@@ -56,11 +58,17 @@ def writeFile(file_location, content):
 	fp.write(content)
 	fp.close()
 
-def getPomVersion(pom_dom):
+def getTopLevelElementContent(pom_dom, element_name):
 	for node in pom_dom.childNodes[0].childNodes:
-		if node.nodeType == minidom.Node.ELEMENT_NODE and node.tagName == "version":
+		if node.nodeType == minidom.Node.ELEMENT_NODE and node.tagName == element_name:
 			return node.childNodes[0].nodeValue
 	return None
+
+def getPomArtifactId(pom_dom):
+	return getTopLevelElementContent(pom_dom, "artifactId")
+
+def getPomVersion(pom_dom):
+	return getTopLevelElementContent(pom_dom, "version")
 
 def listSvnDirs(svn_url, svn_credential):
 	"""
@@ -75,6 +83,18 @@ def listSvnDirs(svn_url, svn_credential):
 	svn_output_lines = list_svn_output.split("\n")
 	# only dirs are of our interest here. all dirs end with '/'
 	return map(lambda x:x.rstrip("/"), svn_output_lines)
+
+def getNextReleaseVersion(svn_tags_url, svn_credential, artifactId, base_version):
+    dirs = listSvnDirs(svn_tags_url, svn_credential)
+    base = "-".join([artifactId, base_version.replace("-SNAPSHOT", "")])
+    same_version_dirs = filter(lambda x:x.startswith(base  + version_component), dirs)
+    if len(same_version_dirs) == 0:
+        # if none exists, here we have the first one
+        return version_format % (base_version.replace("-SNAPSHOT", ""), 1)
+    else:
+        #otherwise get the next number
+        next_ver = max(map(lambda x:int(x[len(base + version_component):]), same_version_dirs))+1
+        return version_format % (base_version.replace("-SNAPSHOT", ""), next_ver)
 
 def takeUserDirChoice(prompt_text, svn_url, svn_credential):
 	"""
@@ -159,7 +179,8 @@ project_dom = minidom.parse(project_pom)
 old_project_version = getPomVersion(project_dom)
 
 # now reformat it with timestamp and then replace the old version in the pom
-timestamped_version = version_format % (old_project_version.replace("-SNAPSHOT", ""), timestamp)
+project_tags_url = "%s/%s/tags" % (project_svn_base, project_name)
+timestamped_version = getNextReleaseVersion(project_tags_url, svn_credential, getPomArtifactId(project_dom), old_project_version)
 print "project version transformed %s => %s" % (old_project_version, timestamped_version)
 
 # build project
@@ -186,7 +207,9 @@ old_refapp_version = getPomVersion(refapp_dom)
 # the property key to point to the project version
 project_version_key = "%s.version" % project_name.lower()
 # now reformat it with timestamp and then replace the old version in the pom
-refapp_timestamped_version = version_format % (old_refapp_version.replace("-SNAPSHOT", ""), timestamp)
+refapp_tags_url = "%s/tags" % refapp_base
+refapp_timestamped_version = getNextReleaseVersion(refapp_tags_url, svn_credential, getPomArtifactId(refapp_dom), old_refapp_version)
+
 print "refapp version transformed %s => %s" % (old_refapp_version, refapp_timestamped_version)
 
 # change the project version in refapp's parent pom here and commit
