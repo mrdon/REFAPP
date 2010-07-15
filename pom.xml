@@ -1,4 +1,5 @@
-<?xml version="1.0" ?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.atlassian.pom</groupId>
@@ -236,7 +237,7 @@
     <properties>
         <jdkLevel>1.5</jdkLevel>
         <atlassian.plugins.version>2.5.3</atlassian.plugins.version>
-        <sal.version>2.1.1.b127857071852</sal.version>
+        <sal.version>2.1.1.alpha127917007252</sal.version>
         <template.renderer.version>1.1.0.beta1</template.renderer.version>
         <rest.module.version>2.0.0</rest.module.version>
         <oauth.version>1.0.13.beta3</oauth.version>
