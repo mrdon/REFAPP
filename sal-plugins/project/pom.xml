@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.atlassian.refapp</groupId>
         <artifactId>sal-refimpl-plugins</artifactId>
-        <version>2.6.0-SNAPSHOT</version>
+        <version>2.6.0.alpha1</version>
     </parent>
 
     <artifactId>sal-refimpl-project-plugin</artifactId>
