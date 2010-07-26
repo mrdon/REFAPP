@@ -5,7 +5,7 @@
         <artifactId>atlassian-refapp-parent</artifactId>
         <version>2.7.0-SNAPSHOT</version>
     </parent>
-    <artifactId>atlassian-refapp-plugins-parent</artifactId>
+    <artifactId>atlassian-refapp-plugin-parent</artifactId>
     <name>Reference App Plugins Parent POM</name>
     <description>Plugin parent POM configuration</description>
     <packaging>pom</packaging>
