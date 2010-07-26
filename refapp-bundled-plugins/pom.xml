@@ -124,6 +124,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.atlassian.bundles</groupId>
+            <artifactId>json</artifactId>
+            <version>20070829</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>com.atlassian.templaterenderer</groupId>
             <artifactId>atlassian-template-renderer-api</artifactId>
             <version>${atr.version}</version>
