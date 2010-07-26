@@ -10,12 +10,17 @@
         <interface>com.atlassian.sal.api.sql.DataSourceProvider</interface>
     </component>
 
-    <component name="Refapp Hsql Data Source" key="refapp-datasource"
-               class="com.atlassian.sal.refimpl.sql.HsqlDataSource" public="false"/>
+    <component name="Refapp Data Source" key="refapp-datasource"
+               class="com.atlassian.sal.refimpl.sql.RefimplDataSource" public="false">
+        <interface>javax.sql.DataSource</interface>
+    </component>
 
     <component name="Refapp Backup Registry" key="refapp-backup-registry"
                class="com.atlassian.sal.core.backup.MemoryBackupRegistry" public="true">
         <interface>com.atlassian.sal.api.backup.BackupRegistry</interface>
     </component>
+
+    <component-import name="Application Properties" key="application-properties"
+                      interface="com.atlassian.sal.api.ApplicationProperties"/>
 </atlassian-plugin>
 

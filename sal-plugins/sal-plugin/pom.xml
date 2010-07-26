@@ -23,13 +23,15 @@
                             com.atlassian.sal.api,
                             com.atlassian.sal.api.backup,
                             com.atlassian.sal.api.sql,
-                            org.slf4j,
                             com.google.common.base,
                             com.google.common.collect,
+                            javax.sql,
+                            org.hsqldb.jdbc,
+                            org.slf4j,
                         </Import-Package>
                         <Private-Package>
                             com.atlassian.sal.core.backup,
-                            com.atlassian.sql.refimpl.sql,
+                            com.atlassian.sal.refimpl.sql,
                         </Private-Package>
                         <Bundle-ClassPath>.,{maven-dependencies}</Bundle-ClassPath>
                         <Spring-Context>*;timeout:=60</Spring-Context>
@@ -61,6 +63,12 @@
             <groupId>com.google.collections</groupId>
             <artifactId>google-collections</artifactId>
             <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>1.8.0.7</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

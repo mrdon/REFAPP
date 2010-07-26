@@ -229,12 +229,14 @@
             <version>${pom.version}</version>
             <scope>provided</scope>
         </dependency>
+        <!--
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>refapp-backup-plugin</artifactId>
             <version>${pom.version}</version>
             <scope>provided</scope>
         </dependency>
+        -->
         <dependency>
             <groupId>com.atlassian.pdkinstall</groupId>
             <artifactId>pdkinstall-plugin</artifactId>
