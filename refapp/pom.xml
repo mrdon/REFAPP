@@ -476,7 +476,7 @@
     </dependencies>
 
     <properties>
-        <http.port>8080</http.port>
+        <http.port>8189</http.port>
         <rmi.port>8580</rmi.port>
         <baseurl>http://localhost:${http.port}/atlassian-refapp</baseurl>
         <tomcat.installer.url>
