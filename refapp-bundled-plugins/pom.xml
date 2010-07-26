@@ -59,6 +59,12 @@
             Maven WAR plugin doesn't try to package them in WEB-INF/lib.
         -->
         <dependency>
+            <groupId>com.atlassian.applinks</groupId>
+            <artifactId>applinks-plugin</artifactId>
+            <version>${apl.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-auth-plugin</artifactId>
             <version>${pom.version}</version>
