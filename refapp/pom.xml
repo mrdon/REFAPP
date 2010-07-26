@@ -225,12 +225,6 @@
         </dependency>
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
-            <artifactId>atlassian-refapp-applinks-plugin</artifactId>
-            <version>${project.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-jquery-plugin</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
@@ -358,12 +352,6 @@
             <groupId>com.atlassian.bundles</groupId>
             <artifactId>google-collections</artifactId>
             <version>${google.collections.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.atlassian.applinks</groupId>
-            <artifactId>applinks-plugin</artifactId>
-            <version>${applinks.plugin.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

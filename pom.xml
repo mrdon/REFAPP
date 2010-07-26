@@ -26,7 +26,6 @@
         <module>web-item-plugin</module>
         <module>decorator-plugin</module>
         <module>charlie-plugin</module>
-        <module>refapp-applinks-plugin</module>
         <module>refapp</module>
     </modules>
     <scm>
@@ -242,6 +241,5 @@
         <rest.module.version>2.0.0</rest.module.version>
         <oauth.version>1.0.13.beta3</oauth.version>
         <google.collections.version>1.0</google.collections.version>
-        <applinks.plugin.version>3.0-fecrudev-r63214</applinks.plugin.version>
     </properties>
 </project>
