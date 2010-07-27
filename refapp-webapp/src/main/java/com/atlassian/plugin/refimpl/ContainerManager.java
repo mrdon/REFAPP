@@ -21,6 +21,8 @@ import com.atlassian.plugin.hostcontainer.SimpleConstructorHostContainer;
 import com.atlassian.plugin.main.AtlassianPlugins;
 import com.atlassian.plugin.main.PluginsConfiguration;
 import com.atlassian.plugin.main.PluginsConfigurationBuilder;
+import com.atlassian.plugin.metadata.DefaultPluginMetadataManager;
+import com.atlassian.plugin.metadata.PluginMetadataManager;
 import com.atlassian.plugin.module.ClassPrefixModuleFactory;
 import com.atlassian.plugin.module.PrefixDelegatingModuleFactory;
 import com.atlassian.plugin.module.ModuleFactory;
@@ -166,6 +168,7 @@ public class ContainerManager
         publicContainer.put(WebResourceManager.class, webResourceManager);
         publicContainer.put(Map.class, publicContainer);
         publicContainer.put(ModuleFactory.class, moduleFactory);
+        publicContainer.put(PluginMetadataManager.class, new DefaultPluginMetadataManager());
 
         hostContainer = new SimpleConstructorHostContainer(publicContainer);
         moduleFactory.addPrefixModuleFactory(new ClassPrefixModuleFactory(hostContainer));
