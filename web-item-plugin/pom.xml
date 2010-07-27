@@ -43,13 +43,13 @@
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
             <artifactId>atlassian-plugins-webfragment</artifactId>
-            <version>${atlassian.plugins.version}</version>
+            <version>${plug.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
             <artifactId>atlassian-plugins-osgi</artifactId>
-            <version>${atlassian.plugins.version}</version>
+            <version>${plug.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
