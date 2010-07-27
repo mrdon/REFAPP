@@ -15,11 +15,8 @@ public class AuthenticationInitialization
 {
     private final Log log = LogFactory.getLog(getClass());
     
-    public AuthenticationInitialization(Authenticator authenticator, RoleMapper roleMapper, UserManager userManager, GroupManager groupManager)
+    public AuthenticationInitialization(UserManager userManager, GroupManager groupManager)
     {
-        StaticDelegatingAuthenticator.setAuthenticator(authenticator);
-        StaticDelegatingRoleMapper.setRoleMapper(roleMapper);
-        
         try
         {
             addUser(userManager, groupManager, "admin", "A. D. Ministrator", "admin@example.com", "admin", "users", "administrators");

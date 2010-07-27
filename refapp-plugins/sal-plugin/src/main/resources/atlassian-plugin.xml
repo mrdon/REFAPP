@@ -41,7 +41,7 @@
     <component-import key="groupManager" interface="com.atlassian.user.GroupManager" />
     <component-import key="authenticationContext" interface="com.atlassian.seraph.auth.AuthenticationContext" />
 
-    <component key="authController" class="com.atlassian.sal.core.auth.SeraphAuthenticationController" public="true">
+    <component key="authController" class="com.atlassian.refapp.sal.auth.RefappAuthenticationController" public="true">
         <interface>com.atlassian.sal.api.auth.AuthenticationController</interface>
     </component>
 

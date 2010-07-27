@@ -29,6 +29,8 @@ public class GroupRoleMapper implements RoleMapper
     {
         this.authenticator = authenticator;
         this.groupManager = groupManager;
+        StaticDelegatingAuthenticator.setAuthenticator(authenticator);
+        StaticDelegatingRoleMapper.setRoleMapper(this);
     }
     
     public void init(Map params, SecurityConfig config)
