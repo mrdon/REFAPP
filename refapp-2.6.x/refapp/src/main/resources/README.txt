@@ -1,0 +1,1 @@
+Make the maven source plugin happy

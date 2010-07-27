@@ -1,0 +1,11 @@
+## This macro renders all Web Panels for a particular location.
+## Make sure $webInterfaceManager is in the velocity context when calling this macro
+#macro (webpanels $location $context )
+<!-- Rendering webpanels for location: $location -->
+    #foreach($item in $webInterfaceManager.getDisplayableWebPanels($location, $context))
+        <div>
+            $item.getHtml($context)
+        </div>
+    #end
+<!-- Finished rendering webpanels for location: $location -->
+#end
