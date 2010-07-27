@@ -66,6 +66,7 @@
                         <!--log>${project.build.directory}/cargo-log.log</log-->
                         <systemProperties>
                             <baseurl>${baseurl}</baseurl>
+                            <baseurl.display>${baseurl}</baseurl.display>
                         </systemProperties>
                     </container>
                     <configuration>

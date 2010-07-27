@@ -23,6 +23,10 @@ public class InitListener implements ServletContextListener {
         ContainerManager.setInstance(new ContainerManager(sce.getServletContext()));
         ContainerManager mgr = ContainerManager.getInstance();
         mgr.getPluginAccessor().getPlugins();
+        if (System.getProperty("baseurl.display") != null)
+        {
+            Logger.getLogger(InitListener.class).info("\n\n*** Refapp started on " + System.getProperty("baseurl.display") + "\n\n");
+        }
     }
 
     public void contextDestroyed(ServletContextEvent sce) {

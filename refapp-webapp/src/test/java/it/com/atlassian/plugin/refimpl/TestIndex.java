@@ -1,19 +1,10 @@
 package it.com.atlassian.plugin.refimpl;
 
-import com.atlassian.plugin.refimpl.ParameterUtils;
-import com.atlassian.plugin.webresource.UrlMode;
-
-import net.sourceforge.jwebunit.junit.WebTestCase;
-
-public class TestIndex extends WebTestCase
+public class TestIndex extends AbstractRefappTestCase
 {
     public TestIndex(String name)
     {
         super(name);
-    }
-
-    public void setUp() throws Exception {
-        getTestContext().setBaseUrl(ParameterUtils.getBaseUrl(UrlMode.ABSOLUTE));
     }
 
     public void testIndex()

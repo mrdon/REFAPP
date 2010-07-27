@@ -44,7 +44,7 @@
                 <span class="accesskey">R</span>emember me
             </label>
 
-            <button id="login"
+            <button id="os_login"
                     name="login"
                     type="submit"
                     tabindex="4"
