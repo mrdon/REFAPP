@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+#* @vtlvariable name="esc" type="org.apache.velocity.tools.generic.EscapeTool" *#
+#* @vtlvariable name="redir" type="java.lang.String" *#
+#* @vtlvariable name="websudoURI" type="java.lang.String" *#
+#* @vtlvariable name="username" type="java.lang.String" *#
+<html>
+    <head>
+        <title>Authenticate</title>
+        <meta name="decorator" content="atl.general">
+    </head>
+    <body>
+        <form action="$esc.html($websudoURI)" method="POST">
+            <input name="redir" type="hidden" value="$!esc.html($redir)">
+
+            <label for="os_username">
+                <span class="accesskey">U</span>sername
+            </label>
+            <span id="os_username">$esc.html($username)</span>
+
+            <label for="os_password">
+                <span class="accesskey">P</span>assword
+            </label>
+            <input id="os_password"
+                   name="os_password"
+                   type="password"
+                   size="25"
+                   tabindex="2"
+                   accesskey="p"
+                   value="">
+
+            <button id="websudo"
+                    name="websudo"
+                    type="submit"
+                    tabindex="4"
+                    accesskey="a">
+                <span class="accesskey">A</span>uthenticate
+            </button>
+        </form>
+    </body>
+</html>

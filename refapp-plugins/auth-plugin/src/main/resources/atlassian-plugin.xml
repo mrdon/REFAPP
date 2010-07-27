@@ -13,6 +13,11 @@
     <component key="repositoryIdentifier" class="com.atlassian.refapp.auth.internal.AuthPluginRepositoryIdentifier">
         <interface>com.atlassian.user.repository.RepositoryIdentifier</interface>
     </component>
+
+    <component key="webSudoAuthenticator" class="com.atlassian.refapp.auth.DefaultWebSudoAuthenticator" public="true">
+        <interface>com.atlassian.refapp.auth.WebSudoAuthenticator</interface>
+    </component>
+
     <component key="memoryProvider" class="com.atlassian.user.impl.memory.provider.MemoryProvider" />
 
     <component key="passwordEncryptor" class="com.atlassian.user.impl.osuser.security.password.OSUPasswordEncryptor" public="true">
@@ -53,6 +58,10 @@
 
     <servlet key="login-servlet" class="com.atlassian.refapp.auth.internal.LoginServlet">
         <url-pattern>/login</url-pattern>
+    </servlet>
+
+    <servlet key="websudo-servlet" class="com.atlassian.refapp.auth.internal.WebSudoServlet">
+        <url-pattern>/websudo</url-pattern>
     </servlet>
 
     <servlet key="logout" class="com.atlassian.refapp.auth.internal.LogoutServlet">
