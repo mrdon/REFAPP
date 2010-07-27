@@ -201,6 +201,12 @@
             <artifactId>atlassian-plugins-main</artifactId>
             <version>${atlassian.plugins.version}</version>
             <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>org.apache.felix.framework</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
