@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+$webResourceManager.requireResource("com.atlassian.refapp.decorator:decorator-resources")
+$webResourceManager.requireResourcesForContext("atl.popup")
+<html>
+    <head>
+        #if ($title)<title>$titleHtml</title>#end
+        <link href="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/developer16.ico")" rel="shortcut icon"/>
+        <link href="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/developer16.png")" type="image/png" rel="icon"/>
+        $headHtml
+        $webResourceIncluder.includeResources()
+    </head>
+    <body>
+        <h1>
+                  <img src="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/atlassian.png")" alt="Atlassian"/>
+          RefApp
+        </h1>
+        $bodyHtml
+        <div class="refapp-footer" style="text-align:center">
+            <hr/>
+            Atlassian Plugins -
+            #set($items = $webInterfaceManager.getDisplayableItems("footer.links", $context))
+            #set($first = true)
+            #foreach($item in $items)
+              #if (!$first)|#end #set($first = false)
+              <a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $context)">$item.webLabel.getDisplayableLabel($request, $context)</a>
+            #end
+            #webpanels("footer.links", $context)
+        </div>
+    </body>
+</html>

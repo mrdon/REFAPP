@@ -1,0 +1,27 @@
+<html>
+<head>
+    <title>${!user.fullName}'s profile</title>
+    <meta name="decorator" content="atl.admin"/>
+</head>
+<body>
+
+<a href="../users">Back to users</a>
+<br>
+<table>
+<tr><th>Username:</th><td>$user.name</td></tr>
+<tr><th>Full Name:</th><td>$!user.fullName</td></tr>
+<tr><th>Email:</th><td>$!user.email</td></tr>
+</table>
+
+<br/><br/>
+
+<form method="POST" action="$user.name">
+<table>
+<tr><th>Password:</th><td><input type="password" name="password" value=""/></td></tr>
+<tr><th>Full Name:</th><td><input type="text" name="fullName" value="$!user.fullName"/></td></tr>
+<tr><th>Email:</th><td><input type="text" name="email" value="$!user.email"/></td></tr>
+</table>
+<input type="submit" value="Update User"/>
+</form>
+</body>
+</html>

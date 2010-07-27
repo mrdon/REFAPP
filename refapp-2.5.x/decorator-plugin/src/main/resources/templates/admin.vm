@@ -1,0 +1,10 @@
+<html>
+<head>
+  <title>RefApp Administration</title>
+  <meta name="decorator" content="atl.admin"/>
+</head>
+<body>
+  <p>This is the RefApp administration screen.  To add items to the admin menu, create a web item for
+  the location <tt>system.admin/general</tt>.  You can also create your own sections if you please.</p>
+</body>
+</html>
