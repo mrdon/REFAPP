@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.atlassian.refapp</groupId>
+        <artifactId>atlassian-refapp-parent</artifactId>
+        <version>2.6.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>atlassian-refapp-jquery-plugin</artifactId>
+    <name>Reference App JQuery Plugin</name>
+    <description>Plugin which provides jQuery as a web-resource</description>
+    <packaging>jar</packaging>
+    <properties>
+        <atlassian.plugin.key>com.jquery</atlassian.plugin.key>
+    </properties>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>atlassian-plugin.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+                <excludes>
+                    <exclude>atlassian-plugin.xml</exclude>
+                </excludes>
+            </resource>
+        </resources>
+    </build>
+</project>
