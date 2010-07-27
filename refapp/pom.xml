@@ -339,13 +339,13 @@
         <dependency>
             <groupId>com.atlassian.templaterenderer</groupId>
             <artifactId>atlassian-template-renderer-api</artifactId>
-            <version>${template.renderer.version}</version>
+            <version>${atr.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.templaterenderer</groupId>
             <artifactId>atlassian-template-renderer-velocity16-plugin</artifactId>
-            <version>${template.renderer.version}</version>
+            <version>${atr.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -363,7 +363,7 @@
         <dependency>
             <groupId>com.atlassian.plugins.rest</groupId>
             <artifactId>atlassian-rest-module</artifactId>
-            <version>${rest.module.version}</version>
+            <version>${rest.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
