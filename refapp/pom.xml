@@ -167,7 +167,7 @@
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
             <artifactId>atlassian-plugins-refimpl</artifactId>
-            <version>${atlassian.plugins.version}</version>
+            <version>${plug.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>
