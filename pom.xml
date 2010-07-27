@@ -230,12 +230,12 @@
             <dependency>
                 <groupId>com.atlassian.plugins</groupId>
                 <artifactId>atlassian-plugins-webresource</artifactId>
-                <version>${atlassian.plugins.version}</version>
+                <version>${plug.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.atlassian.plugins</groupId>
                 <artifactId>atlassian-plugins-webfragment</artifactId>
-                <version>${atlassian.plugins.version}</version>
+                <version>${plug.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.atlassian.sal</groupId>
@@ -263,7 +263,7 @@
 
     <properties>
         <jdkLevel>1.5</jdkLevel>
-        <atlassian.plugins.version>2.6.0-alpha3</atlassian.plugins.version>
+        <plug.version>2.6.0-alpha3</plug.version>
         <sal.version>2.1.0</sal.version>
         <atr.version>1.1.0.beta1</atr.version>
         <apl.version>3.0-fecrudev-r63214</apl.version>

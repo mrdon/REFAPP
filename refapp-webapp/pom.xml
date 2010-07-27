@@ -175,31 +175,31 @@
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
             <artifactId>atlassian-plugins-core</artifactId>
-            <version>${atlassian.plugins.version}</version>
+            <version>${plug.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
             <artifactId>atlassian-plugins-servlet</artifactId>
-            <version>${atlassian.plugins.version}</version>
+            <version>${plug.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
             <artifactId>atlassian-plugins-webfragment</artifactId>
-            <version>${atlassian.plugins.version}</version>
+            <version>${plug.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
             <artifactId>atlassian-plugins-webresource</artifactId>
-            <version>${atlassian.plugins.version}</version>
+            <version>${plug.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
             <artifactId>atlassian-plugins-main</artifactId>
-            <version>${atlassian.plugins.version}</version>
+            <version>${plug.version}</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
