@@ -1,7 +1,10 @@
 package com.atlassian.refapp.charlie;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.atlassian.plugin.web.WebInterfaceManager;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
+import com.atlassian.sal.api.websudo.WebSudoManager;
 import com.atlassian.templaterenderer.TemplateRenderer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,14 +15,26 @@ import java.util.*;
 
 public class CharlieAdminServlet extends CharlieServlet
 {
-    public CharlieAdminServlet(PluginSettingsFactory pluginSettingsFactory, TemplateRenderer templateRenderer, WebInterfaceManager webInterfaceManager)
+
+    private final WebSudoManager webSudoManager;
+
+    public CharlieAdminServlet(PluginSettingsFactory pluginSettingsFactory, TemplateRenderer templateRenderer,
+                               WebInterfaceManager webInterfaceManager, final WebSudoManager webSudoManager)
     {
         super(pluginSettingsFactory, templateRenderer, webInterfaceManager);
+        this.webSudoManager = checkNotNull(webSudoManager);
     }
 
-    @Override protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException
     {
+        if (!webSudoManager.canExecuteRequest(request))
+        {
+            webSudoManager.enforceWebSudoProtection(request, response);
+            return;
+        }
+
         final Map<String, Object> context = new HashMap<String, Object>();
         final String delete = request.getParameter("delete");
         if (delete == null)
@@ -41,9 +56,17 @@ public class CharlieAdminServlet extends CharlieServlet
         }
     }
 
-    @Override protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException
     {
+        if (!webSudoManager.canExecuteRequest(request))
+        {
+            // Instead of enforcing WebSudo protection this could log an error or throw an exception...
+            webSudoManager.enforceWebSudoProtection(request, response);
+            return;
+        }
+
         final String key = request.getParameter("key");
         final String name = request.getParameter("name");
         final List<String> charlies = getCharlies();
