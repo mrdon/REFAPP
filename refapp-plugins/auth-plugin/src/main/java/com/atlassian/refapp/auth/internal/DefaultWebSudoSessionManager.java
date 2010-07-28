@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.concurrent.TimeUnit;
 
-public final class DefaultWebSudoSessionManager implements WebSudoSessionManager
+public class DefaultWebSudoSessionManager implements WebSudoSessionManager
 {
     private static final long DEFAULT_EXPIRY_MILLIS = TimeUnit.MINUTES.toMillis(10);
     private static final String WEBSUDO_SESSION_KEY = DefaultWebSudoSessionManager.class.getName() + "-session";
