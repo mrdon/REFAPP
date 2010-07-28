@@ -32,10 +32,10 @@ public final class WebSudoServlet extends BaseVelocityServlet
     {
         response.setContentType("text/html;charset=UTF-8");
 
-        VelocityContext context = createDefaultVelocityContext();
+        final VelocityContext context = createDefaultVelocityContext();
         context.put("redir", request.getParameter("redir"));
 
-        Principal user = auth.getUser(request);
+        final Principal user = auth.getUser(request);
         if (user != null)
         {
             context.put("username", user.getName());
@@ -60,7 +60,7 @@ public final class WebSudoServlet extends BaseVelocityServlet
 
         try
         {
-            Principal user = auth.getUser(request);
+            final Principal user = auth.getUser(request);
             if (auth.login(request, response, user.getName(), request.getParameter("os_password")))
             {
                 webSudoSessionManager.createWebSudoSession(request);

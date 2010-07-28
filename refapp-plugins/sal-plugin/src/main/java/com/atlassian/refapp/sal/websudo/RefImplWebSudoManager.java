@@ -12,7 +12,7 @@ import java.net.URLEncoder;
 
 public final class RefImplWebSudoManager implements WebSudoManager
 {
-    public static final String WEBSUDO_PATH = "/plugins/servlet/websudo";
+    private static final String WEBSUDO_PATH = "/plugins/servlet/websudo";
 
     private final WebSudoSessionManager webSudoAuthenticator;
 

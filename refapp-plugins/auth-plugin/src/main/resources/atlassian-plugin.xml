@@ -14,7 +14,7 @@
         <interface>com.atlassian.user.repository.RepositoryIdentifier</interface>
     </component>
 
-    <component key="webSudoAuthenticator" class="com.atlassian.refapp.auth.internal.DefaultWebSudoSessionManager" public="true">
+    <component key="webSudoSessionManager" class="com.atlassian.refapp.auth.internal.DefaultWebSudoSessionManager" public="true">
         <interface>com.atlassian.refapp.auth.external.WebSudoSessionManager</interface>
     </component>
 
