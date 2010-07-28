@@ -2,7 +2,7 @@ package com.atlassian.refapp.auth.internal;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.atlassian.refapp.auth.WebSudoAuthenticator;
+import com.atlassian.refapp.auth.external.WebSudoSessionManager;
 import com.atlassian.seraph.auth.Authenticator;
 import com.atlassian.seraph.auth.AuthenticatorException;
 import org.apache.velocity.VelocityContext;
@@ -14,17 +14,17 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.Principal;
 
-public class WebSudoServlet extends BaseVelocityServlet
+public final class WebSudoServlet extends BaseVelocityServlet
 {
     private static final String LOGIN_PATH = "/plugins/servlet/login";
     private final Authenticator auth;
-    private final WebSudoAuthenticator webSudoAuthenticator;
+    private final WebSudoSessionManager webSudoSessionManager;
 
-    public WebSudoServlet(final Authenticator auth, final WebSudoAuthenticator webSudoAuthenticator)
+    public WebSudoServlet(final Authenticator auth, final WebSudoSessionManager webSudoSessionManager)
     {
         super();
         this.auth = checkNotNull(auth, "auth cannot be null");
-        this.webSudoAuthenticator = checkNotNull(webSudoAuthenticator, "webSudoAuthenticator cannot be null");
+        this.webSudoSessionManager = checkNotNull(webSudoSessionManager, "webSudoSessionManager cannot be null");
     }
 
     @Override
@@ -61,15 +61,20 @@ public class WebSudoServlet extends BaseVelocityServlet
         try
         {
             Principal user = auth.getUser(request);
-            auth.login(request, response, user.getName(), request.getParameter("os_password"));
-            webSudoAuthenticator.createWebSudoSession(request);
-            RedirectHelper.redirect(request, response);
+            if (auth.login(request, response, user.getName(), request.getParameter("os_password")))
+            {
+                webSudoSessionManager.createWebSudoSession(request);
+                RedirectHelper.redirect(request, response);
+            }
+            else
+            {
+                response.sendRedirect(request.getRequestURL().append("?redir=").append(request.getParameter("redir")).toString());
+            }
         } catch (AuthenticatorException ae)
         {
-            webSudoAuthenticator.removeWebSudoSession(request);
+            webSudoSessionManager.removeWebSudoSession(request);
             redirectToLogin(request, response);
         }
-
     }
 
     private void redirectToLogin(final HttpServletRequest request, final HttpServletResponse response) throws IOException

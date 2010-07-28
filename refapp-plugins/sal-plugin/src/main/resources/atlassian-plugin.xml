@@ -38,7 +38,7 @@
         <url-pattern>/</url-pattern>
     </servlet-filter>
 
-    <component-import key="webSudoAuthenticator" interface="com.atlassian.refapp.auth.WebSudoAuthenticator" />
+    <component-import key="webSudoAuthenticator" interface="com.atlassian.refapp.auth.external.WebSudoSessionManager" />
     <component-import key="roleMapper" interface="com.atlassian.seraph.auth.RoleMapper" />
     <component-import key="authenticator" interface="com.atlassian.user.security.authentication.Authenticator" />
     <component-import key="atlassianUserManager" interface="com.atlassian.user.UserManager" />

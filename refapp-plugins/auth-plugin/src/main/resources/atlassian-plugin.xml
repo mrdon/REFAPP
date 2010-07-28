@@ -5,7 +5,7 @@
         <vendor name="${pom.organization.name}" url="${pom.organization.url}" />
         <bundle-instructions>
             <Export-Package>
-                com.atlassian.user,com.atlassian.user.util,com.atlassian.user.security.authentication,
+                com.atlassian.refapp.auth.external,com.atlassian.user,com.atlassian.user.util,com.atlassian.user.security.authentication,
                 com.atlassian.seraph.auth,com.atlassian.seraph.config,com.atlassian.refapp.auth.web.conditions</Export-Package>
         </bundle-instructions>
     </plugin-info>
@@ -14,8 +14,8 @@
         <interface>com.atlassian.user.repository.RepositoryIdentifier</interface>
     </component>
 
-    <component key="webSudoAuthenticator" class="com.atlassian.refapp.auth.DefaultWebSudoAuthenticator" public="true">
-        <interface>com.atlassian.refapp.auth.WebSudoAuthenticator</interface>
+    <component key="webSudoAuthenticator" class="com.atlassian.refapp.auth.internal.DefaultWebSudoSessionManager" public="true">
+        <interface>com.atlassian.refapp.auth.external.WebSudoSessionManager</interface>
     </component>
 
     <component key="memoryProvider" class="com.atlassian.user.impl.memory.provider.MemoryProvider" />

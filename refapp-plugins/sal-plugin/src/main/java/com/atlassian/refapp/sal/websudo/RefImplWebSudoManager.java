@@ -2,7 +2,7 @@ package com.atlassian.refapp.sal.websudo;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.atlassian.refapp.auth.WebSudoAuthenticator;
+import com.atlassian.refapp.auth.external.WebSudoSessionManager;
 import com.atlassian.sal.api.websudo.WebSudoManager;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +14,9 @@ public final class RefImplWebSudoManager implements WebSudoManager
 {
     public static final String WEBSUDO_PATH = "/plugins/servlet/websudo";
 
-    private final WebSudoAuthenticator webSudoAuthenticator;
+    private final WebSudoSessionManager webSudoAuthenticator;
 
-    public RefImplWebSudoManager(final WebSudoAuthenticator webSudoAuthenticator)
+    public RefImplWebSudoManager(final WebSudoSessionManager webSudoAuthenticator)
     {
         this.webSudoAuthenticator = checkNotNull(webSudoAuthenticator);
     }
