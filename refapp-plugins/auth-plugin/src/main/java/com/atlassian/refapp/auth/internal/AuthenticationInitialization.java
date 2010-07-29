@@ -3,8 +3,6 @@ package com.atlassian.refapp.auth.internal;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.atlassian.seraph.auth.Authenticator;
-import com.atlassian.seraph.auth.RoleMapper;
 import com.atlassian.user.EntityException;
 import com.atlassian.user.Group;
 import com.atlassian.user.GroupManager;
@@ -19,9 +17,10 @@ public class AuthenticationInitialization
     {
         try
         {
-            addUser(userManager, groupManager, "admin", "A. D. Ministrator", "admin@example.com", "admin", "users", "administrators");
-            addUser(userManager, groupManager, "fred", "Fred Admin", "fred@example.org", "fred", "users", "administrators");
+            addUser(userManager, groupManager, "admin", "A. D. Ministrator (Sysadmin)", "admin@example.com", "admin", "users", "system_administrators");
+            addUser(userManager, groupManager, "fred", "Fred Sysadmin", "fred@example.org", "fred", "users", "system_administrators");
             addUser(userManager, groupManager, "barney", "Barney User", "barney@example.org", "barney", "users");
+            addUser(userManager, groupManager, "betty", "Betty Admin", "betty@example.org", "betty", "users", "administrators");
         }
         catch (EntityException e)
         {
