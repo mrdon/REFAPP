@@ -1,0 +1,145 @@
+<atlassian-plugin key="${atlassian.plugin.key}" name="${pom.name}" pluginsVersion="2">
+    <plugin-info>
+        <description>${pom.description}</description>
+        <version>${pom.version}</version>
+        <vendor name="${pom.organization.name}" url="${pom.organization.url}" />
+        <bundle-instructions>
+            <Export-Package>com.atlassian.refapp.trustedapps,com.atlassian.security.auth.trustedapps,com.atlassian.security.auth.trustedapps.request</Export-Package>
+        </bundle-instructions>
+    </plugin-info>
+    
+    <component-import key="pluginEventManager" interface="com.atlassian.plugin.event.PluginEventManager" />
+
+    <component key="key-factory" class="com.atlassian.refapp.trustedapps.internal.KeyFactory" />
+    <component key="encryption-provider" class="com.atlassian.security.auth.trustedapps.BouncyCastleEncryptionProvider" />
+    <component key="trusted-apps-manager" class="com.atlassian.refapp.trustedapps.internal.RefAppTrustedApplicationsManagerImpl" public="true">
+        <interface>com.atlassian.security.auth.trustedapps.TrustedApplicationsConfigurationManager</interface>
+        <interface>com.atlassian.security.auth.trustedapps.TrustedApplicationsManager</interface>
+    </component>
+    <component key="user-resolver" class="com.atlassian.refapp.trustedapps.internal.RefAppUserResolverImpl" public="true">
+        <interface>com.atlassian.security.auth.trustedapps.UserResolver</interface>
+    </component>
+    
+    <!-- sal services -->
+    <component name="Application Properties" key="applicationProperties" class="com.atlassian.refapp.sal.RefimplApplicationProperties"
+               system="true" public="true">
+        <interface>com.atlassian.sal.api.ApplicationProperties</interface>
+    </component>
+
+    <servlet-filter name="Servlet Context Thread Local Filter"
+                    key="servletContextThreadLocalFilter"
+                    class="com.atlassian.refapp.sal.ServletContextThreadLocalFilter"
+                    location="before-decoration"
+                    weight="1">
+        <description>Makes the servlet context, request, and response available through static methods.</description>
+        <url-pattern>/</url-pattern>
+    </servlet-filter>
+
+    <component-import key="roleMapper" interface="com.atlassian.seraph.auth.RoleMapper" />'
+    <component-import key="authenticator" interface="com.atlassian.user.security.authentication.Authenticator" />
+    <component-import key="atlassianUserManager" interface="com.atlassian.user.UserManager" />
+    <component-import key="groupManager" interface="com.atlassian.user.GroupManager" />
+    <component-import key="authenticationContext" interface="com.atlassian.seraph.auth.AuthenticationContext" />
+
+    <component key="authController" class="com.atlassian.refapp.sal.auth.RefappAuthenticationController" public="true">
+        <interface>com.atlassian.sal.api.auth.AuthenticationController</interface>
+    </component>
+
+    <component key="authListener" class="com.atlassian.sal.core.auth.SeraphAuthenticationListener" public="true">
+        <interface>com.atlassian.sal.api.auth.AuthenticationListener</interface>
+    </component>
+
+    <component key="loginUriProvider" class="com.atlassian.refapp.sal.auth.LoginUriProviderImpl" public="true">
+        <interface>com.atlassian.sal.api.auth.LoginUriProvider</interface>
+    </component>
+
+    <component key="componentLocator" name="component locator"
+               class="com.atlassian.refapp.sal.component.RefImplComponentLocator"
+               system="true" public="true">
+        <interface>com.atlassian.sal.api.component.ComponentLocator</interface>
+    </component>
+
+    <component name="Refimpl Thread Local Delegate Executor Factory" key="refimplThreadLocalDelegateExecutorFactory"
+               class="com.atlassian.refapp.sal.executor.RefimplThreadLocalDelegateExecutorFactory" system="true"
+               public="true" >
+        <interface>com.atlassian.sal.api.executor.ThreadLocalDelegateExecutorFactory</interface>
+    </component>
+
+    <component name="License Handler" key="licenseHandler"
+               class="com.atlassian.refapp.sal.license.RefimplLicenseHandler" system="true" public="true">
+        <interface>com.atlassian.sal.api.license.LicenseHandler</interface>
+    </component>
+
+    <component key="i18nResolver" name="I18n Resolver"
+               class="com.atlassian.refapp.sal.message.RefimplI18nResolver"
+               system="true" public="true">
+        <interface>com.atlassian.sal.api.message.I18nResolver</interface>
+    </component>
+    <component key="localeResolver" name="Locale Resolver"
+               class="com.atlassian.refapp.sal.message.RefimplLocaleResolver"
+               system="true" public="true">
+        <interface>com.atlassian.sal.api.message.LocaleResolver</interface>
+    </component>
+
+    <component key="resourceBundleResolver" name="Resource Bundle Resolver"
+               class="com.atlassian.refapp.sal.message.ResourceBundleResolverImpl">
+        <interface>com.atlassian.refapp.sal.message.ResourceBundleResolver</interface>
+    </component>
+
+    <component name="Non-Marshalling Request Factory" key="requestFactory"
+               class="com.atlassian.sal.core.net.HttpClientRequestFactory" system="true" public="true">
+        <interface>com.atlassian.sal.api.net.NonMarshallingRequestFactory</interface>
+    </component>
+    <component name="Refimpl Certificate Factory" key="certificateFactory"
+               class="com.atlassian.refapp.sal.net.RefImplCertificateFactory" system="true">
+        <interface>com.atlassian.sal.core.trusted.CertificateFactory</interface>
+    </component>
+
+    <component key="pluginSettingsFactory" name="Plugin settings factory"
+               class="com.atlassian.refapp.sal.pluginsettings.RefimplPluginSettingsFactory"
+               system="true" public="true">
+        <interface>com.atlassian.sal.api.pluginsettings.PluginSettingsFactory</interface>
+    </component>
+
+    <component name="Refimpl Project Manager" key="RefimplProjectManager"
+               class="com.atlassian.refapp.sal.project.RefimplProjectManager" system="true" public="true">
+        <interface>com.atlassian.sal.api.project.ProjectManager</interface>
+    </component>
+
+    <component key="pluginScheduler" class="com.atlassian.sal.core.scheduling.TimerPluginScheduler" public="true" >
+        <interface>com.atlassian.sal.api.scheduling.PluginScheduler</interface>
+    </component>
+
+    <component name="Refimpl Search Provider" key="RefimplSearchProvider"
+               class="com.atlassian.refapp.sal.search.RefimplSearchProvider" system="true" public="true">
+        <interface>com.atlassian.sal.api.search.SearchProvider</interface>
+    </component>
+    <component name="Search Query Parser" key="searchQueryParser"
+            class="com.atlassian.refapp.sal.search.query.DefaultSearchQueryParser" system="true" public="true">
+        <interface>com.atlassian.sal.api.search.query.SearchQueryParser</interface>
+    </component>
+
+    <component name="NoOp Transaction Template" key="noopTransactionTemplate"
+               class="com.atlassian.sal.core.transaction.HostContextTransactionTemplate" system="true" public="true">
+        <interface>com.atlassian.sal.api.transaction.TransactionTemplate</interface>
+    </component>
+
+    <component name="Refimpl Host Context Accessor" key="hostContextAccessor"
+               class="com.atlassian.refapp.sal.RefimplHostContextAccessor" public="true" system="true">
+        <interface>com.atlassian.sal.spi.HostContextAccessor</interface>
+    </component>
+
+    <component key="pluginUpgradeManager" name="pluginUpgradeManager"
+               class="com.atlassian.refapp.sal.upgrade.RefImplPluginUpgradeManager"
+               system="true" public="true">
+        <interface>com.atlassian.sal.api.upgrade.PluginUpgradeManager</interface>
+        <interface>com.atlassian.sal.api.lifecycle.LifecycleAware</interface>
+    </component>
+
+    <component key="salUserManager" name="User Manager"
+               class="com.atlassian.refapp.sal.user.RefImplUserManager"
+               system="true" public="true">
+        <interface>com.atlassian.sal.api.user.UserManager</interface>
+    </component>
+
+</atlassian-plugin>

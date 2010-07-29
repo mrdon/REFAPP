@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+
+#* @vtlvariable name="webInterfaceManager" type="com.atlassian.plugin.web.WebInterfaceManager" *#
+#parse ("templates/webpanel.vm")
+
+$webResourceManager.requireResource("com.atlassian.refapp.decorator:decorator-resources")
+$webResourceManager.requireResourcesForContext("atl.admin")
+<html>
+    <head>
+        <title>#if ($titleHtml)$titleHtml#else Welcome!#end</title>
+        <link href="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/developer16.ico")" rel="shortcut icon"/>
+        <link href="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/developer16.png")" type="image/png" rel="icon"/>
+        $headHtml
+        $webResourceIncluder.includeResources()
+    </head>
+    <body>
+        <ul class="header-links">
+        #foreach($item in $webInterfaceManager.getDisplayableItems("header.links", $context))
+          <li><a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $context)">$item.webLabel.getDisplayableLabel($request, $context)</a></li>
+        #end
+        </ul>
+
+        <h1>
+		  <img src="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/atlassian.png")" alt="Atlassian"/>
+          RefApp Administration
+        </h1>
+        <ul class="admin-menu">
+        #foreach($section in $webInterfaceManager.getDisplayableSections("system.admin", $context))
+          <li class="admin-menu-section">
+            <ul>
+              <li class="admin-menu-section-heading">$section.webLabel.getDisplayableLabel($request, $context)</li>
+            #foreach($item in $webInterfaceManager.getDisplayableItems("system.admin/$section.key", $context))
+              <li><a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $context)">$item.webLabel.getDisplayableLabel($request, $context)</a></li>
+            #end
+            </ul>
+          </li>
+        #end
+        </ul>
+        <div class="refapp-body">
+        $bodyHtml
+        </div>
+
+        <div class="refapp-body">
+            Below is a Web Panel section. To include your Web Panel, use <tt>location="atl.admin.body"</tt>:
+            #webpanels("atl.admin.body", $context)
+        </div>
+        
+        <div class="refapp-footer" style="text-align:center">
+            <hr/>
+            Atlassian Plugins -
+            #set($panels = $webInterfaceManager.getDisplayableItems("footer.links", $context))
+            #set($first = true)
+            #foreach($item in $panels)
+              #if (!$first)|#end #set($first = false)
+              <a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $context)">$item.webLabel.getDisplayableLabel($request, $context)</a>
+            #end
+            #webpanels("footer.links", $context)
+        </div>
+    </body>
+</html>
