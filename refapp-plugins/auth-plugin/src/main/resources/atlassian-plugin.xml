@@ -90,7 +90,7 @@
         <label key="com.atlassian.refapp.auth.user">
             <param name="param0">$userHelper.remoteUser.fullName</param>
         </label>
-        <link linkId="administration">/plugins/servlet/users/$userHelper.remoteUser.name</link>
+        <link linkId="user">/plugins/servlet/users/$userHelper.remoteUser.name</link>
         <condition class="com.atlassian.refapp.auth.web.conditions.UserIsLoggedInCondition"/>
     </web-item>
 
