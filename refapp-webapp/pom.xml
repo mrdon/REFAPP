@@ -155,6 +155,11 @@
             <artifactId>atlassian-extras</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.atlassian.sal</groupId>
+            <artifactId>sal-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>com.atlassian.applinks</groupId>
             <artifactId>applinks-api</artifactId>
             <version>${apl.version}</version>
