@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 public class DefaultWebSudoSessionManager implements WebSudoSessionManager
 {
-    private static final long DEFAULT_EXPIRY_MILLIS = TimeUnit.MINUTES.toMillis(10);
+    private static final long DEFAULT_EXPIRY_MILLIS = TimeUnit.SECONDS.toMillis(10*60); //   TimeUnit.MINUTES requires Java 6
     private static final String WEBSUDO_SESSION_KEY = DefaultWebSudoSessionManager.class.getName() + "-session";
 
     public boolean isWebSudoSession(final HttpServletRequest request)
