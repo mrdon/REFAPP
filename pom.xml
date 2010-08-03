@@ -268,7 +268,7 @@
         <atr.version>1.1.1</atr.version>
         <apl.version>3.0-fecrudev-r63214</apl.version>
         <oauth.version>1.0.13.beta3</oauth.version>
-        <rest.version>2.1.1</rest.version>
+        <rest.version>2.1.0</rest.version>
         <ajs.version>3.0.6</ajs.version>
         <google.collections.version>1.0</google.collections.version>
     </properties>
