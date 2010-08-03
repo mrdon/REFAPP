@@ -76,7 +76,7 @@ public class DefaultWebSudoSessionManagerTest
             @Override
             long currentTimeMillis()
             {
-                return CURRENT_MILLIS + TimeUnit.MINUTES.toMillis(12);
+                return CURRENT_MILLIS + TimeUnit.SECONDS.toMillis(12*60);
             }
         };
         when(session.getAttribute(SESS_KEY)).thenReturn(CURRENT_MILLIS);
