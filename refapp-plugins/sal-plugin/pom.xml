@@ -76,7 +76,12 @@
             <artifactId>sal-spi</artifactId>
             <version>${sal.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.atlassian.refapp</groupId>
+            <artifactId>atlassian-refapp-auth-plugin</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>com.atlassian.user</groupId>
             <artifactId>atlassian-user</artifactId>

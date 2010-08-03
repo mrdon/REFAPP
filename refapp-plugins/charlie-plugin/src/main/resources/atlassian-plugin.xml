@@ -9,6 +9,10 @@
         <interface>com.atlassian.plugin.web.WebInterfaceManager</interface>
     </component-import>
 
+    <component-import key="salWebSudoManager">
+        <interface>com.atlassian.sal.api.websudo.WebSudoManager</interface>
+    </component-import>
+
     <component-import key="pluginSettingsFactory">
         <interface>com.atlassian.sal.api.pluginsettings.PluginSettingsFactory</interface>
     </component-import>

@@ -5,7 +5,7 @@
         <vendor name="${pom.organization.name}" url="${pom.organization.url}" />
         <bundle-instructions>
             <Export-Package>
-                com.atlassian.user,com.atlassian.user.util,com.atlassian.user.security.authentication,
+                com.atlassian.refapp.auth.external,com.atlassian.user,com.atlassian.user.util,com.atlassian.user.security.authentication,
                 com.atlassian.seraph.auth,com.atlassian.seraph.config,com.atlassian.refapp.auth.web.conditions</Export-Package>
         </bundle-instructions>
     </plugin-info>
@@ -13,6 +13,11 @@
     <component key="repositoryIdentifier" class="com.atlassian.refapp.auth.internal.AuthPluginRepositoryIdentifier">
         <interface>com.atlassian.user.repository.RepositoryIdentifier</interface>
     </component>
+
+    <component key="webSudoSessionManager" class="com.atlassian.refapp.auth.internal.DefaultWebSudoSessionManager" public="true">
+        <interface>com.atlassian.refapp.auth.external.WebSudoSessionManager</interface>
+    </component>
+
     <component key="memoryProvider" class="com.atlassian.user.impl.memory.provider.MemoryProvider" />
 
     <component key="passwordEncryptor" class="com.atlassian.user.impl.osuser.security.password.OSUPasswordEncryptor" public="true">
@@ -53,6 +58,10 @@
 
     <servlet key="login-servlet" class="com.atlassian.refapp.auth.internal.LoginServlet">
         <url-pattern>/login</url-pattern>
+    </servlet>
+
+    <servlet key="websudo-servlet" class="com.atlassian.refapp.auth.internal.WebSudoServlet">
+        <url-pattern>/websudo</url-pattern>
     </servlet>
 
     <servlet key="logout" class="com.atlassian.refapp.auth.internal.LogoutServlet">

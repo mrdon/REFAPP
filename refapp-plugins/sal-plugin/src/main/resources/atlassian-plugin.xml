@@ -12,6 +12,9 @@
 
     <component key="key-factory" class="com.atlassian.refapp.trustedapps.internal.KeyFactory" />
     <component key="encryption-provider" class="com.atlassian.security.auth.trustedapps.BouncyCastleEncryptionProvider" />
+    <component key="salWebSudoManager" class="com.atlassian.refapp.sal.websudo.RefImplWebSudoManager" public="true">
+        <interface>com.atlassian.sal.api.websudo.WebSudoManager</interface>    
+    </component>
     <component key="trusted-apps-manager" class="com.atlassian.refapp.trustedapps.internal.RefAppTrustedApplicationsManagerImpl" public="true">
         <interface>com.atlassian.security.auth.trustedapps.TrustedApplicationsConfigurationManager</interface>
         <interface>com.atlassian.security.auth.trustedapps.TrustedApplicationsManager</interface>
@@ -35,7 +38,8 @@
         <url-pattern>/</url-pattern>
     </servlet-filter>
 
-    <component-import key="roleMapper" interface="com.atlassian.seraph.auth.RoleMapper" />'
+    <component-import key="webSudoSessionManager" interface="com.atlassian.refapp.auth.external.WebSudoSessionManager" />
+    <component-import key="roleMapper" interface="com.atlassian.seraph.auth.RoleMapper" />
     <component-import key="authenticator" interface="com.atlassian.user.security.authentication.Authenticator" />
     <component-import key="atlassianUserManager" interface="com.atlassian.user.UserManager" />
     <component-import key="groupManager" interface="com.atlassian.user.GroupManager" />

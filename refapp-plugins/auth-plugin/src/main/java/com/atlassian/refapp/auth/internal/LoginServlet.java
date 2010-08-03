@@ -19,36 +19,14 @@ import org.apache.velocity.tools.generic.EscapeTool;
 
 import com.atlassian.seraph.auth.Authenticator;
 
-public class LoginServlet extends HttpServlet
+public class    LoginServlet extends BaseVelocityServlet
 {
-    // JavaDocs say this is threadsafe & stateless, so might as well share an instance
-    // http://velocity.apache.org/tools/releases/1.3/javadoc/org/apache/velocity/tools/generic/EscapeTool.html
-    private static final EscapeTool ESCAPE_TOOL = new EscapeTool();
-
     private final Authenticator auth;
-    private final VelocityEngine velocity;
 
     public LoginServlet(Authenticator auth)
     {
+        super();
         this.auth = auth;
-        velocity = new VelocityEngine();
-        velocity.addProperty(Velocity.RUNTIME_LOG_LOGSYSTEM_CLASS, JdkLogChute.class.getName());
-        velocity.addProperty(Velocity.RESOURCE_LOADER, "classpath");
-        velocity.addProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-    }
-    
-    
-    @Override
-    public void init(ServletConfig config) throws ServletException
-    {
-        try
-        {
-            velocity.init();
-        }
-        catch (Exception e)
-        {
-            throw new ServletException(e);
-        }
     }
 
     @Override
@@ -56,8 +34,7 @@ public class LoginServlet extends HttpServlet
     {
         response.setContentType("text/html;charset=UTF-8");
 
-        VelocityContext context = new VelocityContext();
-        context.put("esc", ESCAPE_TOOL);
+        VelocityContext context = createDefaultVelocityContext();
         context.put("redir", getContextRelativeRequestURL(request));
 
         Principal user = auth.getUser(request);
@@ -99,17 +76,5 @@ public class LoginServlet extends HttpServlet
             redir.append('?').append(query);
         }
         return redir.toString();
-    }
-
-    private Template getTemplate(String templateName) throws ServletException
-    {
-        try
-        {
-            return velocity.getTemplate(templateName);
-        }
-        catch (Exception e)
-        {
-            throw new ServletException(e);
-        }
     }
 }
