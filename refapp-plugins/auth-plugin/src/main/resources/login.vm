@@ -44,6 +44,17 @@
                 <span class="accesskey">R</span>emember me
             </label>
 
+            <input id="os_websudo_id"
+                   name="os_websudo"
+                   type="checkbox"
+                   tabindex="3"
+                   accesskey="w"
+                   checked="checked"
+                   value="true">
+            <label for="os_websudo_id">
+                No <span class="accesskey">w</span>eb sudo
+            </label>
+
             <button id="os_login"
                     name="login"
                     type="submit"

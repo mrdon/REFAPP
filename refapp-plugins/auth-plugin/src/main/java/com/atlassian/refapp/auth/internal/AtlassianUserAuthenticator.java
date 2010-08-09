@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.atlassian.refapp.auth.external.WebSudoSessionManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -46,16 +47,18 @@ public class AtlassianUserAuthenticator extends AbstractAuthenticator
 
     private final UserManager userManager;
     private final Authenticator authenticator;
+    private final WebSudoSessionManager websudoManager;
 
     private String loginCookieKey;
     private String authType;
     private int autoLoginCookieAge;
     private String loginCookiePath;
 
-    public AtlassianUserAuthenticator(UserManager userManager, Authenticator authenticator)
+    public AtlassianUserAuthenticator(UserManager userManager, Authenticator authenticator, WebSudoSessionManager websudoManager)
     {
         this.userManager = userManager;
         this.authenticator = authenticator;
+        this.websudoManager = websudoManager;
     }
     
     public void init(Map params, SecurityConfig config)
@@ -103,6 +106,10 @@ public class AtlassianUserAuthenticator extends AbstractAuthenticator
             Principal user = getUser(username);
             request.getSession().setAttribute(LOGGED_IN_KEY, user);
             request.getSession().setAttribute(LOGGED_OUT_KEY, null);
+            if (request.getParameter("os_websudo_id") != null)
+            {
+                websudoManager.createWebSudoSession(request);
+            }
 
             final boolean canLogin = getRoleMapper().canLogin(user, request);
             if (dbg)

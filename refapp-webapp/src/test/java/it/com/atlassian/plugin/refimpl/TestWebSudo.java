@@ -52,6 +52,7 @@ public class TestWebSudo extends AbstractRefappTestCase
         assertTextPresent("Username");
         setTextField("os_username", user);
         setTextField("os_password", password);
+        uncheckCheckbox("os_websudo");
         clickButton("os_login");
         assertTextPresent("admin");
         assertButtonPresent("logout");
