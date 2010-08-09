@@ -17,7 +17,7 @@ public class TestWebSudo extends AbstractRefappTestCase
 
         // Redirect to the WebSudo form
         gotoPage("/plugins/servlet/charlieadmin");
-        
+
         assertTextPresent("You have requested access to an administrative function");
 
         // Authenticate
@@ -25,6 +25,16 @@ public class TestWebSudo extends AbstractRefappTestCase
         clickButton("websudo");
 
         // Redirect to the charlie admin screen
+        assertTextPresent("Charlies Administration");
+    }
+
+    public void testWebSudoBypass()
+    {
+        loginAs(TEST_USER, TEST_PASS, true);
+
+        // Redirect to the WebSudo form
+        gotoPage("/plugins/servlet/charlieadmin");
+        
         assertTextPresent("Charlies Administration");
     }
 
@@ -46,13 +56,25 @@ public class TestWebSudo extends AbstractRefappTestCase
 
     private void loginAs(final String user, final String password)
     {
+        loginAs(user, password, false);
+    }
+    private void loginAs(final String user, final String password, boolean bypassWebsudo)
+    {
         beginAt("/"); // Starts a new session
         assertLinkPresentWithText("Login");
         clickLinkWithExactText("Login");
         assertTextPresent("Username");
         setTextField("os_username", user);
         setTextField("os_password", password);
-        uncheckCheckbox("os_websudo");
+        if (bypassWebsudo)
+        {
+            uncheckCheckbox("os_websudo");
+        }
+        else
+        {
+            checkCheckbox("os_websudo");
+        }
+
         clickButton("os_login");
         assertTextPresent("admin");
         assertButtonPresent("logout");
