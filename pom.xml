@@ -54,6 +54,19 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
         </profile>
+        <profile>
+            <id>platform-projects</id>
+            <build>
+                <defaultGoal>verify</defaultGoal>
+            </build>
+            <modules>
+               <module>platform-projects</module>
+            </modules>
+            <properties>
+                <refapp.version>${project.version}</refapp.version>
+            </properties>
+        </profile>
+
     </profiles>
 
     <dependencyManagement>
