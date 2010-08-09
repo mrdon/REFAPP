@@ -24,6 +24,7 @@
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp</artifactId>
             <version>${project.version}</version>
+            <type>war</type>
         </dependency>
     </dependencies>
    
