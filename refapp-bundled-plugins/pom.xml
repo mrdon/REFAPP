@@ -66,6 +66,12 @@
         </dependency>
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
+            <artifactId>atlassian-refapp-applinks-plugin</artifactId>
+            <version>${pom.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-auth-plugin</artifactId>
             <version>${pom.version}</version>
             <scope>provided</scope>
