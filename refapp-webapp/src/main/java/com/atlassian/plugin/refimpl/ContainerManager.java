@@ -159,7 +159,6 @@ public class ContainerManager
 
         publicContainer = new HashMap<Class<?>, Object>();
         publicContainer.put(PluginController.class, plugins.getPluginController());
-        publicContainer.put(PluginAccessor.class, pluginAccessor);
 
         // TODO: should re-use event publisher from plugin event manager
         publicContainer.put(EventPublisher.class, createEventPublisher());
