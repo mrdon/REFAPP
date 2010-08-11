@@ -40,15 +40,15 @@ public class TestRefimplPluginSettingsFactory extends TestCase
         assertEquals("bar", factory.createGlobalSettings().get("foo"));
     }
 
-    public void testFilePersistenceWithNewlinesAndPipes()
+    public void testFilePersistenceWithSpecialCharacters()
     {
         ApplicationProperties props = Mockito.mock(ApplicationProperties.class);
         Mockito.when(props.getHomeDirectory()).thenReturn(tmpDir);
         RefimplPluginSettingsFactory factory = new RefimplPluginSettingsFactory(props);
         RefimplPluginSettings settings = (RefimplPluginSettings) factory.createGlobalSettings();
-        settings.put("foo", "bar\n|baz");
+        settings.put("foo", "bar\n|b\faz><&");
 
         factory = new RefimplPluginSettingsFactory(props);
-        assertEquals("bar\n|baz", factory.createGlobalSettings().get("foo"));
+        assertEquals("bar\n|b\faz><&", factory.createGlobalSettings().get("foo"));
     }
 }

@@ -14,12 +14,12 @@ public class RefimplPluginSettings extends AbstractStringPluginSettings
 
     protected void putActual(String key, String val)
     {
-        map.put(key, val);
+        map.put(key, XmlUtils.escape(val));
     }
 
     protected String getActual(String key)
     {
-        return map.get(key);
+        return XmlUtils.unescape(map.get(key));
     }
 
     protected void removeActual(String key)
