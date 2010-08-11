@@ -24,78 +24,48 @@ public class RefimplPluginSettingsFactory implements PluginSettingsFactory
 
     private static final Logger log = Logger.getLogger(RefimplPluginSettingsFactory.class);
     private final Properties properties;
-    private File pluginSettingsFile;
-    private boolean useMemoryStore = false;
+    private final File file;
 
     public RefimplPluginSettingsFactory(ApplicationProperties applicationProperties)
     {
+        // Maintain backwards compatibility, check the old locations
+        File file = new File(System.getProperty("sal.com.atlassian.refapp.sal.pluginsettings.store", "com.atlassian.refapp.sal.pluginsettings.xml"));
+        boolean useMemoryStore = Boolean.valueOf(System.getProperty("sal.com.atlassian.refapp.sal.pluginsettings.usememorystore", "false"));
         properties = new Properties();
-
-        // Check if the memory store is to be used instead of setting file.
-        useMemoryStore = Boolean.valueOf(System.getProperty("sal.com.atlassian.refapp.sal.pluginsettings.usememorystore", "false"));
-
         if (useMemoryStore)
         {
-            pluginSettingsFile = null;
             log.info("Using memory store for plugin settings");
+            file = null;
         }
-        // now try to read the pluginSettings file.
-        else
+        else if (!file.exists() || !file.canRead())
         {
-            // Maintain backwards compatibility, check the old location.
-            File oldLocationFile = new File(System.getProperty("sal.com.atlassian.refapp.sal.pluginsettings.store", "com.atlassian.refapp.sal.pluginsettings.xml"));
-
-            // Fallback to the standard mechanism if there's a problem with the old location.
-            if (!oldLocationFile.exists() || !oldLocationFile.canRead())
+            // Use refapp home directory
+            File dataDir = new File(applicationProperties.getHomeDirectory(), "data");
+            try
             {
-                // Use refapp home directory
-                File dataDir = new File(applicationProperties.getHomeDirectory(), "data");
-                try
+                if (!dataDir.exists())
                 {
-                    // create the data dir if one doesn't exist.
-                    if (!dataDir.exists())
-                    {
-                        dataDir.mkdirs();
-                    }
-
-                    // look for the plugin setting file in new location.
-                    File newLocationFile = new File(dataDir, "com.atlassian.refapp.sal.pluginsettings.xml");
-
-                    // if it doesn't exist, we create a new one.
-                    if (!newLocationFile.exists())
-                    {
-                        newLocationFile.createNewFile();
-                    }
-
-                    // point the setting file to the new location file.
-                    pluginSettingsFile = newLocationFile;
+                    dataDir.mkdirs();
                 }
-                catch (IOException ioe)
-                {
-                    useMemoryStore = true;
-                    log.error("Error creating plugin settings properties, fallback to memory store", ioe);
-                    return;
-                }
+                file = new File(dataDir, "com.atlassian.refapp.sal.pluginsettings.xml");
+                file.createNewFile();
             }
-            else
+            catch (IOException ioe)
             {
-                // point the setting file to the old one.
-                pluginSettingsFile = oldLocationFile;
-                log.warn("Reading plugin settings from the old location. Please upgrade this to the new configuration layout.");
-            }
-
-            // now load the setting file if it's not empty.
-            if (pluginSettingsFile.length() > 0)
-            {
-                // even at this stage, the file might be readable but corrupted.
-                pluginSettingsFile = load(pluginSettingsFile);
-
-                if (pluginSettingsFile != null)
-                {
-                    log.info("Using " + pluginSettingsFile.getAbsolutePath() + " as plugin settings store");
-                }
+                log.error("Error creating plugin settings properties, using memory store", ioe);
+                file = null;
             }
         }
+        if (file != null && file.length() > 0)
+        {
+            file = load(file);
+        }
+        if (file != null)
+        {
+            // File is a new file
+            log.info("Using " + file.getAbsolutePath() + " as plugin settings store");
+        }
+        this.file = file;
     }
 
     private File load(File file)
@@ -149,20 +119,15 @@ public class RefimplPluginSettingsFactory implements PluginSettingsFactory
     @SuppressWarnings("AccessToStaticFieldLockedOnInstance")
     private synchronized void store()
     {
-        if (useMemoryStore)
+        if (file == null || !file.canWrite())
         {
-            // No need to store anything to disk.
+            // Read only settings
             return;
         }
-        else if (!pluginSettingsFile.canWrite())
-        {
-            log.error("Cannot store settings into file.");
-        }
-
         OutputStream os = null;
         try
         {
-            os = new FileOutputStream(pluginSettingsFile);
+            os = new FileOutputStream(file);
             properties.storeToXML(os, "SAL Reference Implementation plugin settings");
         }
         catch (IOException ioe)
