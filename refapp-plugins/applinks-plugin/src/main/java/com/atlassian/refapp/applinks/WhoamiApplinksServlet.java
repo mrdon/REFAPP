@@ -2,13 +2,13 @@ package com.atlassian.refapp.applinks;
 
 import com.atlassian.applinks.api.ApplicationLink;
 import com.atlassian.applinks.api.ApplicationLinkRequestFactory;
+import com.atlassian.applinks.api.ApplicationLinkResponseHandler;
 import com.atlassian.applinks.api.ApplicationLinkService;
 import com.atlassian.applinks.api.CredentialsRequiredException;
 import com.atlassian.plugin.webresource.WebResourceManager;
 import com.atlassian.sal.api.net.Request;
 import com.atlassian.sal.api.net.Response;
 import com.atlassian.sal.api.net.ResponseException;
-import com.atlassian.sal.api.net.ResponseHandler;
 import com.atlassian.templaterenderer.TemplateRenderer;
 import com.google.common.collect.ImmutableMap;
 
@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class WhoamiApplinksServlet extends HttpServlet
 {
@@ -59,14 +58,14 @@ public class WhoamiApplinksServlet extends HttpServlet
     private AuthenticationInformation getAuthenticationInformation(final HttpServletRequest request, final ApplicationLink link)
     {
         final ApplicationLinkRequestFactory requestFactory = link.createAuthenticatedRequestFactory();
-        final AtomicReference<String> username = new AtomicReference<String>();
-        final AtomicReference<AuthenticationStatus> status = new AtomicReference<AuthenticationStatus>(AuthenticationStatus.COMMUNICATION_ERROR);
-        final AtomicReference<String> errorMessage = new AtomicReference<String>();
+        final Holder<String> username = new Holder<String>();
+        final Holder<AuthenticationStatus> status = new Holder<AuthenticationStatus>(AuthenticationStatus.COMMUNICATION_ERROR);
+        final Holder<String> errorMessage = new Holder<String>();
         try
         {
             requestFactory
                     .createRequest(Request.MethodType.GET, ENDPOINT)
-                    .execute(new ResponseHandler()
+                    .execute(new ApplicationLinkResponseHandler()
                     {
                         public void handle(final Response response) throws ResponseException
                         {
@@ -88,6 +87,11 @@ public class WhoamiApplinksServlet extends HttpServlet
                                 status.set(AuthenticationStatus.COMMUNICATION_ERROR);
                                 errorMessage.set(String.format("%s: %s", response.getStatusCode(), response.getStatusText()));
                             }
+                        }
+
+                        public void credentialsRequired(final Response response) throws ResponseException
+                        {
+                            status.set(AuthenticationStatus.CREDENTIALS_REQUIRED);
                         }
                     });
 
@@ -172,5 +176,33 @@ public class WhoamiApplinksServlet extends HttpServlet
         CREDENTIALS_REQUIRED,
         COMMUNICATION_ERROR,
         ANONYMOUS
+    }
+
+    /**
+     * Generic holder class
+     */
+    private static class Holder<T>
+    {
+        private T value;
+
+        public Holder()
+        {
+            value = null;
+        }
+
+        public void set(final T value)
+        {
+            this.value = value;
+        }
+
+        public T get()
+        {
+            return value;
+        }
+
+        public Holder(final T value)
+        {
+            this.value = value;
+        }
     }
 }
