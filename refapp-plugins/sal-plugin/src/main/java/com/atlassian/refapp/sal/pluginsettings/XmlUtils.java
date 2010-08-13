@@ -54,32 +54,23 @@ public class XmlUtils {
         {
             return null;
         }
-        else
+
+        // working buffer.
+        StringBuilder copy = new StringBuilder();
+
+        // just consider every char for a chance of escaping.
+        for (int i = 0; i < string.length(); i++)
         {
-            // the conversion buffer.
-            final StringBuilder copy = new StringBuilder();
-
-            copy.setLength(0);
-            boolean copied = false;
-
-            for (int i = 0; i < string.length(); i++) {
-
-                char c = string.charAt(i);
-                String s = charToCode.get(c);
-                if (s != null && !copied) {
-                    copy.append(string.substring(0, i));
-                    copied = true;
-                }
-                if (copied) {
-                    if (s == null) {
-                        copy.append(c);
-                    } else {
-                        copy.append(s);
-                    }
-                }
-            }
-            return copied ? copy.toString() : string;
+            copy.append(escapeChar(string.charAt(i)));
         }
+        return copy.toString();
+    }
+
+    private static String escapeChar(char c)
+    {
+        String escaped = charToCode.get(c);
+        // escape the char if its escape sequence is defined.
+        return escaped == null ? String.valueOf(c):escaped;
     }
 
     /**
