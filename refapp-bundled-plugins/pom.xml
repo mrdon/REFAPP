@@ -53,6 +53,18 @@
         </plugins>
     </build>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>atlassian-platform-plugins</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <!--
             These are plugins that we want to install in the refimpl container.  They're marked as scope provided so the
@@ -67,55 +79,55 @@
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-applinks-plugin</artifactId>
-            <version>${pom.version}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-auth-plugin</artifactId>
-            <version>${pom.version}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-trusted-apps-plugin</artifactId>
-            <version>${pom.version}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-trusted-apps-client-plugin</artifactId>
-            <version>${pom.version}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-cache-plugin</artifactId>
-            <version>${pom.version}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-web-item-plugin</artifactId>
-            <version>${pom.version}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-decorator-plugin</artifactId>
-            <version>${pom.version}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-charlie-plugin</artifactId>
-            <version>${pom.version}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-refapp-jquery-plugin</artifactId>
-            <version>${pom.version}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -149,21 +161,8 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.bundles</groupId>
-            <artifactId>google-collections</artifactId>
-            <version>${google.collections.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>biz.aQute</groupId>
-            <artifactId>bndlib</artifactId>
-            <version>0.0.255</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>com.atlassian.plugins.rest</groupId>
             <artifactId>atlassian-rest-module</artifactId>
-            <version>${rest.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -243,7 +242,6 @@
         <dependency>
             <groupId>com.atlassian.aui</groupId>
             <artifactId>auiplugin</artifactId>
-            <version>${ajs.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

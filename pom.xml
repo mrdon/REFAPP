@@ -16,6 +16,8 @@
         <url>http://www.atlassian.com</url>
     </organization>
     <modules>
+        <module>platform-libraries</module>
+        <module>platform-plugins</module>
         <module>refapp-plugins</module>
         <module>refapp-bundled-plugins</module>
         <module>refapp-webapp</module>

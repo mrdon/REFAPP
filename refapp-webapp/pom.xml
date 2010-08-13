@@ -139,6 +139,17 @@
             </properties>
         </profile>
     </profiles>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>atlassian-platform-libraries</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
 
@@ -187,31 +198,26 @@
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
             <artifactId>atlassian-plugins-core</artifactId>
-            <version>${plug.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
             <artifactId>atlassian-plugins-servlet</artifactId>
-            <version>${plug.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
             <artifactId>atlassian-plugins-webfragment</artifactId>
-            <version>${plug.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
             <artifactId>atlassian-plugins-webresource</artifactId>
-            <version>${plug.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
             <artifactId>atlassian-plugins-main</artifactId>
-            <version>${plug.version}</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
