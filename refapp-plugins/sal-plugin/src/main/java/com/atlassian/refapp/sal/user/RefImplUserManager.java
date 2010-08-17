@@ -49,24 +49,21 @@ public class RefImplUserManager implements com.atlassian.sal.api.user.UserManage
         return request.getRemoteUser();
     }
 
-    public String getRemoteUserFullname()
+    public String getUserFullname(final String username)
     {
-        final User user = getUser(getRemoteUsername());
-        if (user == null)
+        try
         {
-            return null;
+            final User user = userManager.getUser(username);
+            if (user != null)
+            {
+                return user.getFullName();
+            }
         }
-        return user.getFullName();
-    }
-
-    public String getRemoteUserFullname(final HttpServletRequest request)
-    {
-        final User user = getUser(getRemoteUsername(request));
-        if (user == null)
+        catch (EntityException e)
         {
-            return null;
+            // Oh well, just return null
         }
-        return user.getFullName();
+        return null;
     }
 
     public boolean isSystemAdmin(final String username)
@@ -131,23 +128,6 @@ public class RefImplUserManager implements com.atlassian.sal.api.user.UserManage
             }
         };
     }
-
-    private User getUser(String username)
-    {
-        if (username == null)
-        {
-            return null;
-        }
-        try
-        {
-            return userManager.getUser(username);
-        }
-        catch (EntityException e)
-        {
-            return null;
-        }
-    }
-
 
     /**
      * Check that {@code reference} is not {@code null}. If it is, throw a
