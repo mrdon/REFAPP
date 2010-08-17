@@ -49,6 +49,26 @@ public class RefImplUserManager implements com.atlassian.sal.api.user.UserManage
         return request.getRemoteUser();
     }
 
+    public String getRemoteUserFullname()
+    {
+        final User user = getUser(getRemoteUsername());
+        if (user == null)
+        {
+            return null;
+        }
+        return user.getFullName();
+    }
+
+    public String getRemoteUserFullname(final HttpServletRequest request)
+    {
+        final User user = getUser(getRemoteUsername(request));
+        if (user == null)
+        {
+            return null;
+        }
+        return user.getFullName();
+    }
+
     public boolean isSystemAdmin(final String username)
     {
         return isUserInGroup(username, "system_administrators");
@@ -111,6 +131,23 @@ public class RefImplUserManager implements com.atlassian.sal.api.user.UserManage
             }
         };
     }
+
+    private User getUser(String username)
+    {
+        if (username == null)
+        {
+            return null;
+        }
+        try
+        {
+            return userManager.getUser(username);
+        }
+        catch (EntityException e)
+        {
+            return null;
+        }
+    }
+
 
     /**
      * Check that {@code reference} is not {@code null}. If it is, throw a

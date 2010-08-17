@@ -279,7 +279,7 @@
     <properties>
         <jdkLevel>1.5</jdkLevel>
         <plug.version>2.6.0-alpha8</plug.version>
-        <sal.version>2.2.0-beta1</sal.version>
+        <sal.version>2.2.0-beta4</sal.version>
         <atr.version>1.1.1</atr.version>
         <apl.version>3.0-fecrudev-r65733</apl.version>
         <oauth.version>1.0.13.beta3</oauth.version>
