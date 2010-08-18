@@ -17,6 +17,7 @@
         <module>REST</module>
         <!-- <module>AJS</module> -->
         <module>SAL</module>
+        <module>ATR</module>
     </modules>
 
     <dependencies>

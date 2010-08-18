@@ -23,6 +23,24 @@
                 <version>${ajs.version}</version>
                 <scope>provided</scope>
             </dependency>
+            <dependency>
+                <groupId>com.atlassian.templaterenderer</groupId>
+                <artifactId>atlassian-template-renderer-api</artifactId>
+                <version>${atr.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.templaterenderer</groupId>
+                <artifactId>atlassian-template-renderer-velocity16-plugin</artifactId>
+                <version>${atr.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.templaterenderer</groupId>
+                <artifactId>atlassian-template-renderer-velocity15-plugin</artifactId>
+                <version>${atr.version}</version>
+                <scope>provided</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
