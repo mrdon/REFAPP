@@ -235,7 +235,7 @@
     <properties>
         <jdkLevel>1.5</jdkLevel>
         <plug.version>2.5.3</plug.version>
-        <sal.version>2.1.1-alpha10</sal.version>
+        <sal.version>2.1.1-alpha8</sal.version>
         <atr.version>1.1.1</atr.version>
         <rest.version>2.1.0</rest.version>
         <oauth.version>1.0.13.beta3</oauth.version>
