@@ -3,7 +3,7 @@
     <parent>
         <groupId>com.atlassian.refapp</groupId>
         <artifactId>atlassian-refapp-plugin-parent</artifactId>
-        <version>2.6.0-alpha2</version>
+        <version>2.6.0-SNAPSHOT</version>
     </parent>
     <artifactId>atlassian-refapp-decorator-plugin</artifactId>
     <name>Reference App Decorator Plugin</name>
