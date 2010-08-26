@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
+import com.atlassian.sal.api.user.UserProfile;
 import com.atlassian.sal.api.user.UserResolutionException;
 import com.atlassian.seraph.auth.AuthenticationContext;
 import com.atlassian.user.EntityException;
@@ -49,22 +50,20 @@ public class RefImplUserManager implements com.atlassian.sal.api.user.UserManage
         return request.getRemoteUser();
     }
 
-    public String getUserFullname(final String username)
+    public UserProfile getUserProfile(String username)
     {
+        final User user;
         try
         {
-            final User user = userManager.getUser(username);
-            if (user != null)
-            {
-                return user.getFullName();
-            }
+           user = userManager.getUser(username);
+           return new RefimplUserProfile(user);
         }
         catch (EntityException e)
         {
-            // Oh well, just return null
+            return null;
         }
-        return null;
-    }
+   }
+
 
     public boolean isSystemAdmin(final String username)
     {
