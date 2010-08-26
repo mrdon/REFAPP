@@ -56,6 +56,10 @@ public class RefImplUserManager implements com.atlassian.sal.api.user.UserManage
         try
         {
            user = userManager.getUser(username);
+           if (user == null)
+           {
+              return null;
+           }
            return new RefimplUserProfile(user);
         }
         catch (EntityException e)
