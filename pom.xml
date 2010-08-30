@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.atlassian.pom</groupId>
         <artifactId>atlassian-public-pom</artifactId>
-        <version>20</version>
+        <version>27</version>
     </parent>
     <groupId>com.atlassian.refapp</groupId>
     <artifactId>atlassian-refapp-parent</artifactId>
