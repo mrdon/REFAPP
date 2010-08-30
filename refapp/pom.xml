@@ -256,7 +256,7 @@
         </dependency>
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
-            <artifactId>sal-refapp-plugin</artifactId>
+            <artifactId>refapp-activeobjects-spi</artifactId>
             <version>${project.version}</version>
             <type>bundle</type>
             <scope>provided</scope>

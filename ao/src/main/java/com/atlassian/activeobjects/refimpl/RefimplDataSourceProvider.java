@@ -1,6 +1,8 @@
-package com.atlassian.sal.refimpl.sql;
+package com.atlassian.activeobjects.refimpl;
 
-import com.atlassian.sal.api.sql.DataSourceProvider;
+
+import com.atlassian.activeobjects.spi.DataSourceProvider;
+import com.atlassian.activeobjects.spi.DatabaseType;
 
 import javax.sql.DataSource;
 
@@ -18,5 +20,10 @@ public class RefimplDataSourceProvider implements DataSourceProvider
     public DataSource getDataSource()
     {
         return dataSource;
+    }
+
+    public DatabaseType getDatabaseType()
+    {
+        return DatabaseType.HSQL;
     }
 }

@@ -27,6 +27,7 @@
         <module>charlie-plugin</module>
         <module>sal-plugins</module>
         <module>backup-plugin</module>
+        <module>ao</module>
         <module>refapp</module>
     </modules>
     <scm>
@@ -237,7 +238,7 @@
     <properties>
         <jdkLevel>1.5</jdkLevel>
         <atlassian.plugins.version>2.5.0</atlassian.plugins.version>
-        <sal.version>2.1.0-ao-1</sal.version>
+        <sal.version>2.1.0-ao-5</sal.version>
         <template.renderer.version>1.1.0.beta1</template.renderer.version>
         <oauth.version>1.0.13.beta3</oauth.version>
         <rest.module.version>2.0.0.rc1</rest.module.version>

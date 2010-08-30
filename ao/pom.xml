@@ -6,9 +6,9 @@
         <version>2.6.0-ao-2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>sal-refapp-plugin</artifactId>
+    <artifactId>refapp-activeobjects-spi</artifactId>
     <packaging>bundle</packaging>
-    <name>SAL Refapp Plugin</name>
+    <name>Refapp implementation of the Active Objects plugin's SPI</name>
 
     <build>
         <plugins>
@@ -18,21 +18,22 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Bundle-SymbolicName>com.atlassian.refapp.sal</Bundle-SymbolicName>
+                        <Bundle-SymbolicName>com.atlassian.refapp.activeobjects-spi</Bundle-SymbolicName>
+                        <Private-Package>
+                            com.atlassian.activeobjects.refimpl*
+                        </Private-Package>
+                        <Export-Package>
+                            com.atlassian.activeobjects.spi*;version="${ao.version}"
+                        </Export-Package>
                         <Import-Package>
-                            com.atlassian.sal.api,
-                            com.atlassian.sal.api.backup,
-                            com.atlassian.sal.api.sql,
-                            com.google.common.base,
-                            com.google.common.collect,
+                            com.atlassian.sal*;version="2.1",
+                            com.google.common*;version="1.0",
                             javax.sql,
                             org.hsqldb.jdbc,
                             org.slf4j,
                         </Import-Package>
-                        <Private-Package>
-                            com.atlassian.sal.core.backup,
-                            com.atlassian.sal.refimpl.sql,
-                        </Private-Package>
+                        <Embed-Dependency>!clover.*;scope=compile|runtime;inline=true</Embed-Dependency>
+                        <Embed-Transitive>true</Embed-Transitive>
                         <Bundle-ClassPath>.,{maven-dependencies}</Bundle-ClassPath>
                         <Spring-Context>*;timeout:=60</Spring-Context>
                     </instructions>
@@ -49,15 +50,15 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.atlassian.activeobjects</groupId>
+            <artifactId>activeobjects-spi</artifactId>
+            <version>${ao.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.6.0</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.atlassian.sal</groupId>
-            <artifactId>sal-core</artifactId>
-            <version>${sal.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.collections</groupId>
@@ -72,4 +73,7 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+    <properties>
+        <ao.version>0.8</ao.version>
+    </properties>
 </project>

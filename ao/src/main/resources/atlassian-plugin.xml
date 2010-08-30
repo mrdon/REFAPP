@@ -6,18 +6,13 @@
     </plugin-info>
 
     <component name="Refapp Data Source Provider" key="refapp-datasource-provider"
-               class="com.atlassian.sal.refimpl.sql.RefimplDataSourceProvider" public="true">
-        <interface>com.atlassian.sal.api.sql.DataSourceProvider</interface>
+               class="com.atlassian.activeobjects.refimpl.RefimplDataSourceProvider" public="true">
+        <interface>com.atlassian.activeobjects.spi.DataSourceProvider</interface>
     </component>
 
     <component name="Refapp Data Source" key="refapp-datasource"
-               class="com.atlassian.sal.refimpl.sql.RefimplDataSource" public="false">
+               class="com.atlassian.activeobjects.refimpl.RefimplDataSource" public="false">
         <interface>javax.sql.DataSource</interface>
-    </component>
-
-    <component name="Refapp Backup Registry" key="refapp-backup-registry"
-               class="com.atlassian.sal.core.backup.MemoryBackupRegistry" public="true">
-        <interface>com.atlassian.sal.api.backup.BackupRegistry</interface>
     </component>
 
     <component-import name="Application Properties" key="application-properties"

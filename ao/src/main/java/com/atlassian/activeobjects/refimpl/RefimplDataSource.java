@@ -1,4 +1,4 @@
-package com.atlassian.sal.refimpl.sql;
+package com.atlassian.activeobjects.refimpl;
 
 import com.atlassian.sal.api.ApplicationProperties;
 import org.hsqldb.jdbc.jdbcDataSource;
