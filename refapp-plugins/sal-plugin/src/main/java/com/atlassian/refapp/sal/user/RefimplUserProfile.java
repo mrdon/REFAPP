@@ -9,8 +9,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class RefimplUserProfile implements UserProfile
 {
-    private static final URI SMALL_CHARLIE = URI.create("/charlie_sm.png");
-    private static final URI MEDIUM_CHARLIE = URI.create("/charlie_md.png");
     private static final URI LARGE_CHARLIE = URI.create("/charlie_lg.png");
 
     private final String username;
@@ -43,18 +41,10 @@ public class RefimplUserProfile implements UserProfile
 
     public URI getProfilePictureUri(int width, int height)
     {
-        if (width < 16 || height < 16)
-        {
-            return null;
-        }
-        else if (width < 48 && height < 48)
-        {
-            return SMALL_CHARLIE;
-        }
-        else if (width < 100 && height < 100)
-        {
-            return MEDIUM_CHARLIE;
-        }
+		if (width > 100 || height > 100)
+		{
+			return null;
+		}
         else
         {
             return LARGE_CHARLIE;
