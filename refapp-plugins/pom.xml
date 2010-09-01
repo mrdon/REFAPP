@@ -26,7 +26,6 @@
         <module>trusted-apps-plugin</module>
         <module>trusted-apps-client-plugin</module>
         <!--module>ui-toolbox-plugin</module-->
-        <module>jquery-plugin</module>
         <module>web-item-plugin</module>
         <module>decorator-plugin</module>
         <module>charlie-plugin</module>
