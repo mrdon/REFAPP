@@ -278,7 +278,7 @@
 
     <properties>
         <jdkLevel>1.5</jdkLevel>
-        <plug.version>2.6.0-beta1</plug.version>
+        <plug.version>2.6.0-beta2</plug.version>
         <sal.version>2.2.0-beta8</sal.version>
         <atr.version>1.2.0</atr.version>
         <apl.version>3.0-integdev-r107512</apl.version>
