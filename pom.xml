@@ -23,9 +23,9 @@
         <module>refapp-webapp</module>
     </modules>
     <scm>
-        <connection>scm:svn:https://studio.atlassian.com/svn/REFAPP/trunk</connection>
-        <developerConnection>scm:svn:https://studio.atlassian.com/svn/REFAPP/trunk</developerConnection>
-        <url>https://studio.atlassian.com/source/browse/REFAPP/trunk</url>
+        <connection>scm:svn:https://studio.atlassian.com/svn/REFAPP/branches/refapp-2.7.x</connection>
+        <developerConnection>scm:svn:https://studio.atlassian.com/svn/REFAPP/branches/refapp-2.7.x</developerConnection>
+        <url>https://studio.atlassian.com/source/browse/REFAPP/branches/refapp-2.7.x</url>
     </scm>
     <build>
         <plugins>
