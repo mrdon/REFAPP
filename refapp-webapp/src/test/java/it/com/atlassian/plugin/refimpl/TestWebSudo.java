@@ -58,6 +58,7 @@ public class TestWebSudo extends AbstractRefappTestCase
     {
         loginAs(user, password, false);
     }
+    
     private void loginAs(final String user, final String password, boolean bypassWebsudo)
     {
         beginAt("/"); // Starts a new session
@@ -68,11 +69,11 @@ public class TestWebSudo extends AbstractRefappTestCase
         setTextField("os_password", password);
         if (bypassWebsudo)
         {
-            uncheckCheckbox("os_websudo");
+            checkCheckbox("os_websudo");
         }
         else
         {
-            checkCheckbox("os_websudo");
+            uncheckCheckbox("os_websudo");
         }
 
         clickButton("os_login");

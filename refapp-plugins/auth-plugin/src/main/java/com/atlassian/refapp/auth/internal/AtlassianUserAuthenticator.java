@@ -106,7 +106,7 @@ public class AtlassianUserAuthenticator extends AbstractAuthenticator
             Principal user = getUser(username);
             request.getSession().setAttribute(LOGGED_IN_KEY, user);
             request.getSession().setAttribute(LOGGED_OUT_KEY, null);
-            if (request.getParameter("os_websudo") == null)
+            if (request.getParameter("os_websudo") != null)
             {
                 websudoManager.createWebSudoSession(request);
             }
