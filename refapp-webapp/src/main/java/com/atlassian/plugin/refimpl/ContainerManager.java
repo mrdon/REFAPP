@@ -68,9 +68,14 @@ import java.util.*;
 public class ContainerManager
 {
     /**
-     * the name of the bundled plugins zip file to use
+     * the name of the bundled plugins zip file to use.
      */
     private static final String BUNDLED_PLUGINS_ZIP = "/atlassian-bundled-plugins.zip";
+
+    /**
+     * System property key for overriding package export versions.
+     */
+    private static final String PACKAGE_VERSION_EXPORT_OVERRIDES = "refapp.packageExport.overrides";
 
     private final ServletModuleManager servletModuleManager;
     private final SimpleWebResourceIntegration webResourceIntegration;
@@ -125,6 +130,13 @@ public class ContainerManager
             put("javax.servlet", "2.5");
             put("javax.servlet.http", "2.5");
         }});
+
+        final String packageVersionExportString = System.getProperty(PACKAGE_VERSION_EXPORT_OVERRIDES);
+        if (packageVersionExportString != null)
+        {
+            scannerConfig.getPackageVersions().putAll(ConfigParser.parseMap(packageVersionExportString));
+        }
+
         hostComponentProvider = new SimpleHostComponentProvider();
 
         File osgiCache = findAndCreateDirectory(servletContext, "osgi.cache", "WEB-INF/osgi-cache");
