@@ -1,4 +1,4 @@
-package com.atlassian.plugin.refimpl.servlet;
+package com.atlassian.plugin.refimpl;
 
 import com.atlassian.plugin.refimpl.ConfigParser;
 import com.google.common.collect.ImmutableMap;
