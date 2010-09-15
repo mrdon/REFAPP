@@ -16,4 +16,14 @@ public class RefappInfoProvider implements AppSpecificInfoProvider
     {
         return "admin";
     }
+
+    public String getBaseContext()
+    {
+        return System.getProperty("context.path", "/refapp");
+    }
+
+    public String getPort()
+    {
+        return System.getProperty("http.port", "5990");
+    }
 }

@@ -7,4 +7,6 @@ public interface AppSpecificInfoProvider
 {
     String getAdminUsername();
     String getAdminPassword();
+    String getBaseContext();
+    String getPort();
 }
