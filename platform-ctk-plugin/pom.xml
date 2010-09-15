@@ -1,0 +1,104 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.atlassian.refapp</groupId>
+        <artifactId>atlassian-refapp-parent</artifactId>
+        <version>2.9.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>platform-ctk-plugin</artifactId>
+    <name>Platform Compatibility Testing Kit Plugin</name>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.atlassian.sal</groupId>
+            <artifactId>sal-api</artifactId>
+            <version>${sal.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.sal</groupId>
+            <artifactId>sal-spi</artifactId>
+            <version>${sal.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+            <version>2.5.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.7</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.plugins</groupId>
+            <artifactId>atlassian-plugins-core</artifactId>
+            <version>${plug.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.atlassian.functest</groupId>
+            <artifactId>functest-plugin</artifactId>
+            <version>${fp.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- just to make sure this gets built after refapp -->
+        <dependency>
+            <groupId>com.atlassian.refapp</groupId>
+            <artifactId>atlassian-refapp</artifactId>
+            <type>war</type>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>atlassian-plugin.xml</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-refapp-plugin</artifactId>
+                <version>3.2.1</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <productVersion>${project.version}</productVersion>
+                    <log4jProperties>src/test/resources/log4j.properties</log4jProperties>
+                    <systemPropertyVariables>
+                        <xvfb.enable>false</xvfb.enable>
+                        <baseurl>http://localhost:5990/refapp</baseurl>
+                        <plugin.resource.directories>${basedir}/src/main/resources</plugin.resource.directories>
+                        <webdriver.browser>htmlunit</webdriver.browser>
+                    </systemPropertyVariables>
+                    <pluginArtifacts>
+                        <pluginArtifact>
+                            <groupId>com.atlassian.functest</groupId>
+                            <artifactId>functest-plugin</artifactId>
+                            <version>${fp.version}</version>
+                        </pluginArtifact>
+                    </pluginArtifacts>
+               </configuration>
+           </plugin>
+        </plugins>
+    </build>
+</project>

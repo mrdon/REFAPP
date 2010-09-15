@@ -21,6 +21,7 @@
         <module>refapp-plugins</module>
         <module>refapp-bundled-plugins</module>
         <module>refapp-webapp</module>
+        <module>platform-ctk-plugin</module>
     </modules>
     <scm>
         <connection>scm:svn:https://studio.atlassian.com/svn/REFAPP/trunk</connection>
@@ -285,6 +286,7 @@
         <oauth.version>1.1.beta1</oauth.version>
         <rest.version>2.2.0-beta1</rest.version>
         <ajs.version>3.2-m1</ajs.version>
+        <fp.version>0.2-alpha2</fp.version>
         <google.collections.version>1.0</google.collections.version>
     </properties>
 </project>
