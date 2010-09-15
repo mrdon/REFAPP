@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 public class AuthenticationControllerTest extends SpringAwareTestCase
 {
-	private AuthenticationController controller;
+    private AuthenticationController controller;
 
     public void setController(AuthenticationController controller)
     {
@@ -17,7 +17,7 @@ public class AuthenticationControllerTest extends SpringAwareTestCase
 
     @Test
     public void testInjection()
-	{
+    {
         assertTrue("AuthenticationController should be injectable", controller != null);
-	}
+    }
 }

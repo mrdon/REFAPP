@@ -3,10 +3,6 @@
         <description>A Compatibility Test Kit</description>
         <vendor name="Atlassian Software Systems" url="http://www.atlassian.com"/>
         <version>${pom.version}</version>
-		<!-- This is for Resin 3.0, it sucks so this needs to be here -->
-		<bundle-instructions>		  
-            <Import-Package>org.springframework.orm.jpa.support,*;resolution:=optional</Import-Package>
-        </bundle-instructions>
     </plugin-info>
 
     <component-import key="loc" interface="com.atlassian.sal.api.license.LicenseHandler" />
