@@ -41,6 +41,12 @@
                 <version>${atr.version}</version>
                 <scope>provided</scope>
             </dependency>
+            <dependency>
+                <groupId>com.atlassian.upm</groupId>
+                <artifactId>atlassian-universal-plugin-manager-plugin</artifactId>
+                <version>${upm.version}</version>
+                <scope>provided</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

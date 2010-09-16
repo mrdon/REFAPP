@@ -18,6 +18,7 @@
         <!-- <module>AJS</module> -->
         <module>SAL</module>
         <module>ATR</module>
+        <module>UPM</module>
     </modules>
 
     <dependencies>

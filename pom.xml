@@ -123,10 +123,10 @@
 	                    <groupId>log4j</groupId>
 	                    <artifactId>log4j</artifactId>
 	                </exclusion>
-                        <exclusion>
-                            <groupId>bouncycastle</groupId>
-                            <artifactId>bcprov-jdk14</artifactId>
-                        </exclusion>
+                    <exclusion>
+                        <groupId>bouncycastle</groupId>
+                        <artifactId>bcprov-jdk14</artifactId>
+                    </exclusion>
 	            </exclusions>
 	        </dependency>
 	        <dependency>
@@ -178,14 +178,14 @@
 	                    <groupId>xml-apis</groupId>
 	                    <artifactId>xml-apis</artifactId>
 	                </exclusion>
-                        <exclusion>
-                            <groupId>log4j</groupId>
-                            <artifactId>log4j</artifactId>
-                        </exclusion>
-                        <exclusion>
-                            <groupId>p6spy</groupId>
-                            <artifactId>p6spy</artifactId>
-                        </exclusion>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>p6spy</groupId>
+                        <artifactId>p6spy</artifactId>
+                    </exclusion>
                     <exclusion>
                         <groupId>dom4j</groupId>
                         <artifactId>dom4j</artifactId>
@@ -285,8 +285,11 @@
         <apl.version>3.0-integdev-r107512</apl.version>
         <oauth.version>1.1.beta1</oauth.version>
         <rest.version>2.2.0</rest.version>
+        <upm.version>1.2-SNAPSHOT</upm.version>
+        <selenium.version>2.0.0-pi_pre_m7</selenium.version>
         <ajs.version>3.2-m1</ajs.version>
         <fp.version>0.2-alpha2</fp.version>
         <google.collections.version>1.0</google.collections.version>
+        <rome.version>1.0</rome.version>
     </properties>
 </project>

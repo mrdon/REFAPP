@@ -7,7 +7,7 @@
     </parent>
     <artifactId>platform-ctk-plugin</artifactId>
     <name>Platform Compatibility Testing Kit Plugin</name>
-    <packaging>jar</packaging>
+    <packaging>atlassian-plugin</packaging>
 
     <dependencies>
         <dependency>
@@ -46,6 +46,12 @@
             <version>${plug.version}</version>
             <scope>provided</scope>
         </dependency>
+     <!--   <dependency>
+            <groupId>com.atlassian.upm</groupId>
+            <artifactId>atlassian-universal-plugin-manager-plugin</artifactId>
+            <version>${upm.version}</version>
+            <scope>provided</scope>
+        </dependency> -->
 
         <dependency>
             <groupId>com.atlassian.functest</groupId>
@@ -65,6 +71,28 @@
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-client</artifactId>
             <version>1.0.3-atlassian-1</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>rome</groupId>
+            <artifactId>rome</artifactId>
+            <version>${rome.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>com.atlassian.selenium</groupId>
+            <artifactId>atlassian-webdriver-refapp</artifactId>
+            <version>${selenium.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.atlassian.selenium</groupId>
+                    <artifactId>atlassian-webdriver-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- just to make sure this gets built after refapp -->
@@ -112,6 +140,12 @@
                     </pluginArtifacts>
                </configuration>
            </plugin>
+            <plugin>
+                <!-- not directly used, but the version needed to be specified -->
+                <groupId>net.sf.alchim</groupId>
+                <artifactId>yuicompressor-maven-plugin</artifactId>
+                <version>0.7.1</version>
+            </plugin>
         </plugins>
     </build>
 </project>

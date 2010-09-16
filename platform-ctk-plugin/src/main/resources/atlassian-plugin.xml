@@ -32,13 +32,14 @@
         <interface>com.atlassian.sal.api.upgrade.PluginUpgradeTask</interface>
     </component>
 
-    <rest key="dummyrest" path="/platform-ctk" version="1.0" class="com.atlassian.refapp.ctk.DummyRestResource">
+    <rest key="dummyrest" path="/platform-ctk" version="1.0" class="com.atlassian.refapp.ctk.rest.DummyRestResource">
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </rest>
 
     <!-- declares different sets of the tests -->
     <junit key="sal-test" cliPort="3333" package="com.atlassian.refapp.ctk.test"/>
-    <junit key="rest-test" cliPort="3333" package="com.atlassian.refapp.ctk.resttest"/>
+    <junit key="rest-test" cliPort="3333" package="com.atlassian.refapp.ctk.rest.tests"/>
+    <junit key="ui-test" cliPort="3333" package="com.atlassian.refapp.ctk.ui.tests"/>
 
 </atlassian-plugin>

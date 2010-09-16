@@ -1,5 +1,7 @@
 package com.atlassian.refapp.ctk.refapp;
 
+import javax.ws.rs.core.UriBuilder;
+
 import com.atlassian.refapp.ctk.AppSpecificInfoProvider;
 
 /**
@@ -25,5 +27,15 @@ public class RefappInfoProvider implements AppSpecificInfoProvider
     public String getPort()
     {
         return System.getProperty("http.port", "5990");
+    }
+
+    public Integer getPortValue()
+    {
+        return Integer.parseInt(getPort());
+    }
+
+    public UriBuilder createLocalhostUriBuilder()
+    {
+        return UriBuilder.fromUri("http://localhost/").port(getPortValue()).path(getBaseContext());
     }
 }
