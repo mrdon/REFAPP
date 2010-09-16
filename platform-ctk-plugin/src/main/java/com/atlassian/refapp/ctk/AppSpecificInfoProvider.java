@@ -38,7 +38,13 @@ public interface AppSpecificInfoProvider
      */
     public Set<String> getExpectedMatchingUrls();
 
+    /**
+     * @return the {@code Integer} value of {@code getPort()}
+     */
     Integer getPortValue();
 
+    /**
+     * @return a {@code UriBuilder} for the currently deployed application
+     */
     UriBuilder createLocalhostUriBuilder();
 }
