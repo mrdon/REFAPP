@@ -285,7 +285,7 @@
         <apl.version>3.0-integdev-r107512</apl.version>
         <oauth.version>1.1.beta1</oauth.version>
         <rest.version>2.2.0</rest.version>
-        <upm.version>1.2-SNAPSHOT</upm.version>
+        <upm.version>1.2.m2</upm.version>
         <selenium.version>2.0.0-pi_pre_m7</selenium.version>
         <ajs.version>3.2-m1</ajs.version>
         <fp.version>0.2-alpha2</fp.version>
