@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 public class LoginUriProviderTest extends SpringAwareTestCase
 {
-	private LoginUriProvider provider;
+    private LoginUriProvider provider;
 
     public void setProvider(LoginUriProvider provider)
     {
@@ -23,7 +23,7 @@ public class LoginUriProviderTest extends SpringAwareTestCase
     @Test
     public void testInjection()
     {
-		assertTrue("LoginUriProvider should be injectable", provider != null);
+        assertTrue("LoginUriProvider should be injectable", provider != null);
     }
 
     @Test

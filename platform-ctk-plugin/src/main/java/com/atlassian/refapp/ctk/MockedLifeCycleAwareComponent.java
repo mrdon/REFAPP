@@ -4,7 +4,10 @@ import com.atlassian.sal.api.lifecycle.LifecycleAware;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class LifeCycleAwareStateHolder implements LifecycleAware
+/**
+ * A mocked LifecycleAware component.
+ */
+public class MockedLifeCycleAwareComponent implements LifecycleAware
 {
     private AtomicInteger calledCount = new AtomicInteger(0);
 

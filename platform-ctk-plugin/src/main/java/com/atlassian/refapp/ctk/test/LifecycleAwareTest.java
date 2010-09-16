@@ -1,7 +1,7 @@
 package com.atlassian.refapp.ctk.test;
 
 import com.atlassian.functest.junit.SpringAwareTestCase;
-import com.atlassian.refapp.ctk.LifeCycleAwareStateHolder;
+import com.atlassian.refapp.ctk.MockedLifeCycleAwareComponent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -20,7 +20,7 @@ public class LifecycleAwareTest extends SpringAwareTestCase implements Applicati
     @Test
     public void testCallCount()
     {
-        LifeCycleAwareStateHolder stateHolder = (LifeCycleAwareStateHolder)applicationContext.getBean("lifeCycleStateHolder");
-        assertTrue("LifecycleAware component should be called only once", stateHolder.getCalledCount() == 1);
+        MockedLifeCycleAwareComponent component = (MockedLifeCycleAwareComponent)applicationContext.getBean("mockedLifeCycleComponent");
+        assertTrue("LifecycleAware component should be called only once", component.getCalledCount() == 1);
     }
 }

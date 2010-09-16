@@ -7,7 +7,12 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.junit.Test;
+import org.mockito.Mockito;
+
+import javax.servlet.http.HttpServletRequest;
+
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 
 public class LocaleResolverTest extends SpringAwareTestCase
 {
@@ -29,5 +34,11 @@ public class LocaleResolverTest extends SpringAwareTestCase
     {
         final Set<Locale> localeSet = localeResolver.getSupportedLocales();
         assertTrue("LocaleResolver should return at least one supported locale", localeSet.size() >= 1);
+    }
+
+    @Test
+    public void testGetLocale()
+    {
+        assertNotNull("in worse case it should return the system default one but never null", localeResolver.getLocale(Mockito.mock(HttpServletRequest.class)));
     }
 }

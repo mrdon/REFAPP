@@ -3,6 +3,9 @@ package com.atlassian.refapp.ctk.refapp;
 import javax.ws.rs.core.UriBuilder;
 
 import com.atlassian.refapp.ctk.AppSpecificInfoProvider;
+import com.google.common.collect.Sets;
+
+import java.util.Set;
 
 /**
  * Info provider for refapp which has "admin"/"admin" user pass as default.
@@ -27,6 +30,16 @@ public class RefappInfoProvider implements AppSpecificInfoProvider
     public String getPort()
     {
         return System.getProperty("http.port", "5990");
+    }
+
+    public String getMatchingSearchTerm()
+    {
+        return "refapp";
+    }
+
+    public Set<String> getExpectedMatchingUrls()
+    {
+        return Sets.newHashSet("http://foo.com", "http://bar.com");
     }
 
     public Integer getPortValue()

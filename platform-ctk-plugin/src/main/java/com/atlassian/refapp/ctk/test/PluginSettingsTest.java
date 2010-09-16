@@ -5,6 +5,7 @@ import com.atlassian.functest.junit.SpringAwareTestCase;
 import com.atlassian.sal.api.pluginsettings.PluginSettings;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -14,17 +15,12 @@ import java.util.Map;
 import java.util.Properties;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class PluginSettingsTest extends SpringAwareTestCase
 {
-    private static final String LONG_STRING = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    private static final String VERY_LONG_STRING = StringUtils.repeat("ABCDEFGHIJ", 10000);
 
     private PluginSettingsFactory factory;
 
@@ -40,8 +36,7 @@ public class PluginSettingsTest extends SpringAwareTestCase
     }
 
     @Test
-    @SuppressWarnings("unchecked")
-	public void testSaveAndLoadSettings()
+	public void testSaveString()
     {
         final PluginSettings settings = factory.createGlobalSettings();
         assertTrue("Global PluginSettings should be retrievable", settings != null);
@@ -49,24 +44,58 @@ public class PluginSettingsTest extends SpringAwareTestCase
         settings.put("string", "foo");
         assertTrue("Should be able to store and retrieve a string", "foo".equals(settings.get("string")));
 
-        settings.put("longstring", LONG_STRING);
-        assertTrue("Should be able to store and retrieve a string", LONG_STRING.equals(settings.get("longstring")));
+        settings.put("longstring", VERY_LONG_STRING);
+        assertTrue("Should be able to store and retrieve a string", VERY_LONG_STRING.equals(settings.get("longstring")));
+    }
 
-        List<String> list = Arrays.asList("foo");
-        settings.put("list", list);
-        list = (List<String>) settings.get("list");
-        assertTrue("Should be able to store and retrieve a list", list != null && "foo".equals(list.get(0)));
+    @Test
+    public void testSaveList()
+    {
+        final PluginSettings settings = factory.createGlobalSettings();
+        List<String> oldList = Arrays.asList("foo", "faa", "fee", "fuu");
+        settings.put("list", oldList);
 
-        Properties map = new Properties();
-        map.setProperty("key", "value");
-        settings.put("map", map);
-        map = (Properties) settings.get("map");
-        assertTrue("Should be able to store and retrieve a map", map != null && "value".equals(map.get("key")));
+        List<String> list = (List<String>) settings.get("list");
+        assertNotNull("Should be able to store and retrieve a list", list);
+        assertEquals("Should be able to store and retrieve a list", list, oldList);
+    }
 
+    @Test
+    public void testSaveProperties()
+    {
+        final PluginSettings settings = factory.createGlobalSettings();
+        Properties oldProp = new Properties();
+        oldProp.setProperty("key1", "value1");
+        oldProp.setProperty("key2", "value2");
+        settings.put("prop", oldProp);
+
+        Properties prop = (Properties) settings.get("prop");
+        assertNotNull("Should be able to store and retrieve a map", prop);
+        assertTrue("Should be able to store and retrieve a map", oldProp.equals(prop));
+    }
+
+    @Test
+    public void testSaveMap()
+    {
+        final PluginSettings settings = factory.createGlobalSettings();
+        Map<String, String> oldMap = new HashMap<String, String>();
+        oldMap.put("key1", "value1");
+        oldMap.put("key2", "value2");
+        settings.put("map", oldMap);
+
+        Map<String, String> map = (Map) settings.get("map");
+        assertNotNull("Should be able to store and retrieve a map", map);
+        assertTrue("Should be able to store and retrieve a map", map.equals(oldMap));
+    }
+
+    @Test
+    public void testSpecialCharacters()
+    {
+        final PluginSettings settings = factory.createGlobalSettings();
         Map<String, String> hashMap = new HashMap<String, String>();
-        hashMap.put("key", "value");
+        hashMap.put("key\n\t\f\r", "value\n\t\f\r");
         settings.put("hashMap", hashMap);
         hashMap = (Map) settings.get("hashMap");
-        assertTrue("Should be able to store and retrieve a real map", hashMap != null && "value".equals(hashMap.get("key")));
+        assertTrue("Should be able to store and retrieve a real map", hashMap != null && "value\n\t\f\r".equals(hashMap.get("key\n\t\f\r")));
     }
 }

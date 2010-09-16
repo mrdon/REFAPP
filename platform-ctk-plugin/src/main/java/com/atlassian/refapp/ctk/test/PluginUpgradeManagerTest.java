@@ -1,7 +1,7 @@
 package com.atlassian.refapp.ctk.test;
 
 import com.atlassian.functest.junit.SpringAwareTestCase;
-import com.atlassian.refapp.ctk.UpgradeStateHolder;
+import com.atlassian.refapp.ctk.MockedUpgradeTask;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 import com.atlassian.sal.api.upgrade.PluginUpgradeManager;
 
@@ -42,28 +42,28 @@ public class PluginUpgradeManagerTest extends SpringAwareTestCase implements App
     @Test
     public void testUpgrade()
     {
-        UpgradeStateHolder holder = (UpgradeStateHolder)applicationContext.getBean("upgradeStateHolder");
+        MockedUpgradeTask upgradeTask = (MockedUpgradeTask)applicationContext.getBean("mockedUpgradeTask");
 
         try
         {
-            if (holder.getCalledCount() == 0)
+            if (upgradeTask.getCalledCount() == 0)
             {
                 upgradeManager.upgrade();
-                assertTrue("Upgrade task should have been called once since we have just called upgrade()", holder.getCalledCount() == 1);
+                assertTrue("Upgrade task should have been called once since we have just called upgrade()", upgradeTask.getCalledCount() == 1);
             }
 
             // at this stage, the count should be one since upgrade() has been called at least once.
             // another upgrade call here should have no effect.
             upgradeManager.upgrade();
-            assertTrue("Upgrade task should not have been called again", holder.getCalledCount() == 1);
+            assertTrue("Upgrade task should not have been called again", upgradeTask.getCalledCount() == 1);
 
             // Yes, we just happen to know how to clear the data build number....
-            pluginSettingsFactory.createGlobalSettings().remove(holder.getPluginKey() + ":build");
+            pluginSettingsFactory.createGlobalSettings().remove(upgradeTask.getPluginKey() + ":build");
         }
         finally
         {
             // reset the counter for the next test.
-            holder.reset();
+            upgradeTask.reset();
         }
     }
 }

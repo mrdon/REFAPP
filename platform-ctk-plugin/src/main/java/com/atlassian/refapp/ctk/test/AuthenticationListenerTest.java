@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 public class AuthenticationListenerTest extends SpringAwareTestCase
 {
-	private AuthenticationListener authenticationListener;
+    private AuthenticationListener authenticationListener;
 
     public void setAuthenticationListener(AuthenticationListener authenticationListener)
     {
@@ -17,7 +17,7 @@ public class AuthenticationListenerTest extends SpringAwareTestCase
 
     @Test
     public void testInjection()
-	{
-		assertTrue("AuthenticationListener should be injectable", authenticationListener != null);
-	}
+    {
+        assertTrue("AuthenticationListener should be injectable", authenticationListener != null);
+    }
 }

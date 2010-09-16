@@ -21,14 +21,17 @@
     <component-import key="authenticationController" interface="com.atlassian.sal.api.auth.AuthenticationController" />
     <component-import key="authenticationListener" interface="com.atlassian.sal.api.auth.AuthenticationListener" />
     <component-import key="loginUriProvider" interface="com.atlassian.sal.api.auth.LoginUriProvider" />
+    <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties" />
 
     <component key="refappInfoProvider" class="com.atlassian.refapp.ctk.refapp.RefappInfoProvider"/>
 
-    <component key="lifeCycleStateHolder" class="com.atlassian.refapp.ctk.LifeCycleAwareStateHolder" public="true">
+    <!-- We use this to track LifeCycleAware callbacks. -->
+    <component key="mockedLifeCycleComponent" class="com.atlassian.refapp.ctk.MockedLifeCycleAwareComponent" public="true">
         <interface>com.atlassian.sal.api.lifecycle.LifecycleAware</interface>
     </component>
 
-    <component key="upgradeStateHolder" class="com.atlassian.refapp.ctk.UpgradeStateHolder" public="true">
+    <!--  We use this to track operations exerted by upgrade manager. -->
+    <component key="mockedUpgradeTask" class="com.atlassian.refapp.ctk.MockedUpgradeTask" public="true">
         <interface>com.atlassian.sal.api.upgrade.PluginUpgradeTask</interface>
     </component>
 

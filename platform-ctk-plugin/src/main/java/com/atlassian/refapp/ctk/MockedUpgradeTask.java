@@ -6,7 +6,10 @@ import com.atlassian.sal.api.upgrade.PluginUpgradeTask;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class UpgradeStateHolder implements PluginUpgradeTask
+/**
+ * A mocked upgrade task.
+ */
+public class MockedUpgradeTask implements PluginUpgradeTask
 {
     private AtomicInteger calledCount = new AtomicInteger(0);
 

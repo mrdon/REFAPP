@@ -75,8 +75,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>1.7</version>
+        </dependency>
 
-
+        <!-- this should not be specific to refapp. will fix this later -->
         <dependency>
             <groupId>com.atlassian.selenium</groupId>
             <artifactId>atlassian-webdriver-refapp</artifactId>
