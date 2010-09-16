@@ -19,7 +19,7 @@ public class UpmUiTest extends CtkSeleniumTest
         // TODO:Should be able to supply product instance here. Wait for newer atlassian-selenium.
         FirstPage page1 = RefappPages.FIRST_PAGE.get(getDriver());
         page1.get(false);
-        page1.login("admin", "admin");
+        page1.login(getInfoProvider().getAdminUsername(), getInfoProvider().getAdminPassword());
         checkState(page1.isLoggedIn());
         checkState(page1.isAdmin());
 
