@@ -34,9 +34,9 @@ public class SearchProviderTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testInjection()
+    public void testSearchProviderAvailable()
     {
-        assertTrue("SearchProvider should be injectable", searchProvider != null);
+        assertNotNull("SearchProvider must be available to plugins", searchProvider);
     }
 
     @Test
@@ -49,7 +49,7 @@ public class SearchProviderTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testSearchButWithMatch()
+    public void testSearchWithMatch()
     {
         final SearchResults sresults = searchProvider.search(null, infoProvider.getMatchingSearchTerm());
 

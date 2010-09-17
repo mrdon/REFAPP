@@ -7,7 +7,7 @@ import com.atlassian.sal.api.license.LicenseHandler;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertNotNull;
 
 public class LicenseHandlerTest extends SpringAwareTestCase
 {
@@ -33,20 +33,20 @@ public class LicenseHandlerTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testInjection()
+    public void testLicenseHandlerAvailable()
     {
-        assertTrue("License handler should be injectable", handler != null);
+        assertNotNull("License handler must be available to plugins", handler);
     }
 
     @Test
-    public void testValidLicense()
+    public void testValidLicenseShouldNotThrowException()
     {
         // this should not throw any exception.
         handler.setLicense(VALID_LICENSE);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testInvalidLicense()
+    public void testInvalidLicenseShouldthrowIAE()
     {
         // Should throw IllegalArgumentException for invalid license.
         handler.setLicense(INVALID_LICENSE);

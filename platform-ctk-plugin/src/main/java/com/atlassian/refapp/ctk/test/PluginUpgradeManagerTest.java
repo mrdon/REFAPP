@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 
 public class PluginUpgradeManagerTest extends SpringAwareTestCase implements ApplicationContextAware
 {
@@ -34,13 +35,13 @@ public class PluginUpgradeManagerTest extends SpringAwareTestCase implements App
     }
 
     @Test
-    public void testInjection()
+    public void testPluginUpgradeManagerAvailable()
     {
-        assertTrue("PluginUpgradeManager should be injectable", upgradeManager != null);
+        assertNotNull("PluginUpgradeManager should be available to plugins", upgradeManager);
     }
 
     @Test
-    public void testUpgrade()
+    public void testUpgradeShouldBeCalledOnlyOnce()
     {
         MockedUpgradeTask upgradeTask = (MockedUpgradeTask)applicationContext.getBean("mockedUpgradeTask");
 

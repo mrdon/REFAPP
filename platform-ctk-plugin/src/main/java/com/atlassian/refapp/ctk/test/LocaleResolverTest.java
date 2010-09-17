@@ -24,20 +24,20 @@ public class LocaleResolverTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testInjection()
+    public void testLocaleResolverAvailable()
     {
-        assertTrue("LocaleResolver should be injectable", localeResolver != null);
+        assertNotNull("LocaleResolver should be available to plugins", localeResolver);
     }
 
     @Test
-    public void testMinimumSupportedLocales()
+    public void testAtLeastOneSupportedLocales()
     {
         final Set<Locale> localeSet = localeResolver.getSupportedLocales();
         assertTrue("LocaleResolver should return at least one supported locale", localeSet.size() >= 1);
     }
 
     @Test
-    public void testGetLocale()
+    public void testGetLocaleNeverNull()
     {
         assertNotNull("in worse case it should return the system default one but never null", localeResolver.getLocale(Mockito.mock(HttpServletRequest.class)));
     }

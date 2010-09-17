@@ -10,6 +10,7 @@ import java.util.Map;
 import com.atlassian.sal.api.message.MessageCollection;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
 public class I18nResolverTest extends SpringAwareTestCase
@@ -22,9 +23,9 @@ public class I18nResolverTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testInjection()
+    public void testI18nResolverAvailable()
     {
-        assertTrue("I18nResolver should be injectable", resolver != null);
+        assertNotNull("I18nResolver should be available to plugins", resolver);
     }
 
     @Test
@@ -47,13 +48,13 @@ public class I18nResolverTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testResolve()
+    public void testResolveNonExistingKey()
     {
         assertTrue("Should return the input key if the text can't be resolved", "some.key.that.doesnt.exist".equals(resolver.getText("some.key.that.doesnt.exist")));
     }
 
     @Test
-    public void testGerAllTranslationsForPrefix()
+    public void testGetAllTranslationsForPrefix()
     {
         final Map<String,String> translations = resolver.getAllTranslationsForPrefix("some.key.that.doesnt.exist", Locale.US);
         assertTrue("Should return empty map of translations for unknown key", translations.keySet().isEmpty());

@@ -14,6 +14,7 @@ import com.atlassian.sal.api.scheduling.PluginScheduler;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 
@@ -28,13 +29,13 @@ public class PluginSchedulerTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testInjection()
+    public void testPluginSchedulerAvailable()
     {
-        assertTrue("PluginScheduler should be injectable", scheduler != null);
+        assertNotNull("PluginScheduler should be available to plugins", scheduler);
     }
 
     @Test
-    public void testScheduleJob() throws InterruptedException
+    public void testScheduledJobMustBeExecuted() throws InterruptedException
     {
         // reset the counter first.
         TestJob.calledCount.set(0);
@@ -47,18 +48,22 @@ public class PluginSchedulerTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testScheduleAndThenUnscheduleJob()
+    public void testUnscheduleExistingJobShouldNotThrowException()
     {
         String jobName = "job" + random.nextInt();
         scheduler.scheduleJob(jobName, TestJob.class, new HashMap<String, Object>(), new Date(), 10000000);
 
         // this unschedule must be ok
         scheduler.unscheduleJob(jobName);
+    }
 
+    @Test
+    public void testUnscheduleNonExistingJobShouldThrowIAE()
+    {
         try
         {
             // this unschedule must die.
-            scheduler.unscheduleJob(jobName);
+            scheduler.unscheduleJob("job" + random.nextInt());
             fail("Should throw IllegalArgumentException when unscheduling an unknown job");
         }
         catch (final IllegalArgumentException ex)

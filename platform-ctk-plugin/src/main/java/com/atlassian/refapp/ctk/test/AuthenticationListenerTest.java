@@ -4,7 +4,7 @@ import com.atlassian.functest.junit.SpringAwareTestCase;
 import com.atlassian.sal.api.auth.AuthenticationListener;
 
 import org.junit.Test;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 
 public class AuthenticationListenerTest extends SpringAwareTestCase
 {
@@ -16,8 +16,8 @@ public class AuthenticationListenerTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testInjection()
+    public void testAuthenticationListenerAvailable()
     {
-        assertTrue("AuthenticationListener should be injectable", authenticationListener != null);
+        assertNotNull("AuthenticationListener should be available to plugins", authenticationListener);
     }
 }

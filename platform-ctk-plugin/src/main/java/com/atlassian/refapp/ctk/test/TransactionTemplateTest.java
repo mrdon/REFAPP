@@ -7,6 +7,7 @@ import com.atlassian.sal.api.transaction.TransactionTemplate;
 
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 
 public class TransactionTemplateTest extends SpringAwareTestCase
 {
@@ -19,13 +20,13 @@ public class TransactionTemplateTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testInjection()
+    public void testTransactionTemplateAvailable()
     {
-        assertTrue("TransactionTemplate should be injectable", template != null);
+        assertNotNull("TransactionTemplate must be available to plugins", template);
     }
 
     @Test
-    public void textExecution()
+    public void testCallBackIsExecuted()
     {
         final String result = (String) template.execute(new TransactionCallback()
         {

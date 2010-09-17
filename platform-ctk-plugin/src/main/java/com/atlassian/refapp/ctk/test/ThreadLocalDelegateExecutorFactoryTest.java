@@ -11,6 +11,7 @@ import java.util.concurrent.Callable;
 
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * The thread local delegate executor factory should at least transfer the user state
@@ -31,9 +32,9 @@ public class ThreadLocalDelegateExecutorFactoryTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testInjection()
+    public void testUserManagerAvailable()
     {
-        assertTrue("ThreadLocalDelegateExecutorFactory should be injectable", threadLocalDelegateExecutorFactory != null);
+        assertNotNull("ThreadLocalDelegateExecutorFactory should be available to plugins", threadLocalDelegateExecutorFactory);
     }
 
     @Test

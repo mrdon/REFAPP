@@ -30,13 +30,13 @@ public class PluginSettingsTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testInjection()
+    public void testPluginSettingsFactoryShouldBeAvailable()
     {
-        assertTrue("PluginSettingsFactory should be injectable", factory != null);
+        assertNotNull("PluginSettingsFactory should be available to plugins", factory);
     }
 
     @Test
-	public void testSaveString()
+	public void testStringMustBeSupported()
     {
         final PluginSettings settings = factory.createGlobalSettings();
         assertTrue("Global PluginSettings should be retrievable", settings != null);
@@ -49,7 +49,7 @@ public class PluginSettingsTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testSaveList()
+    public void testListMustBeSupported()
     {
         final PluginSettings settings = factory.createGlobalSettings();
         List<String> oldList = Arrays.asList("foo", "faa", "fee", "fuu");
@@ -61,7 +61,7 @@ public class PluginSettingsTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testSaveProperties()
+    public void testPropertiesMustBeSupported()
     {
         final PluginSettings settings = factory.createGlobalSettings();
         Properties oldProp = new Properties();
@@ -75,7 +75,7 @@ public class PluginSettingsTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testSaveMap()
+    public void testMapMustBeSupported()
     {
         final PluginSettings settings = factory.createGlobalSettings();
         Map<String, String> oldMap = new HashMap<String, String>();
@@ -89,7 +89,7 @@ public class PluginSettingsTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testSpecialCharacters()
+    public void testSpecialCharactersMustBeSupported()
     {
         final PluginSettings settings = factory.createGlobalSettings();
         Map<String, String> hashMap = new HashMap<String, String>();

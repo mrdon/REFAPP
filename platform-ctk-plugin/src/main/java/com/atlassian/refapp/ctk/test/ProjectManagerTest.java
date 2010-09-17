@@ -7,7 +7,7 @@ import com.atlassian.functest.junit.SpringAwareTestCase;
 import com.atlassian.sal.api.project.ProjectManager;
 
 import org.junit.Test;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 
 public class ProjectManagerTest extends SpringAwareTestCase
 {
@@ -19,15 +19,15 @@ public class ProjectManagerTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testInjection()
+    public void testProjectManagerAvailable()
     {
-        assertTrue("ProjectManager should be injectable", projectManager != null);
+        assertNotNull("ProjectManager must be available for plugins", projectManager);
     }
 
     @Test
-    public void testGetAllProjectKeys()
+    public void testGetAllProjectKeysMustNeverReturnNull()
     {
         final Collection<String> keys = projectManager.getAllProjectKeys();
-        assertTrue("Project manager should return keys: " + keys, keys != null);
+        assertNotNull("Project manager should return keys: " + keys, keys);
     }
 }

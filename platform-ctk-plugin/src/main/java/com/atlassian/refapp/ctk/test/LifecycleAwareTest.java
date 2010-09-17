@@ -18,9 +18,9 @@ public class LifecycleAwareTest extends SpringAwareTestCase implements Applicati
     }
 
     @Test
-    public void testCallCount()
+    public void testLifeCycleAwareComponentShouldBeStartedOnlyOnce()
     {
         MockedLifeCycleAwareComponent component = (MockedLifeCycleAwareComponent)applicationContext.getBean("mockedLifeCycleComponent");
-        assertTrue("LifecycleAware component should be called only once", component.getCalledCount() == 1);
+        assertTrue("LifecycleAware component should be started only once", component.getCalledCount() == 1);
     }
 }

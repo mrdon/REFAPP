@@ -12,6 +12,7 @@ import java.security.Principal;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 public class AuthenticationControllerTest extends SpringAwareTestCase
 {
@@ -23,16 +24,21 @@ public class AuthenticationControllerTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testInjection()
+    public void testAuthenticationControllerAvailable()
     {
-        assertTrue("AuthenticationController should be injectable", controller != null);
+        assertNotNull("AuthenticationController should be available to plugins", controller);
     }
 
     @Test
-    public void testShouldAttemptAuthentication()
+    public void testShouldAttemptAuthenticationWhenRequestUnauthenticated()
     {
-        assertTrue("should return true if not authenticated", controller.shouldAttemptAuthentication(createMockUnauthicatedRequest()));
-        assertFalse("should return false if already authenticated", controller.shouldAttemptAuthentication(createMockAuthicatedRequest("hoho")));
+        assertTrue("should return true if not authenticated", controller.shouldAttemptAuthentication(createMockUnauthenticatedRequest()));
+    }
+
+    @Test
+    public void testShouldNotAttemptAuthenticationWhenRequestAlreadyAuthenticated()
+    {
+        assertFalse("should return false if already authenticated", controller.shouldAttemptAuthentication(createMockAuthenticatedRequest("hoho")));
     }
 
     private HttpServletRequest createMockRequest()
@@ -45,14 +51,14 @@ public class AuthenticationControllerTest extends SpringAwareTestCase
         return request;
     }
 
-    private HttpServletRequest createMockUnauthicatedRequest()
+    private HttpServletRequest createMockUnauthenticatedRequest()
     {
         HttpServletRequest request = createMockRequest();
         Mockito.when(request.getUserPrincipal()).thenReturn(null);
         return request;
     }
 
-    private HttpServletRequest createMockAuthicatedRequest(String authenticatedUserName)
+    private HttpServletRequest createMockAuthenticatedRequest(String authenticatedUserName)
     {
         HttpServletRequest request = createMockRequest();
         Mockito.when(request.getUserPrincipal()).thenReturn(new DummyPrincipal(authenticatedUserName));

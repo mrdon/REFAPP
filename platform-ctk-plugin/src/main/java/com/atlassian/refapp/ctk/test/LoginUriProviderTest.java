@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 
 public class LoginUriProviderTest extends SpringAwareTestCase
 {
@@ -21,13 +22,13 @@ public class LoginUriProviderTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testInjection()
+    public void testLoginUriProviderAvailable()
     {
-        assertTrue("LoginUriProvider should be injectable", provider != null);
+        assertNotNull("LoginUriProvider should be available to plugins", provider);
     }
 
     @Test
-    public void testGetLoginUri() throws URISyntaxException, UnsupportedEncodingException
+    public void testGetLoginUriMustContainDestinationUri() throws URISyntaxException, UnsupportedEncodingException
     {
         String destUri = "http://server/dest.html?param=value";
         URI loginUri = provider.getLoginUri(new URI(destUri));
