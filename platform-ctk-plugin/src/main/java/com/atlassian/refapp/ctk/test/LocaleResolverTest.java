@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 
 public class LocaleResolverTest extends SpringAwareTestCase
 {
@@ -39,6 +40,20 @@ public class LocaleResolverTest extends SpringAwareTestCase
     @Test
     public void testGetLocaleNeverNull()
     {
-        assertNotNull("in worse case it should return the system default one but never null", localeResolver.getLocale(Mockito.mock(HttpServletRequest.class)));
+        assertNotNull("getLocale() never returns null", localeResolver.getLocale(Mockito.mock(HttpServletRequest.class)));
+    }
+
+    @Test
+    public void testGetLocaleFallbackToSystemDefaultInWorstCase()
+    {
+        assertEquals("in worse case it should return the system default one", Locale.getDefault(), localeResolver.getLocale(Mockito.mock(HttpServletRequest.class)));
+    }
+
+    @Test
+    public void testLocaleSpecifiedInRequestTakesPrecedenceOverSystemDefault()
+    {
+        HttpServletRequest mockedRequest = Mockito.mock(HttpServletRequest.class);
+        Mockito.when(mockedRequest.getLocale()).thenReturn(new Locale("ko", "kr"));
+        assertEquals("locale which the client prefers should take precedence over system default", new Locale("ko", "kr"), localeResolver.getLocale(mockedRequest));
     }
 }
