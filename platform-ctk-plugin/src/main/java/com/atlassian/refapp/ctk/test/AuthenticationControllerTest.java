@@ -3,6 +3,7 @@ package com.atlassian.refapp.ctk.test;
 import com.atlassian.functest.junit.SpringAwareTestCase;
 import com.atlassian.sal.api.auth.AuthenticationController;
 
+import com.atlassian.seraph.filter.BaseLoginFilter;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -62,6 +63,7 @@ public class AuthenticationControllerTest extends SpringAwareTestCase
     {
         HttpServletRequest request = createMockRequest();
         Mockito.when(request.getUserPrincipal()).thenReturn(new DummyPrincipal(authenticatedUserName));
+        Mockito.when(request.getAttribute(BaseLoginFilter.OS_AUTHSTATUS_KEY)).thenReturn(BaseLoginFilter.LOGIN_SUCCESS);
         return request;
     }
 

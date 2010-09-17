@@ -62,6 +62,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.atlassian.seraph</groupId>
+            <artifactId>atlassian-seraph</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-client</artifactId>
             <version>1.0.3-atlassian-1</version>
