@@ -45,6 +45,6 @@ public class MockedUpgradeTask implements PluginUpgradeTask
 
     public String getPluginKey()
     {
-        return "com.atlassian.sal.ctk";
+        return "com.atlassian.refapp.ctk";
     }
 }

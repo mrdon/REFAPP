@@ -133,13 +133,6 @@
         <interface>com.atlassian.sal.spi.HostContextAccessor</interface>
     </component>
 
-    <component key="pluginUpgradeManager" name="pluginUpgradeManager"
-               class="com.atlassian.refapp.sal.upgrade.RefImplPluginUpgradeManager"
-               system="true" public="true">
-        <interface>com.atlassian.sal.api.upgrade.PluginUpgradeManager</interface>
-        <interface>com.atlassian.sal.api.lifecycle.LifecycleAware</interface>
-    </component>
-
     <component key="salUserManager" name="User Manager"
                class="com.atlassian.refapp.sal.user.RefImplUserManager"
                system="true" public="true">
