@@ -44,9 +44,13 @@
 
     <servlet-filter key="login-filter" class="com.atlassian.seraph.filter.LoginFilter" location="before-login" weight="1000000">
         <url-pattern>/*</url-pattern>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>REQUEST</dispatcher>
     </servlet-filter>
     <servlet-filter key="security" class="com.atlassian.seraph.filter.SecurityFilter" location="before-login" weight="1000001">
         <url-pattern>/*</url-pattern>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>REQUEST</dispatcher>
         <init-param>
             <param-name>config.file</param-name>
             <param-value>/seraph-config.xml</param-value>
@@ -54,6 +58,8 @@
     </servlet-filter>
     <servlet-filter key="copy-authentication-context" class="com.atlassian.refapp.auth.internal.AuthenticationContextCopyFilter" location="before-login" weight="1000001">
         <url-pattern>/*</url-pattern>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>REQUEST</dispatcher>
     </servlet-filter>
 
     <servlet key="login-servlet" class="com.atlassian.refapp.auth.internal.LoginServlet">
