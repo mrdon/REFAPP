@@ -7,6 +7,7 @@
     
     <component-import key="templateRenderer" interface="com.atlassian.templaterenderer.velocity.one.six.VelocityTemplateRenderer" />
     <component-import key="webInterfaceManager" interface="com.atlassian.plugin.web.WebInterfaceManager"/>
+    <component-import key="webResourceManager" interface="com.atlassian.plugin.webresource.WebResourceManager" />
     <component-import key="userManager" interface="com.atlassian.sal.api.user.UserManager"/>
 
     <template-context-item key="webInterfaceManagerContextItem" context-key="webInterfaceManager"

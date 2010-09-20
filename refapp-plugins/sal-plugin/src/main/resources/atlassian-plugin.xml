@@ -9,6 +9,7 @@
     </plugin-info>
     
     <component-import key="pluginEventManager" interface="com.atlassian.plugin.event.PluginEventManager" />
+    <component-import key="pluginAccessor" interface="com.atlassian.plugin.PluginAccessor" />
 
     <component key="key-factory" class="com.atlassian.refapp.trustedapps.internal.KeyFactory" />
     <component key="encryption-provider" class="com.atlassian.security.auth.trustedapps.BouncyCastleEncryptionProvider" />
