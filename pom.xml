@@ -279,12 +279,12 @@
     <properties>
         <jdkLevel>1.5</jdkLevel>
         <plug.version>2.6.0</plug.version>
-        <sal.version>2.2.0</sal.version>
+        <sal.version>2.2.1</sal.version>
         <atr.version>1.2.0</atr.version>
         <apl.version>3.0-integdev-r107512</apl.version>
         <oauth.version>1.1.beta1</oauth.version>
-        <rest.version>2.2.0</rest.version>
-        <ajs.version>3.2-m1</ajs.version>
+        <rest.version>2.2.2</rest.version>
+        <ajs.version>3.2.0</ajs.version>
         <google.collections.version>1.0</google.collections.version>
     </properties>
 </project>
