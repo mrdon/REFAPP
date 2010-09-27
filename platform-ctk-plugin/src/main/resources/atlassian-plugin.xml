@@ -10,7 +10,7 @@
     <component-import key="i18nResolver" interface="com.atlassian.sal.api.message.I18nResolver" />
     <component-import key="localeResolver" interface="com.atlassian.sal.api.message.LocaleResolver" />
     <component-import key="pluginSettingsFactory" interface="com.atlassian.sal.api.pluginsettings.PluginSettingsFactory" />
-    <component-import key="requestFactory" interface="com.atlassian.sal.api.net.NonMarshallingRequestFactory" />
+    <component-import key="requestFactory" interface="com.atlassian.sal.api.net.RequestFactory" />
     <component-import key="projectManager" interface="com.atlassian.sal.api.project.ProjectManager" />
     <component-import key="pluginScheduler" interface="com.atlassian.sal.api.scheduling.PluginScheduler" />
     <component-import key="searchProvider" interface="com.atlassian.sal.api.search.SearchProvider" />
@@ -41,7 +41,7 @@
     </rest>
 
     <!-- declares different sets of the tests -->
-    <junit key="sal-test" cliPort="3333" package="com.atlassian.refapp.ctk.test"/>
+    <junit key="sal-test" cliPort="3333" package="com.atlassian.refapp.ctk.sal"/>
     <junit key="rest-test" cliPort="3333" package="com.atlassian.refapp.ctk.rest.tests"/>
     <junit key="ui-test" cliPort="3333" package="com.atlassian.refapp.ctk.ui.tests"/>
 

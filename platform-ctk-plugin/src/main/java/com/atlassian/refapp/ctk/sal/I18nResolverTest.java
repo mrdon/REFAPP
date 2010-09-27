@@ -1,4 +1,4 @@
-package com.atlassian.refapp.ctk.test;
+package com.atlassian.refapp.ctk.sal;
 
 import com.atlassian.functest.junit.SpringAwareTestCase;
 import com.atlassian.sal.api.message.I18nResolver;

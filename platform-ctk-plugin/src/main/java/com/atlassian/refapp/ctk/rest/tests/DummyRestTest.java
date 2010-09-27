@@ -39,8 +39,9 @@ public class DummyRestTest extends SpringAwareTestCase
     @Test
     public void testWithDummyRestWithParam() throws ResponseException
     {
-        URI uri = infoProvider.createLocalhostUriBuilder().path("rest").path("platform-ctk").path("latest").path("dummy").path("hello").build();
-        DummyRestResource.Result result = get(uri, DummyRestResource.Result.class, "who", "atlassian");
+        URI uri = infoProvider.createLocalhostUriBuilder().path("rest").path("platform-ctk").path("latest").path("dummy").path("hello").
+                queryParam("who", "atlassian").build();
+        DummyRestResource.Result result = get(uri, DummyRestResource.Result.class);
         assertNotNull(result);
         assertEquals("hello atlassian!", result.getMessage());
     }
@@ -50,14 +51,10 @@ public class DummyRestTest extends SpringAwareTestCase
         this.requestFactory = requestFactory;
     }
 
-    private <R> R get(URI uri, final Class<R> resultClass, String... queryParams)
+    private <R> R get(URI uri, final Class<R> resultClass)
             throws ResponseException
     {
         Request request = requestFactory.createRequest(Request.MethodType.GET, uri.toString());
-        if (queryParams != null)
-        {
-            request.addRequestParameters(queryParams);
-        }
         Object result = request.executeAndReturn(
                 new ReturningResponseHandler()
                 {

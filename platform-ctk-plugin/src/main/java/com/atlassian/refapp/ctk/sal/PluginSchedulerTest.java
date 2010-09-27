@@ -1,4 +1,4 @@
-package com.atlassian.refapp.ctk.test;
+package com.atlassian.refapp.ctk.sal;
 
 import java.security.SecureRandom;
 import java.util.Date;

@@ -68,6 +68,13 @@
         </dependency>
 
         <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>1.0.3-atlassian-1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>rome</groupId>
             <artifactId>rome</artifactId>
             <version>${rome.version}</version>
@@ -155,6 +162,17 @@
                 <groupId>net.sf.alchim</groupId>
                 <artifactId>yuicompressor-maven-plugin</artifactId>
                 <version>0.7.1</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>it/**/*</exclude>
+                        <exclude>**/*Abstract*</exclude>
+                        <exclude>**/*Mock*</exclude>
+                        <exclude>**/*$*</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
