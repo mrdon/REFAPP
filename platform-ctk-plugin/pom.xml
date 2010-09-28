@@ -144,7 +144,8 @@
                     <log4jProperties>src/test/resources/log4j.properties</log4jProperties>
                     <systemPropertyVariables>
                         <xvfb.enable>false</xvfb.enable>
-                        <baseurl>http://localhost:5990/refapp</baseurl>
+                        <baseurl>http://localhost:${http.port}/refapp</baseurl>
+                        <http.port>${http.port}</http.port>
                         <plugin.resource.directories>${basedir}/src/main/resources</plugin.resource.directories>
                         <webdriver.browser>htmlunit</webdriver.browser>
                     </systemPropertyVariables>
@@ -176,4 +177,8 @@
             </plugin>
         </plugins>
     </build>
+
+    <properties>
+        <http.port>5990</http.port>
+    </properties>
 </project>

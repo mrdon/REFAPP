@@ -7,23 +7,27 @@ import com.atlassian.webdriver.refapp.page.RefappPages;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.net.URL;
+
 import static com.google.common.base.Preconditions.checkState;
 
 public class UpmUiTest extends CtkSeleniumTest
 {
-    private static String PLUGIN_NAME = "Atlassian Who Am I Plugin";
-
     @Before
     public void loginAndLoadUpm() throws Exception
     {
         // TODO:Should be able to supply product instance here. Wait for newer atlassian-selenium.
+        String baseUrl = getInfoProvider().createLocalhostUriBuilder().build().toURL().toString();
+        System.setProperty("refapp-base-url", baseUrl);
+
         FirstPage page1 = RefappPages.FIRST_PAGE.get(getDriver());
         page1.get(false);
         page1.login(getInfoProvider().getAdminUsername(), getInfoProvider().getAdminPassword());
         checkState(page1.isLoggedIn());
         checkState(page1.isAdmin());
 
-        getDriver().navigate().to(getInfoProvider().createLocalhostUriBuilder().path("plugins").path("servlet").path("upm").build().toURL());
+        URL upmUrl = getInfoProvider().createLocalhostUriBuilder().path("plugins").path("servlet").path("upm").build().toURL();
+        getDriver().navigate().to(upmUrl);
     }
 
     @Test
