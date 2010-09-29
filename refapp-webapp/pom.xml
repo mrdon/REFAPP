@@ -53,6 +53,13 @@
                             <goal>start</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>stop-container</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
                 </executions>
                 <configuration>
                     <wait>${cargo.wait}</wait>
