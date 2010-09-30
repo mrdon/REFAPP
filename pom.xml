@@ -44,6 +44,32 @@
                 <artifactId>maven-bundle-plugin</artifactId>
                 <extensions>true</extensions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.atlassian.refappbuild</groupId>
+                        <artifactId>refappbuild-enforcer-rules</artifactId>
+                        <version>0.4.5</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>enforce_no_alpha_no_beta</id>
+                        <configuration>
+                            <rules>
+                                <myCustomRule implementation="com.atlassian.refappbuild.enforcerrules.RequireOnlyFinalDeps">
+                                    <groupIds>com.atlassian.sal,com.atlassian.plugins.rest,com.atlassian.plugins,com.atlassian.aui,com.atlassian.templaterenderer,com.atlassian.upm</groupIds>
+                                </myCustomRule>
+                            </rules>
+                        </configuration>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
