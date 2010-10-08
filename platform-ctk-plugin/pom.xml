@@ -42,7 +42,7 @@
         </dependency>
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
-            <artifactId>atlassian-plugins-core</artifactId>
+            <artifactId>atlassian-plugins-osgi</artifactId>
             <version>${plug.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -156,6 +156,13 @@
                             <version>${fp.version}</version>
                         </pluginArtifact>
                     </pluginArtifacts>
+                    <instructions>
+                        <Import-Package>
+                            com.atlassian.event;version="${event.version}",
+                            *;resolution:=optional
+                        </Import-Package>
+                    </instructions>
+                    
                </configuration>
            </plugin>
             <plugin>

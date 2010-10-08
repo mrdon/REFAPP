@@ -46,6 +46,11 @@
                 <artifactId>atlassian-plugins-main</artifactId>
                 <version>${plug.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.atlassian.event</groupId>
+                <artifactId>atlassian-event</artifactId>
+                <version>${event.version}</version>                
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

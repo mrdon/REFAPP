@@ -22,6 +22,7 @@
     <component-import key="authenticationListener" interface="com.atlassian.sal.api.auth.AuthenticationListener" />
     <component-import key="loginUriProvider" interface="com.atlassian.sal.api.auth.LoginUriProvider" />
     <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties" />
+    <component-import key="packageAdmin" interface="org.osgi.service.packageadmin.PackageAdmin" />
 
     <component key="refappInfoProvider" class="com.atlassian.refapp.ctk.refapp.RefappInfoProvider"/>
 
@@ -44,5 +45,6 @@
     <junit key="sal-test" cliPort="3333" package="com.atlassian.refapp.ctk.sal"/>
     <junit key="rest-test" cliPort="3333" package="com.atlassian.refapp.ctk.rest.tests"/>
     <junit key="ui-test" cliPort="3333" package="com.atlassian.refapp.ctk.ui.tests"/>
+    <junit key="export-test" cliPort="3333" package="com.atlassian.refapp.ctk.exports"/>
 
 </atlassian-plugin>

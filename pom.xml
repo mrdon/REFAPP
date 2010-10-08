@@ -323,6 +323,7 @@
         <upm.version>1.2.1</upm.version>
         <selenium.version>2.0.0-m7</selenium.version>
         <ajs.version>3.2-m1</ajs.version>
+        <event.version>2.0.4</event.version>
         <fp.version>0.2-alpha2</fp.version>
         <google.collections.version>1.0</google.collections.version>
         <rome.version>1.0</rome.version>
