@@ -78,6 +78,11 @@
                     <artifactId>cargo-maven2-plugin</artifactId>
                     <version>1.0-beta-2-db2</version>
                 </plugin>
+                <plugin>
+                    <groupId>net.sf.alchim</groupId>
+                    <artifactId>yuicompressor-maven-plugin</artifactId>
+                    <version>0.7.1</version>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -327,5 +332,6 @@
         <fp.version>0.2-alpha2</fp.version>
         <google.collections.version>1.0</google.collections.version>
         <rome.version>1.0</rome.version>
+        <amps.version>3.2.2</amps.version>
     </properties>
 </project>
