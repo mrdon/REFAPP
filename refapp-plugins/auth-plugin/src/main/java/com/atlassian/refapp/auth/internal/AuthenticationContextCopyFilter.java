@@ -16,6 +16,7 @@ public class AuthenticationContextCopyFilter implements Filter
 {
     private final AuthenticationContext authenticationContext;
     private SecurityConfig securityConfig;
+    private final ThreadLocal<Integer> entryCount = new ThreadLocal<Integer>();
     
     public AuthenticationContextCopyFilter(AuthenticationContext authenticationContext)
     {
@@ -34,12 +35,17 @@ public class AuthenticationContextCopyFilter implements Filter
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
     {
         authenticationContext.setUser(securityConfig.getAuthenticationContext().getUser());
+        entryCount.set(entryCount.get() == null ? 1 : entryCount.get() + 1);
         try
         {
             chain.doFilter(request, response);
         } finally
         {
-            authenticationContext.clearUser();
+            entryCount.set(entryCount.get() - 1);
+            if (entryCount.get() == 0)
+            {
+                authenticationContext.clearUser();
+            }
         }
     }
 
