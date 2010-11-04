@@ -99,6 +99,12 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>org.twdata.pkgscanner</groupId>
+            <artifactId>package-scanner</artifactId>
+            <version>0.9.4</version>
+        </dependency>
+
         <!--&lt;!&ndash; this should not be specific to refapp. will fix this later &ndash;&gt;-->
         <!--<dependency>-->
             <!--<groupId>com.atlassian.selenium</groupId>-->
@@ -125,12 +131,20 @@
 
     <build>
         <resources>
+            <!--<resource>-->
+                <!--<directory>src/main/resources</directory>-->
+                <!--<filtering>true</filtering>-->
+                <!--<includes>-->
+                    <!--<include>atlassian-plugin.xml</include>-->
+                <!--</includes>-->
+            <!--</resource>-->
             <resource>
-                <directory>src/main/resources</directory>
+                <directory>src/main/resources/com/atlassian/refapp/ctk/version</directory>
                 <filtering>true</filtering>
                 <includes>
-                    <include>atlassian-plugin.xml</include>
+                    <include>platformversions.xml</include>
                 </includes>
+                <targetPath>com/atlassian/refapp/ctk/version</targetPath>
             </resource>
         </resources>
         <plugins>
@@ -146,7 +160,7 @@
                         <xvfb.enable>false</xvfb.enable>
                         <baseurl>http://localhost:${http.port}/refapp</baseurl>
                         <http.port>${http.port}</http.port>
-                        <plugin.resource.directories>${basedir}/src/main/resources</plugin.resource.directories>
+                        <plugin.resource.directories>${basedir}/target/classes</plugin.resource.directories>
                         <webdriver.browser>htmlunit</webdriver.browser>
                     </systemPropertyVariables>
                     <pluginArtifacts>

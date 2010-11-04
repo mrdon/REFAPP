@@ -46,5 +46,6 @@
     <junit key="rest-test" cliPort="3333" package="com.atlassian.refapp.ctk.rest.tests"/>
     <junit key="ui-test" cliPort="3333" package="com.atlassian.refapp.ctk.ui.tests"/>
     <junit key="export-test" cliPort="3333" package="com.atlassian.refapp.ctk.exports"/>
+    <junit key="version-test" cliPort="3333" package="com.atlassian.refapp.ctk.version"/>
 
 </atlassian-plugin>

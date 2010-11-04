@@ -1,0 +1,9 @@
+<platform version="${project.version}">
+    <export-version-check package="com.atlassian.plugin" version="${plug.version}" modulename="Atlassian Plugin Framework"/>
+    <export-version-check package="com.atlassian.plugins.rest.common" version="${rest.version}" modulename="Atlassian Rest Framework"/>
+    <export-version-check package="com.atlassian.sal.api" version="${sal.version}" modulename="Shared Access Layer"/>
+    <export-version-check package="com.atlassian.event" version="${event.version}" modulename="Atlassian Event"/>
+    <export-version-check package="com.atlassian.upm.spi" version="${upm.version}" modulename="Atlassian Universal Plugin Manager Plugin"/>
+    <export-version-check package="com.atlassian.templaterenderer" version="${atr.version}" modulename="Atlassian Template Renderer"/>
+    <bundle-version-check bundlename="com.atlassian.auiplugin" version="${ajs.version}" modulename="Atlassian UI Plugin"/>
+</platform >
