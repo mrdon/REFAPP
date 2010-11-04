@@ -99,18 +99,18 @@
             </exclusions>
         </dependency>
 
-        <!-- this should not be specific to refapp. will fix this later -->
-        <dependency>
-            <groupId>com.atlassian.selenium</groupId>
-            <artifactId>atlassian-webdriver-refapp</artifactId>
-            <version>${selenium.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.atlassian.selenium</groupId>
-                    <artifactId>atlassian-webdriver-core</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!--&lt;!&ndash; this should not be specific to refapp. will fix this later &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>com.atlassian.selenium</groupId>-->
+            <!--<artifactId>atlassian-webdriver-refapp</artifactId>-->
+            <!--<version>${selenium.version}</version>-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>com.atlassian.selenium</groupId>-->
+                    <!--<artifactId>atlassian-webdriver-core</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+        <!--</dependency>-->
 
         <!-- just to make sure this gets built after refapp -->
         <dependency>
