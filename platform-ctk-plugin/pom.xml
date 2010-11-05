@@ -50,7 +50,7 @@
         <dependency>
             <groupId>com.atlassian.functest</groupId>
             <artifactId>functest-plugin</artifactId>
-            <version>${fp.version}</version>
+            <version>${fp.libversion}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -77,7 +77,7 @@
         <dependency>
             <groupId>rome</groupId>
             <artifactId>rome</artifactId>
-            <version>${rome.version}</version>
+            <version>${rome.libversion}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -167,7 +167,7 @@
                         <pluginArtifact>
                             <groupId>com.atlassian.functest</groupId>
                             <artifactId>functest-plugin</artifactId>
-                            <version>${fp.version}</version>
+                            <version>${fp.libversion}</version>
                         </pluginArtifact>
                     </pluginArtifacts>
                     <instructions>

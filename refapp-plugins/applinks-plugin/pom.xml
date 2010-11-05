@@ -17,7 +17,7 @@
             <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
                 <artifactId>maven-refapp-plugin</artifactId>
-                <version>${amps.version}</version>
+                <version>${amps.libversion}</version>
                 <extensions>true</extensions>
             </plugin>
         </plugins>
@@ -101,7 +101,7 @@
         <dependency>
             <groupId>com.atlassian.bundles</groupId>
             <artifactId>google-collections</artifactId>
-            <version>${google.collections.version}</version>
+            <version>${google.collections.libversion}</version>
             <scope>provided</scope>
         </dependency>
 		<dependency>
