@@ -19,6 +19,7 @@
         <module>SAL</module>
         <module>ATR</module>
         <module>UPM</module>
+        <module>OAUTH</module>
     </modules>
 
     <dependencies>

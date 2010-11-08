@@ -233,6 +233,21 @@
             <version>${event.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.atlassian.oauth</groupId>
+            <artifactId>atlassian-oauth-api</artifactId>
+            <version>${oauth.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.oauth</groupId>
+            <artifactId>atlassian-oauth-consumer-spi</artifactId>
+            <version>${oauth.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.oauth</groupId>
+            <artifactId>atlassian-oauth-service-provider-spi</artifactId>
+            <version>${oauth.version}</version>
+        </dependency>
+        <dependency>
             <groupId>opensymphony</groupId>
             <artifactId>sitemesh</artifactId>
             <version>2.4</version>
