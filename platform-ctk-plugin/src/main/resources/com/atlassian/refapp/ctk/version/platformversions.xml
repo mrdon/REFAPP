@@ -6,4 +6,4 @@
     <export-version-check package="com.atlassian.upm.spi" version="${upm.version}" modulename="Atlassian Universal Plugin Manager Plugin"/>
     <export-version-check package="com.atlassian.templaterenderer" version="${atr.version}" modulename="Atlassian Template Renderer"/>
     <bundle-version-check bundlename="com.atlassian.auiplugin" version="${ajs.version}" modulename="Atlassian UI Plugin"/>
-</platform >
+</platform>
