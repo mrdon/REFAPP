@@ -8,6 +8,7 @@ import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +53,9 @@ public class PluginSettingsTest extends SpringAwareTestCase
     public void testListMustBeSupported()
     {
         final PluginSettings settings = factory.createGlobalSettings();
-        List<String> oldList = Arrays.asList("foo", "faa", "fee", "fuu");
+        // TODO: Some serializers have trouble serializing Arrays$ArrayList so this is just a temporary work around to get the test working in most apps.
+        // TODO: Ideally we should test different implementations of List here REFAPP-166.
+        List<String> oldList = new ArrayList<String>(Arrays.asList("foo", "faa", "fee", "fuu"));
         settings.put("list", oldList);
 
         List<String> list = (List<String>) settings.get("list");
