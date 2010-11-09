@@ -42,18 +42,4 @@ public class LocaleResolverTest extends SpringAwareTestCase
     {
         assertNotNull("getLocale() never returns null", localeResolver.getLocale(Mockito.mock(HttpServletRequest.class)));
     }
-
-    @Test
-    public void testGetLocaleFallbackToSystemDefaultInWorstCase()
-    {
-        assertEquals("in worse case it should return the system default one", Locale.getDefault(), localeResolver.getLocale(Mockito.mock(HttpServletRequest.class)));
-    }
-
-    @Test
-    public void testLocaleSpecifiedInRequestTakesPrecedenceOverSystemDefault()
-    {
-        HttpServletRequest mockedRequest = Mockito.mock(HttpServletRequest.class);
-        Mockito.when(mockedRequest.getLocale()).thenReturn(new Locale("ko", "kr"));
-        assertEquals("locale which the client prefers should take precedence over system default", new Locale("ko", "kr"), localeResolver.getLocale(mockedRequest));
-    }
 }
