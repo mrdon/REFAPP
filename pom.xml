@@ -331,7 +331,7 @@
         <atr.version>1.2.3</atr.version>
 
         <apl.name>AppLinks</apl.name>
-        <apl.version>3.0-integdev-r107512</apl.version>
+        <apl.version>3.1</apl.version>
 
         <oauth.name>OAuth</oauth.name>
         <oauth.version>1.1</oauth.version>
@@ -347,6 +347,8 @@
 
         <event.name>Events</event.name>
         <event.version>2.0.4</event.version>
+
+        <trusted.version>2.2</trusted.version>
 
         <!-- libraries need to a .libversion suffix -->
         <selenium.libversion>2.0.0-m7</selenium.libversion>

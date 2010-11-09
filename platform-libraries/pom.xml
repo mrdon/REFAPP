@@ -66,6 +66,26 @@
                 <artifactId>atlassian-oauth-service-provider-spi</artifactId>
                 <version>${oauth.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.atlassian.security.auth.trustedapps</groupId>
+                <artifactId>atlassian-trusted-apps-core</artifactId>
+                <version>${trusted.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.applinks</groupId>
+                <artifactId>applinks-api</artifactId>
+                <version>${apl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.applinks</groupId>
+                <artifactId>applinks-host</artifactId>
+                <version>${apl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.applinks</groupId>
+                <artifactId>applinks-spi</artifactId>
+                <version>${apl.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

@@ -20,6 +20,8 @@
         <module>ATR</module>
         <module>UPM</module>
         <module>OAUTH</module>
+        <module>TRUST</module>
+        <module>APL</module>
     </modules>
 
     <dependencies>

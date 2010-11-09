@@ -67,7 +67,7 @@ public class WhoamiApplinksServlet extends HttpServlet
                     .createRequest(Request.MethodType.GET, ENDPOINT)
                     .execute(new ApplicationLinkResponseHandler()
                     {
-                        public void handle(final Response response) throws ResponseException
+                        public java.lang.Void handle(final Response response) throws ResponseException
                         {
                             if (response.isSuccessful())
                             {
@@ -87,11 +87,13 @@ public class WhoamiApplinksServlet extends HttpServlet
                                 status.set(AuthenticationStatus.COMMUNICATION_ERROR);
                                 errorMessage.set(String.format("%s: %s", response.getStatusCode(), response.getStatusText()));
                             }
+                            return null;
                         }
 
-                        public void credentialsRequired(final Response response) throws ResponseException
+                        public java.lang.Void credentialsRequired(final Response response) throws ResponseException
                         {
                             status.set(AuthenticationStatus.CREDENTIALS_REQUIRED);
+                            return null;
                         }
                     });
 
