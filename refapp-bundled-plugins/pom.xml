@@ -189,7 +189,7 @@
         </dependency>
         <dependency>
             <groupId>com.atlassian.oauth</groupId>
-            <artifactId>atlassian-whoami-plugin</artifactId>
+            <artifactId>atlassian-oauth-signature-generator-plugin</artifactId>
             <version>${oauth.version}</version>
             <scope>provided</scope>
         </dependency>
