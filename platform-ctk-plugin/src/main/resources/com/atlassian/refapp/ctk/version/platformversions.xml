@@ -6,7 +6,7 @@
     <export-version-check package="com.atlassian.upm.spi" version="${upm.version}" modulename="Atlassian Universal Plugin Manager Plugin"/>
     <export-version-check package="com.atlassian.templaterenderer" version="${atr.version}" modulename="Atlassian Template Renderer"/>
     <export-version-check package="com.atlassian.oauth" version="${oauth.version}" modulename="Atlassian OAuth"/>
-    <export-version-check package="com.atlassian.security.auth.trustedapps" version="${trusted.version}" modulename="Atlassian Trusted Apps"/>
+    <export-version-check package="com.atlassian.security.auth.trustedapps" version="${trust.version}" modulename="Atlassian Trusted Apps"/>
     <export-version-check package="com.atlassian.applinks.api" version="${apl.version}" modulename="Atlassian Application Links"/>
     <bundle-version-check bundlename="com.atlassian.auiplugin" version="${ajs.version}" modulename="Atlassian UI Plugin"/>
 </platform>

@@ -69,7 +69,7 @@
             <dependency>
                 <groupId>com.atlassian.security.auth.trustedapps</groupId>
                 <artifactId>atlassian-trusted-apps-core</artifactId>
-                <version>${trusted.version}</version>
+                <version>${trust.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.atlassian.applinks</groupId>

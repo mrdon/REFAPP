@@ -161,11 +161,11 @@
     <dependencies>
 
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>atlassian-refapp-bundled-plugins</artifactId>
+            <groupId>com.atlassian.refapp</groupId>
+            <artifactId>atlassian-platform</artifactId>
             <version>${project.version}</version>
-            <type>zip</type>
-            <scope>provided</scope>
+            <type>pom</type>
+            <scope>import</scope>
         </dependency>
 
         <dependency>
@@ -187,19 +187,16 @@
         <dependency>
             <groupId>com.atlassian.applinks</groupId>
             <artifactId>applinks-api</artifactId>
-            <version>${apl.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.applinks</groupId>
             <artifactId>applinks-host</artifactId>
-            <version>${apl.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.atlassian.applinks</groupId>
             <artifactId>applinks-spi</artifactId>
-            <version>${apl.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -230,27 +227,22 @@
         <dependency>
             <groupId>com.atlassian.event</groupId>
             <artifactId>atlassian-event</artifactId>
-            <version>${event.version}</version>
         </dependency>
         <dependency>
             <groupId>com.atlassian.oauth</groupId>
             <artifactId>atlassian-oauth-api</artifactId>
-            <version>${oauth.version}</version>
         </dependency>
         <dependency>
             <groupId>com.atlassian.oauth</groupId>
             <artifactId>atlassian-oauth-consumer-spi</artifactId>
-            <version>${oauth.version}</version>
         </dependency>
         <dependency>
             <groupId>com.atlassian.oauth</groupId>
             <artifactId>atlassian-oauth-service-provider-spi</artifactId>
-            <version>${oauth.version}</version>
         </dependency>
         <dependency>
             <groupId>com.atlassian.security.auth.trustedapps</groupId>
             <artifactId>atlassian-trusted-apps-core</artifactId>
-            <version>${trusted.version}</version>
         </dependency>
         <dependency>
             <groupId>opensymphony</groupId>
