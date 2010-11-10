@@ -19,6 +19,11 @@ public interface AppSpecificInfoProvider
     String getAdminPassword();
 
     /**
+     * @return the fullname of admin as stored within the app.
+     */
+    String getAdminFullname();
+
+    /**
      * @return return base context of the app which we're testing against.
      */
     String getBaseContext();

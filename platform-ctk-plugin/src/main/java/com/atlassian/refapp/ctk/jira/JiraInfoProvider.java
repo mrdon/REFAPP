@@ -18,6 +18,11 @@ public class JiraInfoProvider implements AppSpecificInfoProvider
         return "admin";
     }
 
+    public String getAdminFullname()
+    {
+        return "admin";
+    }
+
     public String getBaseContext()
     {
         return System.getProperty("context.path", "/jira");

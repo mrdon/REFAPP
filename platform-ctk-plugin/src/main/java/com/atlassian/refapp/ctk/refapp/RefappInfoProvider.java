@@ -22,6 +22,11 @@ public class RefappInfoProvider implements AppSpecificInfoProvider
         return "admin";
     }
 
+    public String getAdminFullname()
+    {
+        return "A. D. Ministrator (Sysadmin)";
+    }
+
     public String getBaseContext()
     {
         return System.getProperty("context.path", "/refapp");

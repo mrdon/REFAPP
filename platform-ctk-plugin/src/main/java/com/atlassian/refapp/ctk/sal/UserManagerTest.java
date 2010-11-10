@@ -90,7 +90,7 @@ public class UserManagerTest extends SpringAwareTestCase
     {
         UserProfile adminProfile = userManager.getUserProfile(infoProvider.getAdminUsername());
         assertEquals("admin profile should have appropriate admin username", infoProvider.getAdminUsername(), adminProfile.getUsername());
-        assertTrue(adminProfile.getFullName().contains("(Sysadmin)"));
+        assertEquals("admin fullname should match", adminProfile.getFullName(), infoProvider.getAdminFullname());
         assertTrue("this should return an email address", adminProfile.getEmail().contains("@"));
     }
 
