@@ -67,7 +67,7 @@ public class WhoamiApplinksServlet extends HttpServlet
                     .createRequest(Request.MethodType.GET, ENDPOINT)
                     .execute(new ApplicationLinkResponseHandler()
                     {
-                        public java.lang.Void handle(final Response response) throws ResponseException
+                        public Void handle(final Response response) throws ResponseException
                         {
                             if (response.isSuccessful())
                             {
@@ -90,7 +90,7 @@ public class WhoamiApplinksServlet extends HttpServlet
                             return null;
                         }
 
-                        public java.lang.Void credentialsRequired(final Response response) throws ResponseException
+                        public Void credentialsRequired(final Response response) throws ResponseException
                         {
                             status.set(AuthenticationStatus.CREDENTIALS_REQUIRED);
                             return null;
