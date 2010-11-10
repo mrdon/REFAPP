@@ -38,7 +38,8 @@ public class SearchProviderTest extends SpringAwareTestCase
     @Test
     public void testSearchButNoMatch()
     {
-        final SearchResults sresults = searchProvider.search(null, "superweirdsearchtermwahaha");
+        final SearchResults sresults = searchProvider.search(infoProvider.getAdminUsername(),
+                                                             "superweirdsearchtermwahaha");
 
         assertNotNull("Should never return null", sresults);
         assertTrue("Search time should be greater than zero", sresults.getSearchTime() > 0);
