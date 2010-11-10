@@ -162,6 +162,7 @@
                         <http.port>${http.port}</http.port>
                         <plugin.resource.directories>${basedir}/target/classes</plugin.resource.directories>
                         <webdriver.browser>htmlunit</webdriver.browser>
+                        <platform.ctk.testedapp>refapp</platform.ctk.testedapp>
                     </systemPropertyVariables>
                     <pluginArtifacts>
                         <pluginArtifact>
@@ -172,8 +173,7 @@
                     </pluginArtifacts>
                     <instructions>
                         <Import-Package>
-                            com.atlassian.event;version="${event.version}",
-                            *;resolution:=optional
+                            com.atlassian.event,*;resolution:=optional
                         </Import-Package>
                     </instructions>
                     

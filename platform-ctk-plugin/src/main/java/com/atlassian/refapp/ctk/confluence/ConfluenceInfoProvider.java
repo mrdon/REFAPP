@@ -1,16 +1,12 @@
-package com.atlassian.refapp.ctk.refapp;
-
-import javax.ws.rs.core.UriBuilder;
+package com.atlassian.refapp.ctk.confluence;
 
 import com.atlassian.refapp.ctk.AppSpecificInfoProvider;
 import com.google.common.collect.Sets;
 
+import javax.ws.rs.core.UriBuilder;
 import java.util.Set;
 
-/**
- * Info provider for refapp which has "admin"/"admin" user pass as default.
- */
-public class RefappInfoProvider implements AppSpecificInfoProvider
+public class ConfluenceInfoProvider implements AppSpecificInfoProvider
 {
     public String getAdminUsername()
     {
@@ -24,22 +20,22 @@ public class RefappInfoProvider implements AppSpecificInfoProvider
 
     public String getBaseContext()
     {
-        return System.getProperty("context.path", "/refapp");
+        return System.getProperty("context.path", "/confluence");
     }
 
     public String getPort()
     {
-        return System.getProperty("http.port", "5990");
+        return System.getProperty("http.port", "1990");
     }
 
     public String getMatchingSearchTerm()
     {
-        return "refapp";
+        return "confluence";
     }
 
     public Set<String> getExpectedMatchingContents()
     {
-        return Sets.newHashSet("http://foo.com", "http://bar.com");
+        return Sets.newHashSet("A note to Confluence administrators", "Home");
     }
 
     public Integer getPortValue()

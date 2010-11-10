@@ -3,6 +3,7 @@ package com.atlassian.refapp.ctk.sal;
 import com.atlassian.functest.junit.SpringAwareTestCase;
 
 import com.atlassian.refapp.ctk.AppSpecificInfoProvider;
+import com.atlassian.refapp.ctk.AppSpecificInfoProviderFactory;
 import com.atlassian.sal.api.user.UserManager;
 
 import com.atlassian.sal.api.user.UserProfile;
@@ -19,16 +20,11 @@ import static org.junit.Assert.assertEquals;
 public class UserManagerTest extends SpringAwareTestCase
 {
     private UserManager userManager;
-    private AppSpecificInfoProvider infoProvider;
+    private AppSpecificInfoProvider infoProvider = AppSpecificInfoProviderFactory.create();
 
     public void setUserManager(UserManager userManager)
     {
         this.userManager = userManager;
-    }
-
-    public void setInfoProvider(AppSpecificInfoProvider infoProvider)
-    {
-        this.infoProvider = infoProvider;
     }
 
     @Test

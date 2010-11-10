@@ -1,16 +1,12 @@
-package com.atlassian.refapp.ctk.refapp;
-
-import javax.ws.rs.core.UriBuilder;
+package com.atlassian.refapp.ctk.jira;
 
 import com.atlassian.refapp.ctk.AppSpecificInfoProvider;
 import com.google.common.collect.Sets;
 
+import javax.ws.rs.core.UriBuilder;
 import java.util.Set;
 
-/**
- * Info provider for refapp which has "admin"/"admin" user pass as default.
- */
-public class RefappInfoProvider implements AppSpecificInfoProvider
+public class JiraInfoProvider implements AppSpecificInfoProvider
 {
     public String getAdminUsername()
     {
@@ -24,7 +20,7 @@ public class RefappInfoProvider implements AppSpecificInfoProvider
 
     public String getBaseContext()
     {
-        return System.getProperty("context.path", "/refapp");
+        return System.getProperty("context.path", "/jira");
     }
 
     public String getPort()
@@ -34,7 +30,7 @@ public class RefappInfoProvider implements AppSpecificInfoProvider
 
     public String getMatchingSearchTerm()
     {
-        return "refapp";
+        return "jira";
     }
 
     public Set<String> getExpectedMatchingContents()

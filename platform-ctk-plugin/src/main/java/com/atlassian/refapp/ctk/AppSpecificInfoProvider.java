@@ -34,9 +34,9 @@ public interface AppSpecificInfoProvider
     public String getMatchingSearchTerm();
 
     /**
-     * @return urls which must match given the search is performed using {@link #getMatchingSearchTerm()}.
+     * @return contents (keywords, url components, or excerpts) expected within results given the search is performed using {@link #getMatchingSearchTerm()}.
      */
-    public Set<String> getExpectedMatchingUrls();
+    public Set<String> getExpectedMatchingContents();
 
     /**
      * @return the {@code Integer} value of {@code getPort()}

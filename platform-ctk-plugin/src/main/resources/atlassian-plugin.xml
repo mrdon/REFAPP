@@ -24,8 +24,6 @@
     <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties" />
     <component-import key="packageAdmin" interface="org.osgi.service.packageadmin.PackageAdmin" />
 
-    <component key="refappInfoProvider" class="com.atlassian.refapp.ctk.refapp.RefappInfoProvider"/>
-
     <!-- We use this to track LifeCycleAware callbacks. -->
     <component key="mockedLifeCycleComponent" class="com.atlassian.refapp.ctk.MockedLifeCycleAwareComponent" public="true">
         <interface>com.atlassian.sal.api.lifecycle.LifecycleAware</interface>
