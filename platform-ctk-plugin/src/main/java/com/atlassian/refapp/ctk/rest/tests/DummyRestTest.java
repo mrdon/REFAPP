@@ -51,6 +51,7 @@ public class DummyRestTest extends SpringAwareTestCase
             throws ResponseException
     {
         Request request = requestFactory.createRequest(Request.MethodType.GET, uri.toString());
+        request.setRequestContentType("application/xml");
         Object result = request.executeAndReturn(
                 new ReturningResponseHandler()
                 {
