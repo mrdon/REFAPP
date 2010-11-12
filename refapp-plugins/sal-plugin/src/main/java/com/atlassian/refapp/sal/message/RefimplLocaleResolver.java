@@ -15,24 +15,24 @@ public class RefimplLocaleResolver implements LocaleResolver
         String lang = request.getParameter("locale.lang");
         String variant = request.getParameter("locale.variant");
 
-        Locale locale;
         if (lang != null && country != null && variant != null)
         {
-            locale = new Locale(lang, country, variant);
+            return new Locale(lang, country, variant);
         }
         else if (lang != null && country != null)
         {
-            locale = new Locale(lang, country);
+            return new Locale(lang, country);
         }
         else if (lang != null)
         {
-            locale = new Locale(lang);
+            return new Locale(lang);
         }
-        else
+        else if (request.getLocale() != null)
         {
-            locale = request.getLocale();
+            return request.getLocale();
         }
-        return locale;
+
+        return Locale.getDefault();
     }
 
     public Set<Locale> getSupportedLocales()
