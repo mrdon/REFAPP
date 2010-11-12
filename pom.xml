@@ -45,6 +45,15 @@
                 <extensions>true</extensions>
             </plugin>
         </plugins>
+         <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.twdata.maven</groupId>
+                    <artifactId>cargo-maven2-plugin</artifactId>
+                    <version>1.0-beta-2-db2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <profiles>
