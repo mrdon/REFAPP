@@ -1,5 +1,7 @@
 package com.atlassian.refapp.sal.license;
 
+import com.atlassian.license.LicenseException;
+import com.atlassian.license.ng.LicenseManager;
 import com.atlassian.sal.api.license.LicenseHandler;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,5 +21,14 @@ public class RefimplLicenseHandler implements LicenseHandler
     public void setLicense(String license)
     {
         log.info("Setting license "+license);
+        try
+        {
+            LicenseManager.registerLicense(license);
+        }
+        catch (LicenseException e)
+        {
+            throw new IllegalArgumentException(e);
+        }
+
     }
 }
