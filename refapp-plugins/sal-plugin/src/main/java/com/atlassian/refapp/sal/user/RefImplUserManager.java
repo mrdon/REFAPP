@@ -103,6 +103,10 @@ public class RefImplUserManager implements com.atlassian.sal.api.user.UserManage
         {
             final User user = userManager.getUser(username);
             final Group adminGroup = groupManager.getGroup(group);
+            if ((user == null) || (adminGroup == null))
+            {
+                return false;
+            }
             return groupManager.hasMembership(adminGroup, user);
         }
         catch (final EntityException e)
