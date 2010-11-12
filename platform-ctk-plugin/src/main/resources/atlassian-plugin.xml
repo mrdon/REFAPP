@@ -41,6 +41,5 @@
 
     <!-- declares different sets of the tests -->
     <junit key="standard-test" cliPort="3333" packages="com.atlassian.refapp.ctk.sal,com.atlassian.refapp.ctk.rest.tests,com.atlassian.refapp.ctk.version"/>
-    <junit key="ui-test" cliPort="3333" packages="com.atlassian.refapp.ctk.ui.tests"/>
 
 </atlassian-plugin>
