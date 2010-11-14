@@ -17,6 +17,22 @@
                 <version>${sal.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.atlassian.sal</groupId>
+                <artifactId>sal-spi</artifactId>
+                <version>${sal.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.sal</groupId>
+                <artifactId>sal-spring</artifactId>
+                <version>${sal.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.atlassian.sal</groupId>
+                        <artifactId>sal-spi</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
                 <groupId>com.atlassian.plugins</groupId>
                 <artifactId>atlassian-plugins-core</artifactId>
                 <version>${plug.version}</version>
