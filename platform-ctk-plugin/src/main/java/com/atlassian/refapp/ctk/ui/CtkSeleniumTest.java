@@ -5,7 +5,6 @@ import java.util.List;
 import com.atlassian.functest.selenium.webdriver.AbstractSeleniumTestCase;
 import com.atlassian.refapp.ctk.AppSpecificInfoProvider;
 
-import com.atlassian.refapp.ctk.AppSpecificInfoProviderFactory;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By;
 
@@ -13,8 +12,6 @@ import static org.junit.Assert.assertTrue;
 
 public class CtkSeleniumTest extends AbstractSeleniumTestCase
 {
-    private AppSpecificInfoProvider infoProvider = AppSpecificInfoProviderFactory.create();
-
     public void assertTextPresent(String text)
     {
         assertTrue("Should contain '" + text + "'", getDriver().getPageSource().contains(text));

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.atlassian.functest.junit.SpringAwareTestCase;
 import com.atlassian.refapp.ctk.AppSpecificInfoProvider;
-import com.atlassian.refapp.ctk.AppSpecificInfoProviderFactory;
 import com.atlassian.refapp.ctk.rest.DummyRestResource;
 
 import com.atlassian.sal.api.net.Request;
@@ -20,7 +19,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class DummyRestTest extends SpringAwareTestCase
 {
-    private AppSpecificInfoProvider infoProvider = AppSpecificInfoProviderFactory.create();
+    private AppSpecificInfoProvider infoProvider;
     private RequestFactory requestFactory;
 
     @Test
@@ -45,6 +44,11 @@ public class DummyRestTest extends SpringAwareTestCase
     public void setRequestFactory(RequestFactory requestFactory)
     {
         this.requestFactory = requestFactory;
+    }
+
+    public void setInfoProvider(AppSpecificInfoProvider infoProvider)
+    {
+        this.infoProvider = infoProvider;
     }
 
     private <R> R get(URI uri, final Class<R> resultClass)

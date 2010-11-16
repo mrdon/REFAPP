@@ -3,14 +3,10 @@ package com.atlassian.refapp.ctk.sal;
 import com.atlassian.functest.junit.SpringAwareTestCase;
 
 import com.atlassian.refapp.ctk.AppSpecificInfoProvider;
-import com.atlassian.refapp.ctk.AppSpecificInfoProviderFactory;
 import com.atlassian.sal.api.search.SearchMatch;
 import com.atlassian.sal.api.search.SearchProvider;
 import com.atlassian.sal.api.search.SearchResults;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
 import org.junit.Test;
 
 import java.util.Set;
@@ -22,11 +18,16 @@ import static org.junit.Assert.assertNotNull;
 public class SearchProviderTest extends SpringAwareTestCase
 {
     private SearchProvider searchProvider;
-    private AppSpecificInfoProvider infoProvider = AppSpecificInfoProviderFactory.create();
+    private AppSpecificInfoProvider infoProvider;
 
     public void setSearchProvider(SearchProvider searchProvider)
     {
         this.searchProvider = searchProvider;
+    }
+
+    public void setInfoProvider(AppSpecificInfoProvider infoProvider)
+    {
+        this.infoProvider = infoProvider;
     }
 
     @Test
