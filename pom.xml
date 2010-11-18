@@ -16,13 +16,11 @@
         <url>http://www.atlassian.com</url>
     </organization>
     <modules>
-        <module>platform-libraries</module>
-        <module>platform-plugins</module>
+        <module>atlassian-platform</module>
         <module>refapp-plugins</module>
         <module>refapp-bundled-plugins</module>
         <module>refapp-webapp</module>
         <module>platform-ctk-plugin</module>
-        <module>atlassian-platform</module>
     </modules>
     <scm>
         <connection>scm:svn:https://studio.atlassian.com/svn/REFAPP/trunk</connection>
