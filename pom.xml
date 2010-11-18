@@ -293,7 +293,7 @@
         <atr.version>1.2.3</atr.version>
         <apl.version>3.0-integdev-r107512</apl.version>
         <oauth.version>1.1.beta1</oauth.version>
-        <rest.version>2.2.2</rest.version>
+        <rest.version>2.2.3</rest.version>
         <ajs.version>3.2.0</ajs.version>
         <google.collections.version>1.0</google.collections.version>
         <fp.version>0.2-alpha5</fp.version>
