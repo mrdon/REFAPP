@@ -20,7 +20,11 @@
                 <groupId>com.atlassian.upm</groupId>
                 <artifactId>atlassian-universal-plugin-manager-plugin</artifactId>
                 <version>${upm.version}</version>
-                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.upm</groupId>
+                <artifactId>spi</artifactId>
+                <version>${upm.version}</version>
             </dependency>
             
             <!-- SAL -->
@@ -29,28 +33,39 @@
                 <artifactId>sal-api</artifactId>
                 <version>${sal.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.atlassian.sal</groupId>
+                <artifactId>sal-core</artifactId>
+                <version>${sal.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.sal</groupId>
+                <artifactId>sal-spi</artifactId>
+                <version>${sal.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.sal</groupId>
+                <artifactId>sal-test-resources</artifactId>
+                <version>${sal.version}</version>
+            </dependency>
 
             <!-- ATR -->
             <dependency>
                 <groupId>com.atlassian.templaterenderer</groupId>
                 <artifactId>atlassian-template-renderer-api</artifactId>
                 <version>${atr.version}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.atlassian.templaterenderer</groupId>
                 <artifactId>atlassian-template-renderer-velocity16-plugin</artifactId>
                 <version>${atr.version}</version>
-                <scope>provided</scope>
             </dependency>
-            
             
             <!-- AJS -->
             <dependency>
                 <groupId>com.atlassian.aui</groupId>
                 <artifactId>auiplugin</artifactId>
                 <version>${ajs.version}</version>
-                <scope>provided</scope>
             </dependency>
 
             <!-- REST -->
@@ -58,14 +73,16 @@
                 <groupId>com.atlassian.plugins.rest</groupId>
                 <artifactId>atlassian-rest-module</artifactId>
                 <version>${rest.version}</version>
-                <scope>provided</scope>
             </dependency>
-
             <dependency>
                 <groupId>com.atlassian.plugins.rest</groupId>
                 <artifactId>atlassian-rest-common</artifactId>
                 <version>${rest.version}</version>
-                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.plugins.rest</groupId>
+                <artifactId>com.atlassian.jersey-library</artifactId>
+                <version>${rest.version}</version>
             </dependency>
 
             <!-- PLUG -->
@@ -99,6 +116,11 @@
                 <artifactId>atlassian-plugins-main</artifactId>
                 <version>${plug.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.atlassian.plugins</groupId>
+                <artifactId>atlassian-plugins-spring</artifactId>
+                <version>${plug.version}</version>
+            </dependency>
 
             <!-- EVENT -->
             <dependency>
@@ -127,37 +149,47 @@
                 <groupId>com.atlassian.oauth</groupId>
                 <artifactId>atlassian-oauth-consumer-sal-plugin</artifactId>
                 <version>${oauth.version}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.atlassian.oauth</groupId>
                 <artifactId>atlassian-oauth-consumer-plugin</artifactId>
                 <version>${oauth.version}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.atlassian.oauth</groupId>
                 <artifactId>atlassian-oauth-service-provider-plugin</artifactId>
                 <version>${oauth.version}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.atlassian.oauth</groupId>
                 <artifactId>atlassian-oauth-service-provider-sal-plugin</artifactId>
                 <version>${oauth.version}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.atlassian.oauth</groupId>
                 <artifactId>atlassian-oauth-admin-plugin</artifactId>
                 <version>${oauth.version}</version>
-                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.oauth</groupId>
+                <artifactId>atlassian-oauth-bridge</artifactId>
+                <version>${oauth.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.oauth</groupId>
+                <artifactId>atlassian-whoami-plugin</artifactId>
+                <version>${oauth.version}</version>
             </dependency>
 
             <!-- TRUST -->
             <dependency>
                 <groupId>com.atlassian.security.auth.trustedapps</groupId>
                 <artifactId>atlassian-trusted-apps-core</artifactId>
+                <version>${trust.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.security.auth.trustedapps</groupId>
+                <artifactId>atlassian-trusted-apps-seraph-integration</artifactId>
                 <version>${trust.version}</version>
             </dependency>
 
