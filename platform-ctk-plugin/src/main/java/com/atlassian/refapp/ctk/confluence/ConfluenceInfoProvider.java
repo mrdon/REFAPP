@@ -20,7 +20,7 @@ public class ConfluenceInfoProvider implements AppSpecificInfoProvider
 
     public String getAdminFullname()
     {
-        return "admin";
+        return "A. D. Ministrator";
     }
 
     public String getBaseContext()
@@ -40,7 +40,7 @@ public class ConfluenceInfoProvider implements AppSpecificInfoProvider
 
     public Set<String> getExpectedMatchingContents()
     {
-        return Sets.newHashSet("A note to Confluence administrators", "Home");
+        return Sets.newHashSet("confluence");
     }
 
     public Integer getPortValue()

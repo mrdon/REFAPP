@@ -172,7 +172,11 @@
                     </pluginArtifacts>
                     <instructions>
                         <Import-Package>
-                            com.atlassian.event,*;resolution:=optional
+                            com.atlassian.event,
+                            com.atlassian.functest.junit,
+                            com.atlassian.functest.api,
+                            org.junit*,
+                            *;resolution:=optional
                         </Import-Package>
                     </instructions>
                     
