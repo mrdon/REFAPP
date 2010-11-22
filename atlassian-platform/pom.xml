@@ -139,11 +139,23 @@
                 <groupId>com.atlassian.oauth</groupId>
                 <artifactId>atlassian-oauth-consumer-spi</artifactId>
                 <version>${oauth.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>net.sourceforge.findbugs</groupId>
+                        <artifactId>jsr305</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.atlassian.oauth</groupId>
                 <artifactId>atlassian-oauth-service-provider-spi</artifactId>
                 <version>${oauth.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>net.sourceforge.findbugs</groupId>
+                        <artifactId>jsr305</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.atlassian.oauth</groupId>
@@ -164,6 +176,12 @@
                 <groupId>com.atlassian.oauth</groupId>
                 <artifactId>atlassian-oauth-service-provider-sal-plugin</artifactId>
                 <version>${oauth.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>net.sourceforge.findbugs</groupId>
+                        <artifactId>jsr305</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.atlassian.oauth</groupId>
