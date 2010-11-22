@@ -55,6 +55,7 @@ public class DummyRestTest extends SpringAwareTestCase
             throws ResponseException
     {
         Request request = requestFactory.createRequest(Request.MethodType.GET, uri.toString());
+        request.addBasicAuthentication(infoProvider.getAdminUsername(), infoProvider.getAdminPassword());
         request.setRequestContentType("application/xml");
         Object result = request.executeAndReturn(
                 new ReturningResponseHandler()

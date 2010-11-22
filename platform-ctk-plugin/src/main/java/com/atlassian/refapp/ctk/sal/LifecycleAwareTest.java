@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 import org.junit.Test;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 public class LifecycleAwareTest extends SpringAwareTestCase implements ApplicationContextAware
 {
@@ -21,6 +21,6 @@ public class LifecycleAwareTest extends SpringAwareTestCase implements Applicati
     public void testLifeCycleAwareComponentShouldBeStartedOnlyOnce()
     {
         MockedLifeCycleAwareComponent component = (MockedLifeCycleAwareComponent)applicationContext.getBean("mockedLifeCycleComponent");
-        assertTrue("LifecycleAware component should be started only once", component.getCalledCount() == 1);
+        assertEquals("LifecycleAware component should be started only once", 1, component.getCalledCount());
     }
 }
