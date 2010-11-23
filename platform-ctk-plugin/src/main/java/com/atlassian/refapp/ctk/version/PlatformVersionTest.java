@@ -1,6 +1,7 @@
 package com.atlassian.refapp.ctk.version;
 
 import com.atlassian.functest.junit.SpringAwareTestCase;
+import com.atlassian.plugin.util.VersionStringComparator;
 import com.atlassian.refapp.ctk.PlatformVersionSpecReader;
 import com.atlassian.refapp.ctk.PlatformVersionSpecReader.VersionCheck;
 import com.atlassian.refapp.ctk.PlatformVersionSpecReader.ExportVersionCheck;
@@ -17,6 +18,9 @@ import static org.junit.Assert.fail;
 
 public class PlatformVersionTest extends SpringAwareTestCase
 {
+    private static final DefaultOsgiVersionConverter VERSION_CONVERTER = new DefaultOsgiVersionConverter();
+    private static final VersionStringComparator VERSION_COMPARATOR = new VersionStringComparator();
+
     private PackageAdmin packageAdmin;
 
     public void setPackageAdmin(PackageAdmin packageAdmin)
@@ -40,7 +44,7 @@ public class PlatformVersionTest extends SpringAwareTestCase
             {
                 ExportVersionCheck exportCheck = (ExportVersionCheck) check;
                 final ExportedPackage export = packageAdmin.getExportedPackage(exportCheck.getPkg());
-                if (export == null || !export.getVersion().toString().equals(getOsgiVersion(exportCheck.getVersion())))
+                if (export == null || !isSameOrNewerVersion(getOsgiVersion(exportCheck.getVersion()), export.getVersion().toString()))
                 {
                     sb.append("Atlassian Platform ");
                     sb.append(platformVersion);
@@ -69,7 +73,7 @@ public class PlatformVersionTest extends SpringAwareTestCase
                     // the version we expect must be found.
                     for(Bundle bundle:bundles)
                     {
-                        if (bundle.getVersion().toString().equals(getOsgiVersion(bundleCheck.getVersion())))
+                        if (isSameOrNewerVersion(getOsgiVersion(bundleCheck.getVersion()), bundle.getVersion().toString()))
                         {
                             found = true;
                             break;
@@ -97,11 +101,19 @@ public class PlatformVersionTest extends SpringAwareTestCase
     }
 
     /**
-     * Converts maven versions to OSGi format.
+     * Converts a maven version to OSGi format.
      */
     private static String getOsgiVersion(String version)
     {
-        DefaultOsgiVersionConverter converter = new DefaultOsgiVersionConverter();
-        return converter.getVersion(version);
+        return VERSION_CONVERTER.getVersion(version);
+    }
+
+    /**
+     * Returns true if the actualVersion is same or newer than the specVersion.
+     * The versions here are assumed to be in OSGi format.
+     */
+    protected static boolean isSameOrNewerVersion(String specVersion, String actualVersion)
+    {
+        return VERSION_COMPARATOR.compare(specVersion, actualVersion) <= 0;
     }
 }
