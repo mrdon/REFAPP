@@ -1,0 +1,4 @@
+<platform version="1.2.3">
+    <export-version-check package="package1" version="5.5.5" modulename="package1name"/>
+    <bundle-version-check bundlename="bundle1" version="6.6.6" modulename="bundle1name"/>
+</platform>

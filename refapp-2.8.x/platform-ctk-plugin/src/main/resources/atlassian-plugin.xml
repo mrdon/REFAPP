@@ -1,0 +1,54 @@
+<atlassian-plugin key="com.atlassian.refapp.ctk" name="${project.name}" system="false" pluginsVersion="2">
+    <plugin-info>
+        <description>A Compatibility Test Kit</description>
+        <vendor name="Atlassian Software Systems" url="http://www.atlassian.com"/>
+        <version>${pom.version}</version>
+    </plugin-info>
+
+    <component-import key="loc" interface="com.atlassian.sal.api.license.LicenseHandler" />
+    <component-import key="lifecycleManager" interface="com.atlassian.sal.api.lifecycle.LifecycleManager" />
+    <component-import key="i18nResolver" interface="com.atlassian.sal.api.message.I18nResolver" />
+    <component-import key="localeResolver" interface="com.atlassian.sal.api.message.LocaleResolver" />
+    <component-import key="pluginSettingsFactory" interface="com.atlassian.sal.api.pluginsettings.PluginSettingsFactory" />
+    <component-import key="requestFactory" interface="com.atlassian.sal.api.net.RequestFactory" />
+    <component-import key="projectManager" interface="com.atlassian.sal.api.project.ProjectManager" />
+    <component-import key="pluginScheduler" interface="com.atlassian.sal.api.scheduling.PluginScheduler" />
+    <component-import key="searchProvider" interface="com.atlassian.sal.api.search.SearchProvider" />
+    <component-import key="transactionTemplate" interface="com.atlassian.sal.api.transaction.TransactionTemplate" />
+    <component-import key="salUserManager" interface="com.atlassian.sal.api.user.UserManager" />
+    <component-import key="pluginUpgradeManager" interface="com.atlassian.sal.api.upgrade.PluginUpgradeManager" />
+    <component-import key="threadLocalDelegateExecutorFactory" interface="com.atlassian.sal.api.executor.ThreadLocalDelegateExecutorFactory" />
+    <component-import key="authenticationController" interface="com.atlassian.sal.api.auth.AuthenticationController" />
+    <component-import key="authenticationListener" interface="com.atlassian.sal.api.auth.AuthenticationListener" />
+    <component-import key="loginUriProvider" interface="com.atlassian.sal.api.auth.LoginUriProvider" />
+    <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties" />
+    <component-import key="packageAdmin" interface="org.osgi.service.packageadmin.PackageAdmin" />
+    
+    <component key="refappInfoProvider" class="com.atlassian.refapp.ctk.refapp.RefappInfoProvider" application="refapp"/>
+    <component key="confluenceInfoProvider" class="com.atlassian.refapp.ctk.confluence.ConfluenceInfoProvider" application="confluence"/>
+    <component key="jiraInfoProvider" class="com.atlassian.refapp.ctk.jira.JiraInfoProvider" application="jira"/>
+
+    <!-- We use this to track LifeCycleAware callbacks. -->
+    <component key="mockedLifeCycleComponent" class="com.atlassian.refapp.ctk.MockedLifeCycleAwareComponent" public="true">
+        <interface>com.atlassian.sal.api.lifecycle.LifecycleAware</interface>
+    </component>
+
+    <!--  We use this to track operations exerted by upgrade manager. -->
+    <component key="mockedUpgradeTask" class="com.atlassian.refapp.ctk.MockedUpgradeTask" public="true">
+        <interface>com.atlassian.sal.api.upgrade.PluginUpgradeTask</interface>
+    </component>
+
+    <rest key="dummyrest" path="/platform-ctk" version="1.0" class="com.atlassian.refapp.ctk.rest.DummyRestResource">
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </rest>
+
+    <!-- declares different sets of the tests -->
+    <junit key="standard-test" cliPort="3333">
+        <package>com.atlassian.refapp.ctk.sal</package>
+        <package>com.atlassian.refapp.ctk.rest.tests</package>
+        <package>com.atlassian.refapp.ctk.version</package>
+        <exclude>com.atlassian.refapp.ctk.sal.LifecycleAwareTest</exclude>
+    </junit>
+
+</atlassian-plugin>

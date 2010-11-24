@@ -1,0 +1,13 @@
+<security-paths>
+    <!-- Having these defined for the refapp make no sense. If we must test the security roles of Seraph in the refapp
+         then we should choose paths that will not conflict with real paths in the applications.
+     -->
+    <!--<path name="admin">-->
+        <!--<url-pattern>/admin/*</url-pattern>-->
+        <!--<role-name>administrators</role-name>-->
+    <!--</path>-->
+    <!--<path name="secure">-->
+        <!--<url-pattern>/secure/*</url-pattern>-->
+        <!--<role-name>users</role-name>-->
+    <!--</path>-->
+</security-paths>

@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.atlassian.refapp</groupId>
+        <artifactId>atlassian-refapp-parent</artifactId>
+        <version>2.7.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>atlassian-refapp-platform-projects</artifactId>
+    <name>Reference App Platform Projects Parent  POM</name>
+    <packaging>pom</packaging>
+
+    <!-- This list contains all the projects which rely on Refapp for
+         integration test execution.
+         *** THIS IS NOT ALL THE PROJECT USED BY REFAPP *** 
+    -->
+    <modules>
+        <module>REST</module>
+        <!-- <module>AJS</module> -->
+        <module>SAL</module>
+        <module>ATR</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.atlassian.refapp</groupId>
+            <artifactId>atlassian-refapp</artifactId>
+            <version>${project.version}</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+   
+</project>

@@ -1,0 +1,9 @@
+pluginsettings.xml
+refapp/pluginsettings.xml
+refapp/overlays
+*.iml
+*.ipr
+*.iws
+*~
+target
+trunk

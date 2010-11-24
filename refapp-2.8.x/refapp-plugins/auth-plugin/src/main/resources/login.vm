@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+#* @vtlvariable name="esc" type="org.apache.velocity.tools.generic.EscapeTool" *#
+#* @vtlvariable name="redir" type="java.lang.String" *#
+#* @vtlvariable name="loginURI" type="java.lang.String" *#
+<html>
+    <head>
+        <title>Log In</title>
+        <meta name="decorator" content="atl.general">
+    </head>
+    <body>
+        <form action="$esc.html($loginURI)" method="POST">
+            <input name="redir" type="hidden" value="$esc.html($redir)">
+
+            <label for="os_username">
+                <span class="accesskey">U</span>sername
+            </label>
+            <input id="os_username"
+                   name="os_username"
+                   type="text"
+                   size="25"
+                   tabindex="1"
+                   accesskey="u"
+                   value="">
+
+            <label for="os_password">
+                <span class="accesskey">P</span>assword
+            </label>
+            <input id="os_password"
+                   name="os_password"
+                   type="password"
+                   size="25"
+                   tabindex="2"
+                   accesskey="p"
+                   value="">
+
+            <input id="os_cookie_id"
+                   name="os_cookie"
+                   type="checkbox"
+                   tabindex="3"
+                   accesskey="r"
+                   value="true">
+            <label for="os_cookie_id">
+                <span class="accesskey">R</span>emember me
+            </label>
+
+            <input id="os_websudo_id"
+                   name="os_websudo"
+                   type="checkbox"
+                   tabindex="3"
+                   accesskey="w"
+                   checked="checked"
+                   value="true">
+            <label for="os_websudo_id">
+                No <span class="accesskey">w</span>eb sudo
+            </label>
+
+            <button id="os_login"
+                    name="login"
+                    type="submit"
+                    tabindex="4"
+                    accesskey="l">
+                <span class="accesskey">L</span>og In
+            </button>
+        </form>
+    </body>
+</html>
