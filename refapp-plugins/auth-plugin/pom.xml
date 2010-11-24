@@ -22,8 +22,8 @@
                 <configuration>
                     <instructions>
                         <Export-Package>
-                            com.atlassian.seraph.*;version="2.1.7-rc2",
-                            com.atlassian.user.*;version="2.0.0",
+                            com.atlassian.seraph.*;version="${seraph.version}",
+                            com.atlassian.user.*;version="${atlassian.user.version}",
                             com.atlassian.refapp.auth.external
                         </Export-Package>
                         <Import-Package>
@@ -40,7 +40,7 @@
                             javax.mail.*;version="0.0.0";resolution:="optional",
                             javax.naming.*;version="0.0.0";resolution:="optional",
                             javax.rmi;version="0.0.0",
-                            javax.servlet.*;version="0.0.0",
+                            javax.servlet.*;version="2.4",
                             javax.sql;version="0.0.0";resolution:="optional",
                             javax.xml.*;version="0.0.0",
                             net.sf.hibernate.*;version="0.0.0";resolution:="optional",
