@@ -34,7 +34,14 @@
           <td>
           <a href="charlie/$charlie.key">$charlie.key</a>
           </td>
-          <td>$charlie.value</td><td><a href="charlieadmin?delete=$charlie.key">Delete</a></td></tr>
+          <td>$charlie.value</td><td><a href="charlieadmin?delete=$charlie.key">Delete</a></td>
+           #set ($notUsed = $context.put("projectKey", $charlie.key))
+           #foreach($item in $webInterfaceManager.getDisplayableWebPanels("charlie.project.action", $context))
+            <td>
+                $item.getHtml($context)
+            </td>
+           #end
+      </tr>
     #end
     </tbody>
   </table>
