@@ -24,16 +24,6 @@ public interface AppSpecificInfoProvider
     String getAdminFullname();
 
     /**
-     * @return return base context of the app which we're testing against.
-     */
-    String getBaseContext();
-
-    /**
-     * @return return port of the app which we're testing against.
-     */
-    String getPort();
-
-    /**
      * @return a search term which guarantees at least a match.
      */
     public String getMatchingSearchTerm();
@@ -42,14 +32,4 @@ public interface AppSpecificInfoProvider
      * @return contents (keywords, url components, or excerpts) expected within results given the search is performed using {@link #getMatchingSearchTerm()}.
      */
     public Set<String> getExpectedMatchingContents();
-
-    /**
-     * @return the {@code Integer} value of {@code getPort()}
-     */
-    Integer getPortValue();
-
-    /**
-     * @return a {@code UriBuilder} for the currently deployed application
-     */
-    UriBuilder createLocalhostUriBuilder();
 }
