@@ -14,6 +14,7 @@
     You can create Charlies to test your own cross product plugins if they need to use these keys.</p>
   <p>
       Charlies have their own "homepage", similar to how a Jira project has a landing page.
+      You can add "actions" to each Charlie by specifying a webpanel for the 'charlie.project.action' location.
   </p>
 
   <div class="charlies-form">
