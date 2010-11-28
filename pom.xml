@@ -297,7 +297,7 @@
         <rest.version>2.2.3</rest.version>
         <ajs.version>3.2.0</ajs.version>
         <google.collections.version>1.0</google.collections.version>
-        <fp.version>0.2-alpha5</fp.version>
+        <fp.version>0.2-alpha6</fp.version>
         <rome.version>1.0</rome.version>
     </properties>
 </project>
