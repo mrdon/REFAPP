@@ -3,7 +3,6 @@ package com.atlassian.refapp.ctk.confluence;
 import com.atlassian.refapp.ctk.AppSpecificInfoProvider;
 import com.google.common.collect.Sets;
 
-import javax.ws.rs.core.UriBuilder;
 import java.util.Set;
 
 public class ConfluenceInfoProvider implements AppSpecificInfoProvider
@@ -23,16 +22,6 @@ public class ConfluenceInfoProvider implements AppSpecificInfoProvider
         return "A. D. Ministrator";
     }
 
-    public String getBaseContext()
-    {
-        return System.getProperty("context.path", "/confluence");
-    }
-
-    public String getPort()
-    {
-        return System.getProperty("http.port", "1990");
-    }
-
     public String getMatchingSearchTerm()
     {
         return "confluence";
@@ -41,15 +30,5 @@ public class ConfluenceInfoProvider implements AppSpecificInfoProvider
     public Set<String> getExpectedMatchingContents()
     {
         return Sets.newHashSet("confluence");
-    }
-
-    public Integer getPortValue()
-    {
-        return Integer.parseInt(getPort());
-    }
-
-    public UriBuilder createLocalhostUriBuilder()
-    {
-        return UriBuilder.fromUri("http://localhost/").port(getPortValue()).path(getBaseContext());
     }
 }

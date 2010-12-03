@@ -1,7 +1,5 @@
 package com.atlassian.refapp.ctk.refapp;
 
-import javax.ws.rs.core.UriBuilder;
-
 import com.atlassian.refapp.ctk.AppSpecificInfoProvider;
 import com.google.common.collect.Sets;
 
@@ -27,16 +25,6 @@ public class RefappInfoProvider implements AppSpecificInfoProvider
         return "A. D. Ministrator (Sysadmin)";
     }
 
-    public String getBaseContext()
-    {
-        return System.getProperty("context.path", "/refapp");
-    }
-
-    public String getPort()
-    {
-        return System.getProperty("http.port", "5990");
-    }
-
     public String getMatchingSearchTerm()
     {
         return "refapp";
@@ -45,15 +33,5 @@ public class RefappInfoProvider implements AppSpecificInfoProvider
     public Set<String> getExpectedMatchingContents()
     {
         return Sets.newHashSet("http://foo.com", "http://bar.com");
-    }
-
-    public Integer getPortValue()
-    {
-        return Integer.parseInt(getPort());
-    }
-
-    public UriBuilder createLocalhostUriBuilder()
-    {
-        return UriBuilder.fromUri("http://localhost/").port(getPortValue()).path(getBaseContext());
     }
 }
