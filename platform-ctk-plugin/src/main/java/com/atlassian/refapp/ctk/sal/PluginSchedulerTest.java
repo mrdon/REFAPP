@@ -42,9 +42,21 @@ public class PluginSchedulerTest extends SpringAwareTestCase
 
         // schedule the job to increment the counter.
         scheduler.scheduleJob("job" + random.nextInt(), TestJob.class, new HashMap<String, Object>(), new Date(), 10000000);
-        Thread.sleep(3000);
 
-        assertEquals("Should be able to schedule job and have it called only once within 3 seconds", 1, TestJob.calledCount.get());
+        final long startWait = System.currentTimeMillis();
+
+        // wait maximum 65 secs.
+        // this is because in some apps such as jira, job executions can be delayed up to 60 seconds.
+        while (System.currentTimeMillis() - startWait < 65000)
+        {
+            Thread.sleep(1000);
+            if (TestJob.calledCount.get() == 1)
+            {
+                break;
+            }
+        }
+
+        assertEquals("Should be able to schedule job and have it called only once", 1, TestJob.calledCount.get());
     }
 
     @Test
