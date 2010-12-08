@@ -1,18 +1,20 @@
 package com.atlassian.refapp.charlie;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import com.atlassian.plugin.web.WebInterfaceManager;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 import com.atlassian.sal.api.websudo.WebSudoManager;
 import com.atlassian.sal.api.websudo.WebSudoSessionException;
 import com.atlassian.templaterenderer.TemplateRenderer;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
-import java.io.IOException;
-import java.util.*;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public class CharlieAdminServlet extends CharlieServlet
 {
@@ -20,9 +22,10 @@ public class CharlieAdminServlet extends CharlieServlet
     private final WebSudoManager webSudoManager;
 
     public CharlieAdminServlet(PluginSettingsFactory pluginSettingsFactory, TemplateRenderer templateRenderer,
-                               WebInterfaceManager webInterfaceManager, final WebSudoManager webSudoManager)
+                               WebInterfaceManager webInterfaceManager, final WebSudoManager webSudoManager,
+                               CharlieStore store)
     {
-        super(pluginSettingsFactory, templateRenderer, webInterfaceManager);
+        super(pluginSettingsFactory, templateRenderer, webInterfaceManager, store);
         this.webSudoManager = checkNotNull(webSudoManager);
     }
 
@@ -39,18 +42,18 @@ public class CharlieAdminServlet extends CharlieServlet
             if (delete == null)
             {
                 final Map<String, String> charlies = new HashMap<String, String>();
-                for (String charlie : getCharlies())
+                for (String charlie : store.getCharlies())
                 {
-                    charlies.put(charlie, getCharlieName(charlie));
+                    charlies.put(charlie, store.getCharlieName(charlie));
                 }
                 context.put("charlies", charlies);
                 render("/templates/charliesadmin.vm", context, response);
             }
             else
             {
-                final List<String> charlies = getCharlies();
+                final List<String> charlies = store.getCharlies();
                 charlies.remove(delete);
-                storeCharlies(charlies);
+                store.storeCharlies(charlies);
                 response.sendRedirect(request.getRequestURL().toString());
             }
         } catch (WebSudoSessionException wse)
@@ -69,10 +72,10 @@ public class CharlieAdminServlet extends CharlieServlet
 
             final String key = request.getParameter("key");
             final String name = request.getParameter("name");
-            final List<String> charlies = getCharlies();
+            final List<String> charlies = store.getCharlies();
             charlies.add(key);
-            storeCharlies(charlies);
-            setCharlieName(key, name);
+            store.storeCharlies(charlies);
+            store.setCharlieName(key, name);
             response.sendRedirect(request.getRequestURL().toString());
         } catch (WebSudoSessionException wse)
         {

@@ -25,6 +25,8 @@
         <interface>com.atlassian.sal.api.ApplicationProperties</interface>
     </component-import>
 
+    <component key="charlieStore" class="com.atlassian.refapp.charlie.CharlieStore" autowire="constructor"/>
+
     <servlet key="charlieAdminServlet" class="com.atlassian.refapp.charlie.CharlieAdminServlet">
         <url-pattern>/charlieadmin</url-pattern>
     </servlet>
@@ -50,5 +52,7 @@
     <web-panel key="projectList" location="atl.refapp.index" weight="1">
         <resource name="view" type="velocity" location="templates/projectlist.vm"/>
     </web-panel>
+
+    <rest key="charlieRestApi" path="/charlie" version="1"/>
 
 </atlassian-plugin>
