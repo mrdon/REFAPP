@@ -289,7 +289,7 @@
 
     <properties>
         <jdkLevel>1.5</jdkLevel>
-        <plug.version>2.6.3</plug.version>
+        <plug.version>2.6.4</plug.version>
         <sal.version>2.2.1</sal.version>
         <atr.version>1.2.3</atr.version>
         <apl.version>3.0-integdev-r107512</apl.version>
