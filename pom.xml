@@ -350,7 +350,7 @@
 
         <!-- libraries need to a .libversion suffix -->
         <selenium.libversion>2.0.0-m7</selenium.libversion>
-        <fp.libversion>0.2-alpha6</fp.libversion>
+        <fp.libversion>0.3</fp.libversion>
         <google.collections.libversion>1.0</google.collections.libversion>
         <rome.libversion>1.0</rome.libversion>
         <amps.libversion>3.2.2</amps.libversion>
