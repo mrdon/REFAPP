@@ -43,7 +43,6 @@ public class SearchProviderTest extends SpringAwareTestCase
                                                              "superweirdsearchtermwahaha");
 
         assertNotNull("Should never return null", sresults);
-        assertTrue("Search time should be greater than zero", sresults.getSearchTime() > 0);
     }
 
     @Test
