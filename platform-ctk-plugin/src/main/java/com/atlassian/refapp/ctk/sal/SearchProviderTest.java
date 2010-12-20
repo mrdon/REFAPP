@@ -46,29 +46,29 @@ public class SearchProviderTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testSearchWithMatch() {
-        final String matchingSearchTerm = infoProvider.getMatchingSearchTerm();
-        final boolean searchSupported = matchingSearchTerm != null;
+    public void testSearchWithMatch()
+    {
         final SearchResults sresults = searchProvider.search(infoProvider.getAdminUsername(),
-                searchSupported ? matchingSearchTerm : "dummySearchTerm");
+                                                             infoProvider.getMatchingSearchTerm());
 
         assertNotNull("Should never return null", sresults);
-        if (searchSupported) {
-            assertTrue("We expect matches in search", sresults.getMatches().size() > 0);
+        assertTrue("We expect matches in search", sresults.getMatches().size() > 0);
 
-            for (String content : infoProvider.getExpectedMatchingContents()) {
-                boolean found = false;
-                for (SearchMatch match : sresults.getMatches()) {
-                    // if any of these match, then we're good.
-                    if (match.getTitle().contains(content) ||
-                            match.getUrl().contains(content) ||
-                            match.getExcerpt().contains(content)) {
-                        found = true;
-                        break;
-                    }
+        for(String content:infoProvider.getExpectedMatchingContents())
+        {
+            boolean found = false;
+            for(SearchMatch match:sresults.getMatches())
+            {
+                // if any of these match, then we're good.
+                if (match.getTitle().contains(content) ||
+                    match.getUrl().contains(content) ||
+                    match.getExcerpt().contains(content))
+                {
+                    found = true;
+                    break;
                 }
-                assertTrue("the expected content should exist in the search results:" + content, found);
             }
+            assertTrue("the expected content should exist in the search results:" + content, found);
         }
     }
 }
