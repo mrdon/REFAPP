@@ -25,6 +25,7 @@
     <component-import key="packageAdmin" interface="org.osgi.service.packageadmin.PackageAdmin" />
     
     <component key="refappInfoProvider" class="com.atlassian.refapp.ctk.refapp.RefappInfoProvider" application="refapp"/>
+    <component key="bambooInfoProvider" class="com.atlassian.refapp.ctk.bamboo.BambooInfoProvider" application="bamboo"/>
     <component key="confluenceInfoProvider" class="com.atlassian.refapp.ctk.confluence.ConfluenceInfoProvider" application="confluence"/>
     <component key="jiraInfoProvider" class="com.atlassian.refapp.ctk.jira.JiraInfoProvider" application="jira"/>
 
