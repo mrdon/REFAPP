@@ -1,7 +1,9 @@
 package com.atlassian.refapp.sal.license;
 
-import com.atlassian.license.LicenseException;
-import com.atlassian.license.ng.LicenseManager;
+import com.atlassian.extras.api.AtlassianLicense;
+import com.atlassian.extras.api.LicenseException;
+import com.atlassian.extras.api.LicenseManager;
+import com.atlassian.extras.core.LicenseManagerFactory;
 import com.atlassian.sal.api.license.LicenseHandler;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,14 +23,16 @@ public class RefimplLicenseHandler implements LicenseHandler
     public void setLicense(String license)
     {
         log.info("Setting license "+license);
-        try
-        {
-            LicenseManager.registerLicense(license);
+        final LicenseManager licenseManager = LicenseManagerFactory.getLicenseManager();
+        final AtlassianLicense atlassianLicense;
+        try {
+            atlassianLicense = licenseManager.getLicense(license);
+        } catch (final LicenseException exception) {
+            throw new IllegalArgumentException("Invalid license", exception);
         }
-        catch (LicenseException e)
-        {
-            throw new IllegalArgumentException(e);
+        if (atlassianLicense == null) {
+            throw new IllegalArgumentException("Missing license");
         }
-
     }
+
 }
