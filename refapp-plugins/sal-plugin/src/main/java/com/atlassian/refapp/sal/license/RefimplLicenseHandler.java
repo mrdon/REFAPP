@@ -28,7 +28,7 @@ public class RefimplLicenseHandler implements LicenseHandler
         try {
             atlassianLicense = licenseManager.getLicense(license);
         } catch (final LicenseException exception) {
-            throw new IllegalArgumentException("Invalid license", exception);
+            throw new IllegalArgumentException("Invalid license", exception );
         }
         if (atlassianLicense == null) {
             throw new IllegalArgumentException("Missing license");
