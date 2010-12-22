@@ -344,7 +344,7 @@
         <rest.version>2.3.1</rest.version>
 
         <upm.name>Universal Plugin Manager</upm.name>
-        <upm.version>1.2.1</upm.version>
+        <upm.version>1.2.4</upm.version>
 
         <ajs.name>AUI</ajs.name>
         <ajs.version>3.2.2-m2</ajs.version>
