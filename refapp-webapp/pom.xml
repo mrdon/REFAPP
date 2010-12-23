@@ -225,6 +225,12 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>com.atlassian.security</groupId>
+            <artifactId>atlassian-secure-random</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>com.atlassian.event</groupId>
             <artifactId>atlassian-event</artifactId>
         </dependency>

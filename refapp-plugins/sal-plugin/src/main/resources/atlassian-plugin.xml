@@ -140,4 +140,9 @@
         <interface>com.atlassian.sal.api.user.UserManager</interface>
     </component>
 
+    <component key="xsrfTokenAccessor" name="XSRF Token Accessor"
+               class="com.atlassian.sal.core.xsrf.IndependentXsrfTokenAccessor" system="true" public="true">
+        <interface>com.atlassian.sal.api.xsrf.XsrfTokenAccessor</interface>
+    </component>
+
 </atlassian-plugin>
