@@ -24,12 +24,13 @@ public interface AppSpecificInfoProvider
     String getAdminFullname();
 
     /**
-     * @return a search term which guarantees at least a match.
+     * @return a search term which guarantees at least a match, or <code>null</code> if searching is not supported.
      */
     public String getMatchingSearchTerm();
 
     /**
-     * @return contents (keywords, url components, or excerpts) expected within results given the search is performed using {@link #getMatchingSearchTerm()}.
+     * @return contents (keywords, url components, or excerpts) expected within results given the search is performed
+     * using {@link #getMatchingSearchTerm()}, or <code>null</code> if searching is not supported.
      */
     public Set<String> getExpectedMatchingContents();
 }
