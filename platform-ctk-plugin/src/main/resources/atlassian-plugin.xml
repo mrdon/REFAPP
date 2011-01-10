@@ -29,6 +29,7 @@
     <component key="bambooInfoProvider" class="com.atlassian.refapp.ctk.bamboo.BambooInfoProvider" application="bamboo"/>
     <component key="confluenceInfoProvider" class="com.atlassian.refapp.ctk.confluence.ConfluenceInfoProvider" application="confluence"/>
     <component key="jiraInfoProvider" class="com.atlassian.refapp.ctk.jira.JiraInfoProvider" application="jira"/>
+    <component key="fecruInfoProvider" class="com.atlassian.refapp.ctk.fecru.FecruInfoProvider" application="crucible"/>
 
     <!-- We use this to track LifeCycleAware callbacks. -->
     <component key="mockedLifeCycleComponent" class="com.atlassian.refapp.ctk.MockedLifeCycleAwareComponent" public="true">
