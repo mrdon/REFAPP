@@ -6,7 +6,9 @@
         <bundle-instructions>
             <Export-Package>
                 com.atlassian.refapp.auth.external,com.atlassian.user,com.atlassian.user.util,com.atlassian.user.security.authentication,
-                com.atlassian.seraph.auth,com.atlassian.seraph.config,com.atlassian.refapp.auth.web.conditions</Export-Package>
+                com.atlassian.seraph.auth,com.atlassian.seraph.config,com.atlassian.refapp.auth.web.conditions,
+                com.atlassian.user.search.page
+</Export-Package>
         </bundle-instructions>
     </plugin-info>
 
