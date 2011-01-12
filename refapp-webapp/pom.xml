@@ -20,22 +20,14 @@
                         <id>copy</id>
                         <phase>generate-sources</phase>
                         <goals>
-                            <goal>copy</goal>
+                            <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>${project.groupId}</groupId>
-                                    <artifactId>atlassian-refapp-bundled-plugins</artifactId>
-                                    <version>${project.version}</version>
-                                    <type>zip</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
-                                    <destFileName>atlassian-bundled-plugins.zip</destFileName>
-                                </artifactItem>
-                            </artifactItems>
+                            <includeArtifactIds>atlassian-bundled-plugins</includeArtifactIds>
+                            <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>true</overWriteSnapshots>
+                            <stripVersion>true</stripVersion>
                         </configuration>
                     </execution>
                 </executions>
@@ -69,8 +61,8 @@
                             <url>${tomcat.installer.url}</url>
                             <installDir>${project.build.directory}</installDir>
                         </zipUrlInstaller>
-                        <!--output>${project.build.directory}/output.log</output-->
-                        <!--log>${project.build.directory}/cargo-log.log</log-->
+                        <output>${project.build.directory}/output.log</output>
+                        <log>${project.build.directory}/cargo-log.log</log>
                         <systemProperties>
                             <baseurl>${baseurl}</baseurl>
                             <baseurl.display>${baseurl}</baseurl.display>
@@ -166,6 +158,14 @@
             <version>${project.version}</version>
             <type>pom</type>
             <scope>import</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>atlassian-bundled-plugins</artifactId>
+            <version>${project.version}</version>
+            <type>zip</type>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

@@ -30,6 +30,7 @@
         <module>decorator-plugin</module>
         <module>charlie-plugin</module>
         <module>sal-plugin</module>
+        <module>sal-whitelist-plugin</module>
         <module>applinks-plugin</module>
     </modules>
 </project>

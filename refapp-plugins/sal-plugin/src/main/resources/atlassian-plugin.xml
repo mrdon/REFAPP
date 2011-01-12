@@ -10,7 +10,13 @@
     
     <component-import key="pluginEventManager" interface="com.atlassian.plugin.event.PluginEventManager" />
     <component-import key="pluginAccessor" interface="com.atlassian.plugin.PluginAccessor" />
-
+    <component-import key="webSudoSessionManager" interface="com.atlassian.refapp.auth.external.WebSudoSessionManager" />
+    <component-import key="roleMapper" interface="com.atlassian.seraph.auth.RoleMapper" />
+    <component-import key="authenticator" interface="com.atlassian.user.security.authentication.Authenticator" />
+    <component-import key="atlassianUserManager" interface="com.atlassian.user.UserManager" />
+    <component-import key="groupManager" interface="com.atlassian.user.GroupManager" />
+    <component-import key="authenticationContext" interface="com.atlassian.seraph.auth.AuthenticationContext" />
+    
     <component key="key-factory" class="com.atlassian.refapp.trustedapps.internal.KeyFactory" />
     <component key="encryption-provider" class="com.atlassian.security.auth.trustedapps.BouncyCastleEncryptionProvider" />
     <component key="salWebSudoManager" class="com.atlassian.refapp.sal.websudo.RefImplWebSudoManager" public="true">
@@ -38,13 +44,6 @@
         <description>Makes the servlet context, request, and response available through static methods.</description>
         <url-pattern>/</url-pattern>
     </servlet-filter>
-
-    <component-import key="webSudoSessionManager" interface="com.atlassian.refapp.auth.external.WebSudoSessionManager" />
-    <component-import key="roleMapper" interface="com.atlassian.seraph.auth.RoleMapper" />
-    <component-import key="authenticator" interface="com.atlassian.user.security.authentication.Authenticator" />
-    <component-import key="atlassianUserManager" interface="com.atlassian.user.UserManager" />
-    <component-import key="groupManager" interface="com.atlassian.user.GroupManager" />
-    <component-import key="authenticationContext" interface="com.atlassian.seraph.auth.AuthenticationContext" />
 
     <component key="authController" class="com.atlassian.refapp.sal.auth.RefappAuthenticationController" public="true">
         <interface>com.atlassian.sal.api.auth.AuthenticationController</interface>
@@ -144,5 +143,4 @@
                class="com.atlassian.sal.core.xsrf.IndependentXsrfTokenAccessor" system="true" public="true">
         <interface>com.atlassian.sal.api.xsrf.XsrfTokenAccessor</interface>
     </component>
-
 </atlassian-plugin>
