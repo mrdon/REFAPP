@@ -9,7 +9,7 @@
 
 
     <component key="whitelist" name="Whitelist" 
-            class="com.atlassian.sal.core.net.AppLinksWhitelist" system="true" public="true">
+            class="com.atlassian.applinks.host.spi.AppLinksWhitelist" system="true" public="true">
         <interface>com.atlassian.sal.api.net.Whitelist</interface>
     </component>
 </atlassian-plugin>
