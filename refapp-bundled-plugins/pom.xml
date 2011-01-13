@@ -163,13 +163,6 @@
             <type>atlassian-plugin</type>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.refapp</groupId>
-            <artifactId>atlassian-refapp-sal-whitelist-plugin</artifactId>
-            <version>${project.version}</version>
-            <scope>provided</scope>
-            <type>atlassian-plugin</type>
-        </dependency>
-        <dependency>
             <groupId>com.atlassian.plugins.rest</groupId>
             <artifactId>atlassian-rest-module</artifactId>
             <version>${rest.version}</version>
