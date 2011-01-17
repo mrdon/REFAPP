@@ -330,10 +330,10 @@
         <jdkLevel>1.5</jdkLevel>
 
         <plug.name>Plugins Framework</plug.name>
-        <plug.version>2.6.4</plug.version>
+        <plug.version>2.7.0-alpha2</plug.version>
 
         <sal.name>SAL</sal.name>
-        <sal.version>2.4.0-alpha4</sal.version>
+        <sal.version>2.4.0-alpha5</sal.version>
 
         <atr.name>Template Renderer</atr.name>
         <atr.version>1.2.3</atr.version>
@@ -342,16 +342,16 @@
         <apl.version>3.2-m2</apl.version>
 
         <oauth.name>OAuth</oauth.name>
-        <oauth.version>1.1</oauth.version>
+        <oauth.version>1.2.0-alpha1</oauth.version>
 
         <rest.name>REST</rest.name>
-        <rest.version>2.3.1</rest.version>
+        <rest.version>2.4.0-alpha1</rest.version>
 
         <upm.name>Universal Plugin Manager</upm.name>
         <upm.version>1.2.4</upm.version>
 
         <ajs.name>AUI</ajs.name>
-        <ajs.version>3.2.2-m2</ajs.version>
+        <ajs.version>3.3.0</ajs.version>
 
         <event.name>Events</event.name>
         <event.version>2.0.4</event.version>
@@ -359,7 +359,7 @@
         <trust.version>2.2</trust.version>
 
         <!-- libraries need to a .libversion suffix -->
-        <selenium.libversion>2.0.0-m7</selenium.libversion>
+        <selenium.libversion>2.0.0-m16</selenium.libversion>
         <fp.libversion>0.3</fp.libversion>
         <google.collections.libversion>1.0</google.collections.libversion>
         <rome.libversion>1.0</rome.libversion>
