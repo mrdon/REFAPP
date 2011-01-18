@@ -143,4 +143,9 @@
                class="com.atlassian.sal.core.xsrf.IndependentXsrfTokenAccessor" system="true" public="true">
         <interface>com.atlassian.sal.api.xsrf.XsrfTokenAccessor</interface>
     </component>
+
+    <component key="xsrfTokenValidator" name="XSRF Token Validator"
+               class="com.atlassian.sal.core.xsrf.IndependentXsrfTokenValidator" system="true" public="true">
+        <interface>com.atlassian.sal.api.xsrf.XsrfTokenValidator</interface>
+    </component>
 </atlassian-plugin>
