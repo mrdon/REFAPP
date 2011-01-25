@@ -356,7 +356,7 @@
         <event.name>Events</event.name>
         <event.version>2.0.4</event.version>
 
-        <trust.version>2.2</trust.version>
+        <trust.version>2.3</trust.version>
 
         <!-- libraries need to a .libversion suffix -->
         <selenium.libversion>2.0.0-m16</selenium.libversion>
