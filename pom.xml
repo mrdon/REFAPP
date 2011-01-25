@@ -345,7 +345,7 @@
         <oauth.version>1.2.0-alpha1</oauth.version>
 
         <rest.name>REST</rest.name>
-        <rest.version>2.4.0-alpha1</rest.version>
+        <rest.version>2.4.0-alpha2</rest.version>
 
         <upm.name>Universal Plugin Manager</upm.name>
         <upm.version>1.2.4</upm.version>
