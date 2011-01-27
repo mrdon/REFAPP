@@ -101,4 +101,40 @@ public class PluginSettingsTest extends SpringAwareTestCase
         hashMap = (Map) settings.get("hashMap");
         assertTrue("Should be able to store and retrieve a real map", hashMap != null && "value\n\t\f\r".equals(hashMap.get("key\n\t\f\r")));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetWithNullKeyShouldThrowIllegalArgumentException()
+    {
+        factory.createGlobalSettings().get(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetWithLongKeyShouldThrowIllegalArgumentException()
+    {
+        factory.createGlobalSettings().get(StringUtils.repeat("a", 101));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testPutWithNullKeyShouldThrowIllegalArgumentException()
+    {
+        factory.createGlobalSettings().put(null, "foo");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testPutWithLongKeyShouldThrowIllegalArgumentException()
+    {
+        factory.createGlobalSettings().put(StringUtils.repeat("a", 101), "foo");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testRemoveWithNullKeyShouldThrowIllegalArgumentException()
+    {
+        factory.createGlobalSettings().remove(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testRemoveWithLongKeyShouldThrowIllegalArgumentException()
+    {
+        factory.createGlobalSettings().remove(StringUtils.repeat("a", 101));
+    }
 }
