@@ -357,7 +357,7 @@
         <event.version>2.0.5</event.version>
         
         <trust.name>Trusted Apps</trust.name>
-        <trust.version>2.3.1-beta1</trust.version>
+        <trust.version>2.3.1</trust.version>
 
         <!-- libraries need to a .libversion suffix -->
         <selenium.libversion>2.0.0-m16</selenium.libversion>
