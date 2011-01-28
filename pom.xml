@@ -342,7 +342,7 @@
         <apl.version>3.2-m2</apl.version>
 
         <oauth.name>OAuth</oauth.name>
-        <oauth.version>1.2.0</oauth.version>
+        <oauth.version>1.2.1</oauth.version>
 
         <rest.name>REST</rest.name>
         <rest.version>2.4.0</rest.version>
