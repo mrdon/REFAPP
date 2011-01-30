@@ -34,10 +34,13 @@ public final class RefImplWebSudoManager implements WebSudoManager
         {
             final String queryString = request.getQueryString();
             final String requestURI = request.getServletPath();
+            final String pathInfo = request.getPathInfo();
             response.sendRedirect(request.getContextPath()
                     + WEBSUDO_PATH
                     + "?redir="
-                    + URLEncoder.encode(requestURI + ((null != queryString) ? "?" + queryString : ""), "UTF-8"));
+                    + URLEncoder.encode(requestURI +
+                                       ((null != pathInfo) ? pathInfo : "") +
+                                       ((null != queryString) ? "?" + queryString : ""), "UTF-8"));
         } catch (IOException e)
         {
             throw new SecurityException("Failed to redirect to " + WEBSUDO_PATH);
