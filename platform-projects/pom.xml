@@ -14,12 +14,13 @@
          *** THIS IS NOT ALL THE PROJECT USED BY REFAPP *** 
     -->
     <modules>
+
+        <module>OAUTH</module>
         <module>REST</module>
         <!-- <module>AJS</module> -->
         <module>SAL</module>
         <module>ATR</module>
         <module>UPM</module>
-        <module>OAUTH</module>
         <module>TRUST</module>
         <module>APL</module>
     </modules>
