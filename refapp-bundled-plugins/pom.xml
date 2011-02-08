@@ -229,14 +229,12 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore-osgi</artifactId>
             <version>4.0</version>
-            <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient-osgi</artifactId>
             <version>4.0</version>
-            <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>

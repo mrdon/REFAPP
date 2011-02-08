@@ -14,7 +14,6 @@
          *** THIS IS NOT ALL THE PROJECT USED BY REFAPP *** 
     -->
     <modules>
-
         <module>OAUTH</module>
         <module>REST</module>
         <!-- <module>AJS</module> -->
@@ -33,5 +32,4 @@
             <type>war</type>
         </dependency>
     </dependencies>
-   
 </project>
