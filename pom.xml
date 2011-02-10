@@ -343,7 +343,7 @@
         <atr.version>1.2.3</atr.version>
 
         <apl.name>AppLinks</apl.name>
-        <apl.version>3.2-m2</apl.version>
+        <apl.version>3.2</apl.version>
 
         <oauth.name>OAuth</oauth.name>
         <oauth.version>1.2.1</oauth.version>
