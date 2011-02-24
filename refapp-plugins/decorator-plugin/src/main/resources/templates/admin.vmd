@@ -48,7 +48,7 @@ $webResourceManager.requireResourcesForContext("atl.admin")
         
         <div class="refapp-footer" style="text-align:center">
             <hr/>
-            RefApp $version -
+            Atlassian RefApp $version -
             #set($panels = $webInterfaceManager.getDisplayableItems("footer.links", $context))
             #set($first = true)
             #foreach($item in $panels)

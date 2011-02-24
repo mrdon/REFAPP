@@ -18,7 +18,7 @@ $webResourceManager.requireResourcesForContext("atl.popup")
         $bodyHtml
         <div class="refapp-footer" style="text-align:center">
             <hr/>
-            RefApp $version -
+            Atlassian RefApp $version -
             #set($items = $webInterfaceManager.getDisplayableItems("footer.links", $context))
             #set($first = true)
             #foreach($item in $items)

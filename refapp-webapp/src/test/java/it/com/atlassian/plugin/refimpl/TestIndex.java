@@ -13,6 +13,6 @@ public class TestIndex extends AbstractRefappTestCase
         assertTextPresent("com.atlassian.plugin.osgi.bridge");
 
         assertTextNotPresent("Installed");
-        assertTextPresent("Atlassian Plugins - ");
+        assertTextPresent("Atlassian RefApp ");
     }
 }
