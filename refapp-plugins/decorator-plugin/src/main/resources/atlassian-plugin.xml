@@ -37,14 +37,14 @@
 
     <web-item key="issuesFooterLink" section="footer.links" weight="10">
         <label key="Issues"/>
-        <link linkId="issuesFooterLink">http://jira.atlassian.com/browse/PLUG"</link>
+        <link linkId="issuesFooterLink">https://studio.atlassian.com/browse/REFAPP</link>
     </web-item>
 
     <web-item key="buildsFooterLink" section="footer.links" weight="20">
         <!-- this useless condition is here to force the condition parsing logic to run -->
         <condition class="com.atlassian.plugin.web.conditions.AlwaysDisplayCondition"/>
         <label key="Builds"/>
-        <link linkId="buildsFooterLink">http://bamboo.developer.atlassian.com/browse/ATLASSIANPLUGINS"</link>
+        <link linkId="buildsFooterLink">https://bamboo.developer.atlassian.com/browse/REFAPP</link>
     </web-item>
 
     <web-item key="docsFooterLink" section="footer.links" weight="10">
