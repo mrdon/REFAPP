@@ -24,7 +24,7 @@ $webResourceManager.requireResourcesForContext("atl.general")
         $bodyHtml
         <div class="refapp-footer" style="text-align:center">
             <hr/>
-            Atlassian Plugins -
+            RefApp $version -
             #set($items = $webInterfaceManager.getDisplayableItems("footer.links", $context))
             #set($first = true)
             #foreach($item in $items)

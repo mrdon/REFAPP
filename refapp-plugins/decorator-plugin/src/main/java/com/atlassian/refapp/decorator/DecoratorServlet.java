@@ -10,16 +10,21 @@ import com.opensymphony.module.sitemesh.util.OutputConverter;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import java.io.InputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Properties;
+import org.apache.commons.io.IOUtils;
 
 public class DecoratorServlet extends HttpServlet
 {
     private static final String ADMIN_PATH = "/admin.vmd";
+    private static final String PROPERTIES_LOCATION = "META-INF/maven/com.atlassian.refapp/atlassian-refapp/pom.properties";
 
     private final TemplateRenderer templateRenderer;
 
@@ -83,10 +88,34 @@ public class DecoratorServlet extends HttpServlet
         }
     }
 
+    private Properties getPropertiesFromServletContext(String location)
+    {
+        ServletContext servletContext = getServletConfig().getServletContext(); 
+        InputStream in = servletContext.getResourceAsStream(location);
+
+        try {
+            Properties properties = new Properties();
+            properties.load(in);
+            return properties;
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException("Could not load default properties", e);
+        }
+        finally
+        {
+            IOUtils.closeQuietly(in);
+        }
+    }
+
     private Map<String, Object> getVelocityParams(HttpServletRequest request, Page page, HttpServletResponse response)
         throws IOException
     {
         Map<String, Object> velocityParams = new HashMap<String, Object>();
+
+        Properties properties = getPropertiesFromServletContext(PROPERTIES_LOCATION);
+        String version = properties.getProperty("version");
+        velocityParams.put("version", version);
 
         velocityParams.put("page", page);
         velocityParams.put("titleHtml", page.getTitle());
