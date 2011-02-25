@@ -111,7 +111,8 @@ public class DecoratorServlet extends HttpServlet
         Map<String, Object> velocityParams = new HashMap<String, Object>();
 
         String version;
-        try {
+        try
+        {
             Properties properties = getPropertiesFromServletContext(PROPERTIES_LOCATION);
             version = properties.getProperty("version");
         }
