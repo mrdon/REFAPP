@@ -30,9 +30,9 @@
         </dependency>
         <dependency>
             <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity-tools</artifactId>
+            <artifactId>velocity-tools</artifactId><!--
             <scope>provided</scope>
-        </dependency>
+        --></dependency>
         <dependency>
             <groupId>com.atlassian.sal</groupId>
             <artifactId>sal-api</artifactId>
