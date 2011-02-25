@@ -93,6 +93,11 @@ public class DecoratorServlet extends HttpServlet
         ServletContext servletContext = getServletConfig().getServletContext(); 
         InputStream in = servletContext.getResourceAsStream(location);
 
+	if (in == null)
+	{
+	    throw new IOException();
+	}
+
         try
         {
             Properties properties = new Properties();
