@@ -88,19 +88,16 @@ public class DecoratorServlet extends HttpServlet
         }
     }
 
-    private Properties getPropertiesFromServletContext(String location)
+    private Properties getPropertiesFromServletContext(String location) throws IOException
     {
         ServletContext servletContext = getServletConfig().getServletContext(); 
         InputStream in = servletContext.getResourceAsStream(location);
 
-        try {
+        try
+        {
             Properties properties = new Properties();
             properties.load(in);
             return properties;
-        }
-        catch (IOException e)
-        {
-            throw new RuntimeException("Could not load default properties", e);
         }
         finally
         {
@@ -113,8 +110,15 @@ public class DecoratorServlet extends HttpServlet
     {
         Map<String, Object> velocityParams = new HashMap<String, Object>();
 
-        Properties properties = getPropertiesFromServletContext(PROPERTIES_LOCATION);
-        String version = properties.getProperty("version");
+        String version;
+        try {
+            Properties properties = getPropertiesFromServletContext(PROPERTIES_LOCATION);
+            version = properties.getProperty("version");
+        }
+        catch (IOException e)
+        {
+            version = "(unknown)";
+        }
         velocityParams.put("version", version);
 
         velocityParams.put("page", page);
