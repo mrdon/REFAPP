@@ -57,6 +57,10 @@ public class PlatformVersionTest extends SpringAwareTestCase
                         sb.append("  current version:");
                         sb.append(export.getVersion());
                     }
+                    else
+                    {
+                        sb.append(" (no current version)");
+                    }
                     sb.append("\n");
                 }
             }
