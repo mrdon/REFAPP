@@ -15,7 +15,7 @@ public class BambooInfoProvider implements AppSpecificInfoProvider {
     }
 
     public String getAdminFullname() {
-        return "Admin";
+        return "Bamboo Master";
     }
 
     public String getMatchingSearchTerm() {
@@ -27,5 +27,4 @@ public class BambooInfoProvider implements AppSpecificInfoProvider {
         // Search is not supported by Bamboo.
         return null;
     }
-
 }
