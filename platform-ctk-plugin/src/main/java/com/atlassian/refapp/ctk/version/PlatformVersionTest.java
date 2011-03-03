@@ -45,6 +45,11 @@ public class PlatformVersionTest extends SpringAwareTestCase
                 final ExportedPackage export = packageAdmin.getExportedPackage(exportCheck.getPkg());
                 if (export == null || !VersionStringComparator.isSameOrNewerVersion(getOsgiVersion(exportCheck.getVersion()), export.getVersion().toString()))
                 {
+                    if(export == null && exportCheck.isOptional())
+                    {
+                        continue;
+                    }
+                    
                     sb.append("Atlassian Platform ");
                     sb.append(platformVersion);
                     sb.append(" must have ");
