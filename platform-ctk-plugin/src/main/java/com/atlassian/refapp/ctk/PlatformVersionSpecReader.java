@@ -1,17 +1,17 @@
 package com.atlassian.refapp.ctk;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.atlassian.plugin.util.ClassLoaderUtils;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.Validate;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
-
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public final class PlatformVersionSpecReader
 {
@@ -21,35 +21,39 @@ public final class PlatformVersionSpecReader
 
     private static final String PLATFORM_VERSION_PATH = "com/atlassian/refapp/ctk/version/platformversions.xml";
 
-    /**
-     * Get the platform version.
-     *
-     * @return the platform version.
-     */
-    public static String getPlatformVersion()
+    static Document readPlatformVersionDocument() throws RuntimeException
     {
-        InputStream in = null;
+        InputStream in = ClassLoaderUtils.getResourceAsStream(PLATFORM_VERSION_PATH, PlatformVersionSpecReader.class);
 
         try
         {
-            in = ClassLoaderUtils.getResourceAsStream(PLATFORM_VERSION_PATH, PlatformVersionSpecReader.class);
-
             SAXReader reader = new SAXReader();
-            Document document = reader.read(in);
+            return reader.read(in);
 
-            String xPath = "//platform";
-            List<Node> nodes = document.selectNodes(xPath);
-
-            return nodes.get(0).valueOf("@version");
         }
         catch (DocumentException e)
         {
-            throw new IllegalStateException("cannot read the platform version definition", e);
+            throw new RuntimeException("Cannot read the platform version definition", e);
         }
         finally
         {
             IOUtils.closeQuietly(in);
         }
+    }
+    
+    /**
+     * Get the platform version.
+     *
+     * @return the platform version.
+     */
+    public static String getPlatformVersion() throws RuntimeException
+    {
+        Document document = readPlatformVersionDocument();
+
+        String xPath = "/platform";
+        List<Node> nodes = document.selectNodes(xPath);
+
+        return nodes.get(0).valueOf("@version");
     }
 
     /**
@@ -60,50 +64,44 @@ public final class PlatformVersionSpecReader
     public static List<VersionCheck> getVersionChecks()
     {
         final List<VersionCheck> versionChecks = new ArrayList<VersionCheck>();
-        InputStream in = null;
+        
+        Document document = readPlatformVersionDocument();
 
-        try
+        List<Node> nodes = document.selectNodes("/platform/export-version-check");
+        for (Node node : nodes)
         {
-            in = ClassLoaderUtils.getResourceAsStream(PLATFORM_VERSION_PATH, PlatformVersionSpecReader.class);
-
-            SAXReader reader = new SAXReader();
-            Document document = reader.read(in);
-
-            List<Node> nodes = document.selectNodes("//export-version-check");
-            for (Node node : nodes)
-            {
-                String pkg = node.valueOf("@package");
-                String version = node.valueOf("@version");
-                String modulename = node.valueOf("@modulename");
-                versionChecks.add(new ExportVersionCheck(pkg, version, modulename));
-            }
-
-            List<Node> bundleCheckNodes = document.selectNodes("//bundle-version-check");
-            for (Node node : bundleCheckNodes)
-            {
-                String bundlename = node.valueOf("@bundlename");
-                String version = node.valueOf("@version");
-                String modulename = node.valueOf("@modulename");
-                versionChecks.add(new BundleVersionCheck(bundlename, version, modulename));
-            }
-        }
-        catch (DocumentException e)
-        {
-            throw new IllegalStateException("cannot read the platform version definition", e);
-        }
-        finally
-        {
-            IOUtils.closeQuietly(in);
+            String pkg = node.valueOf("@package");
+            String version = node.valueOf("@version");
+            String modulename = node.valueOf("@modulename");
+            boolean optional = Boolean.parseBoolean(node.valueOf("@optional"));
+            versionChecks.add(new ExportVersionCheck(pkg, version, modulename, optional));
         }
 
-        return Collections.unmodifiableList(versionChecks);
+        List<Node> bundleCheckNodes = document.selectNodes("/platform/bundle-version-check");
+        for (Node node : bundleCheckNodes)
+        {
+            String bundlename = node.valueOf("@bundlename");
+            String version = node.valueOf("@version");
+            String modulename = node.valueOf("@modulename");
+            versionChecks.add(new BundleVersionCheck(bundlename, version, modulename));
+        }
+        
+        return versionChecks;
     }
 
     public abstract static class VersionCheck
     {
-        protected String version;
-        protected String moduleName;
+        protected final String version;
+        protected final String moduleName;
 
+        VersionCheck(String version, String moduleName)
+        {
+            Validate.notEmpty(version);
+            Validate.notEmpty(moduleName);
+            this.version = version;
+            this.moduleName = moduleName;
+        }
+        
         public String getVersion()
         {
             return version;
@@ -117,17 +115,14 @@ public final class PlatformVersionSpecReader
 
     public static class BundleVersionCheck extends VersionCheck
     {
-        private String bundleName;
+        private final String bundleName;
 
         private BundleVersionCheck(String bundleName, String version, String moduleName)
         {
+            super(version, moduleName);
             Validate.notEmpty(bundleName);
-            Validate.notEmpty(version);
-            Validate.notEmpty(moduleName);
 
             this.bundleName = bundleName;
-            this.version = version;
-            this.moduleName = moduleName;
         }
 
         public String getBundleName()
@@ -138,22 +133,26 @@ public final class PlatformVersionSpecReader
 
     public static class ExportVersionCheck extends VersionCheck
     {
-        private String pkg;
+        private final String pkg;
+        private final boolean optional;
 
-        private ExportVersionCheck(String pkg, String version, String moduleName)
+        private ExportVersionCheck(String pkg, String version, String moduleName, boolean optional)
         {
+            super(version, moduleName);
             Validate.notEmpty(pkg);
-            Validate.notEmpty(version);
-            Validate.notEmpty(moduleName);
 
             this.pkg = pkg;
-            this.version = version;
-            this.moduleName = moduleName;
+            this.optional = optional;
         }
 
         public String getPkg()
         {
             return pkg;
+        }
+
+        public boolean isOptional()
+        {
+            return optional;
         }
     }
 }

@@ -3,7 +3,7 @@
     <export-version-check package="com.atlassian.plugins.rest.common" version="${rest.version}" modulename="Atlassian Rest Framework"/>
     <export-version-check package="com.atlassian.sal.api" version="${sal.version}" modulename="Shared Access Layer"/>
     <export-version-check package="com.atlassian.event" version="${event.version}" modulename="Atlassian Event"/>
-    <export-version-check package="com.atlassian.upm.spi" version="${upm.version}" modulename="Atlassian Universal Plugin Manager Plugin"/>
+    <export-version-check package="com.atlassian.upm.spi" version="${upm.version}" modulename="Atlassian Universal Plugin Manager Plugin" optional="true"/>
     <export-version-check package="com.atlassian.templaterenderer" version="${atr.version}" modulename="Atlassian Template Renderer"/>
     <export-version-check package="com.atlassian.oauth" version="${oauth.version}" modulename="Atlassian OAuth"/>
     <export-version-check package="com.atlassian.security.auth.trustedapps" version="${trust.version}" modulename="Atlassian Trusted Apps"/>
