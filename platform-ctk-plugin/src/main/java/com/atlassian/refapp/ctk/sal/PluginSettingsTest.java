@@ -6,6 +6,7 @@ import com.atlassian.sal.api.pluginsettings.PluginSettings;
 import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 
 import org.apache.commons.lang.StringUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -108,10 +109,15 @@ public class PluginSettingsTest extends SpringAwareTestCase
         factory.createGlobalSettings().get(null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetWithLongKeyShouldThrowIllegalArgumentException()
+    @Test
+    public void testGetWithLongKeyShouldSucceed()
     {
-        factory.createGlobalSettings().get(StringUtils.repeat("a", 101));
+        PluginSettings ps = factory.createGlobalSettings();
+        
+        ps.get(StringUtils.repeat("a", 100));
+        ps.get(StringUtils.repeat("a", 101));
+        ps.get(StringUtils.repeat("a", 255));
+        ps.get(StringUtils.repeat("a", 256));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -120,10 +126,31 @@ public class PluginSettingsTest extends SpringAwareTestCase
         factory.createGlobalSettings().put(null, "foo");
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testPutWithLongKeyShouldThrowIllegalArgumentException()
+    @Test
+    public void putWith100CharacterKeyShouldSucceed()
     {
-        factory.createGlobalSettings().put(StringUtils.repeat("a", 101), "foo");
+        String key = StringUtils.repeat("a", 100);
+        
+        PluginSettings ps = factory.createGlobalSettings();
+        ps.put(key, "Value");
+        assertEquals("Value", ps.get(key));
+    }
+
+    @Ignore("This behaviour is not required until REFAPP-229")
+    @Test
+    public void putWith255CharacterKeyShouldSucceed()
+    {
+        String key = StringUtils.repeat("a", 255);
+        
+        PluginSettings ps = factory.createGlobalSettings();
+        ps.put(key, "Value");
+        assertEquals("Value", ps.get(key));
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void putWithExcessiveKeyShouldThrowIllegalArgumentException()
+    {
+        factory.createGlobalSettings().put(StringUtils.repeat("a", 256), "foo");
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -132,9 +159,14 @@ public class PluginSettingsTest extends SpringAwareTestCase
         factory.createGlobalSettings().remove(null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testRemoveWithLongKeyShouldThrowIllegalArgumentException()
+    @Test
+    public void testRemoveWithLongKeyShouldSucceed()
     {
-        factory.createGlobalSettings().remove(StringUtils.repeat("a", 101));
+        PluginSettings ps = factory.createGlobalSettings();
+        
+        ps.remove(StringUtils.repeat("a", 100));
+        ps.remove(StringUtils.repeat("a", 101));
+        ps.remove(StringUtils.repeat("a", 255));
+        ps.remove(StringUtils.repeat("a", 256));
     }
 }
