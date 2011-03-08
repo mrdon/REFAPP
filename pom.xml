@@ -334,16 +334,16 @@
         <jdkLevel>1.5</jdkLevel>
 
         <plug.name>Plugins Framework</plug.name>
-        <plug.version>2.7.1</plug.version>
+        <plug.version>2.7.3</plug.version>
 
         <sal.name>SAL</sal.name>
-        <sal.version>2.4.0</sal.version>
+        <sal.version>2.4.1</sal.version>
 
         <atr.name>Template Renderer</atr.name>
         <atr.version>1.2.3</atr.version>
 
         <apl.name>AppLinks</apl.name>
-        <apl.version>3.2-m2</apl.version>
+        <apl.version>3.2.2</apl.version>
 
         <oauth.name>OAuth</oauth.name>
         <oauth.version>1.2.1</oauth.version>
