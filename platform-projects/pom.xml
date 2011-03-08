@@ -6,23 +6,36 @@
         <version>2.10.0-SNAPSHOT</version>
     </parent>
     <artifactId>atlassian-refapp-platform-projects</artifactId>
-    <name>Reference App Platform Projects Parent  POM</name>
+    <name>Reference App Platform Projects Parent POM</name>
     <packaging>pom</packaging>
 
     <!-- This list contains all the projects which rely on Refapp for
          integration test execution.
          *** THIS IS NOT ALL THE PROJECT USED BY REFAPP *** 
     -->
-    <modules>
-        <module>OAUTH</module>
-        <module>REST</module>
-        <!-- <module>AJS</module> -->
-        <module>SAL</module>
-        <module>ATR</module>
-        <module>UPM</module>
-        <module>TRUST</module>
-        <module>APL</module>
-    </modules>
+    <profiles>
+        <profile>
+            <id>platform-projects</id>
+            <build>
+                <defaultGoal>verify</defaultGoal>
+            </build>
+
+            <modules>
+                <module>OAUTH</module>
+                <module>REST</module>
+                <!-- <module>AJS</module> -->
+                <module>SAL</module>
+                <module>ATR</module>
+                <module>UPM</module>
+                <module>TRUST</module>
+                <module>APL</module>
+            </modules>
+
+            <properties>
+                <refapp.version>${project.version}</refapp.version>
+            </properties>
+        </profile>
+    </profiles>
 
     <dependencies>
         <dependency>
