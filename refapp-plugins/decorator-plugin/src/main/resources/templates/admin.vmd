@@ -46,16 +46,6 @@ $webResourceManager.requireResourcesForContext("atl.admin")
             #webpanels("atl.admin.body", $context)
         </div>
         
-        <div class="refapp-footer" style="text-align:center">
-            <hr/>
-            Atlassian RefApp $version -
-            #set($panels = $webInterfaceManager.getDisplayableItems("footer.links", $context))
-            #set($first = true)
-            #foreach($item in $panels)
-              #if (!$first)|#end #set($first = false)
-              <a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $context)">$item.webLabel.getDisplayableLabel($request, $context)</a>
-            #end
-            #webpanels("footer.links", $context)
-        </div>
+        #parse("templates/footer.vm")
     </body>
 </html>
