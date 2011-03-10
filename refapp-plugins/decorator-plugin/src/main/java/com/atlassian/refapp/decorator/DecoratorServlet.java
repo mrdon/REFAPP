@@ -1,24 +1,28 @@
 package com.atlassian.refapp.decorator;
 
-import com.atlassian.templaterenderer.TemplateRenderer;
-import com.atlassian.templaterenderer.RenderingException;
-import com.opensymphony.module.sitemesh.Page;
-import com.opensymphony.module.sitemesh.RequestConstants;
-import com.opensymphony.module.sitemesh.HTMLPage;
-import com.opensymphony.module.sitemesh.util.OutputConverter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Properties;
+
+import com.atlassian.refapp.auth.external.WebSudoSessionManager;
+import com.atlassian.templaterenderer.RenderingException;
+import com.atlassian.templaterenderer.TemplateRenderer;
+
+import com.opensymphony.module.sitemesh.HTMLPage;
+import com.opensymphony.module.sitemesh.Page;
+import com.opensymphony.module.sitemesh.RequestConstants;
+import com.opensymphony.module.sitemesh.util.OutputConverter;
+
 import org.apache.commons.io.IOUtils;
 
 public class DecoratorServlet extends HttpServlet
@@ -27,10 +31,12 @@ public class DecoratorServlet extends HttpServlet
     private static final String PROPERTIES_LOCATION = "META-INF/maven/com.atlassian.refapp/atlassian-refapp/pom.properties";
 
     private final TemplateRenderer templateRenderer;
-
-    public DecoratorServlet(TemplateRenderer templateRenderer)
+    private final WebSudoSessionManager webSudoSessionManager;
+    
+    public DecoratorServlet(TemplateRenderer templateRenderer, WebSudoSessionManager webSudoSessionManager)
     {
         this.templateRenderer = templateRenderer;
+        this.webSudoSessionManager = webSudoSessionManager;
     }
 
     protected void service(HttpServletRequest request, HttpServletResponse response)
@@ -93,10 +99,10 @@ public class DecoratorServlet extends HttpServlet
         ServletContext servletContext = getServletConfig().getServletContext(); 
         InputStream in = servletContext.getResourceAsStream(location);
 
-	if (in == null)
-	{
-	    throw new IOException();
-	}
+        if (in == null)
+        {
+            throw new IOException("Resource '" + location + "' not found");
+        }
 
         try
         {
@@ -128,6 +134,12 @@ public class DecoratorServlet extends HttpServlet
         velocityParams.put("version", version);
 
         velocityParams.put("page", page);
+        
+        if (webSudoSessionManager.isWebSudoSession(request))
+        {
+            velocityParams.put("websudosession", Boolean.TRUE.toString());
+        }
+        
         velocityParams.put("titleHtml", page.getTitle());
 
         StringWriter bodyBuffer = new StringWriter();

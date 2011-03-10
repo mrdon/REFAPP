@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.atlassian.refapp.auth.external.WebSudoSessionManager;
 import com.atlassian.templaterenderer.TemplateRenderer;
 
 import com.opensymphony.module.sitemesh.Page;
@@ -31,6 +32,8 @@ public class DecoratorServletTest
     @Mock ServletContext servletContext;
     @Mock Page page;
     
+    @Mock WebSudoSessionManager webSudoSessionManager;
+    
     @Before
     public final void setUpMockBehaviour()
     {
@@ -41,7 +44,7 @@ public class DecoratorServletTest
     @Test
     public void noExceptionsAreThrownWhenPropertiesAreNotAvailable() throws ServletException, IOException
     {
-        DecoratorServlet ds = new DecoratorServlet(templateRenderer);
+        DecoratorServlet ds = new DecoratorServlet(templateRenderer, webSudoSessionManager);
         ds.init(servletConfig);
         ds.service(request, response);
     }
@@ -53,7 +56,7 @@ public class DecoratorServletTest
         Mockito.when(immediatelyFailingInputStream.read()).thenThrow(new IOException());
         
         Mockito.when(servletContext.getResourceAsStream(Mockito.anyString())).thenReturn(immediatelyFailingInputStream);
-        DecoratorServlet ds = new DecoratorServlet(templateRenderer);
+        DecoratorServlet ds = new DecoratorServlet(templateRenderer, webSudoSessionManager);
         ds.init(servletConfig);
         ds.service(request, response);
     }

@@ -15,6 +15,7 @@ $webResourceManager.requireResourcesForContext("atl.admin")
         $webResourceIncluder.includeResources()
     </head>
     <body>
+        #parse("templates/websudo-info.vm")
         <ul class="header-links">
         #foreach($item in $webInterfaceManager.getDisplayableItems("header.links", $context))
           <li><a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $context)">$item.webLabel.getDisplayableLabel($request, $context)</a></li>
