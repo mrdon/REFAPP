@@ -17,15 +17,19 @@ import java.io.StringWriter;
 import java.util.Map;
 import java.util.HashMap;
 
+import com.atlassian.refapp.auth.external.WebSudoSessionManager;
+
 public class DecoratorServlet extends HttpServlet
 {
     private static final String ADMIN_PATH = "/admin.vmd";
 
     private final TemplateRenderer templateRenderer;
-
-    public DecoratorServlet(TemplateRenderer templateRenderer)
+    private final WebSudoSessionManager webSudoSessionManager;
+    
+    public DecoratorServlet(TemplateRenderer templateRenderer, WebSudoSessionManager webSudoSessionManager)
     {
         this.templateRenderer = templateRenderer;
+        this.webSudoSessionManager = webSudoSessionManager;
     }
 
     protected void service(HttpServletRequest request, HttpServletResponse response)
@@ -89,6 +93,12 @@ public class DecoratorServlet extends HttpServlet
         Map<String, Object> velocityParams = new HashMap<String, Object>();
 
         velocityParams.put("page", page);
+        
+        if (webSudoSessionManager.isWebSudoSession(request))
+        {
+            velocityParams.put("websudosession", Boolean.TRUE.toString());
+        }
+        
         velocityParams.put("titleHtml", page.getTitle());
 
         StringWriter bodyBuffer = new StringWriter();

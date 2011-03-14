@@ -1,0 +1,5 @@
+#if ($websudosession)
+<div class="global-warning" id="websudo-banner">
+You have temporary access to administrative functions. <a id="websudo-drop" href="$request.getContextPath()/plugins/servlet/dropwebsudo">Drop access</a> if you no longer require it.
+</div>
+#end

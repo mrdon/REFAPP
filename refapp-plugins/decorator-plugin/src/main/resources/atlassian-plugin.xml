@@ -57,4 +57,8 @@
         <link linkId="oldRefAppHomePageLink">/index.jsp</link>
     </web-item>
 
+    <component-import key="webSudoSessionManager">
+        <interface>com.atlassian.refapp.auth.external.WebSudoSessionManager</interface>
+    </component-import>
+
 </atlassian-plugin>

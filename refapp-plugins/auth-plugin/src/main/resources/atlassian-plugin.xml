@@ -76,6 +76,10 @@
         <url-pattern>/logout</url-pattern>
     </servlet>
 
+    <servlet key="dropwebsudo" class="com.atlassian.refapp.auth.internal.DropWebSudoServlet">
+        <url-pattern>/dropwebsudo</url-pattern>
+    </servlet>
+
     <servlet key="users-servlet" class="com.atlassian.refapp.auth.internal.UsersServlet">
         <url-pattern>/users</url-pattern>
         <url-pattern>/users/*</url-pattern>

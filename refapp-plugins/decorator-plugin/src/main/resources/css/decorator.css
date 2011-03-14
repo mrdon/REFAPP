@@ -79,3 +79,12 @@ h1 {
 .refapp-footer {
     clear: both;
 }
+
+.global-warning {
+    background-color: #FFFFDD;
+    border: 1px solid #F7DF92;
+    color: #000000;
+    margin: 0;
+    padding: 5px;
+    text-align: center;
+}

@@ -11,6 +11,7 @@ $webResourceManager.requireResourcesForContext("atl.popup")
         $webResourceIncluder.includeResources()
     </head>
     <body>
+        #parse("templates/websudo-info.vm")
         <h1>
                   <img src="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/atlassian.png")" alt="Atlassian"/>
           RefApp

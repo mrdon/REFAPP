@@ -73,5 +73,11 @@
             <version>2.5.5</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.atlassian.refapp</groupId>
+            <artifactId>atlassian-refapp-auth-plugin</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

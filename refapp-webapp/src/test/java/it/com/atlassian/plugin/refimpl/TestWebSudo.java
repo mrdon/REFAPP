@@ -54,6 +54,23 @@ public class TestWebSudo extends AbstractRefappTestCase
         assertTextPresent("You have requested access to an administrative function");
     }
 
+    public void testWebSudoStateIsShown()
+    {
+        loginAs(TEST_USER, TEST_PASS, true);
+        assertTextPresent("You have temporary access to administrative functions.");
+    }
+    
+    public void testWebSudoPrivilegesCanBeDropped()
+    {
+        loginAs(TEST_USER, TEST_PASS, true);
+        assertTextPresent("You have temporary access to administrative functions.");
+        clickLink("websudo-drop");
+        assertTextNotPresent("You have temporary access to administrative functions.");
+        
+        gotoPage("/plugins/servlet/charlieadmin");
+        assertTextPresent("You have requested access to an administrative function");
+    }
+    
     private void loginAs(final String user, final String password)
     {
         loginAs(user, password, false);
