@@ -148,4 +148,10 @@
                class="com.atlassian.sal.core.xsrf.IndependentXsrfTokenValidator" system="true" public="true">
         <interface>com.atlassian.sal.api.xsrf.XsrfTokenValidator</interface>
     </component>
+    
+    <component key="helpPathResolver" name="Help Path Resolver"
+                class="com.atlassian.refapp.sal.message.RefImplHelpPathResolver" system="true" public="true">
+        <interface>com.atlassian.sal.api.message.HelpPathResolver</interface>
+    </component>
+    
 </atlassian-plugin>

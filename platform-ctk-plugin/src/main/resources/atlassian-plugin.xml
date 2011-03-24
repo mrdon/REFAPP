@@ -24,6 +24,7 @@
     <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties" />
     <component-import key="xsrfTokenAccessor" interface="com.atlassian.sal.api.xsrf.XsrfTokenAccessor" />
     <component-import key="packageAdmin" interface="org.osgi.service.packageadmin.PackageAdmin" />
+    <component-import key="helpPathResolver" interface="com.atlassian.sal.api.message.HelpPathResolver" />
     
     <component key="refappInfoProvider" class="com.atlassian.refapp.ctk.refapp.RefappInfoProvider" application="refapp"/>
     <component key="bambooInfoProvider" class="com.atlassian.refapp.ctk.bamboo.BambooInfoProvider" application="bamboo"/>
