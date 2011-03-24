@@ -334,7 +334,7 @@
         <jdkLevel>1.5</jdkLevel>
 
         <plug.name>Plugins Framework</plug.name>
-        <plug.version>2.7.3</plug.version>
+        <plug.version>2.7.5</plug.version>
 
         <sal.name>SAL</sal.name>
         <sal.version>2.4.1</sal.version>
