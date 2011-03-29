@@ -22,6 +22,7 @@
         <module>refapp-webapp</module>
         <module>platform-ctk-plugin</module>
         <module>platform-projects</module>
+        <module>refapp-pageobjects</module>
     </modules>
     <scm>
         <connection>scm:svn:https://studio.atlassian.com/svn/REFAPP/trunk</connection>
