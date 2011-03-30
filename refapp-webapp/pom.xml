@@ -120,20 +120,6 @@
                             <includes>
                                 <include>it/**/*java</include>
                             </includes>
-                            <systemProperties>
-                                <property>
-                                    <name>baseurl.refapp</name>
-                                    <value>${baseurl}</value>
-                                </property>
-                                <property>
-                                    <name>http.refapp.port</name>
-                                    <value>${http.port}</value>
-                                </property>
-                                <property>
-                                    <name>context.refapp.path</name>
-                                    <value>/atlassian-refapp</value>
-                                </property>
-                            </systemProperties>
                         </configuration>
                     </execution>
                 </executions>
@@ -165,12 +151,7 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>atlassian-refapp-pageobjects</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>com.atlassian.refapp</groupId>
             <artifactId>atlassian-platform</artifactId>
