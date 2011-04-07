@@ -340,13 +340,13 @@
         <rest.version>2.4.0</rest.version>
 
         <upm.name>Universal Plugin Manager</upm.name>
-        <upm.version>1.2.4</upm.version>
+        <upm.version>1.3.2</upm.version>
 
         <ajs.name>AUI</ajs.name>
         <ajs.version>3.3.1</ajs.version>
 
         <event.name>Events</event.name>
-        <event.version>2.0.5</event.version>
+        <event.version>2.1.0</event.version>
         
         <trust.name>Trusted Apps</trust.name>
         <trust.version>2.3.1</trust.version>
