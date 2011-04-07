@@ -1,5 +1,6 @@
 package com.atlassian.refapp.sal.message;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.ListResourceBundle;
@@ -44,6 +45,9 @@ public class RefimplI18nResolverTest
     private static final String US_VALUE_FOR_KEY_WITHOUT_PREFIX_2 = "Hello, universe";
     private static final String US_VALUE_FOR_KEY_WITH_PREFIX_NOT_AT_START_2 = "Hello, Sydney";
     private static final String US_VALUE_FOR_KEY_WITH_PREFIX_AT_START_2 = "Hello, everyone";
+
+    private static final String KEY_3 = "key3";
+    private static final String VALUE_FOR_KEY_3 = "Hello {0}";
 
     private static final ResourceBundle bundle1_en_US = new ListResourceBundle()
     {
@@ -100,6 +104,22 @@ public class RefimplI18nResolverTest
         }
     };
 
+    private static final ResourceBundle bundle3_currentLocale = new ListResourceBundle()
+    {
+        @Override public Locale getLocale()
+        {
+            return Locale.getDefault();
+        }
+
+        protected Object[][] getContents()
+        {
+            return new Object[][]
+                {
+                    {KEY_3, VALUE_FOR_KEY_3}
+                };
+        }
+    };
+
     private static final ResourceBundleResolver resourceBundleResolver = new ResourceBundleResolver()
     {
         public ResourceBundle getBundle(String baseName, Locale locale, ClassLoader classLoader)
@@ -122,6 +142,13 @@ public class RefimplI18nResolverTest
                     return bundle2_en_US;
                 }
             }
+            else if (baseName.equals("bundle3"))
+            {
+                if (locale.equals(bundle3_currentLocale.getLocale()))
+                {
+                    return bundle3_currentLocale;
+                }
+            }
             throw new MissingResourceException("Can't find bundle for base name " + baseName + ", locale " + locale,
                                                baseName + "_" + locale,"");
         }
@@ -131,7 +158,8 @@ public class RefimplI18nResolverTest
     private final PluginEventManager pluginEventManager = Mockito.mock(PluginEventManager.class);
     private final Plugin plugin = Mockito.mock(Plugin.class);
     private final ResourceDescriptor bundleResourceDescriptor1 = mockResourceDescriptor("bundle1");
-    private final ResourceDescriptor bundleResourceDescriptor2 = mockResourceDescriptor("bundle2"); 
+    private final ResourceDescriptor bundleResourceDescriptor2 = mockResourceDescriptor("bundle2");
+    private final ResourceDescriptor bundleResourceDescriptor3 = mockResourceDescriptor("bundle3");
 
     private RefimplI18nResolver resolver =
         new RefimplI18nResolver(pluginAccessor, pluginEventManager, resourceBundleResolver);
@@ -235,6 +263,26 @@ public class RefimplI18nResolverTest
         Mockito.when(plugin.getResourceDescriptors("i18n")).thenReturn(Arrays.asList(bundleResourceDescriptor1));
         resolver.pluginEnabled(new PluginEnabledEvent(plugin));
         resolver.getAllTranslationsForPrefix(PREFIX, null);
+    }
+
+    @Test
+    public void resolveText() throws Exception
+    {
+        Mockito.when(plugin.getResourceDescriptors("i18n")).thenReturn(Arrays.asList(bundleResourceDescriptor3));
+        resolver.pluginEnabled(new PluginEnabledEvent(plugin));
+
+        assertEquals("Hello World", resolver.resolveText(KEY_3, new Serializable[] { "World" }));
+        assertEquals(KEY_WITHOUT_PREFIX_2, resolver.resolveText(KEY_WITHOUT_PREFIX_2, new Serializable[0]));
+    }
+
+    @Test
+    public void getRawText() throws Exception
+    {
+        Mockito.when(plugin.getResourceDescriptors("i18n")).thenReturn(Arrays.asList(bundleResourceDescriptor3));
+        resolver.pluginEnabled(new PluginEnabledEvent(plugin));
+
+        assertEquals(VALUE_FOR_KEY_3, resolver.getRawText(KEY_3));
+        assertEquals(KEY_WITHOUT_PREFIX_2, resolver.resolveText(KEY_WITHOUT_PREFIX_2, new Serializable[0]));
     }
 
     private static ResourceDescriptor mockResourceDescriptor(String location)

@@ -38,9 +38,29 @@ public class RefimplI18nResolver extends AbstractI18nResolver
         this.resolver = assertNotNull(resolver, "resolver");
     }
 
+    public String getRawText(String key)
+    {
+        String pattern = getPattern(key);
+        if (pattern == null)
+        {
+            pattern = key;
+        }
+        return pattern;
+    }
+
     public String resolveText(String key, Serializable[] arguments)
     {
-        String message = null;
+        String pattern = getPattern(key);
+        if (pattern == null)
+        {
+            return key;
+        }
+        return MessageFormat.format(pattern, (Object[]) arguments);
+    }
+
+    private String getPattern(String key)
+    {
+        String bundleString = null;
         for (Plugin plugin : pluginResourceBundleNames.keySet())
         {
             for (String bundleName : pluginResourceBundleNames.get(plugin))
@@ -48,7 +68,7 @@ public class RefimplI18nResolver extends AbstractI18nResolver
                 try
                 {
                     ResourceBundle bundle = getBundle(bundleName, Locale.getDefault(), plugin);
-                    message = MessageFormat.format(bundle.getString(key), (Object[]) arguments);
+                    bundleString = bundle.getString(key);
                 }
                 catch (MissingResourceException e)
                 {
@@ -56,11 +76,7 @@ public class RefimplI18nResolver extends AbstractI18nResolver
                 }
             }
         }
-        if (message == null)
-        {
-            message = key;
-        }
-        return message;
+        return bundleString;
     }
 
     public Map<String, String> getAllTranslationsForPrefix(String prefix)
