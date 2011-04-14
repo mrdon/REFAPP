@@ -331,7 +331,7 @@
         <atr.version>1.2.3</atr.version>
 
         <apl.name>AppLinks</apl.name>
-        <apl.version>3.4-beta6</apl.version>
+        <apl.version>3.4</apl.version>
 
         <oauth.name>OAuth</oauth.name>
         <oauth.version>1.2.2</oauth.version>
@@ -346,10 +346,10 @@
         <ajs.version>3.4.0</ajs.version>
 
         <event.name>Events</event.name>
-        <event.version>2.1.0</event.version>
+        <event.version>2.1.1</event.version>
         
         <trust.name>Trusted Apps</trust.name>
-        <trust.version>2.3.3-beta1</trust.version>
+        <trust.version>2.4</trust.version>
 
         <!-- libraries need to a .libversion suffix -->
         <selenium.libversion>2.0.0-m16</selenium.libversion>
