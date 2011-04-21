@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Enumeration;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.atlassian.plugin.Plugin;
 import com.atlassian.plugin.PluginAccessor;
@@ -25,13 +26,13 @@ import com.atlassian.sal.core.message.AbstractI18nResolver;
  */
 public class RefimplI18nResolver extends AbstractI18nResolver
 {
-    private final Map<Plugin, Iterable<String>> pluginResourceBundleNames =
-        new HashMap<Plugin, Iterable<String>>();
+    private final Map<Plugin, Iterable<String>> pluginResourceBundleNames = new ConcurrentHashMap<Plugin, Iterable<String>>();
 
     private final ResourceBundleResolver resolver;
 
-    public RefimplI18nResolver(PluginAccessor pluginAccessor, PluginEventManager pluginEventManager,
-                               ResourceBundleResolver resolver)
+    public RefimplI18nResolver(PluginAccessor pluginAccessor,
+            PluginEventManager pluginEventManager,
+            ResourceBundleResolver resolver)
     {
         pluginEventManager.register(this);
         addPluginResourceBundles(pluginAccessor.getPlugins());
