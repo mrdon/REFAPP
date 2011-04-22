@@ -108,11 +108,11 @@ public class RefimplI18nResolver extends AbstractI18nResolver
             public Map<String, String> get()
             {
                 Map<String, String> translationsWithPrefix = new HashMap<String, String>();
-                for (Plugin plugin : pluginResourceBundleNames.keySet())
+                for (Entry<Plugin, Iterable<String>> pluginBundleNames : pluginResourceBundleNames.entrySet())
                 {
         
-                    addMatchingTranslationsToMap(prefix, Locale.getDefault(), plugin, pluginResourceBundleNames.get(plugin),
-                                                 translationsWithPrefix);
+                    addMatchingTranslationsToMap(
+                            prefix, Locale.getDefault(), pluginBundleNames.getKey(), pluginBundleNames.getValue(), translationsWithPrefix);
                 }
                 return translationsWithPrefix;
             }
@@ -129,10 +129,10 @@ public class RefimplI18nResolver extends AbstractI18nResolver
             public Map<String, String> get()
             {
                 Map<String, String> translationsWithPrefix = new HashMap<String, String>();
-                for (Plugin plugin : pluginResourceBundleNames.keySet())
+                for (Entry<Plugin, Iterable<String>> pluginBundleNames : pluginResourceBundleNames.entrySet())
                 {
-                    addMatchingTranslationsToMap(prefix, locale, plugin, pluginResourceBundleNames.get(plugin),
-                                                 translationsWithPrefix);
+                    addMatchingTranslationsToMap(
+                            prefix, locale, pluginBundleNames.getKey(), pluginBundleNames.getValue(), translationsWithPrefix);
                 }
                 return translationsWithPrefix;
             }
