@@ -2,6 +2,7 @@ package com.atlassian.refapp.sal.message;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,8 +10,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import java.util.Enumeration;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import com.atlassian.plugin.Plugin;
 import com.atlassian.plugin.PluginAccessor;
@@ -20,77 +21,105 @@ import com.atlassian.plugin.event.PluginEventManager;
 import com.atlassian.plugin.event.events.PluginDisabledEvent;
 import com.atlassian.plugin.event.events.PluginEnabledEvent;
 import com.atlassian.sal.core.message.AbstractI18nResolver;
+import com.atlassian.util.concurrent.ManagedLock;
+import com.atlassian.util.concurrent.ManagedLocks;
+import com.atlassian.util.concurrent.Supplier;
 
 /**
  * Returns the key with args as a string
  */
 public class RefimplI18nResolver extends AbstractI18nResolver
 {
-    private final Map<Plugin, Iterable<String>> pluginResourceBundleNames = new ConcurrentHashMap<Plugin, Iterable<String>>();
+    private ManagedLock.ReadWrite locks = ManagedLocks.manageReadWrite(new ReentrantReadWriteLock());
+    private final Map<Plugin, Iterable<String>> pluginResourceBundleNames = new HashMap<Plugin, Iterable<String>>();
 
     private final ResourceBundleResolver resolver;
 
-    public RefimplI18nResolver(PluginAccessor pluginAccessor,
+    public RefimplI18nResolver(final PluginAccessor pluginAccessor,
             PluginEventManager pluginEventManager,
             ResourceBundleResolver resolver)
     {
         pluginEventManager.register(this);
-        addPluginResourceBundles(pluginAccessor.getPlugins());
         this.resolver = assertNotNull(resolver, "resolver");
-    }
 
-    public String resolveText(String key, Serializable[] arguments)
-    {
-        String message = null;
-        for (Plugin plugin : pluginResourceBundleNames.keySet())
+        locks.write().withLock(new Runnable()
         {
-            for (String bundleName : pluginResourceBundleNames.get(plugin))
+            public void run()
             {
-                try
-                {
-                    ResourceBundle bundle = getBundle(bundleName, Locale.getDefault(), plugin);
-                    message = MessageFormat.format(bundle.getString(key), (Object[]) arguments);
-                }
-                catch (MissingResourceException e)
-                {
-                    // ignore, try next bundle
-                }
+                addPluginResourceBundles(pluginAccessor.getPlugins());
             }
-        }
-        if (message == null)
-        {
-            message = key;
-        }
-        return message;
+        });
     }
 
-    public Map<String, String> getAllTranslationsForPrefix(String prefix)
+    public String resolveText(final String key, final Serializable[] arguments)
+    {
+        return locks.read().withLock(new Supplier<String>()
+        {
+            public String get()
+            {
+                String message = null;
+                for (Plugin plugin : pluginResourceBundleNames.keySet())
+                {
+                    for (String bundleName : pluginResourceBundleNames.get(plugin))
+                    {
+                        try
+                        {
+                            ResourceBundle bundle = getBundle(bundleName, Locale.getDefault(), plugin);
+                            message = MessageFormat.format(bundle.getString(key), (Object[]) arguments);
+                        }
+                        catch (MissingResourceException e)
+                        {
+                            // ignore, try next bundle
+                        }
+                    }
+                }
+                if (message == null)
+                {
+                    message = key;
+                }
+                return message;
+            }
+        });
+    }
+
+    public Map<String, String> getAllTranslationsForPrefix(final String prefix)
     {
         assertNotNull(prefix, "prefix");
 
-        Map<String, String> translationsWithPrefix = new HashMap<String, String>();
-        for (Plugin plugin : pluginResourceBundleNames.keySet())
+        return locks.read().withLock(new Supplier<Map<String, String>>()
         {
-
-            addMatchingTranslationsToMap(prefix, Locale.getDefault(), plugin, pluginResourceBundleNames.get(plugin),
-                                         translationsWithPrefix);
-        }
-        return translationsWithPrefix;
+            public Map<String, String> get()
+            {
+                Map<String, String> translationsWithPrefix = new HashMap<String, String>();
+                for (Plugin plugin : pluginResourceBundleNames.keySet())
+                {
+                    addMatchingTranslationsToMap(prefix, Locale.getDefault(), plugin, pluginResourceBundleNames.get(plugin),
+                                                 translationsWithPrefix);
+                }
+                return translationsWithPrefix;
+            }
+        });
     }
 
-    public Map<String, String> getAllTranslationsForPrefix(String prefix, Locale locale)
+    public Map<String, String> getAllTranslationsForPrefix(final String prefix, final Locale locale)
     {
         assertNotNull(prefix, "prefix");
         assertNotNull(locale, "locale");
 
-        Map<String, String> translationsWithPrefix = new HashMap<String, String>();
-        for (Plugin plugin : pluginResourceBundleNames.keySet())
+        return locks.read().withLock(new Supplier<Map<String, String>>()
         {
-
-            addMatchingTranslationsToMap(prefix, locale, plugin, pluginResourceBundleNames.get(plugin),
-                                         translationsWithPrefix);
-        }
-        return translationsWithPrefix;
+            public Map<String, String> get()
+            {
+                Map<String, String> translationsWithPrefix = new HashMap<String, String>();
+                for (Plugin plugin : pluginResourceBundleNames.keySet())
+                {
+        
+                    addMatchingTranslationsToMap(prefix, locale, plugin, pluginResourceBundleNames.get(plugin),
+                                                 translationsWithPrefix);
+                }
+                return translationsWithPrefix;
+            }
+        });
     }
 
     private void addMatchingTranslationsToMap(String prefix, Locale locale, Plugin plugin,
@@ -129,15 +158,27 @@ public class RefimplI18nResolver extends AbstractI18nResolver
     }
 
     @PluginEventListener
-    public void pluginEnabled(PluginEnabledEvent event)
+    public void pluginEnabled(final PluginEnabledEvent event)
     {
-        addPluginResourceBundles(event.getPlugin());
+        locks.write().withLock(new Runnable()
+        {
+            public void run()
+            {
+                addPluginResourceBundles(event.getPlugin());
+            }
+        });
     }
 
     @PluginEventListener
-    public void pluginDisabled(PluginDisabledEvent event)
+    public void pluginDisabled(final PluginDisabledEvent event)
     {
-        removePluginResourceBundles(event.getPlugin());
+        locks.write().withLock(new Runnable()
+        {
+            public void run()
+            {
+                removePluginResourceBundles(event.getPlugin());
+            }
+        });
     }
 
     private void addPluginResourceBundles(Iterable<Plugin> plugins)
