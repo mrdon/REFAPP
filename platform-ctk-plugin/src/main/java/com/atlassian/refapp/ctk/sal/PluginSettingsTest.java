@@ -1,13 +1,8 @@
 package com.atlassian.refapp.ctk.sal;
 
-import com.atlassian.functest.junit.SpringAwareTestCase;
-
-import com.atlassian.sal.api.pluginsettings.PluginSettings;
-import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
-
-import org.apache.commons.lang.StringUtils;
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,14 +11,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.apache.commons.lang.StringUtils;
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import com.atlassian.functest.junit.SpringAwareTestCase;
+import com.atlassian.sal.api.pluginsettings.PluginSettings;
+import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
 
 public class PluginSettingsTest extends SpringAwareTestCase
 {
-    private static final String VERY_LONG_STRING = StringUtils.repeat("ABCDEFGHIJ", 10000);
+    private static final String VERY_LONG_VALUE = StringUtils.repeat("ABCDEFGHIJ", 10000);
 
+    private static final String VERY_LONG_KEY = StringUtils.repeat("q", 99000);
+    
     private PluginSettingsFactory factory;
 
     public void setFactory(PluginSettingsFactory factory)
@@ -46,8 +48,8 @@ public class PluginSettingsTest extends SpringAwareTestCase
         settings.put("string", "foo");
         assertTrue("Should be able to store and retrieve a string", "foo".equals(settings.get("string")));
 
-        settings.put("longstring", VERY_LONG_STRING);
-        assertTrue("Should be able to store and retrieve a string", VERY_LONG_STRING.equals(settings.get("longstring")));
+        settings.put("longstring", VERY_LONG_VALUE);
+        assertTrue("Should be able to store and retrieve a string", VERY_LONG_VALUE.equals(settings.get("longstring")));
     }
 
     @Test
@@ -117,7 +119,7 @@ public class PluginSettingsTest extends SpringAwareTestCase
         ps.get(StringUtils.repeat("a", 100));
         ps.get(StringUtils.repeat("a", 101));
         ps.get(StringUtils.repeat("a", 255));
-        ps.get(StringUtils.repeat("a", 256));
+        ps.get(VERY_LONG_KEY);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -167,6 +169,6 @@ public class PluginSettingsTest extends SpringAwareTestCase
         ps.remove(StringUtils.repeat("a", 100));
         ps.remove(StringUtils.repeat("a", 101));
         ps.remove(StringUtils.repeat("a", 255));
-        ps.remove(StringUtils.repeat("a", 256));
+        ps.remove(VERY_LONG_KEY);
     }
 }
