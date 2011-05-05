@@ -1,5 +1,7 @@
 body {
-    font-family: Helvetica,Arial,sans-serif;
+    background: #fff;
+    color: #000;
+    font-family: sans-serif; /* defaults to Arial/Win, Helvetica/Mac */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -78,6 +80,7 @@ h1 {
 
 .refapp-footer {
     clear: both;
+    text-align: center;
 }
 
 .global-warning {

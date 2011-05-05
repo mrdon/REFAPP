@@ -1,28 +1,33 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 $webResourceManager.requireResource("com.atlassian.refapp.decorator:decorator-resources")
 $webResourceManager.requireResourcesForContext("atl.general")
 #parse ("templates/webpanel.vm")
-<html>
+<html lang="en">
     <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+        <meta charset="UTF-8" />
         <title>#if ($title)$titleHtml#else Welcome!#end</title>
         <link href="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/developer16.ico")" rel="shortcut icon"/>
         <link href="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/developer16.png")" type="image/png" rel="icon"/>
         $headHtml
         $webResourceIncluder.includeResources()
     </head>
-    <body>
-        #parse("templates/websudo-info.vm")
-        <ul class="header-links">
-        #foreach($item in $webInterfaceManager.getDisplayableItems("header.links", $context))
-          <li><a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $context)">$item.webLabel.getDisplayableLabel($request, $context)</a></li>
-        #end
-        </ul>
-        <h1>
-		  <img src="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/atlassian.png")" alt="Atlassian"/>
-          RefApp
-        </h1>
+    <body class="refapp">
+        <div class="refapp-header">
+			#parse("templates/websudo-info.vm")
+			<ul class="header-links">
+			#foreach($item in $webInterfaceManager.getDisplayableItems("header.links", $context))
+			  <li><a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $context)">$item.webLabel.getDisplayableLabel($request, $context)</a></li>
+			#end
+			</ul>
+			<h1>
+			  <img src="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/atlassian.png")" alt="Atlassian"/>
+			  RefApp
+			</h1>
+		</div><!-- .refapp-header -->
+        <div class="refapp-content">
         $bodyHtml
+		</div><!-- .refapp-content -->
         #parse("templates/footer.vm")
     </body>
 </html>

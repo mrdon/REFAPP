@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 #parse ("templates/webpanel.vm")
 <html>
 <head>
@@ -36,8 +37,8 @@
     &lt;/web-panel&gt;
 </pre>
 
-  <p>Other places you can add links to include <tt>system.admin/general</tt>, <tt>header.links</tt> and
-    <tt>footer.links</tt>.  You might want to log in, by default, three users are available, admin, fred and
+  <p>Other places you can add links to include <code>system.admin/general</code>, <code>header.links</code> and
+    <code>footer.links</code>.  You might want to log in, by default, three users are available, admin, fred and
     barney.  Their passwords are the same as their usernames.</p>
 
 </body>

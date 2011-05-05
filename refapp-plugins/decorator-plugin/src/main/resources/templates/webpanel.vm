@@ -3,7 +3,7 @@
 #macro (webpanels $location $context )
 <!-- Rendering webpanels for location: $location -->
     #foreach($item in $webInterfaceManager.getDisplayableWebPanels($location, $context))
-        <div>
+        <div class="refapp-webpanel">
             $item.getHtml($context)
         </div>
     #end

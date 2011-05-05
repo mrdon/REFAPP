@@ -1,5 +1,6 @@
-        <div class="refapp-footer" style="text-align: center;">
+        <div class="refapp-footer">
             <hr/>
+            <p>
             Atlassian RefApp $version -
             #set($items = $webInterfaceManager.getDisplayableItems("footer.links", $context))
             #set($first = true)
@@ -8,4 +9,5 @@
               <a id="$item.link.id" href="$item.link.getDisplayableUrl($request, $context)">$item.webLabel.getDisplayableLabel($request, $context)</a>
             #end
             #webpanels("footer.links", $context)
+            </p>
         </div>
