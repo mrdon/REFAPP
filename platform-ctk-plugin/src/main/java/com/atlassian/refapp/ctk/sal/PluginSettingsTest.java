@@ -22,8 +22,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class PluginSettingsTest extends SpringAwareTestCase
 {
-	//maximum supported string length is 99000
-    private static final String VERY_LONG_STRING = StringUtils.repeat("ABCDEFGHIJ", 9900);
+    private static final String VERY_LONG_STRING = StringUtils.repeat("a", 99000);
 
     private PluginSettingsFactory factory;
 
