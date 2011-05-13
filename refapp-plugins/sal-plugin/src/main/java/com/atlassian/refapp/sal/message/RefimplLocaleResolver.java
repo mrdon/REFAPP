@@ -1,6 +1,7 @@
 package com.atlassian.refapp.sal.message;
 
 import com.atlassian.sal.api.message.LocaleResolver;
+import com.atlassian.seraph.auth.AuthenticationContext;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -9,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 
 public class RefimplLocaleResolver implements LocaleResolver
 {
+	
+	AuthenticationContext context;
+	
     public Locale getLocale(HttpServletRequest request)
     {
         String country = request.getParameter("locale.country");
@@ -33,6 +37,11 @@ public class RefimplLocaleResolver implements LocaleResolver
         }
 
         return Locale.getDefault();
+    }
+    
+    public Locale getLocale()
+    {
+    	return Locale.getDefault();
     }
 
     public Set<Locale> getSupportedLocales()
