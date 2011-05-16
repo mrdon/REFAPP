@@ -66,4 +66,9 @@ public class SimpleWebResourceIntegration implements WebResourceIntegration
     {
         return "1";
     }
+
+    public String getStaticResourceLocale()
+    {
+        return null;
+    }
 }

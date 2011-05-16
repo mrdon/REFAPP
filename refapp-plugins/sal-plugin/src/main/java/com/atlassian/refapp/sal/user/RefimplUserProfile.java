@@ -1,6 +1,7 @@
 package com.atlassian.refapp.sal.user;
 
 import java.net.URI;
+import java.util.TimeZone;
 
 import com.atlassian.sal.api.user.UserProfile;
 import com.atlassian.user.User;
@@ -59,5 +60,11 @@ public class RefimplUserProfile implements UserProfile
     public URI getProfilePageUri()
     {
         return profilePageUri;
+    }
+
+    // TODO: Remove this method when SAL-162 has been finished
+    public TimeZone getTimeZone()
+    {
+        return null;
     }
 }
