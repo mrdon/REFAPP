@@ -1,12 +1,12 @@
 package com.atlassian.refapp.sal.message;
 
-import com.atlassian.sal.api.message.LocaleResolver;
-import com.atlassian.seraph.auth.AuthenticationContext;
-
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
+
+import com.atlassian.sal.api.message.LocaleResolver;
 
 public class RefimplLocaleResolver implements LocaleResolver
 {
