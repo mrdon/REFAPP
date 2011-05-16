@@ -10,9 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public class RefimplLocaleResolver implements LocaleResolver
 {
-	
-	AuthenticationContext context;
-	
     public Locale getLocale(HttpServletRequest request)
     {
         String country = request.getParameter("locale.country");
@@ -36,7 +33,7 @@ public class RefimplLocaleResolver implements LocaleResolver
             return request.getLocale();
         }
 
-        return Locale.getDefault();
+        return getLocale();
     }
     
     public Locale getLocale()
