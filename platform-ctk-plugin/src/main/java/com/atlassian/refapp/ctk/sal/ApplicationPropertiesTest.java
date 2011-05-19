@@ -10,6 +10,7 @@ import org.junit.Test;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
@@ -78,5 +79,11 @@ public class ApplicationPropertiesTest extends SpringAwareTestCase
     {
         assertTrue("the home directory must exist", appProp.getHomeDirectory().exists());
         assertTrue("it must be a directory", appProp.getHomeDirectory().isDirectory());
+    }
+
+    @Test
+    public void testUnknownApplicationPropertyReturnsNull() throws Exception
+    {
+        assertNull(appProp.getPropertyValue("46435654ytrtHGFRHGFRHFRH"));
     }
 }

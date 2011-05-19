@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
 
 public class LocaleResolverTest extends SpringAwareTestCase
 {
@@ -38,8 +37,14 @@ public class LocaleResolverTest extends SpringAwareTestCase
     }
 
     @Test
+    public void testGetLocaleForHttpServletRequestNeverNull()
+    {
+        assertNotNull("getLocale(HttpServletRequest) never returns null", localeResolver.getLocale(Mockito.mock(HttpServletRequest.class)));
+    }
+
+    @Test
     public void testGetLocaleNeverNull()
     {
-        assertNotNull("getLocale() never returns null", localeResolver.getLocale(Mockito.mock(HttpServletRequest.class)));
+        assertNotNull("getLocale() never returns null", localeResolver.getLocale());
     }
 }

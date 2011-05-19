@@ -59,4 +59,11 @@ public class I18nResolverTest extends SpringAwareTestCase
         final Map<String,String> translations = resolver.getAllTranslationsForPrefix("some.key.that.doesnt.exist", Locale.US);
         assertTrue("Should return empty map of translations for unknown key", translations.keySet().isEmpty());
     }
+
+    @Test
+    public void testGetRawTextReturnsKeyWhenUnknown() throws Exception
+    {
+        final String unknownKey = "frkj46543^%$%^$T";
+        assertEquals(unknownKey, resolver.getText(unknownKey));
+    }
 }

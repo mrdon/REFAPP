@@ -16,6 +16,7 @@
     <component-import key="searchProvider" interface="com.atlassian.sal.api.search.SearchProvider" />
     <component-import key="transactionTemplate" interface="com.atlassian.sal.api.transaction.TransactionTemplate" />
     <component-import key="salUserManager" interface="com.atlassian.sal.api.user.UserManager" />
+    <component-import key="timeZoneManager" interface="com.atlassian.sal.api.timezone.TimeZoneManager"/>
     <component-import key="pluginUpgradeManager" interface="com.atlassian.sal.api.upgrade.PluginUpgradeManager" />
     <component-import key="threadLocalDelegateExecutorFactory" interface="com.atlassian.sal.api.executor.ThreadLocalDelegateExecutorFactory" />
     <component-import key="authenticationController" interface="com.atlassian.sal.api.auth.AuthenticationController" />

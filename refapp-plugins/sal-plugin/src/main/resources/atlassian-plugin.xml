@@ -133,6 +133,12 @@
         <interface>com.atlassian.sal.spi.HostContextAccessor</interface>
     </component>
 
+    <component key="timeZoneManager" name="TimeZone Manager"
+               class="com.atlassian.refapp.sal.timezone.RefimplTimeZoneManager"
+               system="true" public="true">
+        <interface>com.atlassian.sal.api.timezone.TimeZoneManager</interface>
+    </component>
+
     <component key="salUserManager" name="User Manager"
                class="com.atlassian.refapp.sal.user.RefImplUserManager"
                system="true" public="true">
