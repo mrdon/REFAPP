@@ -36,7 +36,6 @@ import static org.junit.Assert.assertNotNull;
 
 public class RequestFactoryTest extends SpringAwareTestCase
 {
-    private static final int JETTY_PORT = 54241;
     private static final String MESSAGE = "Hello World!";
 
     private RequestFactory<Request<?, ?>> requestFactory;
@@ -74,7 +73,7 @@ public class RequestFactoryTest extends SpringAwareTestCase
     @Test
     public void testExecuteUnauthenticatedRequest() throws Exception
     {
-        Server server = new Server(JETTY_PORT);
+        Server server = new Server(0);
         ServletHandler handler = new ServletHandler();
         handler.addServletWithMapping(HelloServlet.class, "/*");
         server.setHandler(handler);
@@ -84,7 +83,7 @@ public class RequestFactoryTest extends SpringAwareTestCase
             server.start();
 
             // now, make a request.
-            Request<?, ?> request = requestFactory.createRequest(Request.MethodType.GET, "http://localhost:" + JETTY_PORT);
+            Request<?, ?> request = requestFactory.createRequest(Request.MethodType.GET, "http://localhost:" + getActivePort(server));
             request.execute(new ResponseHandler()
             {
                 public void handle(final Response response) throws ResponseException
@@ -103,7 +102,7 @@ public class RequestFactoryTest extends SpringAwareTestCase
     @Test
     public void testCanSendMultipartPostRequest() throws Exception
     {
-        Server server = new Server(JETTY_PORT);
+        Server server = new Server(0);
         ServletHandler handler = new ServletHandler();
         handler.addServletWithMapping(SetFilesServlet.class, "/*");
         server.setHandler(handler);
@@ -113,7 +112,7 @@ public class RequestFactoryTest extends SpringAwareTestCase
             server.start();
 
             // now, make a request.
-            Request<?, ?> request = requestFactory.createRequest(Request.MethodType.POST, "http://localhost:" + JETTY_PORT);
+            Request<?, ?> request = requestFactory.createRequest(Request.MethodType.POST, "http://localhost:" + getActivePort(server));
             request.setFiles(Collections.singletonList(new RequestFilePart(testFile, "testFile")));
             request.execute(new ResponseHandler()
             {
@@ -132,7 +131,7 @@ public class RequestFactoryTest extends SpringAwareTestCase
     @Test
     public void testCanSendMultipartPutRequest() throws Exception
     {
-        Server server = new Server(JETTY_PORT);
+        Server server = new Server(0);
         ServletHandler handler = new ServletHandler();
         handler.addServletWithMapping(SetFilesServlet.class, "/*");
         server.setHandler(handler);
@@ -142,7 +141,7 @@ public class RequestFactoryTest extends SpringAwareTestCase
             server.start();
 
             // now, make a request.
-            Request<?, ?> request = requestFactory.createRequest(Request.MethodType.PUT, "http://localhost:" + JETTY_PORT);
+            Request<?, ?> request = requestFactory.createRequest(Request.MethodType.PUT, "http://localhost:" + getActivePort(server));
             request.setFiles(Collections.singletonList(new RequestFilePart(testFile, "testFile")));
             request.execute(new ResponseHandler()
             {
@@ -240,5 +239,10 @@ public class RequestFactoryTest extends SpringAwareTestCase
             out.println(MESSAGE);
             out.close();
         }
+    }
+
+    private int getActivePort(Server server)
+    {
+        return server.getConnectors()[0].getLocalPort();
     }
 }
