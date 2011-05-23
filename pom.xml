@@ -322,40 +322,40 @@
         <jdkLevel>1.5</jdkLevel>
 
         <plug.name>Plugins Framework</plug.name>
-        <plug.version>2.8.0-rc1</plug.version>
+        <plug.version>2.8.0</plug.version>
 
         <sal.name>SAL</sal.name>
-        <sal.version>2.6.0-rc2</sal.version>
+        <sal.version>2.6.0</sal.version>
 
         <atr.name>Template Renderer</atr.name>
-        <atr.version>1.3.0-rc1</atr.version>
+        <atr.version>1.3.0</atr.version>
 
         <apl.name>AppLinks</apl.name>
-        <apl.version>3.5-rc2</apl.version>
+        <apl.version>3.5</apl.version>
 
         <oauth.name>OAuth</oauth.name>
         <oauth.version>1.2.2</oauth.version>
 
         <rest.name>REST</rest.name>
-        <rest.version>2.5.0-rc1</rest.version>
+        <rest.version>2.5.0</rest.version>
 
         <upm.name>Universal Plugin Manager</upm.name>
-        <upm.version>1.4-rc1</upm.version>
+        <upm.version>1.4</upm.version>
 
         <ajs.name>AUI</ajs.name>
-        <ajs.version>3.4.2-m1</ajs.version>
+        <ajs.version>3.4.1</ajs.version>
 
         <event.name>Events</event.name>
         <event.version>2.1.1</event.version>
         
         <trust.name>Trusted Apps</trust.name>
-        <trust.version>2.5-rc1</trust.version>
+        <trust.version>2.5</trust.version>
 
         <!-- libraries need to a .libversion suffix -->
         <selenium.libversion>2.0.0-m16</selenium.libversion>
         <fp.libversion>0.3</fp.libversion>
         <google.collections.libversion>1.0</google.collections.libversion>
         <rome.libversion>1.0</rome.libversion>
-        <amps.libversion>3.3-m7</amps.libversion>
+        <amps.libversion>3.3.1</amps.libversion>
     </properties>
 </project>
