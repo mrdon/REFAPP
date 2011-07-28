@@ -80,10 +80,4 @@ public class ApplicationPropertiesTest extends SpringAwareTestCase
         assertTrue("the home directory must exist", appProp.getHomeDirectory().exists());
         assertTrue("it must be a directory", appProp.getHomeDirectory().isDirectory());
     }
-
-    @Test
-    public void testUnknownApplicationPropertyReturnsNull() throws Exception
-    {
-        assertNull(appProp.getPropertyValue("46435654ytrtHGFRHGFRHFRH"));
-    }
 }
