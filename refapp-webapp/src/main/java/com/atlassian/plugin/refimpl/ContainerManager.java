@@ -51,6 +51,8 @@ import com.atlassian.plugin.webresource.WebResourceIntegration;
 import com.atlassian.plugin.webresource.WebResourceManager;
 import com.atlassian.plugin.webresource.WebResourceManagerImpl;
 import com.atlassian.plugin.webresource.WebResourceModuleDescriptor;
+import com.atlassian.plugin.webresource.WebResourceUrlProvider;
+import com.atlassian.plugin.webresource.WebResourceUrlProviderImpl;
 import com.atlassian.plugin.webresource.transformer.WebResourceTransformerModuleDescriptor;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.io.IOUtils;
@@ -81,6 +83,7 @@ public class ContainerManager
     private final SimpleWebResourceIntegration webResourceIntegration;
     private final WebResourceManager webResourceManager;
     private final OsgiContainerManager osgiContainerManager;
+    private final WebResourceUrlProvider webResourceUrlProvider;
     private final PluginAccessor pluginAccessor;
     private final HostComponentProvider hostComponentProvider;
     private final DefaultModuleDescriptorFactory moduleDescriptorFactory;
@@ -95,6 +98,7 @@ public class ContainerManager
     {
         instance = this;
         webResourceIntegration = new SimpleWebResourceIntegration(servletContext);
+        webResourceUrlProvider = new WebResourceUrlProviderImpl(webResourceIntegration);
 
         // Delegating host container since the real one requires the created object map, which won't be available until later
         final HostContainer delegatingHostContainer = new HostContainer()
@@ -164,10 +168,10 @@ public class ContainerManager
         servletModuleManager = new DefaultServletModuleManager(servletContext, pluginEventManager);
         pluginAccessor = plugins.getPluginAccessor();
 
-        final PluginResourceLocator pluginResourceLocator = new PluginResourceLocatorImpl(webResourceIntegration, new SimpleServletContextFactory(servletContext));
+        final PluginResourceLocator pluginResourceLocator = new PluginResourceLocatorImpl(webResourceIntegration, new SimpleServletContextFactory(servletContext), webResourceUrlProvider);
         final PluginResourceDownload pluginDownloadStrategy = new PluginResourceDownload(pluginResourceLocator, new SimpleContentTypeResolver(), "UTF-8");
 
-        webResourceManager = new WebResourceManagerImpl(pluginResourceLocator, webResourceIntegration, new DefaultResourceBatchingConfiguration());
+        webResourceManager = new WebResourceManagerImpl(pluginResourceLocator, webResourceIntegration, webResourceUrlProvider, new DefaultResourceBatchingConfiguration());
 
         publicContainer = new HashMap<Class<?>, Object>();
         publicContainer.put(PluginController.class, plugins.getPluginController());

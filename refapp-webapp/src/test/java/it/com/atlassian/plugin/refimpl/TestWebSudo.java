@@ -11,32 +11,34 @@ public class TestWebSudo extends AbstractRefappTestCase
         super(name);
     }
 
-    public void testWebSudoRequired()
-    {
-        loginAs(TEST_USER, TEST_PASS);
-
-        // Redirect to the WebSudo form
-        gotoPage("/plugins/servlet/charlieadmin");
-
-        assertTextPresent("You have requested access to an administrative function");
-
-        // Authenticate
-        setTextField("os_password", TEST_PASS);
-        clickButton("websudo");
-
-        // Redirect to the charlie admin screen
-        assertTextPresent("Charlies Administration");
-    }
-
-    public void testWebSudoBypass()
-    {
-        loginAs(TEST_USER, TEST_PASS, true);
-
-        // Redirect to the WebSudo form
-        gotoPage("/plugins/servlet/charlieadmin");
-        
-        assertTextPresent("Charlies Administration");
-    }
+//    // REFAPP-252: redo these using webdriver.
+//
+//    public void testWebSudoRequired()
+//    {
+//        loginAs(TEST_USER, TEST_PASS);
+//
+//        // Redirect to the WebSudo form
+//        gotoPage("/plugins/servlet/charlieadmin");
+//
+//        assertTextPresent("You have requested access to an administrative function");
+//
+//        // Authenticate
+//        setTextField("os_password", TEST_PASS);
+//        clickButton("websudo");
+//
+//        // Redirect to the charlie admin screen
+//        assertTextPresent("Charlies Administration");
+//    }
+//
+//    public void testWebSudoBypass()
+//    {
+//        loginAs(TEST_USER, TEST_PASS, true);
+//
+//        // Redirect to the WebSudo form
+//        gotoPage("/plugins/servlet/charlieadmin");
+//
+//        assertTextPresent("Charlies Administration");
+//    }
 
     public void testWebSudoRequiredWrongPassword()
     {
