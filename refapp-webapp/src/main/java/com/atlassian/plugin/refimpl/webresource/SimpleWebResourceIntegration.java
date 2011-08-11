@@ -6,6 +6,7 @@ import com.atlassian.plugin.refimpl.ParameterUtils;
 import com.atlassian.plugin.webresource.WebResourceIntegration;
 import com.atlassian.plugin.webresource.UrlMode;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,5 +71,11 @@ public class SimpleWebResourceIntegration implements WebResourceIntegration
     public String getStaticResourceLocale()
     {
         return null;
+    }
+
+    public File getTemporaryDirectory()
+    {
+        final String tempDir = System.getProperty("java.io.tmpdir");
+        return new File(tempDir);
     }
 }
