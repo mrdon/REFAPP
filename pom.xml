@@ -322,7 +322,7 @@
         <jdkLevel>1.5</jdkLevel>
 
         <plug.name>Plugins Framework</plug.name>
-        <plug.version>2.8.0</plug.version>
+        <plug.version>2.9.0</plug.version>
 
         <sal.name>SAL</sal.name>
         <sal.version>2.6.0</sal.version>
@@ -340,10 +340,10 @@
         <rest.version>2.5.0</rest.version>
 
         <upm.name>Universal Plugin Manager</upm.name>
-        <upm.version>1.4</upm.version>
+        <upm.version>1.5.1</upm.version>
 
         <ajs.name>AUI</ajs.name>
-        <ajs.version>3.4.1</ajs.version>
+        <ajs.version>3.5.0</ajs.version>
 
         <event.name>Events</event.name>
         <event.version>2.1.1</event.version>
