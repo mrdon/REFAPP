@@ -19,6 +19,7 @@
         <module>atlassian-platform</module>
         <module>refapp-plugins</module>
         <module>refapp-bundled-plugins</module>
+        <module>atlassian-refapp-pageobjects</module>
         <module>refapp-webapp</module>
         <module>platform-ctk-plugin</module>
         <module>platform-projects</module>
