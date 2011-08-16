@@ -13,7 +13,7 @@
 <form action="$esc.html($websudoURI)" method="POST">
     <input name="redir" type="hidden" value="$!esc.html($redir)">
 
-    <p>You have requested access to an administrative function and are required to validate your credentials below.</p>
+    <p id="request-access-message">You have requested access to an administrative function and are required to validate your credentials below.</p>
 
     <label for="os_username">
         <span class="accesskey">U</span>sername

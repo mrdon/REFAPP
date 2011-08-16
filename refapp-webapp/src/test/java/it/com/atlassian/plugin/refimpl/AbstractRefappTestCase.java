@@ -1,20 +1,10 @@
 package it.com.atlassian.plugin.refimpl;
 
-import com.atlassian.plugin.refimpl.ParameterUtils;
-import com.atlassian.plugin.webresource.UrlMode;
-import net.sourceforge.jwebunit.junit.WebTestCase;
+import com.atlassian.pageobjects.TestedProductFactory;
+import com.atlassian.webdriver.refapp.RefappTestedProduct;
+import junit.framework.TestCase;
 
-/**
- *
- */
-public class AbstractRefappTestCase extends WebTestCase
+public class AbstractRefappTestCase extends TestCase
 {
-    public AbstractRefappTestCase(String name)
-    {
-        super(name);
-    }
-
-    public void setUp() throws Exception {
-        getTestContext().setBaseUrl(ParameterUtils.getBaseUrl(UrlMode.ABSOLUTE));
-    }
+    protected static final RefappTestedProduct PRODUCT = TestedProductFactory.create(RefappTestedProduct.class);
 }

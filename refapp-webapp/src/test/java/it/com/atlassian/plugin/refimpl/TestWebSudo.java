@@ -1,102 +1,78 @@
 package it.com.atlassian.plugin.refimpl;
 
+import com.atlassian.webdriver.refapp.page.RefappAdminHomePage;
+import com.atlassian.webdriver.refapp.page.RefappCharlieAdminPage;
+import com.atlassian.webdriver.refapp.page.RefappHomePage;
+import com.atlassian.webdriver.refapp.page.RefappLoginPage;
+import com.atlassian.webdriver.refapp.page.RefappWebSudoPage;
+
 public class TestWebSudo extends AbstractRefappTestCase
 {
 
     private static final String TEST_USER = "admin";
     private static final String TEST_PASS = "admin";
 
-    public TestWebSudo(String name)
+    @Override
+    protected void tearDown() throws Exception
     {
-        super(name);
+        super.tearDown();
+        PRODUCT.gotoHomePage().getHeader().logout(RefappHomePage.class);
     }
 
-//    // REFAPP-252: redo these using webdriver.
-//
-//    public void testWebSudoRequired()
-//    {
-//        loginAs(TEST_USER, TEST_PASS);
-//
-//        // Redirect to the WebSudo form
-//        gotoPage("/plugins/servlet/charlieadmin");
-//
-//        assertTextPresent("You have requested access to an administrative function");
-//
-//        // Authenticate
-//        setTextField("os_password", TEST_PASS);
-//        clickButton("websudo");
-//
-//        // Redirect to the charlie admin screen
-//        assertTextPresent("Charlies Administration");
-//    }
-//
-//    public void testWebSudoBypass()
-//    {
-//        loginAs(TEST_USER, TEST_PASS, true);
-//
-//        // Redirect to the WebSudo form
-//        gotoPage("/plugins/servlet/charlieadmin");
-//
-//        assertTextPresent("Charlies Administration");
-//    }
+    public void testWebSudoByPass()
+    {
+        loginAs(TEST_USER, TEST_PASS, true);
+        RefappCharlieAdminPage charlieAdminPage = PRODUCT.visit(RefappCharlieAdminPage.class);
+        assertTrue(charlieAdminPage.getHeader().getWebSudoBannerMessage().contains("You have temporary access to administrative functions."));
+    }
+
+    public void testWebSudoRequired()
+    {
+        loginAs(TEST_USER, TEST_PASS);
+
+        PRODUCT.visit(RefappCharlieAdminPage.class);
+        RefappWebSudoPage webSudoPage = PRODUCT.getPageBinder().bind(RefappWebSudoPage.class);
+        RefappCharlieAdminPage charlieAdminPage = webSudoPage.confirm(TEST_PASS, RefappCharlieAdminPage.class);
+        assertTrue(charlieAdminPage.getHeader().getWebSudoBannerMessage().contains("You have temporary access to administrative functions."));
+    }
 
     public void testWebSudoRequiredWrongPassword()
     {
         loginAs(TEST_USER, TEST_PASS);
 
-        // Redirect to the WebSudo form
-        gotoPage("/plugins/servlet/charlieadmin");
-
-        assertTextPresent("You have requested access to an administrative function");
-
-        // Authenticate
-        setTextField("os_password", "");
-        clickButton("websudo");
-
-        assertTextPresent("You have requested access to an administrative function");
+        PRODUCT.visit(RefappCharlieAdminPage.class);
+        RefappWebSudoPage webSudoPage = PRODUCT.getPageBinder().bind(RefappWebSudoPage.class);
+        webSudoPage = webSudoPage.confirm("", RefappWebSudoPage.class);
+        webSudoPage = webSudoPage.confirm("blah", RefappWebSudoPage.class);
+        assertTrue(webSudoPage.isRequestAccessMessagePresent());
     }
 
     public void testWebSudoStateIsShown()
     {
         loginAs(TEST_USER, TEST_PASS, true);
-        assertTextPresent("You have temporary access to administrative functions.");
+        RefappCharlieAdminPage charlieAdminPage = PRODUCT.visit(RefappCharlieAdminPage.class);
+        assertTrue(charlieAdminPage.getHeader().getWebSudoBannerMessage().contains("You have temporary access to administrative functions."));
     }
-    
+
     public void testWebSudoPrivilegesCanBeDropped()
     {
         loginAs(TEST_USER, TEST_PASS, true);
-        assertTextPresent("You have temporary access to administrative functions.");
-        clickLink("websudo-drop");
-        assertTextNotPresent("You have temporary access to administrative functions.");
-        
-        gotoPage("/plugins/servlet/charlieadmin");
-        assertTextPresent("You have requested access to an administrative function");
-    }
-    
-    private void loginAs(final String user, final String password)
-    {
-        loginAs(user, password, false);
-    }
-    
-    private void loginAs(final String user, final String password, boolean bypassWebsudo)
-    {
-        beginAt("/"); // Starts a new session
-        assertLinkPresentWithText("Login");
-        clickLinkWithExactText("Login");
-        assertTextPresent("Username");
-        setTextField("os_username", user);
-        setTextField("os_password", password);
-        if (bypassWebsudo)
-        {
-            checkCheckbox("os_websudo");
-        }
-        else
-        {
-            uncheckCheckbox("os_websudo");
-        }
+        RefappCharlieAdminPage charlieAdminPage = PRODUCT.visit(RefappCharlieAdminPage.class);
+        assertTrue(charlieAdminPage.getHeader().getWebSudoBannerMessage().contains("You have temporary access to administrative functions."));
 
-        clickButton("os_login");
-        assertTextPresent("admin");
-        assertButtonPresent("logout");
+        RefappHomePage homePage = charlieAdminPage.getHeader().dropWebSudo(RefappHomePage.class);
+        assertNull(homePage.getHeader().getWebSudoBannerMessage());
+    }
+
+    private RefappAdminHomePage loginAs(final String user, final String password)
+    {
+        RefappLoginPage loginPage = PRODUCT.gotoLoginPage();
+        return loginPage.login(user, password, false, RefappAdminHomePage.class);
+    }
+
+    private RefappAdminHomePage loginAs(final String user, final String password, boolean bypassWebsudo)
+    {
+        RefappLoginPage loginPage = PRODUCT.gotoLoginPage();
+        return loginPage.login(user, password, bypassWebsudo, RefappAdminHomePage.class);
     }
 }

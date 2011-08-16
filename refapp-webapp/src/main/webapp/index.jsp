@@ -13,7 +13,7 @@
 <% for (Object plugin : ContainerManager.getInstance().getPluginAccessor().getPlugins()) {
     Plugin p = (Plugin) plugin;
 %>
-        <li><%=p.getKey()%></li>
+        <li class="plugin-key"><%=p.getKey()%></li>
 <% } %>
     </ul>
 
@@ -28,14 +28,14 @@
 
 <% for (Bundle bundle : ContainerManager.getInstance().getOsgiContainerManager().getBundles()) {
 %>
-        <tr>
-            <td>
+        <tr class="bundle">
+            <td class="bundle-symbolic-name">
                 <%=bundle.getSymbolicName()%>
             </td>
-            <td>
+            <td class="bundle-version">
                 <%=bundle.getHeaders().get("Bundle-Version")%>
             </td>
-            <td>
+            <td class="bundle-state">
                 <%
                     String state = "N/A";
                     switch (bundle.getState()) {
@@ -61,7 +61,7 @@
                         <td>
                             <% String[] infs = (String[]) service.getProperty("objectClass");
                                 for (String inf : infs) {%>
-                                <li><%=inf%></li>
+                                <li class="bundle-service-interface"><%=inf%></li>
                             <% } %>
 
                         </td>

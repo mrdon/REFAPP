@@ -4,7 +4,7 @@
   <meta name="decorator" content="atl.admin"/>
 </head>
 <body>
-  <h3>Charlies Administration</h3>
+  <h3 id="charlie-header">Charlies Administration</h3>
   <p><a href="http://www.atlassian.com/summit/awards.jsp">Charlie</a> is the nickname we've given to the Atlassian logo.
     The RefApp uses Charlie as a representation of the abstract "keys" supported by SAL and other plugins.</p>
   <p>While in JIRA and Confluence, these keys represent a project or space, a Charlie in the RefApp does nothing,

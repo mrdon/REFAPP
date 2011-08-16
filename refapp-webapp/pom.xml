@@ -95,12 +95,7 @@
                         <exclude>**/*Mock*</exclude>
                         <exclude>**/*$*</exclude>
                     </excludes>
-                    <systemProperties>
-                        <property>
-                            <name>baseurl</name>
-                            <value>${baseurl}</value>
-                        </property>
-                    </systemProperties>
+                    <argLine>-Dbaseurl.refapp=${baseurl} -Dhttp.refapp.port=${http.port} -Dcontext.refapp.path=${refapp.context} -Dxvfb.enable=${xvfb.enable}</argLine>
                 </configuration>
                 <executions>
                     <execution>
@@ -367,9 +362,9 @@
         </dependency>
 
         <dependency>
-            <groupId>net.sourceforge.jwebunit</groupId>
-            <artifactId>jwebunit-htmlunit-plugin</artifactId>
-            <version>1.5</version>
+            <groupId>com.atlassian.selenium</groupId>
+            <artifactId>atlassian-webdriver-refapp</artifactId>
+            <version>2.1-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -377,7 +372,8 @@
     <properties>
         <http.port>8179</http.port>
         <rmi.port>8580</rmi.port>
-        <baseurl>http://localhost:${http.port}/atlassian-refapp</baseurl>
+        <refapp.context>atlassian-refapp</refapp.context>
+        <baseurl>http://localhost:${http.port}/${refapp.context}</baseurl>
         <tomcat.installer.url>
             <!--
                         file:///tmp/apache-tomcat-5.5.25.zip
@@ -386,5 +382,6 @@
         </tomcat.installer.url>
         <cargo.wait>false</cargo.wait>
         <jvmargs />
+        <xvfb.enable>true</xvfb.enable>
     </properties>
 </project>
