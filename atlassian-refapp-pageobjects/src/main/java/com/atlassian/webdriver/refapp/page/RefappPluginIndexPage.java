@@ -1,5 +1,6 @@
 package com.atlassian.webdriver.refapp.page;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -60,17 +61,17 @@ public class RefappPluginIndexPage extends RefappAbstractPage
 
     public class Bundle
     {
-        private String symbolicName;
-        private String version;
-        private String state;
-        private Set<String> serviceInterfaces;
+        private final String symbolicName;
+        private final String version;
+        private final String state;
+        private final Set<String> serviceInterfaces;
 
         public Bundle(String symbolicName, String version, String state, Set<String> serviceInterfaces)
         {
             this.symbolicName = symbolicName;
             this.version = version;
             this.state = state;
-            this.serviceInterfaces = serviceInterfaces;
+            this.serviceInterfaces = ImmutableSet.copyOf(serviceInterfaces);
         }
 
         public String getSymbolicName()
