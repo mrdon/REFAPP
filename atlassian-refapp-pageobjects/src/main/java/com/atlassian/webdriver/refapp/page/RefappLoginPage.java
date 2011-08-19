@@ -31,6 +31,11 @@ public class RefappLoginPage extends RefappAbstractPage implements LoginPage
         return HomePage.class.isAssignableFrom(nextPage) ? pageBinder.bind(nextPage) : pageBinder.navigateToAndBind(nextPage);
     }
 
+    /**
+     * Logins into refapp.
+     *
+     * @param bypassWebsudo if true, user will not have to deal with websudo screen again until the automatically given privilege is expired
+     */
     public <M extends Page> M login(String username, String password, boolean bypassWebsudo, Class<M> nextPage)
     {
         driver.findElement(By.name("os_username")).sendKeys(username);

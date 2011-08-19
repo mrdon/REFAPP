@@ -8,6 +8,7 @@ import com.atlassian.pageobjects.component.Header;
 import com.atlassian.pageobjects.page.HomePage;
 import com.atlassian.webdriver.AtlassianWebDriver;
 
+import com.atlassian.webdriver.utils.Check;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -53,10 +54,24 @@ public class RefappHeader implements Header
         }
     }
 
+    /**
+     * Drops the websudo privilege if the websudo banner is displayed otherwise just navigates
+     * to the next page.
+     * @param nextPage the page to navigate to after websudo privileges have been dropped.
+     * @return The nextPage pageObject
+     */
     public <M extends Page> M dropWebSudo(Class<M> nextPage)
     {
-        driver.findElement(By.id("websudo-drop")).click();
-        return HomePage.class.isAssignableFrom(nextPage) ? pageBinder.bind(nextPage) : pageBinder.navigateToAndBind(nextPage);
+        final By webSudoDropButton = By.id("websudo-drop");
+        if (Check.elementExists(webSudoDropButton, driver))
+        {
+            driver.findElement(webSudoDropButton).click();
+            return HomePage.class.isAssignableFrom(nextPage) ? pageBinder.bind(nextPage) : pageBinder.navigateToAndBind(nextPage);
+        }
+        else
+        {
+            return pageBinder.navigateToAndBind(nextPage);
+        }
     }
 
     public <M extends Page> M logout(Class<M> nextPage)
