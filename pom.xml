@@ -326,7 +326,7 @@
         <plug.version>2.9.0</plug.version>
 
         <sal.name>SAL</sal.name>
-        <sal.version>2.6.0</sal.version>
+        <sal.version>2.7.0-rc2</sal.version>
 
         <atr.name>Template Renderer</atr.name>
         <atr.version>1.3.0</atr.version>

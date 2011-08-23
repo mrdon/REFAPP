@@ -5,6 +5,7 @@ import com.atlassian.extras.api.LicenseException;
 import com.atlassian.extras.api.LicenseManager;
 import com.atlassian.extras.core.LicenseManagerFactory;
 import com.atlassian.sal.api.license.LicenseHandler;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -33,6 +34,26 @@ public class RefimplLicenseHandler implements LicenseHandler
         if (atlassianLicense == null) {
             throw new IllegalArgumentException("Missing license");
         }
+    }
+
+    /**
+     * Gets the server ID of the currently running application.
+     *
+     * @return the server ID.
+     */
+    public String getServerId()
+    {
+        return "AREF-IMPL-SERV-ERID";
+    }
+
+    /**
+     * Gets the Support Entitlement Number (SEN) for the currently running application.
+     *
+     * @return the Support Entitlement Number, or {@code null} if there is no current support entitlement.
+     */
+    public String getSupportEntitlementNumber()
+    {
+        return null;
     }
 
 }

@@ -1,13 +1,13 @@
 package com.atlassian.refapp.ctk.sal;
 
 import com.atlassian.functest.junit.SpringAwareTestCase;
-
 import com.atlassian.sal.api.license.LicenseHandler;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
-import static org.junit.Assert.assertTrue;
+
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class LicenseHandlerTest extends SpringAwareTestCase
 {
@@ -52,5 +52,11 @@ public class LicenseHandlerTest extends SpringAwareTestCase
     {
         // Should throw IllegalArgumentException for invalid license.
         handler.setLicense(INVALID_LICENSE);
+    }
+
+    @Test
+    public void testGetServerIdReturnsValidID()
+    {
+        assertTrue(handler.getServerId().matches("A[A-Z0-9]{3}(-[A-Z0-9]{4}){3}"));
     }
 }
