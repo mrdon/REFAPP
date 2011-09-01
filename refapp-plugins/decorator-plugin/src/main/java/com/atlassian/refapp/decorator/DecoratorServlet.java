@@ -27,7 +27,7 @@ import org.apache.commons.io.IOUtils;
 
 public class DecoratorServlet extends HttpServlet
 {
-    private static final String ADMIN_PATH = "/admin.vmd";
+    private static final String SERVLET_PATH = "/refappdecorator";
     private static final String PROPERTIES_LOCATION = "META-INF/maven/com.atlassian.refapp/atlassian-refapp/pom.properties";
 
     private final TemplateRenderer templateRenderer;
@@ -68,9 +68,9 @@ public class DecoratorServlet extends HttpServlet
         {
             pathInfo = request.getPathInfo();
         }
-        if (pathInfo != null && pathInfo.endsWith(ADMIN_PATH))
+        if (pathInfo != null)
         {
-            template = "/templates/admin.vmd";
+            template = mapPathToTemplate(pathInfo);
         }
         else
         {
@@ -92,6 +92,11 @@ public class DecoratorServlet extends HttpServlet
             e.printStackTrace(writer);
             writer.write("</pre>");
         }
+    }
+
+    private String mapPathToTemplate(String pathInfo)
+    {
+        return pathInfo.replace(SERVLET_PATH,"templates");
     }
 
     private Properties getPropertiesFromServletContext(String location) throws IOException
@@ -139,8 +144,27 @@ public class DecoratorServlet extends HttpServlet
         {
             velocityParams.put("websudosession", Boolean.TRUE.toString());
         }
-        
-        velocityParams.put("titleHtml", page.getTitle());
+
+        String titleHtml = page.getTitle();
+        if (titleHtml == null || titleHtml.isEmpty())
+        {
+            titleHtml = "Welcome!";
+        }
+
+        velocityParams.put("titleHtml", titleHtml);
+
+        String htmlClass = page.getProperty("class");
+
+        if (htmlClass != null)
+        {
+            velocityParams.put("headClass", htmlClass);
+        }
+
+        String bodyClass = page.getProperty("body.class");
+        if (bodyClass != null)
+        {
+            velocityParams.put("bodyClass", bodyClass);
+        }
 
         StringWriter bodyBuffer = new StringWriter();
         page.writeBody(OutputConverter.getWriter(bodyBuffer));

@@ -1,0 +1,12 @@
+$webResourceManager.requireResourcesForContext("atl.blank")
+<!DOCTYPE html>
+<html lang="en" #if ($htmlClass)class="$htmlClass"#end>
+    <head>
+        #if ($titleHtml)<title>$titleHtml</title>#end
+        $headHtml
+        $webResourceIncluder.includeResources()
+    </head>
+    <body #if ($bodyClass)class="$bodyClass"#end>
+        $bodyHtml
+    </body>
+</html>

@@ -4,7 +4,7 @@ $webResourceManager.requireResource("com.atlassian.refapp.decorator:decorator-re
 $webResourceManager.requireResourcesForContext("atl.popup")
 <html>
     <head>
-        #if ($title)<title>$titleHtml</title>#end
+        #if ($titleHtml)<title>$titleHtml</title>#end
         <link href="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/developer16.ico")" rel="shortcut icon"/>
         <link href="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/developer16.png")" type="image/png" rel="icon"/>
         $headHtml

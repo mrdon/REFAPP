@@ -3,4 +3,5 @@
     <decorator name="atl.admin" page="/plugins/servlet/refappdecorator/admin.vmd" />
     <decorator name="atl.popup" page="/plugins/servlet/refappdecorator/popup.vmd" />
     <decorator name="atl.userprofile" page="/plugins/servlet/refappdecorator/general.vmd" />
+    <decorator name="atl.blank" page="/plugins/servlet/refappdecorator/blank.vmd" />
 </decorators>

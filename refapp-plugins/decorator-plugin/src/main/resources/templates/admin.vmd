@@ -8,7 +8,7 @@ $webResourceManager.requireResource("com.atlassian.refapp.decorator:decorator-re
 $webResourceManager.requireResourcesForContext("atl.admin")
 <html>
     <head>
-        <title>#if ($titleHtml)$titleHtml#else Welcome!#end</title>
+        #if ($titleHtml)<title>$titleHtml</title>#end
         <link href="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/developer16.ico")" rel="shortcut icon"/>
         <link href="$!webResourceManager.getStaticPluginResource("com.atlassian.refapp.decorator:decorator-resources", "images/developer16.png")" type="image/png" rel="icon"/>
         $headHtml
