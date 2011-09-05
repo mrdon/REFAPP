@@ -96,7 +96,12 @@ public class DecoratorServlet extends HttpServlet
 
     private String mapPathToTemplate(String pathInfo)
     {
-        return pathInfo.replace(SERVLET_PATH,"templates");
+        if (pathInfo.startsWith(SERVLET_PATH))
+        {
+            return pathInfo.replace(SERVLET_PATH,"templates");
+        }
+
+        return pathInfo;
     }
 
     private Properties getPropertiesFromServletContext(String location) throws IOException
