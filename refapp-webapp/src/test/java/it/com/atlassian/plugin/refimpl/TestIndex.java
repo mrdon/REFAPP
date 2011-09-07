@@ -2,10 +2,8 @@ package it.com.atlassian.plugin.refimpl;
 
 import com.atlassian.webdriver.refapp.page.RefappPluginIndexPage;
 import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 
-import javax.annotation.Nullable;
 import java.util.Set;
 
 public class TestIndex extends AbstractRefappTestCase
