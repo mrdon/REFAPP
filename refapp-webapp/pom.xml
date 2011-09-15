@@ -156,6 +156,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.atlassian.refapp</groupId>
+            <artifactId>atlassian-refapp-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>atlassian-bundled-plugins</artifactId>
             <version>${project.version}</version>
