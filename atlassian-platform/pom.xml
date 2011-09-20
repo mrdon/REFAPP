@@ -223,6 +223,33 @@
                 <artifactId>applinks-spi</artifactId>
                 <version>${apl.version}</version>
             </dependency>
+
+            <!-- STRM -->
+            <dependency>
+                <groupId>com.atlassian.streams</groupId>
+                <artifactId>streams-api</artifactId>
+                <version>${strm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.streams</groupId>
+                <artifactId>streams-spi</artifactId>
+                <version>${strm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.streams</groupId>
+                <artifactId>streams-core-plugin</artifactId>
+                <version>${strm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.streams</groupId>
+                <artifactId>streams-inline-actions-plugin</artifactId>
+                <version>${strm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.atlassian.streams</groupId>
+                <artifactId>streams-aggregator-plugin</artifactId>
+                <version>${strm.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

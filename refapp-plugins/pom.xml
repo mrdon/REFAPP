@@ -31,5 +31,6 @@
         <module>charlie-plugin</module>
         <module>sal-plugin</module>
         <module>applinks-plugin</module>
+        <module>streams-plugin</module>
     </modules>
 </project>

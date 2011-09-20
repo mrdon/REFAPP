@@ -151,6 +151,38 @@
             <type>atlassian-plugin</type>
         </dependency>
         <dependency>
+            <groupId>com.atlassian.refapp</groupId>
+            <artifactId>atlassian-refapp-streams-plugin</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+            <type>atlassian-plugin</type>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.streams</groupId>
+            <artifactId>streams-api</artifactId>
+            <version>${strm.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.streams</groupId>
+            <artifactId>streams-spi</artifactId>
+            <version>${strm.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.streams</groupId>
+            <artifactId>streams-core-plugin</artifactId>
+            <version>${strm.version}</version>
+            <scope>provided</scope>
+            <type>atlassian-plugin</type>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.streams</groupId>
+            <artifactId>streams-aggregator-plugin</artifactId>
+            <version>${strm.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>com.atlassian.plugins.rest</groupId>
             <artifactId>atlassian-rest-module</artifactId>
             <version>${rest.version}</version>
@@ -226,6 +258,18 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient-osgi</artifactId>
             <version>4.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.atlassian.util.concurrent</groupId>
+            <artifactId>atlassian-util-concurrent</artifactId>
+            <version>2.3.0-beta2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>1.6</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

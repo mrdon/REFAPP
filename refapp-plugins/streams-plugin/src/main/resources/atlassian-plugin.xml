@@ -1,0 +1,35 @@
+<atlassian-plugin key="com.atlassian.streams.refapp" name="Reference App Streams Plugin" pluginsVersion="2">
+    <plugin-info>
+        <description>Reference App Streams Plugin</description>
+        <version>${strm.version}</version>
+        <vendor name="Atlassian Software Systems Pty Ltd" url="http://www.atlassian.com/"/>
+    </plugin-info>
+
+    <!-- Streams components -->
+    <component-import key="streamsI18nResolver" interface="com.atlassian.streams.spi.StreamsI18nResolver" />
+    <component-import key="streamsEntryRendererFactory" interface="com.atlassian.streams.api.renderer.StreamsEntryRendererFactory" />
+
+    <!-- SAL components -->
+    <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties" />
+
+    <component key="refappEntityResolver" class="com.atlassian.streams.refapp.RefappEntityResolver" public="true">
+        <interface>com.atlassian.streams.spi.EntityResolver</interface>
+    </component>
+
+    <component key="formatPreferenceProvider" name="Format Preference Provider"
+               class="com.atlassian.streams.spi.DefaultFormatPreferenceProvider" public="true">
+        <interface>com.atlassian.streams.spi.FormatPreferenceProvider</interface>
+    </component>
+
+    <component key="refappRenderer" class="com.atlassian.streams.refapp.RefappRenderer" />
+
+    <activity-streams-provider key="refapp" name="RefApp Streams Provider" class="com.atlassian.streams.refapp.RefappStreamsActivityProvider">
+        <filter-provider class="com.atlassian.streams.refapp.RefappFilterOptionProvider" />
+        <validator class="com.atlassian.streams.refapp.RefappStreamsValidator" />
+        <key-provider class="com.atlassian.streams.refapp.RefappKeyProvider" />
+        <entity-association-provider class="com.atlassian.streams.refapp.RefappEntityAssociationProvider" />
+    </activity-streams-provider>
+
+    <resource type="i18n" name="i18n" location="i18n" />
+
+</atlassian-plugin>
