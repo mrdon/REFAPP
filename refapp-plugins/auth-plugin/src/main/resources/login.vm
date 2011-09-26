@@ -21,6 +21,7 @@
                    size="25"
                    tabindex="1"
                    accesskey="u"
+                   autofocus="autofocus"
                    value="">
 
             <label for="os_password">
