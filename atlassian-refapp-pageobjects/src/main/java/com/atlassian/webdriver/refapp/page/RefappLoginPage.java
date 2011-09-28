@@ -1,7 +1,6 @@
 package com.atlassian.webdriver.refapp.page;
 
 import com.atlassian.pageobjects.PageBinder;
-import com.atlassian.pageobjects.elements.PageElementFinder;
 import com.atlassian.pageobjects.page.HomePage;
 import com.atlassian.pageobjects.page.LoginPage;
 import com.atlassian.pageobjects.Page;
@@ -18,20 +17,9 @@ public class RefappLoginPage extends RefappAbstractPage implements LoginPage
     @Inject
     PageBinder pageBinder;
 
-    @Inject
-    PageElementFinder elementFinder;
-
     public String getUrl()
     {
         return "/plugins/servlet/login";
-    }
-
-    /**
-     * Is the user being prompted for login. This may be false if we visit the page while the user is already logged in.
-     */
-    public boolean isPromptingForLogin()
-    {
-        return elementFinder.find(By.name("os_username")).isPresent();
     }
 
     public <M extends Page> M login(String username, String password, Class<M> nextPage)
@@ -40,7 +28,7 @@ public class RefappLoginPage extends RefappAbstractPage implements LoginPage
         driver.findElement(By.name("os_password")).sendKeys(password);
         driver.findElement(By.id("os_login")).submit();
 
-        return bindNextPage(nextPage);
+        return HomePage.class.isAssignableFrom(nextPage) ? pageBinder.bind(nextPage) : pageBinder.navigateToAndBind(nextPage);
     }
 
     /**
@@ -67,11 +55,6 @@ public class RefappLoginPage extends RefappAbstractPage implements LoginPage
 
         driver.findElement(By.id("os_login")).submit();
 
-        return bindNextPage(nextPage);
-    }
-
-    private <M extends Page> M bindNextPage(Class<M> nextPage)
-    {
         return HomePage.class.isAssignableFrom(nextPage) ? pageBinder.bind(nextPage) : pageBinder.navigateToAndBind(nextPage);
     }
 
