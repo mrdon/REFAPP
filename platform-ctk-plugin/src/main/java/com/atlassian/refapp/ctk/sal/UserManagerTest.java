@@ -9,6 +9,7 @@ import com.atlassian.sal.api.user.UserProfile;
 import org.junit.Test;
 
 import java.security.Principal;
+import java.util.Locale;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -94,7 +95,7 @@ public class UserManagerTest extends SpringAwareTestCase
     {
         UserProfile adminProfile = userManager.getUserProfile(infoProvider.getAdminUsername());
         assertEquals("admin profile should have appropriate admin username", infoProvider.getAdminUsername(), adminProfile.getUsername());
-        assertEquals("admin fullname should match", adminProfile.getFullName(), infoProvider.getAdminFullname());
+        assertTrue("admin fullname should overlap", isOverlap(adminProfile.getFullName(), infoProvider.getAdminFullname()));
         assertTrue("this should return an email address", adminProfile.getEmail().contains("@"));
     }
 
@@ -111,5 +112,12 @@ public class UserManagerTest extends SpringAwareTestCase
         Principal adminPrincipal = userManager.resolve(infoProvider.getAdminUsername());
         assertNotNull(adminPrincipal);
         assertEquals(infoProvider.getAdminUsername(), adminPrincipal.getName());
+    }
+
+    private boolean isOverlap(String input1, String input2)
+    {
+        String s1 = input1.toUpperCase(Locale.ENGLISH);
+        String s2 = input2.toUpperCase(Locale.ENGLISH);
+        return s1.contains(s2) || s2.contains(s1);
     }
 }

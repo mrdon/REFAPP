@@ -7,12 +7,10 @@ import com.atlassian.sal.api.search.SearchMatch;
 import com.atlassian.sal.api.search.SearchProvider;
 import com.atlassian.sal.api.search.SearchResults;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
-import java.util.Set;
-
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class SearchProviderTest extends SpringAwareTestCase
@@ -46,23 +44,29 @@ public class SearchProviderTest extends SpringAwareTestCase
     }
 
     @Test
-    public void testSearchWithMatch() {
+    public void testSearchWithMatch()
+    {
         final String matchingSearchTerm = infoProvider.getMatchingSearchTerm();
-        final boolean searchSupported = matchingSearchTerm != null;
+        final boolean searchSupported = StringUtils.isNotBlank(matchingSearchTerm);
         final SearchResults sresults = searchProvider.search(infoProvider.getAdminUsername(),
-                searchSupported ? matchingSearchTerm : "dummySearchTerm");
+                                       searchSupported ? matchingSearchTerm : "dummySearchTerm");
 
         assertNotNull("Should never return null", sresults);
-        if (searchSupported) {
+
+        if (searchSupported)
+        {
             assertTrue("We expect matches in search", sresults.getMatches().size() > 0);
 
-            for (String content : infoProvider.getExpectedMatchingContents()) {
+            for (String content : infoProvider.getExpectedMatchingContents())
+            {
                 boolean found = false;
-                for (SearchMatch match : sresults.getMatches()) {
+                for (SearchMatch match : sresults.getMatches())
+                {
                     // if any of these match, then we're good.
                     if (match.getTitle().contains(content) ||
                             match.getUrl().contains(content) ||
-                            match.getExcerpt().contains(content)) {
+                            match.getExcerpt().contains(content))
+                    {
                         found = true;
                         break;
                     }

@@ -33,4 +33,9 @@ public interface AppSpecificInfoProvider
      * using {@link #getMatchingSearchTerm()}, or <code>null</code> if searching is not supported.
      */
     public Set<String> getExpectedMatchingContents();
+
+    /**
+     * @return a valid license key.
+     */
+    public String getValidLicense();
 }
