@@ -175,6 +175,25 @@
                         <baseurl>http://localhost:${http.port}/refapp</baseurl>
                         <plugin.resource.directories>${basedir}/target/classes</plugin.resource.directories>
                         <webdriver.browser>htmlunit</webdriver.browser>
+                        <platform.ctk.test.admin.username>admin</platform.ctk.test.admin.username>
+                        <platform.ctk.test.admin.password>admin</platform.ctk.test.admin.password>
+                        <platform.ctk.test.admin.fullname>A. D. Ministrator (Sysadmin)</platform.ctk.test.admin.fullname>
+                        <platform.ctk.test.validlicense>
+                            AAACVA0ODAoPeNqdVk1vozAQvfMrkPZMBE20h0pI2ya0i5qv3dBLb4ZMEq/ARLbJbv79gsHlywbRU
+                            xR/zJt5783gb8ElM18gNB3bdJzHuf04/256h8B8sB3HCFESpulsjSMgDLx/V0zvK8TB3c9/GgegN
+                            6D+yn1eLDaWvdjZ1sfh4816dfa/jIimf4+zJQXEcUrEnSKiZT9Yjp3vZhEOY5gtU8JRxLcoAdcnH
+                            M5UnDcDQInxB1MksYP7FcSpIE/O375WAPldfAOX0wzqoHtEOQEqjndLOOIivvu+XfsbP/BWxgmzC
+                            9xHMinBdvSMCGZi3X3iMWIMI1LjejcUZ+VuO6ENwnlEgkjU5VCit1IWdWvAxJ4+XpSSU5uUYkHHY
+                            cXNNktCoLvTs/i7TiMUP52BcOZaThlADyjy0crcAFfdWwGLKL6KEqtj5iml5j5GPP9NzGXwZnJgH
+                            JNzzaY6oMCaGLAQtStaxUlfS+HncZMMaCP2B8yp8XgF6uWRYxfXqNYRbuwHktaYRWlSsjBknaY3x
+                            IIU/50BLQUv08xodEEMupJWGesUL+0wIWHZACMWnSZsQcLo6NGwJBPS+GKIW7UxZcAm88rG+w1Jy
+                            qHReZ9DUltKodQw6mBr9rQXZeikb9WonaPD6Wjo6/BRe1EoOcX/krNeKJnByOwc8b3ye/OlBCc5W
+                            nbdBKDqiq6e7jTtNZ7k6wsjVT/OKkxFK4zIMv5OaM3VUkrFpO2fUg96xVSUjwsNoZ13xKThp+7Dw
+                            Zo/Hw4jc3oohnIK5bqSxndgkvwi7S6h/wEUMrYWMCwCFFBwk1DQL0qqxQbV15RZa/W8ESB7AhQ3b
+                            E9VSUvHT1S7vDj6p4zb0Oabdw==X02rr
+                        </platform.ctk.test.validlicense>
+                        <platform.ctk.test.search.term>refapp</platform.ctk.test.search.term>
+                        <platform.ctk.test.search.matches>http://foo.com,http://bar.com</platform.ctk.test.search.matches>
                     </systemPropertyVariables>
                     <pluginArtifacts>
                         <pluginArtifact>
