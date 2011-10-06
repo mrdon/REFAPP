@@ -63,9 +63,9 @@ public class SearchProviderTest extends SpringAwareTestCase
                 for (SearchMatch match : sresults.getMatches())
                 {
                     // if any of these match, then we're good.
-                    if (match.getTitle().contains(content) ||
-                            match.getUrl().contains(content) ||
-                            match.getExcerpt().contains(content))
+                    if (contains(match.getTitle(), content) ||
+                        contains(match.getUrl(), content) ||
+                        contains(match.getExcerpt(), content))
                     {
                         found = true;
                         break;
@@ -74,5 +74,15 @@ public class SearchProviderTest extends SpringAwareTestCase
                 assertTrue("the expected content should exist in the search results:" + content, found);
             }
         }
+    }
+
+    private boolean contains(String result, String expectedContent)
+    {
+        if (result != null)
+        {
+            return result.contains(expectedContent);
+        }
+
+        return false;
     }
 }
