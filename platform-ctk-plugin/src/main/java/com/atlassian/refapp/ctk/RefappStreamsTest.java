@@ -19,11 +19,10 @@ public class RefappStreamsTest extends AbstractRestTest
     }
 
     @Test
-    public void refappStreamsIsPresent() throws Exception
+    public void streamsIsPresent() throws Exception
     {
         URI uri = UriBuilder.fromUri(appProp.getBaseUrl()).path("plugins").path("servlet").path("streams").build();
         String result = get(uri);
-        assertTrue(result.contains("did something"));
-        assertTrue(result.contains("finished another thing"));
+        assertTrue(result.contains("Activity Stream"));
     }
 }
