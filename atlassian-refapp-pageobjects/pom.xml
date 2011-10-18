@@ -51,11 +51,22 @@
             <groupId>com.atlassian.selenium</groupId>
             <artifactId>atlassian-webdriver-core</artifactId>
             <version>2.1-m4</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.collections</groupId>
+                    <artifactId>google-collections</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.atlassian.selenium</groupId>
             <artifactId>atlassian-pageobjects-elements</artifactId>
             <version>2.1-m4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${google.guava.libversion}</version>
         </dependency>
     </dependencies>
 

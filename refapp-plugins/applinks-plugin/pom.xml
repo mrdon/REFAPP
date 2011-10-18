@@ -99,9 +99,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.atlassian.bundles</groupId>
-            <artifactId>google-collections</artifactId>
-            <version>${google.collections.libversion}</version>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${google.guava.libversion}</version>
             <scope>provided</scope>
         </dependency>
 		<dependency>

@@ -119,6 +119,32 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <!--We only do guava from now on -->
+                        <id>ban_google_colllections</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <rules>
+                                <bannedDependencies>
+                                    <searchTransitive>true</searchTransitive>
+                                    <message>make sure google-collection is not accidentally included as transitive dependency</message>
+                                    <excludes>
+                                        <exclude>com.google.collections:google-collections</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -234,6 +260,11 @@
         <dependency>
             <groupId>com.atlassian.event</groupId>
             <artifactId>atlassian-event</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${google.guava.libversion}</version>
         </dependency>
         <dependency>
             <groupId>com.atlassian.security.auth.trustedapps</groupId>
