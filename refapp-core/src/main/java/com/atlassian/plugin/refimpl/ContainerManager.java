@@ -125,7 +125,7 @@ public class ContainerManager
         packageIncludes.add("org.bouncycastle*");
         packageIncludes.add("org.dom4j*");
         packageIncludes.add("javax.servlet*");
-        packageIncludes.add("com.google*");
+        packageIncludes.add("com.google.common.*");
         packageIncludes.add("com.atlassian.sal*");
         packageIncludes.add("com.opensymphony.module.sitemesh*");
 
@@ -133,6 +133,7 @@ public class ContainerManager
         scannerConfig.setPackageVersions(new HashMap<String,String>() {{
             put("javax.servlet", "2.5");
             put("javax.servlet.http", "2.5");
+            put("com.google.common.*", SystemExportVersionUtils.getGoogleGuavaVersion());
         }});
 
         final String packageVersionExportString = System.getProperty(PACKAGE_VERSION_EXPORT_OVERRIDES);
