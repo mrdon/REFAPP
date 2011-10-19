@@ -9,5 +9,7 @@
     <export-version-check package="com.atlassian.security.auth.trustedapps" version="${trust.version}" modulename="Atlassian Trusted Apps"/>
     <export-version-check package="com.atlassian.applinks.api" version="${apl.version}" modulename="Atlassian Application Links"/>
     <export-version-check package="com.atlassian.streams.api" version="${strm.version}" modulename="Atlassian Activity Streams"/>
+    <!-- This com.google.common.io only exists in guava but not google-collection -->
+    <export-version-check package="com.google.common.io" version="${google.guava.libversion}" modulename="Google Guava"/>
     <bundle-version-check bundlename="com.atlassian.auiplugin" version="${ajs.version}" modulename="Atlassian UI Plugin"/>
 </platform>
