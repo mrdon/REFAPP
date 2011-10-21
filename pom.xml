@@ -349,7 +349,7 @@
         <oauth.version>1.3.2</oauth.version>
 
         <rest.name>REST</rest.name>
-        <rest.version>2.6.0-beta1</rest.version>
+        <rest.version>2.5.0</rest.version>
 
         <upm.name>Universal Plugin Manager</upm.name>
         <upm.version>1.5.1</upm.version>
